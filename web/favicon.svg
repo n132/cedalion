@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="38 43 322 174">
+  <!-- Tab icon. Two things the page logos cannot do at 16px:
+
+       No plate. logo.svg and logo-light.svg have to paint the gap that opens
+       the C as an opaque disc, which forces a background behind the whole mark.
+       Here the gap is a real mask, so the icon is transparent and sits on the
+       tab strip instead of in a box on it.
+
+       Cropped to the ink. The shared canvas is 400x260 with the mark spanning
+       only x 41.5-356.5, y 46.5-213.5; at favicon size that padding was most of
+       the icon. This viewBox is the mark's own bounding box plus a hair.
+
+       Colour follows the browser's theme, since a tab strip is light or dark
+       independently of the page. -->
+  <style>
+    .ring { stroke: #000; }
+    @media (prefers-color-scheme: dark) { .ring { stroke: #fff; } }
+  </style>
+
+  <mask id="cut">
+    <rect x="38" y="43" width="322" height="174" fill="#fff"/>
+    <circle cx="273" cy="130" r="110" fill="#000"/>
+  </mask>
+
+  <g class="ring" fill="none" stroke-width="29">
+    <circle cx="125" cy="130" r="69" mask="url(#cut)"/>
+    <circle cx="273" cy="130" r="69"/>
+  </g>
+</svg>

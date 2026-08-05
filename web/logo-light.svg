@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" width="400" height="260">
+  <!-- Light-background twin of logo.svg: the same geometry with ink and paper
+       swapped, so the plate vanishes into a white page instead of sitting on
+       it as a black box. The plate cannot simply be dropped — the circle that
+       opens the left ring into a C is an opaque fill, not a cut, so it has to
+       be painted in the background colour. -->
+  <rect width="400" height="260" fill="#ffffff"/>
+
+  <!-- left ring -->
+  <circle cx="125" cy="130" r="69" fill="none" stroke="#000000" stroke-width="29"/>
+
+  <!-- the gap: concentric with the O, radius larger than the O's outer edge
+       (95) so it carves the channel that opens the left ring into a C -->
+  <circle cx="273" cy="130" r="110" fill="#ffffff"/>
+
+  <!-- right ring: the closed O. fill="none" so the gap circle above is the only
+       thing controlling the cut into the left ring -->
+  <circle cx="273" cy="130" r="69" fill="none" stroke="#000000" stroke-width="29"/>
+</svg>

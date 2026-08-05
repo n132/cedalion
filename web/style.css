@@ -1,0 +1,524 @@
+/* White page, black content — always. color-scheme is pinned to light so the
+   browser does not restyle native controls when the OS is in dark mode, and
+   there is deliberately no prefers-color-scheme block. Every value is black or
+   white, varied only by opacity. */
+:root {
+  color-scheme: light;
+  --surface:   #ffffff;
+  --surface-2: rgba(0, 0, 0, .035);
+  --line:      rgba(0, 0, 0, .14);
+  --line-soft: rgba(0, 0, 0, .07);
+  --text:      #000000;
+  --text-2:    rgba(0, 0, 0, .66);
+  --text-3:    rgba(0, 0, 0, .45);
+  /* The light falls in at the top edge of anything set into the page. Two
+     depths: the deep one for the boxes that hold a page's worth of content,
+     the shallow one for a single control or block, which a full-strength
+     shadow would swallow. Both are black at low opacity, like everything
+     else here. */
+  --sunk:      inset 0 2px 5px rgba(0, 0, 0, .075);
+  --sunk-soft: inset 0 1px 3px rgba(0, 0, 0, .06);
+  /* The scale the page arrives at. Every size here is in px, so one factor on
+     the body is what moves all of them together — type, padding, rules and the
+     table's own height — rather than a second set of numbers to keep in step.
+     1.8 is what .9 came to when read at the browser's 200%: the size the page
+     was being used at, made the size it is served at, so nobody has to reach
+     for the zoom to get there. The reader's own zoom still multiplies on top,
+     so it remains theirs to change. */
+  --zoom: 1.8;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+/* The system sans, everywhere. Times read like prose on a page of hashes and
+   counts, and a display serif in the header pulled the eye to two signposts
+   instead of to the register they point at. */
+body {
+  zoom: var(--zoom);
+  margin: 0; background: var(--surface); color: var(--text);
+  font: 15px/1.65 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+/* The full window, with gutters — no max-width. The 1440px cap left a wide
+   screen with a band of empty page down both sides while the register itself
+   was still scrolling sideways. The running text keeps its own measure
+   (.sub caps at ~68ch) regardless, so what the width goes to is the table and
+   the tiles, never the prose. */
+.wrap { margin: 0 auto; padding: 0 28px; }
+
+/* A real rule, not a hairline divider — it is the line the header stands on,
+   the way n132.github.io sets its 2px black one across the full width. */
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--surface); border-bottom: 2px solid var(--text);
+}
+/* One flat line across the top: mark at the left edge, links running on from
+   it. Centring huddled the two together in the middle and left the full width
+   of the bar empty on both sides. Both are bottom-aligned with only a few px
+   of clearance, so they read as resting on the rule rather than floating
+   somewhere above it. */
+.topbar .wrap {
+  display: flex; align-items: flex-end;
+  gap: 10px; height: 32px; padding-bottom: 2px;
+}
+.brand { display: inline-flex; align-items: center; }
+/* logo-light.svg, not logo.svg. The mark cannot be made transparent — the
+   circle that opens the C is an opaque fill rather than a cut — so it carries a
+   plate in whichever colour its background is. The light twin's plate is white
+   and disappears here; the black original would sit on the page as a box. */
+.brand img { display: block; height: 26px; width: auto; }
+
+/* What the register is, in one line, where the nav used to be. Bottom-aligned
+   on the rule with the mark, and the line box collapsed onto the glyphs: the
+   body's 1.65 leaves several px of empty space under the letters, inside the
+   span's own box, which no padding on the bar can reach.
+
+   It shrinks and ellipses rather than hiding at a breakpoint. The page is
+   served zoomed, so a media query would have to be written against the window
+   in real pixels while everything it governs is measured in zoomed ones, and
+   the two drift apart the moment --zoom changes. Letting flex do it needs no
+   number at all. */
+.tag {
+  margin-left: auto; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: var(--text-3); font-size: 13px; line-height: 1;
+  position: relative; top: 1px;
+}
+
+/* The mark at the right end of the bar, standing on the rule with the logo and
+   the tag. Grey until it is pointed at, like everything else here that can be
+   clicked — it is a way out of the page, not a thing to be read on the way in,
+   so it does not compete with the two marks it sits beside. */
+.gh { display: inline-flex; color: var(--text-3); }
+.gh:hover { color: var(--text); }
+.gh svg { display: block; width: 17px; height: 17px; fill: currentColor; }
+
+/* The box the page is set into: a tinted, ruled frame with the light falling in
+   at its top edge, and whatever it holds recessed inside it keeping the page's
+   white. */
+.well {
+  padding: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--text); border-radius: 5px;
+  box-shadow: var(--sunk);
+}
+
+/* One section, holding the register, so the padding is set once here rather
+   than as a generic 52px with the one exception overriding it. It sits close at
+   both ends: there is no heading above it to leave room for and nothing below
+   it but the extraction date, and the clearance those two used to need was a
+   band of empty page around the only thing on the page. */
+section { padding: 16px 0 18px; border-bottom: 1px solid var(--line); }
+
+/* The three views, as plain text rather than a boxed control: the one you are
+   on is in ink, the others are grey. */
+/* Views and filter share one row — two controls of the same table, and the
+   filter box on its own line was a band of empty page. */
+.toolbar {
+  display: flex; align-items: center; gap: 24px;
+  flex-wrap: wrap; margin-bottom: 14px;
+}
+/* The field, the glyph that names it and the key that reaches it, as one box.
+   Pushed to the right so its edge lines up with the table's, at a fixed size
+   rather than half the row: now that the page runs the full window, half of it
+   was a search field a metre wide. */
+.search {
+  position: relative; display: flex; align-items: center;
+  margin-left: auto; flex: 0 1 440px;
+}
+/* Room at both ends for what sits inside the field. */
+.search input[type=search] { flex: 1 1 auto; padding: 7px 34px 7px 31px; }
+.search .glyph {
+  position: absolute; left: 10px; width: 14px; height: 14px;
+  color: var(--text-3); pointer-events: none;   /* the click belongs to the field */
+  fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round;
+}
+.search:focus-within .glyph { color: var(--text); }
+/* The shortcut, shown only while it is still the thing to do — with the field
+   focused or holding a filter, pressing / would type a slash. */
+.search kbd {
+  position: absolute; right: 9px; pointer-events: none;
+  font: inherit; font-size: 11px; line-height: 1; color: var(--text-3);
+  padding: 3px 6px; border: 1px solid var(--line); border-radius: 3px;
+  background: var(--surface);
+}
+.search:focus-within kbd, .search:has(input:not(:placeholder-shown)) kbd { display: none; }
+/* The clear button a search field carries, redrawn in the page's ink instead of
+   the platform's grey — the only mark on this page the browser chose. */
+.search input[type=search]::-webkit-search-cancel-button {
+  -webkit-appearance: none; appearance: none;
+  width: 12px; height: 12px; cursor: pointer;
+  background: currentColor; color: var(--text-3);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 4l8 8M12 4l-8 8' stroke='%23000' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.search input[type=search]::-webkit-search-cancel-button:hover { color: var(--text); }
+/* The sort control belongs to the card view — a wide screen sorts by clicking
+   a column head, and a second control saying the same thing would only be a
+   second place to look. The phone block below turns it on. */
+.sort { display: none; align-items: center; gap: 6px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 24px; }
+.tabs button {
+  appearance: none; border: 0; background: none; padding: 0;
+  font: inherit; font-size: 14px; color: var(--text-3);
+  cursor: pointer; white-space: nowrap;
+}
+.tabs button:hover { color: var(--text); }
+.tabs button.on { color: var(--text); font-weight: 600; }
+.tabs .n { font-variant-numeric: tabular-nums; opacity: .55; margin-left: 6px; font-weight: 400; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+/* Inputs do not inherit the page face by default, so the box would have stayed
+   on the browser's sans while everything around it moved to Times. */
+/* A field is a thing you put something into, so it is sunk like the boxes are:
+   tinted, hairline-ruled, with the same light at its top edge. */
+input[type=search] {
+  flex: 1 1 260px; padding: 10px 13px; border: 1px solid var(--line);
+  border-radius: 4px; background: var(--surface-2); color: var(--text);
+  box-shadow: var(--sunk-soft);
+  font-family: inherit; font-size: 14px;
+}
+input[type=search]::placeholder { color: var(--text-3); }
+/* Focused, the well fills with white and the black rule comes back — the field
+   is the one place on the page you are working, so it stops being recessed. */
+input[type=search]:focus {
+  background: var(--surface); box-shadow: none;
+  outline: 2px solid var(--text); outline-offset: -2px;
+}
+/* A ledger, not a spreadsheet: a solid black header, ruled columns and banded
+   rows give the table structure using nothing but ink and paper. */
+/* The table scrolls inside its own box rather than running the page down. With
+   1,400 rows the page scrollbar was the table's scrollbar, and the header and
+   the search box left the screen the moment you started reading. This is the
+   box that scrolls — the well around it does not — so the sticky header pins to
+   the top of the table and the tint stays where it was put. */
+/* Tall enough to fill the window and no taller: 70vh left the footer below the
+   fold on most screens, so the line saying when the data was extracted was
+   something you had to go looking for. The subtraction is everything else on
+   the page — bar, toolbar, the well's own padding, the rule and the footer — so
+   the table ends where the footer begins. The floor keeps it a table rather
+   than a slot on a short window; there the page scrolls, as it should. */
+.tablescroll {
+  /* Divided by the zoom because a viewport unit inside a zoomed box is scaled
+     with everything else: at .9 a plain 100vh reaches nine tenths of the window
+     and leaves a tenth of it blank under the footer. The 220px is not divided —
+     the chrome it stands for is zoomed too, so it is already in these units. */
+  overflow: auto; max-height: max(300px, calc(100vh / var(--zoom) - 220px));
+  background: var(--surface);
+  border: 1px solid var(--line); border-radius: 3px;
+  overscroll-behavior: contain;   /* reaching the end does not then scroll the page */
+}
+table { border-collapse: collapse; width: 100%; min-width: 760px; }
+th, td { text-align: left; padding: 10px 14px; white-space: nowrap; }
+/* Sticky, and now correctly so. A sticky header positions against its nearest
+   scroll container, which is what broke this before — the outer box scrolled, so
+   `top: 56px` (aimed at clearing the page's top bar) parked the header 56px
+   down INSIDE the table. Now that the box is deliberately the thing that
+   scrolls, `top: 0` pins the header to the top of that box, which is exactly
+   where it belongs. The background is opaque, so rows pass behind it cleanly. */
+thead th {
+  position: sticky; top: 0; z-index: 1;
+  background: var(--text); color: var(--surface);
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  font-weight: 620; cursor: pointer; user-select: none;
+}
+thead th + th { box-shadow: inset 1px 0 0 rgba(255, 255, 255, .22); }
+thead th:hover { background: #1c1c1c; }
+/* A column that cannot be ordered does not pretend it can be. */
+thead th.fixed, thead th.fixed:hover { cursor: default; background: var(--text); }
+tbody td + td { box-shadow: inset 1px 0 0 var(--line-soft); }
+/* Banding comes from a class the renderer sets, not from :nth-child(even). A
+   Processing row is followed by the row holding its diff, and that row must not
+   take a turn in the stripe — counted, it shaded everything below the first
+   patch the wrong way. */
+tbody tr.alt { background: rgba(0, 0, 0, .028); }
+tbody tr:hover { background: rgba(0, 0, 0, .085); }
+tbody tr:hover td.idx { box-shadow: inset 3px 0 0 var(--text); }
+td.idx {
+  color: var(--text-3); text-align: right; width: 1%;
+  font-variant-numeric: tabular-nums; font-size: 12px;
+}
+td.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12.5px; letter-spacing: -.01em;
+}
+tbody td:nth-child(2) { font-weight: 600; }
+/* A patch title is a sentence, so this column wraps instead of forcing the
+   table into a horizontal scroll — and now that the table runs the full window,
+   it is also the column that takes the slack. A table at 100% otherwise shares
+   the extra width out among every column in proportion, which puts a gap after
+   each value and reads as a spreadsheet with the data spilled across it. One
+   column absorbing it keeps the rest packed left, and a sentence is the thing
+   that actually benefits from the room. */
+td.desc { white-space: normal; min-width: 26em; width: 100%; }
+/* Vulnerable carries no title, so there the slack collects in the last column
+   and the values stay together at the left where they can be read across. */
+table[data-view=vulnerable] th:last-child,
+table[data-view=vulnerable] td:last-child { width: 100%; }
+a.ext { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--line); }
+a.ext:hover { border-bottom-color: var(--text); }
+
+/* The handle that opens a diff. Set as a word on a rule rather than a filled
+   button: it sits in a table of links and hashes, and a chrome button in one
+   cell would be the loudest thing in the view. */
+button.disc {
+  appearance: none; border: 0; background: none; padding: 0;
+  font: inherit; font-size: 13px; color: var(--text);
+  border-bottom: 1px solid var(--line); cursor: pointer;
+}
+button.disc:hover { border-bottom-color: var(--text); }
+
+/* The diff itself, in a row of its own spanning the table. It scrolls inside
+   its own box: a kernel patch is narrow but the odd line is long, and one of
+   them must not put the whole table into a horizontal scroll. */
+tr.patchrow td { padding: 0 14px 14px; background: var(--surface); }
+tr.patchrow:hover { background: none; }
+/* Recessed into its row the way the table is recessed into the page — the same
+   hairline rule and the same light at the top edge as the box the table itself
+   sits in. It keeps the page's white behind the lines: the +/- tints are the
+   point of a diff and they need paper under them. */
+.diff {
+  margin: 0; max-height: 60vh; overflow: auto; padding: 12px 0;
+  background: var(--surface);
+  border: 1px solid var(--line); border-radius: 3px;
+  box-shadow: var(--sunk-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12.5px; line-height: 1.5; white-space: pre; tab-size: 8;
+}
+/* Every line is its own block so the tint runs the full width of the box, and
+   each carries its own newline so a blank line still takes up a line.
+   max-content over min-width is what carries the tint past the right edge on a
+   long line: a plain block stops at the visible box, so scrolling sideways ran
+   off the end of the colour. */
+.diff span { display: block; width: max-content; min-width: 100%; padding: 0 14px; }
+.d-meta { color: var(--text-3); }
+.d-hunk { color: var(--text-2); background: var(--surface-2); }
+.d-add  { background: #e4f3e8; }   /* the same two tints as the CVSS bands, so */
+.d-del  { background: #f9d7d7; }   /* the page keeps to one set of colours */
+
+/* CVSS severity, in the standard bands. The page is otherwise black on white;
+   these are the lightest tints that still separate at a glance, and the score
+   itself stays black so the colour is a cue and not the message. */
+.sev {
+  display: inline-block; padding: 1px 8px; border-radius: 3px;
+  font-variant-numeric: tabular-nums; font-weight: 600;
+}
+.sev-low      { background: #e4f3e8; }   /* 0.1–3.9 */
+.sev-medium   { background: #fbf1cd; }   /* 4.0–6.9 */
+.sev-high     { background: #fbe0cd; }   /* 7.0–8.9 */
+.sev-critical { background: #f9d7d7; }   /* 9.0–10  */
+
+/* A column whose answer is the same for every row in the view — a promise
+   rather than data. Set as an outlined chip so it does not read as a value that
+   happens to say "pending", and in the page's grey so it does not outrank the
+   identifiers beside it. Same grammar as the CVSS chips, without the tint:
+   there is no band to signal. */
+.pending {
+  display: inline-block; padding: 0 7px;
+  border: 1px solid var(--line); border-radius: 3px;
+  font-size: 10.5px; font-weight: 620; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--text-3);
+}
+.none { color: var(--text-3); }
+.copy { cursor: pointer; border-bottom: 1px dotted transparent; }
+.copy:hover { border-bottom-color: var(--text-3); }
+.empty { padding: 34px 14px; color: var(--text-3); }
+/* Close under the rule, with room left at the very bottom so the last line of
+   the page is not flush against the window edge. The note and the stamp stack:
+   both run the full line, one after the other. */
+footer { padding: 14px 0 40px; color: var(--text-3); font-size: 13px; }
+/* The last line on the page, set off from the note above it — it is a stamp on
+   the register rather than another thing the register says. */
+#foot { display: block; margin-top: 12px; }
+/* The notes, as columns rather than a stack. Three of them fit the width at a
+   measure that can be read, where one paragraph run across the whole window
+   cannot; on a narrow one auto-fit drops them to a single column of their own
+   accord. */
+.notes {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px 44px;
+}
+/* The same uppercase key the table heads its columns with, and the only ink in
+   the footer, so the statement you came for is found rather than read to. */
+.notes h3 {
+  margin: 0 0 5px; font-size: 11px; font-weight: 640; color: var(--text);
+  text-transform: uppercase; letter-spacing: .09em;
+}
+/* A shade darker than the stamp below them: these are statements to be read,
+   and the date is a mark on the page. */
+.notes p { margin: 0; color: var(--text-2); line-height: 1.6; }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   THE SMALL SCREEN. Two rules, answering two different questions: how big the
+   page is drawn, and what shape the register takes. They have different
+   thresholds, so they are different queries.
+
+   THE ZOOM. 1.8 is the size this page is served at because that is the size
+   it was being read at — on a laptop, where the window has 1,400 real pixels
+   to give away. The table needs about 820 of them to stand without scrolling
+   sideways, which at 1.8 is 1,470 real ones; under that the zoom is no longer
+   buying legibility, it is spending the width the table needs. So below 1,100
+   the page works in the pixels it was given. A phone is the extreme case —
+   390 real pixels, 217 after the zoom, which is the laptop layout seen
+   through a keyhole — but the same is true of a tablet and of a laptop window
+   dragged to half the screen.
+
+   The second clause is the phone held on its side: 844 wide but 390 tall, so
+   the width says nothing and the height says everything. A short window has
+   no vertical room to spend on scale either. */
+@media (max-width: 1100px), (max-height: 560px) {
+  :root { --zoom: 1; }
+}
+
+/* THE CARDS. Seven columns of nowrap hashes do not fit 390px by any amount of
+   squeezing, and a table scrolling sideways inside a page scrolling down is
+   two gestures to read one row. So below 700px each row becomes a card, and
+   the column heads — which a table prints once at the top — are written onto
+   every cell as data-label and set beside the value. Nothing is dropped: a
+   card carries the same fields the row did, in the same order.
+
+   700px, and not the phone-on-its-side query above, because that one is about
+   scale and this one is about width. On its side a phone has 844 real pixels,
+   which is enough for the table to be a table; turned into cards it would be
+   one narrow column of labels against half a screen of white. */
+@media (max-width: 700px) {
+
+  .wrap { padding: 0 14px; }
+
+  /* Room for the mark and the tag on a narrow bar. .tag already shrinks and
+     ellipses on its own — see its rule — so it needs no breakpoint of its own,
+     only somewhere to shrink to. */
+  .topbar .wrap { gap: 8px; }
+  .brand img { height: 22px; }
+  /* The glyph stays where it was drawn; the negative margins let the box it is
+     hit in grow past it to something a finger can land on. */
+  .gh { padding: 7px; margin: -7px -7px -7px 0; }
+  .gh svg { width: 19px; height: 19px; }
+
+  /* The controls stay with the reader. On a phone the list is the page's own
+     scroll rather than a box inside it, so the filter that narrows 1,124 rows
+     cannot sit at the top of them and slide away. 36px is the bar above:
+     32px of row, 2px of padding, 2px of rule. */
+  .toolbar {
+    position: sticky; top: 36px; z-index: 10;
+    gap: 10px 12px; margin: 0 -14px 12px; padding: 10px 14px 11px;
+    background: var(--surface); border-bottom: 1px solid var(--line);
+  }
+  /* The views take the first line and the two controls share the second: three
+     stacked rows would be a third of the screen spent on chrome. */
+  .tabs { flex: 1 0 100%; gap: 18px; }
+  .tabs button { padding: 3px 0; font-size: 15px; }
+  .search { margin-left: 0; flex: 1 1 auto; }
+  .search .glyph { left: 11px; }
+  /* 16px, not 14. iOS zooms the page in on a field set smaller than that, and
+     undoes in one tap everything --zoom: 1 was for. */
+  .search input[type=search] { font-size: 16px; padding: 9px 12px 9px 34px; }
+  .search kbd { display: none; }              /* no key to press */
+  .sort { display: flex; }
+  .sort select {
+    max-width: 40vw; padding: 9px 8px; font: inherit; font-size: 16px;
+    color: var(--text); background: var(--surface-2);
+    border: 1px solid var(--line); border-radius: 4px;
+    box-shadow: var(--sunk-soft);
+  }
+  /* The arrow is a square the size of a fingertip, in the page's ink. */
+  .sort button {
+    appearance: none; width: 40px; height: 40px; flex: none;
+    font: inherit; font-size: 13px; cursor: pointer;
+    color: var(--text); background: var(--surface-2);
+    border: 1px solid var(--line); border-radius: 4px;
+  }
+  .sort button:disabled { color: var(--text-3); cursor: default; }
+
+  /* The well and the scroll box are a frame around a table. There is no table
+     now, and a list that scrolls inside a page that scrolls is the gesture the
+     card view exists to avoid — so the frame comes off and the page scrolls. */
+  section { padding: 10px 0 14px; }
+  .well { padding: 0; background: none; border: 0; border-radius: 0; box-shadow: none; }
+  .tablescroll {
+    max-height: none; overflow: visible;
+    border: 0; border-radius: 0; background: none;
+  }
+
+  table { min-width: 0; }
+  thead { display: none; }                    /* the heads are on the cells now */
+  table, tbody, tbody tr, tbody td { display: block; }
+  /* Restated because the rule above outranks the browser's own [hidden]. An
+     unopened diff would otherwise be shown, on every Processing row at once. */
+  tbody tr[hidden] { display: none; }
+
+  tbody tr {
+    margin-bottom: 10px; padding: 9px 12px 10px;
+    background: var(--surface);
+    border: 1px solid var(--line); border-radius: 5px;
+    /* Off-screen cards are not laid out until they are scrolled to. The
+       Vulnerable view is 1,124 of them and the page builds every one. */
+    content-visibility: auto; contain-intrinsic-size: auto 190px;
+  }
+  /* Banding and the hover stripe are how rows are told apart in a table. The
+     cards are already apart, and a phone has no pointer to hover with. */
+  tbody tr.alt, tbody tr:hover { background: var(--surface); }
+  tbody tr:hover td.idx { box-shadow: none; }
+
+  tbody td, tbody td + td { padding: 3px 0; box-shadow: none; white-space: normal; }
+  /* Head at the left, value at the right, the same two columns down every
+     card — so a field can still be read down the list rather than one card at
+     a time, which is the one thing a table gives that a stack of cards does
+     not. `start` rather than `baseline`: a title runs to three lines and its
+     head belongs beside the first of them. */
+  tbody td[data-label] {
+    display: grid; grid-template-columns: 7.5em minmax(0, 1fr);
+    gap: 10px; align-items: start;
+  }
+  tbody td[data-label]::before {
+    content: attr(data-label);
+    font-size: 10px; font-weight: 620; letter-spacing: .07em; line-height: 1.9;
+    text-transform: uppercase; color: var(--text-3);
+  }
+  /* A grid item is stretched to its column unless told otherwise, and a chip,
+     a link or a button stretched to a column is a chip, a link or a button as
+     wide as the card — the CVSS band ran the full width and the rule under
+     `lore ↗` ran on past the word. They size to their contents instead, and
+     still wrap inside the column when the contents are longer than it. */
+  tbody td[data-label] > * { justify-self: start; }
+  /* The one field that is a sentence takes the whole card, with its head above
+     it: read down a 100px column it would be a word to a line. */
+  tbody td.desc, tbody td.desc::before { display: block; }
+  tbody td.desc::before { line-height: 1.6; }
+  /* The row number, as the card's own mark rather than another field of it —
+     it is where the row sits in the list, not something the register knows
+     about the bug. The width is restated because the table's own rule pins it
+     to 1%, which as a block is a rule an inch long under the number. */
+  tbody td.idx {
+    padding: 0 0 7px; margin-bottom: 7px; width: auto; text-align: left;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  tbody td.idx::before { content: "#"; }
+  /* Both of these hand a column the width the table had spare. There is no
+     spare width and no columns to hand it to. */
+  td.desc, table[data-view=vulnerable] td:last-child { min-width: 0; width: auto; }
+  /* A hash is 12 characters that must not be broken across a line, and the
+     column it sits in is narrower here than the value it holds. */
+  td.mono { font-size: 12px; overflow-wrap: anywhere; }
+
+  /* A link and a copy-to-clipboard are targets for a finger now, not a
+     cursor: both get a line of their own to be hit in. */
+  a.ext, .copy { display: inline-block; padding: 3px 0; }
+  /* And the diff handle becomes a real button — a word on a hairline is a
+     3mm target. */
+  button.disc {
+    justify-self: start; padding: 6px 12px; font-size: 13px;
+    border: 1px solid var(--line); border-radius: 4px;
+  }
+
+  /* The diff hangs under the card it belongs to rather than beside it. */
+  tr.patchrow { padding: 0; margin: -6px 0 10px; border: 0; background: none; }
+  tr.patchrow td.idx { display: none; }
+  tr.patchrow td { padding: 0; }
+  .diff { font-size: 11px; line-height: 1.55; max-height: 55vh; }
+  .diff span { padding: 0 10px; }
+
+  .empty { padding: 26px 2px; }
+  /* One column, at the measure the window gives. */
+  .notes { grid-template-columns: 1fr; gap: 18px; }
+  footer { padding: 12px 0 32px; }
+}

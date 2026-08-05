@@ -1,0 +1,6583 @@
+{
+ "generated_at": "2026-08-05 08:44:17",
+ "counts": {
+  "bugs": 1258,
+  "with_report": 1248,
+  "fixed": 94,
+  "reported": 134,
+  "scooped": 13,
+  "incomplete": 0,
+  "merged_links": 37,
+  "cves": 78
+ },
+ "states": {
+  "PoC Available": 1124,
+  "Fixed": 94,
+  "Reported": 40
+ },
+ "views": {
+  "vulnerable": 1124,
+  "processing": 40,
+  "patched": 94
+ },
+ "bugs": [
+  {
+   "view": "vulnerable",
+   "bug_id": "b240dc164119",
+   "hash": "2f632c02b8fc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "98638a6a66fe",
+   "hash": "9153d54e911d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "53f530c49e53",
+   "hash": "a1bfb49efac3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9da1bbfcbe08",
+   "hash": "6bec4e0777ba"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8e6255d9597b",
+   "hash": "03b23109c1ea"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "587437ab2e6b",
+   "hash": "83e6c7701fb5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a1da93e4acc3",
+   "hash": "0f46854096f2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6f3d9aa6edc5",
+   "hash": "edb49fb012af"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a660649b20d3",
+   "hash": "7bcb183013ff"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f5a7f1af42cf",
+   "hash": "4f9696ef5451"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bbab4ff777ca",
+   "hash": "deee61406f77"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "de7ebe8be723",
+   "hash": "4e05b2f0ecf7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4144d2b3d6d0",
+   "hash": "2b926c4be6b7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "85685df395d4",
+   "hash": "f952328389b1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c759f76cd5a2",
+   "hash": "ee51be901529"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c0fdbcec53b9",
+   "hash": "7b6fb9c8e411"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8124330172e2",
+   "hash": "111f6486ac94"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0dbb6f05db55",
+   "hash": "ccb7bca9a340"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d557e47864d6",
+   "hash": "550b82a925cc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d2a51215c984",
+   "hash": "62d5c4c07ec3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8b97175b449e",
+   "hash": "26c973b67170"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3f3c0e025d2a",
+   "hash": "6d82055e0eb9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "65e465e20e52",
+   "hash": "42401445199f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "54c47b3c7940",
+   "hash": "5d465109fcd1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e04395ab612a",
+   "hash": "b342932781f7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5727da50e175",
+   "hash": "3c12e08e4d0f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "07dc48cd5276",
+   "hash": "53c704283bf9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3889b5c7a7b0",
+   "hash": "e9fa294d049a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "501da7d98286",
+   "hash": "4f44a782d983"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a2f404f53d4b",
+   "hash": "810fdddb3c3e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "10933ee30a2e",
+   "hash": "367d3f08ccfe"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "53a82303cc7b",
+   "hash": "49577f71f008"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0a3cfb09f161",
+   "hash": "cca87d857c0b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "38c93ab69cb1",
+   "hash": "ee131a624994"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f9a40112fd25",
+   "hash": "94bcaec36013"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "428ab669740b",
+   "hash": "bff99467ca4c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c0bc29535648",
+   "hash": "09723bdc129d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "411763615dce",
+   "hash": "ceed926aad25"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "83140b6233f1",
+   "hash": "4cb5d406472c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fa91157822a0",
+   "hash": "fc2993c8bfb4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cfb87821205a",
+   "hash": "0ce2cae01ad8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e26df77cd55e",
+   "hash": "dce79fd9c460"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "961e2866e836",
+   "hash": "ea250ead7689"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "70733bc514a3",
+   "hash": "228499f524e5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "29d548ee1751",
+   "hash": "c32bd7e9d66e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "03587a8f1f1f",
+   "hash": "238f4b7361c3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b25e914e14a1",
+   "hash": "acdd556371dd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "587b2dcd862a",
+   "hash": "42100b5a281e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4618907cccde",
+   "hash": "140608d6170c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "31913cd3417f",
+   "hash": "cd8a4a61e42c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a27ae3497f00",
+   "hash": "4f2406c71a51"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "73e1aaf79c44",
+   "hash": "715a545c06fd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cd639b9313e0",
+   "hash": "f083f7682e2c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "da2f172c6c20",
+   "hash": "690cae77b69b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "74c3c002242f",
+   "hash": "215259c5f00b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "51a2ddcebd76",
+   "hash": "e953eb3ad500"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "706b0e29a8a0",
+   "hash": "62e68b63ff3f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e14213f6a8a2",
+   "hash": "62a774350c17"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4b627f424f68",
+   "hash": "b50a55df7b6d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d5d913397236",
+   "hash": "966739a517cb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "04a5ff67774a",
+   "hash": "cb1994c3189a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "84fa29391b9d",
+   "hash": "bdd255e2d33c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2b45adf4266c",
+   "hash": "ed551b68927b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d071fedaa7c0",
+   "hash": "538b7c24e19e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "797cec271d13",
+   "hash": "e12efe8c06d3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "29fdb69a9a3d",
+   "hash": "fc5e6cee219b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9907bfb7091a",
+   "hash": "bfd4177c30c5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9bae7824d2a4",
+   "hash": "b2a06e6a5b7a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b1da965a6463",
+   "hash": "090417bab55d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fd76853c07be",
+   "hash": "3238b757c70c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "63bad23bb3b4",
+   "hash": "3e81a60143c8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0c82cabc1d80",
+   "hash": "01de718f548d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a720ac0c47d2",
+   "hash": "8fd704bd77d7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6c3183727905",
+   "hash": "ee2a8a25f16d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1a2641346311",
+   "hash": "d336070fd289"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6155a794e60d",
+   "hash": "b4404d3ef8de"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "23075da31b02",
+   "hash": "be77deaa27df"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d056180a6ca9",
+   "hash": "ba5073006093"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bb997c62c409",
+   "hash": "b0c5754faf60"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b74fcfb4ab1e",
+   "hash": "294c66b47629"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0f21a1734d21",
+   "hash": "87979a60490e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e63c0862378c",
+   "hash": "0c98b2da8dbe"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "60bd6013fde3",
+   "hash": "22161250d0b2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b900f396b1cd",
+   "hash": "23a096cf966e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "58a944bbef3d",
+   "hash": "3c7fd6dbb019"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b6b1a1d3cbce",
+   "hash": "e4eb70c4b33b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "56e5f466120b",
+   "hash": "e9914a52d206"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e5693071d903",
+   "hash": "9593fb490663"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d9f76b672daf",
+   "hash": "11fa3ce7bd6e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f6642830c757",
+   "hash": "358601da627a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ef760253dd35",
+   "hash": "3525ec22b92a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "557ef5413030",
+   "hash": "6e712271b0bc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a821c8f8e78a",
+   "hash": "7d8d4f5b60e5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ec09b061c7ed",
+   "hash": "5d69894b5c76"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c85e76ce40a4",
+   "hash": "25e5dcc034ad"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0e9019fea768",
+   "hash": "70d2b4afe9ef"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c4fa72094bfd",
+   "hash": "f5b1209fe77e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "31d8b6deda99",
+   "hash": "4079c82c2556"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "36d87f4a0abc",
+   "hash": "8fdc789effbb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f7dbddb0e38d",
+   "hash": "2afe3ce86621"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9c062e9bb205",
+   "hash": "06b40e5c5baf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ebb1dd9198b7",
+   "hash": "d728b991b641"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "12d23b8761b3",
+   "hash": "728bf6ece080"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "733147b3d5a8",
+   "hash": "aef63a62519d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "31bbd9328c37",
+   "hash": "457dce4d2996"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e321ab952bd9",
+   "hash": "108bbb188677"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "917fe2bffc9f",
+   "hash": "bcdfe75c98a5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "417e51757d2d",
+   "hash": "059885ffd715"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0ffe9b75adad",
+   "hash": "7eda15133aaf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "849b84175a0e",
+   "hash": "79e08f98ab06"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "80a4885a044d",
+   "hash": "9af3e29cbe98"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6a581c4284f7",
+   "hash": "2d72192fd011"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e548f99720f6",
+   "hash": "cf41f3e225e2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8099394d3959",
+   "hash": "26941fb50dee"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d4a70dc6dc78",
+   "hash": "8bfa938a059e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0a222424c913",
+   "hash": "1a8c74d0463c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "82246e2a7865",
+   "hash": "656dc9b45704"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "743f6d4623ee",
+   "hash": "97d5aa908f72"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7812d8f3f804",
+   "hash": "85cfaa43a043"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d2b9af090f3c",
+   "hash": "44b43f3afd58"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fb2149cf2e59",
+   "hash": "94d7f2df06ea"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c02acdb4b3d2",
+   "hash": "7b1370246bcc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "79bda0b65e6f",
+   "hash": "af9b07656a6f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9cbe0fb9874f",
+   "hash": "cec419fdfbda"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "df412f93025b",
+   "hash": "ae2f59469aa1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d9cf210315bb",
+   "hash": "3dfbbee8d1e9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "944e67e9fcca",
+   "hash": "cd2f75d3ab1a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b0f93e29183c",
+   "hash": "a843ca621ee5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7aebac19e627",
+   "hash": "96bbdb0f80d4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "963d91c1b9b3",
+   "hash": "a05a56f799af"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cc0bddee3ba5",
+   "hash": "cc7345474e8b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b0bdf64728da",
+   "hash": "3ad5ef33d542"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5889967ac2a5",
+   "hash": "19834df657c7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "771c6b6b9ed6",
+   "hash": "9782b7bc5a9b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "eb85a6f96561",
+   "hash": "ef20fa4a304b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0ae2f21804d8",
+   "hash": "51134f68b1c3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ce498087a4ac",
+   "hash": "943f7cf142c2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9d44b184bc8f",
+   "hash": "9b9965dcb6d5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "67c46971eecb",
+   "hash": "6d5a7bb094e0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f67d53bcf089",
+   "hash": "9dcbcf10b3cc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a4546aaa3bda",
+   "hash": "abc9ce81631d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0f7ece93184f",
+   "hash": "c874c9a7126e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7f50ad6ab6ba",
+   "hash": "930979ef5119"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8cdbf2b7c63d",
+   "hash": "f2166df9a79e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "913ff0bd5a8b",
+   "hash": "09b83f31c78a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bd3013e9166f",
+   "hash": "568889b6a5a5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3b11f512a081",
+   "hash": "76de57139180"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7cc7d1f95ba7",
+   "hash": "99e158bc39d7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bd9a897b07ed",
+   "hash": "adae66b83fa3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e9828b0a3ef7",
+   "hash": "1c90a0006a98"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "09a56a7cb6a4",
+   "hash": "26d1a2a2aa30"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "65cfab7fad79",
+   "hash": "3d594cf1fa36"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "57d95130f031",
+   "hash": "9357842a1a60"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "27bb4e9ddee3",
+   "hash": "15036309c393"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f54ec6f3c505",
+   "hash": "ddf0a511f3e0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "891ca177cdfc",
+   "hash": "ceee7e978181"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5a7f44e9dc1e",
+   "hash": "aacb68f757f1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "15e5765d6b0e",
+   "hash": "3294a6e148d7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ddb98a778942",
+   "hash": "fd3b66f242ca"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "02c2a2218d27",
+   "hash": "6751de317ee6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9fb912278775",
+   "hash": "9c0385b48993"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ebd9d85891ea",
+   "hash": "c321268d3dba"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a99c30dc935d",
+   "hash": "c8ac5feaf04b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "56ba5bade505",
+   "hash": "7c465b3ee8ae"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "baeb4044c117",
+   "hash": "315c560c1fe7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f58b5b583adf",
+   "hash": "4bcdeb4b914c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d982d0e62d14",
+   "hash": "d74a0502b1ff"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "68a101f2570c",
+   "hash": "a09664d33df1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "74bcfda080b5",
+   "hash": "30f81ff27330"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "585e149de406",
+   "hash": "bae12d9236bd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7e72cb6c0bfb",
+   "hash": "42d3e9f5de0c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5e950daddab7",
+   "hash": "cce27971d1f0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5c6d6a5dee65",
+   "hash": "a5b72be1f9c1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fe4882445955",
+   "hash": "fe425402f886"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "13ee30bbcfbe",
+   "hash": "7cd6963b1288"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e6c265ce1e38",
+   "hash": "5ada0137dfcf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "10d383272da2",
+   "hash": "a300548924d5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0a800edd98f9",
+   "hash": "510997c3501e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bb78540a9e7e",
+   "hash": "780f0c49a0ad"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "69c1823fe528",
+   "hash": "df9a0d7a23a0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d7d30eabafaa",
+   "hash": "c618cbf72604"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4f53bbc17685",
+   "hash": "38faf79d9c46"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4418c3778bb4",
+   "hash": "4dd66d08d370"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6ed612ef919c",
+   "hash": "787340ed3e09"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7487e3a3bb97",
+   "hash": "43fb567c11ce"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9db3638b42a3",
+   "hash": "67db7a835f0b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "28eef7d8af94",
+   "hash": "f46384a4b703"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "51b70ee4f6bf",
+   "hash": "3fd491fcd1cd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8c4f65ccadae",
+   "hash": "b9ad7edcd631"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "192a11c54a97",
+   "hash": "7d72b75481af"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e8d1945abb0d",
+   "hash": "db3b0364e3dd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "739664de55c2",
+   "hash": "e26b6fde081c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b6ac79afca84",
+   "hash": "da1cb099d5ca"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8803fafcc08a",
+   "hash": "5090b56d8b2a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5a636c5a8285",
+   "hash": "5fe0540d9213"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2390203eb61a",
+   "hash": "e6c1206b0c74"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d3a542e7e24e",
+   "hash": "f9956968c826"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ab1fb23f4940",
+   "hash": "11af2fac5cf4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "eb84f60f6a65",
+   "hash": "11b04193ef65"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d04c97a5180b",
+   "hash": "5eb30021aa2e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "38e6a1b5781a",
+   "hash": "2090058f3263"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2c72469dbbec",
+   "hash": "bd741eff47c8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "36935f8953d6",
+   "hash": "65ab08f002f9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a2971d231088",
+   "hash": "94b42f0e8e8d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "51327c978d2d",
+   "hash": "117869d10ee0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4392b091259e",
+   "hash": "16e51938840f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "960d0935a4bf",
+   "hash": "8008f211f946"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "26eb3c8d3d13",
+   "hash": "d9594bd12ade"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9b7b5b6fede5",
+   "hash": "936db644dac7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "42eb280079de",
+   "hash": "bfd8ec7b0c13"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8d78415ad832",
+   "hash": "d57d2c11cbe3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "10f89de1e01c",
+   "hash": "95bf3d8877d4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2b49576c7dd4",
+   "hash": "3aaa271e600d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f2fd9698bdf9",
+   "hash": "c4d255fefb56"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "46f960ecf8e2",
+   "hash": "048d71b00660"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "193fd5f75e71",
+   "hash": "c3471d2b06ea"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "26d78329da61",
+   "hash": "5368b365083e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ed9902f2e441",
+   "hash": "6a40161bfc5b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b018876218da",
+   "hash": "3748fcabc248"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9279f4d8f525",
+   "hash": "5393c7ba26ee"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "46e36dce88fe",
+   "hash": "ac07d4244816"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "01553050fc6e",
+   "hash": "d82246b736f5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5cdec24e1905",
+   "hash": "11bcc1a992ea"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ef32d1251d85",
+   "hash": "b217ddd97686"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "13fdc6b3e6e2",
+   "hash": "9babd777dfd5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "112329bfee12",
+   "hash": "e5aa8c8fcab2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a1efa453f51d",
+   "hash": "b29c703b3bea"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6d6917d22384",
+   "hash": "6d743e8dfb8c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "27565809a818",
+   "hash": "739eb42b6476"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "361493279100",
+   "hash": "2d306a633f96"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "273064ef224e",
+   "hash": "f4122434d825"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b9d3e6129f58",
+   "hash": "1fb4b6aa5200"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0f3c46fbe0b8",
+   "hash": "e5931308e811"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6de7f23a4d50",
+   "hash": "53b6d4f9f461"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bf0980edefa6",
+   "hash": "2c646886ea0f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "23e92f524169",
+   "hash": "8ed97dd2f6ef"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "af981e62f5c7",
+   "hash": "117e62348369"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0b8f91753b0c",
+   "hash": "348cbb7d55a0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0bf655cf1314",
+   "hash": "ed1b98423000"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b51e3c6d837e",
+   "hash": "0fc19b6dd5f0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bbd073db49ee",
+   "hash": "9cc73e482ccd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4ee006bf9cc4",
+   "hash": "8e245ae83231"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1331ffa9064a",
+   "hash": "af94571b4dd8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "69accc231328",
+   "hash": "162803c01f30"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e07a91385355",
+   "hash": "2d32938f8bcf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d7a396fb771f",
+   "hash": "abcd300b90f8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "71fd24818e56",
+   "hash": "05e2a8b03ccb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "79461a1917cd",
+   "hash": "e8b1a8b1b1b5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e85c18c045a1",
+   "hash": "f696a68e433a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0f6b1e264f64",
+   "hash": "4db13d2da0fa"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "dcbfbe0b7dd7",
+   "hash": "6adfe7d07742"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "22882dec6063",
+   "hash": "60aebbd9f546"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "88ee4cd7b6d8",
+   "hash": "748296dcfd52"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4ac4f3c71248",
+   "hash": "dd4b2ee801b5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cfea8aa25dbc",
+   "hash": "e6993052500d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "155875ab6ca9",
+   "hash": "1d8fa304196d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a1c9156e3a16",
+   "hash": "002f7fedc79d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d0c14f8829d0",
+   "hash": "6ee40e383c12"
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "2651c1744458",
+   "title": "geneve: gate GRO hint in geneve_gro_complete() on gs->gro_hint",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "69f4c271b5e8",
+   "hash": "a3e7bc350840"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "529938f87637",
+   "hash": "5122b1322004"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3e9f14872067",
+   "hash": "a79f33c2965e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f6d96ab9aed0",
+   "hash": "0463ccfcaa1c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b513a2ee6010",
+   "hash": "5cb4c07bf95e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ba2ee328b128",
+   "hash": "023bc970f963"
+  },
+  {
+   "view": "processing",
+   "bug_id": "4fd59d9ef7bb",
+   "title": "vsock/virtio: prevent workers from using deleted virtqueues",
+   "lore": "20260727035804.1860862-1-bestswngs@gmail.com",
+   "patch": "diff --git a/net/vmw_vsock/virtio_transport.c b/net/vmw_vsock/virtio_transport.c\nindex 57f2d6ec3ffc..79cf19f58943 100644\n--- a/net/vmw_vsock/virtio_transport.c\n+++ b/net/vmw_vsock/virtio_transport.c\n@@ -346,12 +346,13 @@ static void virtio_transport_tx_work(struct work_struct *work)\n \tstruct virtqueue *vq;\n \tbool added = false;\n \n-\tvq = vsock->vqs[VSOCK_VQ_TX];\n \tmutex_lock(&vsock->tx_lock);\n \n \tif (!vsock->tx_run)\n \t\tgoto out;\n \n+\tvq = vsock->vqs[VSOCK_VQ_TX];\n+\n \tdo {\n \t\tstruct sk_buff *skb;\n \t\tunsigned int len;\n@@ -451,13 +452,13 @@ static void virtio_transport_event_work(struct work_struct *work)\n \t\tcontainer_of(work, struct virtio_vsock, event_work);\n \tstruct virtqueue *vq;\n \n-\tvq = vsock->vqs[VSOCK_VQ_EVENT];\n-\n \tmutex_lock(&vsock->event_lock);\n \n \tif (!vsock->event_run)\n \t\tgoto out;\n \n+\tvq = vsock->vqs[VSOCK_VQ_EVENT];\n+\n \tdo {\n \t\tstruct virtio_vsock_event *event;\n \t\tunsigned int len;\n@@ -634,13 +635,13 @@ static void virtio_transport_rx_work(struct work_struct *work)\n \t\tcontainer_of(work, struct virtio_vsock, rx_work);\n \tstruct virtqueue *vq;\n \n-\tvq = vsock->vqs[VSOCK_VQ_RX];\n-\n \tmutex_lock(&vsock->rx_lock);\n \n \tif (!vsock->rx_run)\n \t\tgoto out;\n \n+\tvq = vsock->vqs[VSOCK_VQ_RX];\n+\n \tdo {\n \t\tvirtqueue_disable_cb(vq);\n \t\tfor (;;) {\n@@ -689,7 +690,8 @@ static void virtio_transport_rx_work(struct work_struct *work)\n \t} while (!virtqueue_enable_cb(vq));\n \n out:\n-\tif (vsock->rx_buf_nr < vsock->rx_buf_max_nr / 2)\n+\tif (vsock->rx_run &&\n+\t    vsock->rx_buf_nr < vsock->rx_buf_max_nr / 2)\n \t\tvirtio_vsock_rx_fill(vsock);\n \tmutex_unlock(&vsock->rx_lock);\n }\n"
+  },
+  {
+   "view": "processing",
+   "bug_id": "c7a8694b8ade",
+   "title": "tipc: fix NULL deref in deferred bulk distribution on publish failure",
+   "lore": "20260718092544.785289-3-bestswngs@gmail.com",
+   "patch": "diff --git a/net/tipc/name_distr.c b/net/tipc/name_distr.c\nindex b764274df758..5b0fb09226fc 100644\n--- a/net/tipc/name_distr.c\n+++ b/net/tipc/name_distr.c\n@@ -193,6 +193,10 @@ static int named_distribute(struct net *net, struct sk_buff_head *list,\n \t\tskb_trim(skb, INT_H_SIZE + (msg_dsz - msg_rem));\n \t\t__skb_queue_tail(list, skb);\n \t}\n+\tif (skb_queue_empty(list)) {\n+\t\tpr_warn(\"Bulk publication list empty, nothing to distribute\\n\");\n+\t\treturn 1;\n+\t}\n \thdr = buf_msg(skb_peek_tail(list));\n \tmsg_set_last_bulk(hdr);\n \tmsg_set_named_seqno(hdr, seqno);\n@@ -253,6 +257,13 @@ int tipc_named_dist_cluster_scope(struct net *net, u32 dnode)\n \tspin_unlock_bh(&tn->nametbl_lock);\n \n \tread_lock_bh(&nt->cluster_scope_lock);\n+\tif (unlikely(list_empty(&nt->cluster_scope))) {\n+\t\t/* finalize is done but nothing was published (publish\n+\t\t * failed): a permanent state, nothing to synchronize.\n+\t\t */\n+\t\tread_unlock_bh(&nt->cluster_scope_lock);\n+\t\treturn 0;\n+\t}\n \tif (named_distribute(net, &head, dnode, &nt->cluster_scope, seqno)) {\n \t\tread_unlock_bh(&nt->cluster_scope_lock);\n \t\treturn -ENOBUFS;\ndiff --git a/net/tipc/net.c b/net/tipc/net.c\nindex 4c144e720ac1..2aa8812c551a 100644\n--- a/net/tipc/net.c\n+++ b/net/tipc/net.c\n@@ -138,7 +138,8 @@ static void tipc_net_finalize(struct net *net, u32 addr)\n \ttipc_named_reinit(net);\n \ttipc_sk_reinit(net);\n \ttipc_mon_reinit_self(net);\n-\ttipc_nametbl_publish(net, &ua, &sk, addr);\n+\tif (!tipc_nametbl_publish(net, &ua, &sk, addr))\n+\t\tpr_warn(\"Failed to publish own node state\\n\");\n \tatomic_inc(&tn->finalized);\n \twake_up_var(&tn->finalized);\n }\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "efc54a7d725f",
+   "hash": "a03e7b5c9f52"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1867c5678ce7",
+   "hash": "1aeead855cf0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0a1151592014",
+   "hash": "cb86cd3be110"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ae0c8f553ecb",
+   "hash": "dff24561ab97"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e4c3baaedc4b",
+   "hash": "256757432417"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "aff21b2dac33",
+   "hash": "6869ed7d7a40"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b4694e511b60",
+   "hash": "53bf210b0b0f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fff63be45fc5",
+   "hash": "64917c5f23f3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0132402f86c2",
+   "hash": "9170f1c2a411"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b6ca86c542b9",
+   "hash": "4d30b3d9f00b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c5f2da99c906",
+   "hash": "fdf80779b0d4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "417d90ca8a74",
+   "hash": "476631fb56b5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d2bbfe99f149",
+   "hash": "6d181b83cdbe"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b85986dbd29d",
+   "hash": "93bb0e9d4be5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d99e18994579",
+   "hash": "4c587b3bc287"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "795cf7d90a33",
+   "hash": "8bbe55222815"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b62f6d151918",
+   "hash": "77193762ed34"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ec906a4bf804",
+   "hash": "210ff339952c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c0fcafbfb1d7",
+   "hash": "911acdd49839"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5cb90f3acf75",
+   "hash": "7b65ecb1882f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "65e5b41fd0a8",
+   "hash": "b2041ee12e72"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f782d9fb77ee",
+   "hash": "e83b0bb99c62"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3fec99afc220",
+   "hash": "c0ff5663cab4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ef7d5ed2c027",
+   "hash": "f630fc9f138c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "48bfa602254c",
+   "hash": "535fcc6a40ce"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b3f5428b89f9",
+   "hash": "57b78340703a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "77f6ad9f830f",
+   "hash": "f10b27d86d40"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "004fb037bee2",
+   "hash": "5cd042374148"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9a928a6755ed",
+   "hash": "38422def7ef1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "35b00f0bdc91",
+   "hash": "59587e2b9ab3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a1f8b3bd315e",
+   "hash": "7a62f5dc7e3e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b8c8ad106c6a",
+   "hash": "ea9d88829a97"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "795d4527673f",
+   "hash": "5a756be1c7d3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8eecc07727af",
+   "hash": "2ba239c31b28"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5afd9c4a20bc",
+   "hash": "54562225498c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6cc5ba907bde",
+   "hash": "7e2e278c086f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7915ba88e05e",
+   "hash": "3d3b0bfb6863"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "288912da1bc8",
+   "hash": "181b081f70cd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5d780b55e22a",
+   "hash": "d470bf9262dc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cb4ad78415c7",
+   "hash": "245ffe3bc4ac"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b0b79524eac6",
+   "hash": "a76342b61018"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "172bea382214",
+   "hash": "9d9a527cc3b1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "260c8f41c0e1",
+   "hash": "54bd4227cb25"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64567",
+   "commit": "a2d8d5647ed8",
+   "title": "btrfs: reject free space cache with more entries than pages",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "aae403e2515e",
+   "hash": "c6677a0118ae"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4e4ef9b8e201",
+   "hash": "c4fcb449d3d3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cf2d92229dfe",
+   "hash": "5d89fdf3f03a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "165fb2a4c8bc",
+   "hash": "c564961a866a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "70aad335b1ee",
+   "hash": "1647d2c929ab"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "71c3fdf47a2a",
+   "hash": "89ddb1231531"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e73106acebf6",
+   "hash": "e50782472ade"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ea838e1244a6",
+   "hash": "29aeec5cff9e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1f1ceed1ad00",
+   "hash": "d00d740cee68"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "94f93c6aef1d",
+   "hash": "812af1be61ca"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c65a34c5f446",
+   "hash": "9280cd7e7b8e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c1ebbdc5aa67",
+   "hash": "98a44686ea31"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d334984e77c2",
+   "hash": "42b9113326eb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "335ff1ca0d90",
+   "hash": "5817075ee657"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7084fdf7f56d",
+   "hash": "1877096ddb77"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "661a333577d0",
+   "hash": "2fddca46df20"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a93d521f657d",
+   "hash": "142919621d79"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "73cc11ba297c",
+   "hash": "501db847b8bf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a911df20a20a",
+   "hash": "3990ed5c56f5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "eb3416eba519",
+   "hash": "7b9f4f23a069"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b0c3e30c9bc5",
+   "hash": "45d8e165542e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b468fb081984",
+   "hash": "e901626c2c5a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0c811a002175",
+   "hash": "fbf110be7cd0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "562dff8ceb41",
+   "hash": "fca9baa5c246"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "42e281a5f671",
+   "hash": "b56badcf3ae9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "16c2252e6bdf",
+   "hash": "477a1918245b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e0edf2c596df",
+   "hash": "bde74f84a451"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cb3ddbd9ed5e",
+   "hash": "18a0147f1402"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7e48036c321d",
+   "hash": "ded429b99700"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8ee4b511216f",
+   "hash": "622e99a2559b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a2406d9455e7",
+   "hash": "aeec66870d7c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "751ddf4e8cf5",
+   "hash": "dbd1237c53c9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c803e657d9bb",
+   "hash": "7b1dd862f44a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7a8e3934e37a",
+   "hash": "e72d2afb72be"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5f1d4915333f",
+   "hash": "f470e718cd3e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1f9c9bd68bb5",
+   "hash": "336d4775e502"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0464b35c14f2",
+   "hash": "ba234fc014fe"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "99f9ffc3e5b8",
+   "hash": "01b18a4e3bf0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "13e8d9a02b01",
+   "hash": "ad007652d861"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "903ace05f476",
+   "hash": "30dbd98e310f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b3cf5f847404",
+   "hash": "fbd3c28f03af"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9e1024a2aefe",
+   "hash": "78ef4bc69940"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "132403c7be1c",
+   "hash": "ed262ea14649"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "834b975da605",
+   "hash": "a9280eac0ef1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2b0c5a91cdac",
+   "hash": "cc5a708ebe39"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a041d0fc3e13",
+   "hash": "ddf21ecdee6f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "65d7ffed49d6",
+   "hash": "202c8ed48475"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1e0d3b86e945",
+   "hash": "25e3a075c31b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "988a9cdfbf15",
+   "hash": "e495f28d24e3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a14cfe6424f4",
+   "hash": "891a1c73bd82"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3f88138a4fa2",
+   "hash": "a16b5e59b776"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f1b20d7f7a01",
+   "hash": "2be58eaf18cd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "21420941d815",
+   "hash": "480a3fa97569"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0d23ff73886f",
+   "hash": "81f6e46c4d29"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "83ee58b2672b",
+   "hash": "89f36813607d"
+  },
+  {
+   "view": "processing",
+   "bug_id": "0d6736579db1",
+   "title": "tipc: guard against empty buffer list in tipc_node_xmit()",
+   "lore": "",
+   "patch": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5df651523340",
+   "hash": "3cef7f57d7a1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9a491a33ebc5",
+   "hash": "42ec0be59490"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4441642dd891",
+   "hash": "cee04c0a601a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9f3e47c03174",
+   "hash": "d2cbce95c732"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ede8c3363738",
+   "hash": "2ec607c1a3f8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5bbc793c7d18",
+   "hash": "4397c433f264"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "84a03bd01b84",
+   "hash": "f0db9621a254"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "810dbd224690",
+   "hash": "ec707ebf9e03"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0cd8f2b86c99",
+   "hash": "db8ba07c44da"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c77bd7ac44aa",
+   "hash": "dea7513dc8c5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e8b8d41df361",
+   "hash": "13ce4359b760"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "98dcb2414482",
+   "hash": "7fd45dced0a0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "aeacf6acdae7",
+   "hash": "fe13de1736e7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a6f7301bd0d5",
+   "hash": "c5d95ab2bf21"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ed2ee0cdbf38",
+   "hash": "c1fa3ee343e9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6dd4e75a0f7c",
+   "hash": "6c182920ee56"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "73b6e94945ab",
+   "hash": "790c93d57fb4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "78095e58154b",
+   "hash": "50cbddf724e6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7783cb67c960",
+   "hash": "4a603160f9fc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d4d23e798717",
+   "hash": "a9c3b81cec98"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d41cb843493f",
+   "hash": "f3f284addce0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "232e4d60c1a6",
+   "hash": "90236cd5cde5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8a4b7393ce4e",
+   "hash": "a0b7520cddb5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "71bec6658197",
+   "hash": "1f9f9ceebf9a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4638111fe2a1",
+   "hash": "3a1111ddc263"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a1d070264644",
+   "hash": "346a68e10c0d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "be7e63e247b3",
+   "hash": "4074dd0f920a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e0baf02cad4d",
+   "hash": "91d65250dafd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "84002901feaa",
+   "hash": "93883e5cc6e4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9cdc3816bd90",
+   "hash": "442b48860030"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "af71eebe2497",
+   "hash": "282eeceaee7a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a6071873dece",
+   "hash": "e0418634659f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "28ecf3ba3e4a",
+   "hash": "86a9315dac4f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ef390cd50923",
+   "hash": "83814d33b0d2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c88e578ac7b5",
+   "hash": "579d0d338abb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f699ff2fb697",
+   "hash": "3eddcf4b3723"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0765694b210a",
+   "hash": "cfaf38b5014f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5caea0eab682",
+   "hash": "b1bc75bd77d4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "51881ebe3040",
+   "hash": "92fb0a5eea34"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "343047a977b4",
+   "hash": "617e49e3f154"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c90030fb679c",
+   "hash": "eb28f6f0e41d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "da3865dd1755",
+   "hash": "bf2926355b5d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9274fb176f78",
+   "hash": "7ac3d97c0206"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "afc369b90d0e",
+   "hash": "c91b2bffc07b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c0d46972ce3f",
+   "hash": "efe2275df27b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e3c616d3fb9d",
+   "hash": "0b4eeee9cf92"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bc7767cb5b45",
+   "hash": "7024e74aad7f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7a521b0e5c5f",
+   "hash": "c6f51bc8a4c3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "918b415f749f",
+   "hash": "972d72e2f022"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d1d1f71fccb7",
+   "hash": "f734df964077"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8c358945e478",
+   "hash": "60a5d58dc26b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e668e3083694",
+   "hash": "1395184f702d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "93ed3dfaf216",
+   "hash": "9f1e18cf27d2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5b82964bbe02",
+   "hash": "c53b4d540eb4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1b91acea0659",
+   "hash": "2f7b3ced3d47"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4d96e634e7c7",
+   "hash": "cea610bb9a98"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f5ab8240aa17",
+   "hash": "2256705f75f6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "04404a78e42b",
+   "hash": "69a1ae5f14ca"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d2740cbd7086",
+   "hash": "87c0a3e9b1c2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9a43e2d900b6",
+   "hash": "143ce5743e6c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a57a8a620edf",
+   "hash": "6d2ccd62a604"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8a6d29408468",
+   "hash": "147d248a68f4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "84098b3ec24c",
+   "hash": "d59e3fb05944"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8dda05ddb744",
+   "hash": "0fe866c49a6c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d8f7337e8abd",
+   "hash": "bc0d3a49e042"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2b479deaa3c5",
+   "hash": "836cded43fdb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5fc5002c3c87",
+   "hash": "e09563e0ad04"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6084d0d600b7",
+   "hash": "d3726bfca3f9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "70a07bb5f707",
+   "hash": "fc32942a4f19"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "26d8ef11983e",
+   "hash": "996d13038019"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "806f9155dbe8",
+   "hash": "3d5255800c90"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8e0a4cb665a8",
+   "hash": "a51054f35baa"
+  },
+  {
+   "view": "processing",
+   "bug_id": "7a7e8b052c6a",
+   "title": "xfs: validate inode log item regions during recovery",
+   "lore": "20260716174813.3627911-1-bestswngs@gmail.com",
+   "patch": "diff --git a/fs/xfs/libxfs/xfs_inode_buf.c b/fs/xfs/libxfs/xfs_inode_buf.c\nindex 336ef843f2fe..71311c4fc2ed 100644\n--- a/fs/xfs/libxfs/xfs_inode_buf.c\n+++ b/fs/xfs/libxfs/xfs_inode_buf.c\n@@ -479,7 +479,7 @@ xfs_dinode_verify_fork(\n \treturn NULL;\n }\n \n-static xfs_failaddr_t\n+xfs_failaddr_t\n xfs_dinode_verify_forkoff(\n \tstruct xfs_dinode\t*dip,\n \tstruct xfs_mount\t*mp)\ndiff --git a/fs/xfs/libxfs/xfs_inode_buf.h b/fs/xfs/libxfs/xfs_inode_buf.h\nindex f3624532b023..d120675f6c07 100644\n--- a/fs/xfs/libxfs/xfs_inode_buf.h\n+++ b/fs/xfs/libxfs/xfs_inode_buf.h\n@@ -27,6 +27,8 @@ int\txfs_inode_from_disk(struct xfs_inode *ip, struct xfs_dinode *from);\n \n xfs_failaddr_t xfs_dinode_verify(struct xfs_mount *mp, xfs_ino_t ino,\n \t\t\t   struct xfs_dinode *dip);\n+xfs_failaddr_t xfs_dinode_verify_forkoff(struct xfs_dinode *dip,\n+\t\t\t   struct xfs_mount *mp);\n xfs_failaddr_t xfs_dinode_verify_metadir(struct xfs_mount *mp,\n \t\tstruct xfs_dinode *dip, uint16_t mode, uint16_t flags,\n \t\tuint64_t flags2);\ndiff --git a/fs/xfs/xfs_inode_item_recover.c b/fs/xfs/xfs_inode_item_recover.c\nindex 169a8fe3bf0a..8ebc8eaf9e03 100644\n--- a/fs/xfs/xfs_inode_item_recover.c\n+++ b/fs/xfs/xfs_inode_item_recover.c\n@@ -366,6 +366,13 @@ xlog_recover_inode_commit_pass2(\n \t\terror = -EFSCORRUPTED;\n \t\tgoto out_release;\n \t}\n+\t/* ri_buf[1] may be absent or shorter than a log dinode */\n+\tif (XFS_IS_CORRUPT(mp, item->ri_cnt < 2) ||\n+\t    XFS_IS_CORRUPT(mp,\n+\t\t\t   item->ri_buf[1].iov_len < xfs_log_dinode_size(mp))) {\n+\t\terror = -EFSCORRUPTED;\n+\t\tgoto out_release;\n+\t}\n \tldip = item->ri_buf[1].iov_base;\n \tif (XFS_IS_CORRUPT(mp, ldip->di_magic != XFS_DINODE_MAGIC)) {\n \t\txfs_alert(mp,\n@@ -374,6 +381,11 @@ xlog_recover_inode_commit_pass2(\n \t\terror = -EFSCORRUPTED;\n \t\tgoto out_release;\n \t}\n+\t/* the size gate and fork offsets assume the mount's inode version */\n+\tif (XFS_IS_CORRUPT(mp, !xfs_dinode_good_version(mp, ldip->di_version))) {\n+\t\terror = -EFSCORRUPTED;\n+\t\tgoto out_release;\n+\t}\n \n \t/*\n \t * If the inode has an LSN in it, recover the inode only if the on-disk\n@@ -462,15 +474,6 @@ xlog_recover_inode_commit_pass2(\n \tif (error)\n \t\tgoto out_release;\n \n-\tif (unlikely(ldip->di_forkoff > mp->m_sb.sb_inodesize)) {\n-\t\tXFS_CORRUPTION_ERROR(\"Bad log dinode fork offset\",\n-\t\t\t\tXFS_ERRLEVEL_LOW, mp, ldip, sizeof(*ldip));\n-\t\txfs_alert(mp,\n-\t\t\t\"Bad inode 0x%llx, di_forkoff 0x%x\",\n-\t\t\tin_f->ilf_ino, ldip->di_forkoff);\n-\t\terror = -EFSCORRUPTED;\n-\t\tgoto out_release;\n-\t}\n \tisize = xfs_log_dinode_size(mp);\n \tif (unlikely(item->ri_buf[1].iov_len > isize)) {\n \t\tXFS_CORRUPTION_ERROR(\"Bad log dinode size\", XFS_ERRLEVEL_LOW,\n@@ -495,6 +498,30 @@ xlog_recover_inode_commit_pass2(\n \txfs_log_dinode_to_disk(ldip, dip, current_lsn);\n \n \tfields = in_f->ilf_fields;\n+\n+\t/* forks are otherwise ASSERT-only; check di_forkoff and presence */\n+\tif (fields & (XFS_ILOG_DFORK | XFS_ILOG_AFORK)) {\n+\t\tif (XFS_IS_CORRUPT(mp, xfs_dinode_verify_forkoff(dip, mp) != NULL)) {\n+\t\t\terror = -EFSCORRUPTED;\n+\t\t\tgoto out_release;\n+\t\t}\n+\t}\n+\tif (fields & XFS_ILOG_DFORK) {\n+\t\tif (XFS_IS_CORRUPT(mp, item->ri_cnt < 3) ||\n+\t\t    XFS_IS_CORRUPT(mp, item->ri_buf[2].iov_base == NULL)) {\n+\t\t\terror = -EFSCORRUPTED;\n+\t\t\tgoto out_release;\n+\t\t}\n+\t}\n+\tif (fields & XFS_ILOG_AFORK) {\n+\t\tattr_index = (fields & XFS_ILOG_DFORK) ? 3 : 2;\n+\n+\t\tif (XFS_IS_CORRUPT(mp, item->ri_cnt < attr_index + 1) ||\n+\t\t    XFS_IS_CORRUPT(mp, item->ri_buf[attr_index].iov_base == NULL)) {\n+\t\t\terror = -EFSCORRUPTED;\n+\t\t\tgoto out_release;\n+\t\t}\n+\t}\n \tif (fields & XFS_ILOG_DEV)\n \t\txfs_dinode_put_rdev(dip, in_f->ilf_u.ilfu_rdev);\n \n@@ -510,6 +537,10 @@ xlog_recover_inode_commit_pass2(\n \tswitch (fields & XFS_ILOG_DFORK) {\n \tcase XFS_ILOG_DDATA:\n \tcase XFS_ILOG_DEXT:\n+\t\tif (XFS_IS_CORRUPT(mp, len > XFS_DFORK_DSIZE(dip, mp))) {\n+\t\t\terror = -EFSCORRUPTED;\n+\t\t\tgoto out_release;\n+\t\t}\n \t\tmemcpy(XFS_DFORK_DPTR(dip), src, len);\n \t\tbreak;\n \n@@ -533,11 +564,6 @@ xlog_recover_inode_commit_pass2(\n \t * transaction.\n \t */\n \tif (in_f->ilf_fields & XFS_ILOG_AFORK) {\n-\t\tif (in_f->ilf_fields & XFS_ILOG_DFORK) {\n-\t\t\tattr_index = 3;\n-\t\t} else {\n-\t\t\tattr_index = 2;\n-\t\t}\n \t\tlen = item->ri_buf[attr_index].iov_len;\n \t\tsrc = item->ri_buf[attr_index].iov_base;\n \t\tASSERT(len == xlog_calc_iovec_len(in_f->ilf_asize));\n@@ -546,7 +572,10 @@ xlog_recover_inode_commit_pass2(\n \t\tcase XFS_ILOG_ADATA:\n \t\tcase XFS_ILOG_AEXT:\n \t\t\tdest = XFS_DFORK_APTR(dip);\n-\t\t\tASSERT(len <= XFS_DFORK_ASIZE(dip, mp));\n+\t\t\tif (XFS_IS_CORRUPT(mp, len > XFS_DFORK_ASIZE(dip, mp))) {\n+\t\t\t\terror = -EFSCORRUPTED;\n+\t\t\t\tgoto out_release;\n+\t\t\t}\n \t\t\tmemcpy(dest, src, len);\n \t\t\tbreak;\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fce4555a5fa0",
+   "hash": "84f953cfcf8a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "260339fb7ff5",
+   "hash": "c6e063f23aa8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cc841c8b1ced",
+   "hash": "31e1179039c2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "98ccfcd4908e",
+   "hash": "e49c1f2163c7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8a0c41111174",
+   "hash": "7fcdb516668e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "30554ba435c0",
+   "hash": "fdcc4cee6561"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0913c6a15917",
+   "hash": "e061181c9416"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a0df26891e39",
+   "hash": "e9f59ce7ed64"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "21e8a9b5657b",
+   "hash": "d4dd3df400b1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6715ab7ada5c",
+   "hash": "111dc744bd0e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "62e2f3fd7668",
+   "hash": "08583cb98969"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "10479125ebbf",
+   "hash": "d9e4f64004a8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0a1c21706997",
+   "hash": "1a8be54e1900"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4a86df1e3e2d",
+   "hash": "1a49c508c5a1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4d30eca234c5",
+   "hash": "18116c1d9baf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0959be6b7770",
+   "hash": "2bcd24666bda"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e27a27ee7878",
+   "hash": "8427a83c2cbd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8ce3d703fcd2",
+   "hash": "da892f246232"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a391e5542cf4",
+   "hash": "424ad9bc8295"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8faef11e7d86",
+   "hash": "2d8ce5c810fd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0cf641fea316",
+   "hash": "8ff578522e6b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "dc8a2e14d55f",
+   "hash": "9dd73997c9f4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a3f7be839b87",
+   "hash": "923ee36df90f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fbc898b8aa02",
+   "hash": "0c0dbff9a39c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2351849d275f",
+   "hash": "03295e7602cc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1d84ed26dbbf",
+   "hash": "e1bb31486e22"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e02c6a088e8d",
+   "hash": "962db5e24622"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "518cbf0e3f19",
+   "hash": "2baf59345cf2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c0045354c649",
+   "hash": "e4f27907ef83"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "65686311928d",
+   "hash": "9a6a219d34ac"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "11655b32896b",
+   "hash": "27e95a0d8f1f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d35640c4e5fe",
+   "hash": "065f6bf624e1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6ada12ad810c",
+   "hash": "931291cbe901"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "becb034cf9b2",
+   "hash": "cff4ba971524"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d5e52a039a8f",
+   "hash": "1b9dcd0d965c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "47409f9d1027",
+   "hash": "7a9c52ac255c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0f9737b0c4a3",
+   "hash": "32f441f6100a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8129e7e8146a",
+   "hash": "9055edf7ac18"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1b4c26e347ac",
+   "hash": "7fbb8772e254"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "db899a9e0d4d",
+   "hash": "fe6985af335e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "06291ce3b2b6",
+   "hash": "decca83a6c26"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2a7c578e91e1",
+   "hash": "97e3d8c5959b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d17c2bc750a9",
+   "hash": "3012be10936e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "94c2414e57e3",
+   "hash": "cf9c65fa8d7d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1e7afc5df3ad",
+   "hash": "b7323faffe76"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9d97e02201be",
+   "hash": "93e27f2a02d8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9d6679314057",
+   "hash": "5241406242be"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "afae717e40e8",
+   "hash": "ca1cd78846a9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2b9ec8d0b43f",
+   "hash": "b3b564d51da3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "595bf61da4bc",
+   "hash": "03f3e208daba"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2e09374da566",
+   "hash": "1fe1f1f64995"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a5b5b0dec239",
+   "hash": "e08cb128f34d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "10cc6cf1988b",
+   "hash": "69efe8b2b74c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cde80aa435e0",
+   "hash": "b9fe1c7a9d0d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ec65ce496197",
+   "hash": "d8d94bdc0e79"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a1e47575cb03",
+   "hash": "551d268a80fb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ca0c6c6c3bbf",
+   "hash": "0ebf5e474836"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7f3235ad2e69",
+   "hash": "3bf8b481d393"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a3dc9dcb5679",
+   "hash": "0eb161e4cff4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2ab14095b27b",
+   "hash": "998d2f065662"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1c191a8cf9b4",
+   "hash": "368c03057520"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e6633ff925d6",
+   "hash": "d9095bc5eada"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "798ad7a7cec2",
+   "hash": "6877bc74a821"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "af515986afa3",
+   "hash": "07f66e413c62"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "96fad6b88022",
+   "hash": "31b78c9edc6c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b225ae56d5b1",
+   "hash": "54ae6e169bcf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9e0fe5519b94",
+   "hash": "647e1de803b1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c46dbcc89252",
+   "hash": "29ea8e4c58c0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4b4350f8dc38",
+   "hash": "a2bb70730fb0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e49ea13d404a",
+   "hash": "032c384c1c6a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "27294def768f",
+   "hash": "1871437a8242"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "85288d7fddf7",
+   "hash": "24da8e39b73d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "52f9a0a5be5b",
+   "hash": "dcfb32081ee5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b9e53c0db018",
+   "hash": "ab7c71425703"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "516bea31475b",
+   "hash": "27a77d3977b2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9b8d02178ad1",
+   "hash": "72b3c14091b6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fcd2d76fb110",
+   "hash": "ebc2d37f8688"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8463459e77c2",
+   "hash": "6e7f7b81cb30"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d32869b6c5d0",
+   "hash": "bdbdefdcd52f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "30c89a1ec970",
+   "hash": "5723566cd05b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "43c1d8488f6c",
+   "hash": "0d3f3e5aaf99"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2f4b3eed8630",
+   "hash": "a68f683fbcde"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "06afd46a8b71",
+   "hash": "e1046c8be6ba"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6b6121b1db4e",
+   "hash": "32343016a62b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "11bf03591ef0",
+   "hash": "8f134f961360"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ed5511d33377",
+   "hash": "5a7102fb1d1a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "dbc6a5d1bf31",
+   "hash": "7635c0ba37ae"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d3aac70ee918",
+   "hash": "683d408f480d"
+  },
+  {
+   "view": "processing",
+   "bug_id": "1e58c1233969",
+   "title": "fs/ntfs3: validate EA entry layout against ef->size in ntfs_read_ea",
+   "lore": "20260703222333.94030-1-xmei5@asu.edu",
+   "patch": "diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c\nindex 04814dd29375..259d7f53b77b 100644\n--- a/fs/ntfs3/xattr.c\n+++ b/fs/ntfs3/xattr.c\n@@ -155,6 +155,11 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,\n \t\t\tea_size = le32_to_cpu(ef->size);\n \t\t\tif (ea_size > bytes)\n \t\t\t\tgoto out1;\n+\t\t\tif (bytes < offsetof(struct EA_FULL, name))\n+\t\t\t\tgoto out1;\n+\t\t\tif (struct_size(ef, name, 1 + ef->name_len +\n+\t\t\t\t\tle16_to_cpu(ef->elength)) > ea_size)\n+\t\t\t\tgoto out1;\n \t\t\tcontinue;\n \t\t}\n"
+  },
+  {
+   "view": "processing",
+   "bug_id": "11ee03ff6051",
+   "title": "fs/ntfs3: validate $SDH entry size in ntfs_insert_security",
+   "lore": "20260703215431.73681-1-xmei5@asu.edu",
+   "patch": "diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c\nindex bc7469d0a34d..6d81ae6c1f11 100644\n--- a/fs/ntfs3/fsntfs.c\n+++ b/fs/ntfs3/fsntfs.c\n@@ -2145,6 +2145,9 @@ int ntfs_insert_security(struct ntfs_sb_info *sbi,\n \t\tgoto out;\n \n \twhile (e) {\n+\t\tif (le16_to_cpu(e->de.size) < SIZEOF_SDH_DIRENTRY)\n+\t\t\tbreak;\n+\n \t\tif (le32_to_cpu(e->sec_hdr.size) == new_sec_size) {\n \t\t\terr = ntfs_read_run_nb(sbi, &ni->file.run,\n \t\t\t\t\t       le64_to_cpu(e->sec_hdr.off),\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9e4fe3e63f71",
+   "hash": "2d3f6ed1ee0c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "31faee6da50f",
+   "hash": "09c375f38fc7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "45fef6aaf546",
+   "hash": "ab71935299a6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "67dc554457e3",
+   "hash": "335625898a89"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "83ce70d3639e",
+   "hash": "ca0d3d55625b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7f8bf8276739",
+   "hash": "8bf249df06eb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d675db5d9cff",
+   "hash": "bacb8eff371a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6e0a886f036f",
+   "hash": "b34b17ec893e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4fa566d91373",
+   "hash": "19b66f6670f7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f2d3ba776125",
+   "hash": "e4eaf99ce351"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2aea08073b42",
+   "hash": "9efeb63bf7da"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7efb3b6f4fd7",
+   "hash": "e1e42a59670b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "99429228c5ec",
+   "hash": "ad5d344875a9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ceb1fde23ee8",
+   "hash": "48bb7463211c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d28444cc64e3",
+   "hash": "59263fcb4ddf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9e9a4b9aa395",
+   "hash": "8cc85ca06153"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6cc609dd0943",
+   "hash": "320ce3682bcb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d7b029c60ae2",
+   "hash": "5d2533be01ce"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "57123a436e91",
+   "hash": "ec2ee165c435"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "eb131a328002",
+   "hash": "79d157a19454"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4c4d2dc87839",
+   "hash": "a24be2b90a6c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5ea06738b5af",
+   "hash": "bb2c441438f9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "880cc5c5d529",
+   "hash": "eba845f525a8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fb9c1314eb4f",
+   "hash": "32f10c14063f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "33710f13a8bf",
+   "hash": "be19127bbc8f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5c5fc9a81c9d",
+   "hash": "ec7d54b32e9d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d01759bb1be0",
+   "hash": "c2d6d9c07665"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5ad611daccf7",
+   "hash": "66ffc802a5b9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e8e97a2149ea",
+   "hash": "2c9588db7f7f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "74e929a3e436",
+   "hash": "e4df8f880fdf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8a24f4474f2e",
+   "hash": "6e5e3375a6fd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "960ed446ff3f",
+   "hash": "66b5886eaf77"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e11d2f1f6c4f",
+   "hash": "b7be26966749"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "624c8e47ea59",
+   "hash": "0f2fbe3371ac"
+  },
+  {
+   "view": "processing",
+   "bug_id": "d09dcbf05ea0",
+   "title": "fs/ntfs3: do not mark frame pages uptodate on read error",
+   "lore": "20260712133427.435377-2-bestswngs@gmail.com",
+   "patch": "diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c\nindex 2d2644d80017..862baafb80e3 100644\n--- a/fs/ntfs3/frecord.c\n+++ b/fs/ntfs3/frecord.c\n@@ -2467,7 +2467,8 @@ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,\n out:\n \tfor (i = 0; i < pages_per_frame; i++) {\n \t\tpg = pages[i];\n-\t\tSetPageUptodate(pg);\n+\t\tif (!err)\n+\t\t\tSetPageUptodate(pg);\n \t}\n \n \treturn err;\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e72484ed2957",
+   "hash": "c07c95cac34b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "adaf880e2593",
+   "hash": "204ccd31897f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3f1a37cc2f91",
+   "hash": "1490428a2b4f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6f23d6ed6272",
+   "hash": "fb510e78689c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f8e77296c613",
+   "hash": "439cec902edf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9f7b408aa996",
+   "hash": "22368ab307ad"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fb096724fb39",
+   "hash": "ca8ebed284f7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5c021b0c6f2b",
+   "hash": "c3ccc728920d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "54130b317611",
+   "hash": "b2618ecce28a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b87471897625",
+   "hash": "3a3f39d8ff63"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c37bfc5bce62",
+   "hash": "469f18804bd4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0959b594623a",
+   "hash": "271c2691c578"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "34d866dcaeb0",
+   "hash": "366764e15c2b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "277270ac3399",
+   "hash": "d3aa713ab9ee"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "48a55219399b",
+   "hash": "ae18b000a011"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3d96340c8c82",
+   "hash": "5a3b1f9a1293"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3fcd251f635c",
+   "hash": "d84665b5e2b1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fb78fab8093a",
+   "hash": "06004e4b1406"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bb98566da006",
+   "hash": "7a851b75a069"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7ab8a5181fe2",
+   "hash": "f3a6e545717d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3c7241e264e9",
+   "hash": "d0571984c066"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "33728c4f509d",
+   "hash": "284e15999246"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bad05c07b3ed",
+   "hash": "e37460769d24"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d2706135c013",
+   "hash": "6f1dcd9b097e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "30af744fbf19",
+   "hash": "d920fa4c3126"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "384cdafd3b02",
+   "hash": "bd2b00e5beec"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a8f72c144158",
+   "hash": "b0c79c797cb1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "88b189ada13b",
+   "hash": "fbbaf86d76b0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "65ff67fe3de7",
+   "hash": "eb12d25083cb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c9f1a6922bda",
+   "hash": "28e837570601"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fe09ba1b0cdf",
+   "hash": "2316dd7e35f1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a482f88e77a8",
+   "hash": "f5c707f65b70"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1e6d2ab687ee",
+   "hash": "6842ab9f3d5b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f73b9419ceb6",
+   "hash": "9dae7f436546"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "094788f1020d",
+   "hash": "72de22c41f3b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9b1dff3f3aee",
+   "hash": "ccc9a2e11b97"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a340ef604b4b",
+   "hash": "aa32f99f0bb0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "89eb03f523a1",
+   "hash": "35b5f609051d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e3ae44b79024",
+   "hash": "98e2664b380b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f6d916f7f905",
+   "hash": "89fb3e9f0db1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "84d4ca3daffe",
+   "hash": "40c89db8f301"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c75f0a5e6161",
+   "hash": "c3574cb51954"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "615de4e214bb",
+   "hash": "c3ac14ae627c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "df0357b640e6",
+   "hash": "f4db8e971b6a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "99aad2782ba9",
+   "hash": "02b94614295f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5917ec6fc34a",
+   "hash": "f911d4908836"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b24db5a2335f",
+   "hash": "4374b666cb20"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4533c03cb427",
+   "hash": "5156a55f2cf9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b706aa2243a4",
+   "hash": "ecef6997e419"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2854ea54bb1f",
+   "hash": "70219893392b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3050a3f56cdb",
+   "hash": "e1cd65c1d3e8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5fb7796a89f5",
+   "hash": "14b70fc43bb7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "43ee9665e38d",
+   "hash": "bf13a11b90c8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "dbb4777837ad",
+   "hash": "bbed3990e9b9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9f7863f30e6f",
+   "hash": "0095dd84a4d3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2caeaf6acb10",
+   "hash": "a9ac586aacd4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "89be89438519",
+   "hash": "a77f6f4c74d6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c45161318ad5",
+   "hash": "51320b1c9c95"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1d82ffc67623",
+   "hash": "e294a3d79cc1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5120075c66b0",
+   "hash": "5fe064f14bfc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f85dc9121d62",
+   "hash": "721d61f7184c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a7d3b3af4d88",
+   "hash": "fc7b3de9155c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a68c1b538eaa",
+   "hash": "35f2d000b08f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "72b8e91b0c2a",
+   "hash": "a719fc70b738"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e9bbdd3e9d65",
+   "hash": "97ed424b82dc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d1620c9efcda",
+   "hash": "10f61fe71e8a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9b296f589b26",
+   "hash": "9b245d113efc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1acf20114d5f",
+   "hash": "ca9f4d129e14"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7f7ea1c5ba02",
+   "hash": "e25f4fdb01eb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "95b74b23d7a2",
+   "hash": "b0a208e9764e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "65eed6d5cafd",
+   "hash": "ac438cc8b5c5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "41b29a61ed88",
+   "hash": "a55d15a43f1e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "532af8919c9a",
+   "hash": "1d5f2027bf4c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5c05db03a233",
+   "hash": "032fced97843"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2a8e7cfe9bda",
+   "hash": "c202198b28ff"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "df9edf275450",
+   "hash": "72937510cf45"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cda33e47bcfc",
+   "hash": "41aecf2f3789"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9d56c5d4d3a4",
+   "hash": "b04acffd3692"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "593b2714fcfc",
+   "hash": "df4ba5611b8e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7d86a9d02d0b",
+   "hash": "39a021b343b9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "dfa93bb2a9c8",
+   "hash": "1b4a84ea9108"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "92da80287f9f",
+   "hash": "67e3e29ee33a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e2527f3b09bf",
+   "hash": "45b88b47c111"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b3ea466c7654",
+   "hash": "31b706b6370a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0bbb3bc43a4d",
+   "hash": "b1f03b48f842"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3317464d6f68",
+   "hash": "60471847162f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ae7ae5d2ebe2",
+   "hash": "821d8a2ce7b8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "716d501cc7f2",
+   "hash": "46095d3ffbb5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5b8c5d5607da",
+   "hash": "0c990f771367"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "322410e5bf0d",
+   "hash": "42a37d05dd0d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7fff925a45c3",
+   "hash": "f709d4507539"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d2991e312227",
+   "hash": "c3e58ade9fde"
+  },
+  {
+   "view": "processing",
+   "bug_id": "4741c833a192",
+   "title": "xfs: fix off-by-one in rtrefcount btree root level validation",
+   "lore": "20260714215612.1528518-1-xmei5@asu.edu",
+   "patch": "diff --git a/fs/xfs/libxfs/xfs_rtrefcount_btree.c b/fs/xfs/libxfs/xfs_rtrefcount_btree.c\nindex f27b80a199ba..22acc1411aac 100644\n--- a/fs/xfs/libxfs/xfs_rtrefcount_btree.c\n+++ b/fs/xfs/libxfs/xfs_rtrefcount_btree.c\n@@ -201,7 +201,7 @@ xfs_rtrefcountbt_verify(\n \tif (fa)\n \t\treturn fa;\n \tlevel = be16_to_cpu(block->bb_level);\n-\tif (level > mp->m_rtrefc_maxlevels)\n+\tif (level >= mp->m_rtrefc_maxlevels)\n \t\treturn __this_address;\n \n \treturn xfs_btree_fsblock_verify(bp, mp->m_rtrefc_mxr[level != 0]);\n@@ -651,7 +651,7 @@ xfs_iformat_rtrefcount(\n \tnumrecs = be16_to_cpu(dfp->bb_numrecs);\n \tlevel = be16_to_cpu(dfp->bb_level);\n \n-\tif (level > mp->m_rtrefc_maxlevels ||\n+\tif (level >= mp->m_rtrefc_maxlevels ||\n \t    xfs_rtrefcount_droot_space_calc(level, numrecs) > dsize) {\n \t\txfs_inode_mark_sick(ip, XFS_SICK_INO_CORE);\n \t\treturn -EFSCORRUPTED;\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "793e5109457d",
+   "hash": "463fb3bbffc8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7e916095affc",
+   "hash": "74d26101cd27"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a1d7c1aabf1a",
+   "hash": "978dd21abdaa"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "43b5694dcad7",
+   "hash": "0dfc0b13d5d2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cfde73b631fc",
+   "hash": "8f8af21cd446"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "05276ae1c268",
+   "hash": "e28a5117e102"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a8880ee79db9",
+   "hash": "57ee71cf5fe4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ff5a827b80bf",
+   "hash": "4a7f01d24abe"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3056bdcd5f0b",
+   "hash": "6fc10b2f6e04"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7984bba470e7",
+   "hash": "421373713cbf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "74e0c9145c29",
+   "hash": "50e2a5993dc8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "006bfb7a314c",
+   "hash": "a93e5208ff74"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "369c5a849a7a",
+   "hash": "d7e43d3ca4fd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b826c85877a9",
+   "hash": "b6b7932a6c3e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3708dfb351ca",
+   "hash": "2823e660447b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "55d403b9673a",
+   "hash": "7f4e608ddef4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fd9dcdb9b28d",
+   "hash": "d70a4e71c70a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3ae21593e050",
+   "hash": "9e385efa1abf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4bbce31bd8af",
+   "hash": "7548797f956a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9d7411737bad",
+   "hash": "9db4e876cda4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bce758d4832c",
+   "hash": "7d1b933cf29f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f54260fef9af",
+   "hash": "fe679448fe51"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6e9e39694bd8",
+   "hash": "8d19a1e39754"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "314f8da762f3",
+   "hash": "966c5a2968a2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7eb1c262bc21",
+   "hash": "6073b63f941a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0e90a8141b91",
+   "hash": "099e0deb6138"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bc43cd46651f",
+   "hash": "79a5570bb40d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "12c5d48be536",
+   "hash": "22ae46e518b3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3e2b020fa45d",
+   "hash": "4cdeab43c970"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "faadcc07ce93",
+   "hash": "6ac46ca9df31"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "70e69a3e0cb4",
+   "hash": "411b9cdbff48"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "82f5281841d7",
+   "hash": "84207e48fb38"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "af82f54a06cc",
+   "hash": "3432b8a654da"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "42e6e5466e47",
+   "hash": "4c23870c0a74"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a7a29515a726",
+   "hash": "e07b866683ee"
+  },
+  {
+   "view": "processing",
+   "bug_id": "0bfc402647f5",
+   "title": "Bluetooth: hci_sync: take hci_dev_lock in hci_clear_adv_instance_sync",
+   "lore": "20260703234350.225221-1-xmei5@asu.edu",
+   "patch": "diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c\nindex 3be8c3581c6c..6b566c67ee98 100644\n--- a/net/bluetooth/hci_sync.c\n+++ b/net/bluetooth/hci_sync.c\n@@ -487,6 +487,8 @@ int hci_clear_adv_instance_sync(struct hci_dev *hdev, struct sock *sk,\n \tint err;\n \tu8 rem_inst;\n \n+\thci_dev_lock(hdev);\n+\n \t/* Cancel any timeout concerning the removed instance(s). */\n \tif (!instance || hdev->cur_adv_instance == instance)\n \t\tcancel_adv_timeout(hdev);\n@@ -525,6 +527,8 @@ int hci_clear_adv_instance_sync(struct hci_dev *hdev, struct sock *sk,\n \t\t}\n \t}\n \n+\thci_dev_unlock(hdev);\n+\n \tif (!hdev_is_powered(hdev) || hci_dev_test_flag(hdev, HCI_ADVERTISING))\n \t\treturn 0;\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "adf0e728a987",
+   "hash": "138111e82ed8"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64189",
+   "commit": "7cd9103283b2",
+   "title": "netfilter: ipset: fix race between dump and ip_set_list resize",
+   "cvss": "7.8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "10661c79dabe",
+   "hash": "611c621f9168"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e3f4b9a07574",
+   "hash": "bc79dcab241f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e54744948bd0",
+   "hash": "7bb20672b3d2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3d01d1a6661d",
+   "hash": "fcb85be3f9ab"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b66944e1f9c0",
+   "hash": "ba2a77bcee3a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1643a5ec4405",
+   "hash": "3c051d938058"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "62deac72fcb2",
+   "hash": "6ac1d2767461"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b43641f8d424",
+   "hash": "1fa614d4bd80"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c040822bb408",
+   "hash": "a22160bde9a1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7280eabd7b60",
+   "hash": "ddc2e8aaa2b4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "31c55512cb31",
+   "hash": "fa6ae8cecdf6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ac78dcb5580f",
+   "hash": "44fb2b75be47"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "da29e7c46422",
+   "hash": "e3ad84ad4414"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "dabe2333005f",
+   "hash": "8b4a984a7c76"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "94d7288980fd",
+   "hash": "eaa04a877c15"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bc704520f190",
+   "hash": "74bbed89e347"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c7af3b2ea3da",
+   "hash": "3d7ed5c143dd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3161b405bc6a",
+   "hash": "d8e8e4186260"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "887ea0a531b1",
+   "hash": "491a9f4a3716"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e71d4597dbfe",
+   "hash": "08541ccca2d6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e0df63139505",
+   "hash": "8ff19e18cdf1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a75a5cb4b8de",
+   "hash": "98bcf612af1c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f3e3c3d6a220",
+   "hash": "d7165283f215"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8aadadd4b116",
+   "hash": "d0545cabc992"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d86c3fc4fb4b",
+   "hash": "55525cd5757c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a4850d256a01",
+   "hash": "484303c39186"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4eec03122d53",
+   "hash": "409d0bcc21ac"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "afda473477db",
+   "hash": "8aa1db7b85b1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "47b402455bfb",
+   "hash": "08781fb2bd3c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "25b496dd208b",
+   "hash": "9a916341bc97"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a7c6341f17c0",
+   "hash": "4653cd4ae913"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "22af71d27e66",
+   "hash": "82584855eef0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5dbe1d31d78d",
+   "hash": "1db1e5e872bf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f80aafd9e4d3",
+   "hash": "f17597aa83c0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0c47b99a681e",
+   "hash": "e02165e784d5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "86acac9317e2",
+   "hash": "1bbfb2f1995d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "805e64ab88b5",
+   "hash": "89ae5c6b4cc9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b722bc2cda87",
+   "hash": "a5b62e892cf5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9ae90e99cbc9",
+   "hash": "e3958c7e6fb5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "34467ed63e97",
+   "hash": "a47f4bdb1f2e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "855f87e63079",
+   "hash": "50a01b9ad8c5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2c3266ba6a6e",
+   "hash": "6816506b56fa"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0ef75003e170",
+   "hash": "15beb4854762"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b981a903ad35",
+   "hash": "3ea1c0072ebf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a69380137c9f",
+   "hash": "dff1c79861a0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f64e0ad73775",
+   "hash": "58c223272eaa"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2ab38e579de1",
+   "hash": "deff6e8d3e22"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2c35dccfb772",
+   "hash": "b3546c86c66d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "73c8a1447b90",
+   "hash": "c3d67904640d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4a0a3c915dcb",
+   "hash": "271768920d48"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e58985494baf",
+   "hash": "00d95ac14493"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "16fd85e425c5",
+   "hash": "8c30c232e356"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e08d0dfc2e2b",
+   "hash": "fac4a78aab70"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "45e14a84b948",
+   "hash": "df2db51599f1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ca613f7de6e4",
+   "hash": "34b2e705d23d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "38f06de56e63",
+   "hash": "7b818cfe07fe"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f0e2313a5a56",
+   "hash": "4ba6e4d52501"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "058d6946d88a",
+   "hash": "781adb44c72f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4115ce83e2aa",
+   "hash": "8af291e4808b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e861445be10e",
+   "hash": "89515a7ff641"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "29bd2cd6bf32",
+   "hash": "06ea53abd99b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8f8f1b55bf9e",
+   "hash": "95ea195f7c08"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5eb173b652e6",
+   "hash": "321e62345c10"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "73a5a12cdf38",
+   "hash": "a5b831b68098"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8cc3da070715",
+   "hash": "597bf8a809dc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a8e95e6cf939",
+   "hash": "343c20ad929e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "eaee5b763f71",
+   "hash": "964596a9c090"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bb9e7ef0aed8",
+   "hash": "e950792a1d89"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bcbe0f41a3ff",
+   "hash": "46c004b3dcb9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5869c269a032",
+   "hash": "738ed829e2c5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2e61109bfceb",
+   "hash": "124cc03af2d9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b41be48fe1d0",
+   "hash": "7cab1eebaa93"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "28e9dce38f42",
+   "hash": "97fbff5bc4c8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9104a0391072",
+   "hash": "a0c2a9a682f4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3b0157b6457a",
+   "hash": "98fe36736f2e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "727403f66f57",
+   "hash": "58448fa832db"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0b3b30bad198",
+   "hash": "3394c446df5a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a85de0cce5ab",
+   "hash": "73b2cdbdf82e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cf6d7e6b25f9",
+   "hash": "9faad5e53c89"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cd2c49ffff45",
+   "hash": "f4b799fd88e3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ac292de16a53",
+   "hash": "1a15fd5b5787"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "03090d82cc9e",
+   "hash": "f407e29d2690"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3877c9209f30",
+   "hash": "68a854ef691e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "00fc1bf693f4",
+   "hash": "d1650638d796"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c661675428dd",
+   "hash": "f15e70f902ee"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "25fcef7de991",
+   "hash": "d9592fc52fda"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "20009e8819d7",
+   "hash": "1de0fb8ba417"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "02ec0c2f4013",
+   "hash": "b04380130b55"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e8c8853f9005",
+   "hash": "7b673dc8c4fc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "137cfb9765a8",
+   "hash": "193c728f8c50"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "141998f52acd",
+   "hash": "46a299620ca6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3d3673463af6",
+   "hash": "d4450666df7d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5b023f4cf644",
+   "hash": "12b915fb9167"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d5ee09f9490b",
+   "hash": "c20103500366"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6ab6429f7816",
+   "hash": "963601bfadb8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ba634d3243e9",
+   "hash": "34630cd98d82"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e4b08d5137da",
+   "hash": "4d41150d2c98"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "eb8a1f803f64",
+   "hash": "b84dd6f825a5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "695f7c289e32",
+   "hash": "177cd4b8af42"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64545",
+   "commit": "e82d8cc4321c",
+   "title": "net, bpf: check master for NULL in xdp_master_redirect()",
+   "cvss": "7.5"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64541",
+   "commit": "9d160b35cc34",
+   "title": "net/smc: fix UAF in smc_cdc_rx_handler() by pinning the socket",
+   "cvss": "9.8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3dfef7a68b45",
+   "hash": "bc4c81034052"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64542",
+   "commit": "d186e942365a",
+   "title": "ipv6: ndisc: fix NULL deref in accept_untracked_na()",
+   "cvss": ""
+  },
+  {
+   "view": "processing",
+   "bug_id": "d800b84f8877",
+   "title": "",
+   "lore": "",
+   "patch": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c1637184b90a",
+   "hash": "e037401134a9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b2e570929e4e",
+   "hash": "55e34ba159b3"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64568",
+   "commit": "1d067abcd370",
+   "title": "wifi: mac80211: fix unsol_bcast_probe_resp double free on alloc failure",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64570",
+   "commit": "286e52a799fa",
+   "title": "wifi: mac80211: fix fils_discovery double free on alloc failure",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "069c3afcf898",
+   "hash": "c20afec9d227"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7471011ec771",
+   "hash": "eb3002ddcc1b"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64547",
+   "commit": "03f384bc0cb8",
+   "title": "net: usb: net1080: validate packet_len before pad-byte access in rx_fixup",
+   "cvss": "8.1"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64540",
+   "commit": "8ff7f2a6da4f",
+   "title": "usbnet: gl620a: fix out-of-bounds read in genelink_rx_fixup()",
+   "cvss": "8.1"
+  },
+  {
+   "view": "processing",
+   "bug_id": "ee66e1733f1d",
+   "title": "fs/ntfs3: bound page_lcns[] index by the log record",
+   "lore": "20260617231343.403432-3-xmei5@asu.edu",
+   "patch": "diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c\nindex b1ca84d83de5..1cc7402fdc2c 100644\n--- a/fs/ntfs3/fslog.c\n+++ b/fs/ntfs3/fslog.c\n@@ -647,6 +647,14 @@ static inline void *enum_rstbl(struct RESTART_TABLE *t, void *c)\n \treturn NULL;\n }\n \n+/*\n+ * dp_range_ok - true if [j, j + count) fits in a page_lcns[cap] array.\n+ */\n+static inline bool dp_range_ok(size_t j, u32 count, u32 cap)\n+{\n+\treturn j < cap && count <= cap - j;\n+}\n+\n /*\n  * find_dp - Search for a @vcn in Dirty Page Table.\n  */\n@@ -3801,6 +3809,7 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)\n \tu64 t64;\n \tu16 t16;\n \tu32 t32;\n+\tsize_t j;\n \n \tlog = kzalloc_obj(struct ntfs_log, GFP_NOFS);\n \tif (!log)\n@@ -4566,9 +4575,12 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)\n \t\t * whole routine a loop, case Lcns do not fit below.\n \t\t */\n \t\tt16 = le16_to_cpu(lrh->lcns_follow);\n+\t\tj = le64_to_cpu(lrh->target_vcn) - le64_to_cpu(dp->vcn);\n+\t\tif (!dp_range_ok(j, t16, le32_to_cpu(dp->lcns_follow))) {\n+\t\t\terr = -EINVAL;\n+\t\t\tgoto out;\n+\t\t}\n \t\tfor (i = 0; i < t16; i++) {\n-\t\t\tsize_t j = (size_t)(le64_to_cpu(lrh->target_vcn) -\n-\t\t\t\t\t    le64_to_cpu(dp->vcn));\n \t\t\tdp->page_lcns[j + i] = lrh->page_lcns[i];\n \t\t}\n \n@@ -4985,8 +4997,14 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)\n \t/* Shorten length by any Lcns which were deleted. */\n \tsaved_len = dlen;\n \n+\tj = le64_to_cpu(lrh->target_vcn) - le64_to_cpu(dp->vcn);\n+\tif (!dp_range_ok(j, le16_to_cpu(lrh->lcns_follow),\n+\t\t\t le32_to_cpu(dp->lcns_follow))) {\n+\t\terr = -EINVAL;\n+\t\tgoto out;\n+\t}\n+\n \tfor (i = le16_to_cpu(lrh->lcns_follow); i; i--) {\n-\t\tsize_t j;\n \t\tu32 alen, voff;\n \n \t\tvoff = le16_to_cpu(lrh->record_off) +\n@@ -4994,7 +5012,6 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)\n \t\tvoff += le16_to_cpu(lrh->cluster_off) << SECTOR_SHIFT;\n \n \t\t/* If the Vcn question is allocated, we can just get out. */\n-\t\tj = le64_to_cpu(lrh->target_vcn) - le64_to_cpu(dp->vcn);\n \t\tif (dp->page_lcns[j + i - 1])\n \t\t\tbreak;\n"
+  },
+  {
+   "view": "processing",
+   "bug_id": "df98807f8545",
+   "title": "fs/ntfs3: validate dirty page table on log replay",
+   "lore": "20260617231343.403432-2-xmei5@asu.edu",
+   "patch": "diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c\nindex acfa18b84401..b1ca84d83de5 100644\n--- a/fs/ntfs3/fslog.c\n+++ b/fs/ntfs3/fslog.c\n@@ -778,6 +778,20 @@ static bool check_rstbl(const struct RESTART_TABLE *rt, size_t bytes)\n \treturn true;\n }\n \n+static bool check_dp_table(const struct RESTART_TABLE *dptbl)\n+{\n+\tu32 rsize = le16_to_cpu(dptbl->size);\n+\tstruct DIR_PAGE_ENTRY *dp = NULL;\n+\n+\twhile ((dp = enum_rstbl((struct RESTART_TABLE *)dptbl, dp))) {\n+\t\tif (struct_size(dp, page_lcns, le32_to_cpu(dp->lcns_follow)) >\n+\t\t    rsize)\n+\t\t\treturn false;\n+\t}\n+\n+\treturn true;\n+}\n+\n /*\n  * free_rsttbl_idx - Free a previously allocated index a Restart Table.\n  */\n@@ -4209,6 +4223,11 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)\n \t\tgoto out;\n \t}\n \n+\tif (!check_dp_table(rt)) {\n+\t\terr = -EINVAL;\n+\t\tgoto out;\n+\t}\n+\n \tdptbl = kmemdup(rt, t32, GFP_NOFS);\n \tif (!dptbl) {\n \t\terr = -ENOMEM;\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "55b23f58bace",
+   "hash": "816f3c0b01fe"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "468df4b7d533",
+   "hash": "622764cbce90"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "87197ce5fd51",
+   "hash": "7f95b50dc6b5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9f499d978811",
+   "hash": "bdc1ac44904a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1ee7c8b1b8c5",
+   "hash": "4b1d0b3f6b27"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0b59310e75c9",
+   "hash": "dd8659401764"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64538",
+   "commit": "46c3b8191aad",
+   "title": "ipv6: Fix null-ptr-deref in fib6_nh_mtu_change().",
+   "cvss": ""
+  },
+  {
+   "view": "processing",
+   "bug_id": "20b3d0eed673",
+   "title": "vxlan: fix NULL dereference in vxlan_igmp_join() and vxlan_igmp_leave()",
+   "lore": "",
+   "patch": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "021151967da4",
+   "hash": "3b71b6dd48c3"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-46322",
+   "commit": "aa8963fdce66",
+   "title": "tun: free page on build_skb failure in tun_xdp_one()",
+   "cvss": "7.1"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-46320",
+   "commit": "3bcf7aec6a9d",
+   "title": "tap: free page on error paths in tap_get_user_xdp()",
+   "cvss": "7.4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2afbff86d64b",
+   "hash": "7ec61f2549ed"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f1081ba602f4",
+   "hash": "101e31f315d5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e1d26240d356",
+   "hash": "987279e0ffed"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d61352516140",
+   "hash": "ac05cdf2c83f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "edc4edab6d90",
+   "hash": "c26d0e6e45c4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "44e7a6af61d5",
+   "hash": "eb2a8ba8f8a8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "77941c5fab3a",
+   "hash": "0a0c7888b360"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e972ff65fdec",
+   "hash": "6ba8e52023b2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cbe1703467f7",
+   "hash": "d6835da9c737"
+  },
+  {
+   "view": "processing",
+   "bug_id": "b27792546e50",
+   "title": "fs/ntfs3: fix out-of-bounds read of INDEX_ROOT in reparse/objid init",
+   "lore": "20260610115724.1813176-2-bestswngs@gmail.com",
+   "patch": "diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c\nindex d0434756029b6..42493a2da24ef 100644\n--- a/fs/ntfs3/fsntfs.c\n+++ b/fs/ntfs3/fsntfs.c\n@@ -2302,8 +2302,8 @@ int ntfs_reparse_init(struct ntfs_sb_info *sbi)\n \t\tgoto out;\n \t}\n \n-\troot_r = resident_data(attr);\n-\tif (root_r->type != ATTR_ZERO ||\n+\troot_r = resident_data_ex(attr, sizeof(struct INDEX_ROOT));\n+\tif (!root_r || root_r->type != ATTR_ZERO ||\n \t    root_r->rule != NTFS_COLLATION_TYPE_UINTS) {\n \t\terr = -EINVAL;\n \t\tgoto out;\n@@ -2340,8 +2340,8 @@ int ntfs_objid_init(struct ntfs_sb_info *sbi)\n \t\tgoto out;\n \t}\n \n-\troot = resident_data(attr);\n-\tif (root->type != ATTR_ZERO ||\n+\troot = resident_data_ex(attr, sizeof(struct INDEX_ROOT));\n+\tif (!root || root->type != ATTR_ZERO ||\n \t    root->rule != NTFS_COLLATION_TYPE_UINTS) {\n \t\terr = -EINVAL;\n \t\tgoto out;\n"
+  },
+  {
+   "view": "processing",
+   "bug_id": "399b0606c9c7",
+   "title": "fs/ntfs3: validate ef->size covers the record's name and value",
+   "lore": "20260625040036.996396-3-bestswngs@gmail.com",
+   "patch": "diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c\nindex 9eeac0ab2b71..9097ded7d7dc 100644\n--- a/fs/ntfs3/xattr.c\n+++ b/fs/ntfs3/xattr.c\n@@ -146,26 +146,29 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,\n \tfor (off = 0; off < size; off += ea_size) {\n \t\tconst struct EA_FULL *ef = Add2Ptr(ea_p, off);\n \t\tu32 bytes = size - off;\n+\t\tsize_t need;\n \n \t\t/* Check if we can use field ea->size. */\n \t\tif (bytes < sizeof(ef->size))\n \t\t\tgoto out1;\n \n+\t\t/* Check if we can use fields ef->name_len and ef->elength. */\n+\t\tif (bytes < offsetof(struct EA_FULL, name))\n+\t\t\tgoto out1;\n+\n+\t\t/* Size needed to hold this record's name and value. */\n+\t\tneed = struct_size(ef, name,\n+\t\t\t\t   1 + ef->name_len + le16_to_cpu(ef->elength));\n+\n \t\tif (ef->size) {\n \t\t\tea_size = le32_to_cpu(ef->size);\n-\t\t\tif (ea_size > bytes)\n+\t\t\t/* ef->size must fit the list and cover the record. */\n+\t\t\tif (ea_size > bytes || ea_size < need)\n \t\t\t\tgoto out1;\n \t\t\tcontinue;\n \t\t}\n \n-\t\t/* Check if we can use fields ef->name_len and ef->elength. */\n-\t\tif (bytes < offsetof(struct EA_FULL, name))\n-\t\t\tgoto out1;\n-\n-\t\tea_size = ALIGN(struct_size(ef, name,\n-\t\t\t\t\t    1 + ef->name_len +\n-\t\t\t\t\t\t    le16_to_cpu(ef->elength)),\n-\t\t\t\t4);\n+\t\tea_size = ALIGN(need, 4);\n \t\tif (ea_size > bytes)\n \t\t\tgoto out1;\n \t}\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "91953d82d3f5",
+   "hash": "82991950b251"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c404d8ad2f1a",
+   "hash": "bf47f8061adb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9fd353782532",
+   "hash": "71de649a5e1a"
+  },
+  {
+   "view": "processing",
+   "bug_id": "b54ca8683c45",
+   "title": "ntfs3: fix out-of-bounds read in ntfs_read_mft",
+   "lore": "",
+   "patch": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "27bf716442f2",
+   "hash": "90ca165dc0c8"
+  },
+  {
+   "view": "processing",
+   "bug_id": "4fcca17e38ba",
+   "title": "fs/ntfs3: fix out-of-bounds read in read_log_rec_buf()",
+   "lore": "20260623062230.1236506-2-bestswngs@gmail.com",
+   "patch": "diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c\nindex f038c799e7ac..ee413dc80d3a 100644\n--- a/fs/ntfs3/fslog.c\n+++ b/fs/ntfs3/fslog.c\n@@ -2276,7 +2276,15 @@ static int read_log_rec_buf(struct ntfs_log *log,\n \t */\n \tfor (;;) {\n \t\tbool usa_error;\n-\t\tu32 tail = log->page_size - off;\n+\t\tu32 tail;\n+\n+\t\t/* off comes from the on-disk restart area; bound it. */\n+\t\tif (off >= log->page_size) {\n+\t\t\terr = -EINVAL;\n+\t\t\tgoto out;\n+\t\t}\n+\n+\t\ttail = log->page_size - off;\n \n \t\tif (tail >= data_len)\n \t\t\ttail = data_len;\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8bcc998a735b",
+   "hash": "faa1ff1579cc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d4693d14d37a",
+   "hash": "42e35fc59bae"
+  },
+  {
+   "view": "processing",
+   "bug_id": "a91b301cf11e",
+   "title": "fs/ntfs3: reject restart table growth beyond U16_MAX entries",
+   "lore": "20260623101434.1321291-2-bestswngs@gmail.com",
+   "patch": "diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c\nindex f038c799e7ac..78f34442aaaa 100644\n--- a/fs/ntfs3/fslog.c\n+++ b/fs/ntfs3/fslog.c\n@@ -853,6 +853,9 @@ static inline struct RESTART_TABLE *extend_rsttbl(struct RESTART_TABLE *tbl,\n \tu32 used = le16_to_cpu(tbl->used);\n \tstruct RESTART_TABLE *rt;\n \n+\tif (used + add > U16_MAX)\n+\t\treturn NULL;\n+\n \trt = init_rsttbl(esize, used + add);\n \tif (!rt)\n \t\treturn NULL;\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "63e40d20b04d",
+   "hash": "ba9d7713847e"
+  },
+  {
+   "view": "processing",
+   "bug_id": "2a7fab38eb17",
+   "title": "fs/ntfs3: take run_lock when freeing offs_folio in ni_decompress_file",
+   "lore": "20260626102341.1909289-3-bestswngs@gmail.com",
+   "patch": "diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c\nindex 2b49bc077558..b11961a1f8d8 100644\n--- a/fs/ntfs3/frecord.c\n+++ b/fs/ntfs3/frecord.c\n@@ -2148,10 +2148,13 @@ int ni_decompress_file(struct ntfs_inode *ni)\n \n \t/* Clear cached flag. */\n \tni->ni_flags &= ~NI_FLAG_COMPRESSED_MASK;\n+\t/* offs_folio is accessed under run_lock in attr_wof_frame_info(). */\n+\tdown_write(&ni->file.run_lock);\n \tif (ni->file.offs_folio) {\n \t\tfolio_put(ni->file.offs_folio);\n \t\tni->file.offs_folio = NULL;\n \t}\n+\tup_write(&ni->file.run_lock);\n \tmapping->a_ops = &ntfs_aops;\n \n out:\n"
+  },
+  {
+   "view": "processing",
+   "bug_id": "57eff147b621",
+   "title": "fs/ntfs3: zero frame pages on read error",
+   "lore": "",
+   "patch": ""
+  },
+  {
+   "view": "processing",
+   "bug_id": "a27707e9782d",
+   "title": "fs/ntfs3: fix out-of-bounds write in ni_create_attr_lis",
+   "lore": "",
+   "patch": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c0aa5c68e468",
+   "hash": "c934f0da1771"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ef778de63758",
+   "hash": "1217329619b9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5f2619f95cb4",
+   "hash": "998829b52819"
+  },
+  {
+   "view": "processing",
+   "bug_id": "198b31896226",
+   "title": "isofs: fix out-of-bounds page array access on empty zisofs block",
+   "lore": "20260712234150.3213467-1-xmei5@asu.edu",
+   "patch": "diff --git a/fs/isofs/compress.c b/fs/isofs/compress.c\nindex 397568b9c7e7..3fda92358e22 100644\n--- a/fs/isofs/compress.c\n+++ b/fs/isofs/compress.c\n@@ -65,12 +65,14 @@ static loff_t zisofs_uncompress_block(struct inode *inode, loff_t block_start,\n \t/* Empty block? */\n \tif (block_size == 0) {\n \t\tfor ( i = 0 ; i < pcount ; i++ ) {\n+\t\t\tunsigned int off = i ? 0 : poffset;\n+\n \t\t\tif (!pages[i])\n \t\t\t\tcontinue;\n-\t\t\tmemzero_page(pages[i], 0, PAGE_SIZE);\n+\t\t\tmemzero_page(pages[i], off, PAGE_SIZE - off);\n \t\t\tSetPageUptodate(pages[i]);\n \t\t}\n-\t\treturn ((loff_t)pcount) << PAGE_SHIFT;\n+\t\treturn (((loff_t)pcount) << PAGE_SHIFT) - poffset;\n \t}\n \n \t/* Because zlib is not thread-safe, do all the I/O at the top. */\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "04cb245ace31",
+   "hash": "5dda7cee4aa7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c2ebdb9813e3",
+   "hash": "f849d7b038e0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c1dea6a42b8c",
+   "hash": "cd4fba9fffa0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "98f9d532197a",
+   "hash": "8cbda89ab6a8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b3de808c1f0f",
+   "hash": "c18cbec5cee0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9f616ccda6f8",
+   "hash": "b7005fa41773"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b0f76cb59723",
+   "hash": "5fb0b4717598"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "283bc746048e",
+   "hash": "a45a99e3b6d7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7c6db099c962",
+   "hash": "2479850347b1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "82ae960e1d90",
+   "hash": "392d3a2b893f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "74e49e211f83",
+   "hash": "eafb56247227"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5ca3d3a4e3fd",
+   "hash": "a4a25726df22"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "27a7bb0fa1c9",
+   "hash": "220fa7f0a192"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e0ff346ff927",
+   "hash": "b014b4b7c9fa"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "998833c41e4f",
+   "hash": "6942e0c85269"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "68f7c3307206",
+   "hash": "e740f3bda262"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "10c3460dd605",
+   "hash": "25d8da3e3850"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cfdbb3d6a3f9",
+   "hash": "9e59a7a6bc42"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1e301caa24e0",
+   "hash": "8e62f50bfd53"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ab87fe8cb25f",
+   "hash": "3fd2231bfa61"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e4b7125067d0",
+   "hash": "a1f12ad08db8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "56c76cafc971",
+   "hash": "448966b32109"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "600bc4cb4147",
+   "hash": "7a17784995b4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4e971252df05",
+   "hash": "6a7f364f33f0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7608d7326be4",
+   "hash": "aba4d2fb146e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "707fe9fb6c41",
+   "hash": "c36ef2fffd2a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a7988c6bbfdd",
+   "hash": "7f76c41f799c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2911304aa05e",
+   "hash": "e57030aac279"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ceeca1dbed8f",
+   "hash": "c6f76ea312a6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "98bdf64843a1",
+   "hash": "3b50485b35bf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "03193bc3c391",
+   "hash": "33deed859dc1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8b996475584e",
+   "hash": "6dc5e5de365e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d1f6a1707345",
+   "hash": "9148d9727207"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9e1abb69aa0c",
+   "hash": "29ab03bceb8a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "449485089cab",
+   "hash": "09ffd2d0ca9c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "089efd439f8f",
+   "hash": "869a87653dde"
+  },
+  {
+   "view": "processing",
+   "bug_id": "0f868cdd51bf",
+   "title": "drm/modes: reject out-of-range GTF blanking duty cycle",
+   "lore": "20260711230728.2250485-1-xmei5@asu.edu",
+   "patch": "diff --git a/drivers/gpu/drm/drm_modes.c b/drivers/gpu/drm/drm_modes.c\nindex 3f8e025fd6d9..b6f263e9ba86 100644\n--- a/drivers/gpu/drm/drm_modes.c\n+++ b/drivers/gpu/drm/drm_modes.c\n@@ -966,6 +966,10 @@ drm_gtf_mode_complex(struct drm_device *dev, int hdisplay, int vdisplay,\n \t/* 18.Find the ideal blanking duty cycle from blanking duty cycle */\n \tideal_duty_cycle = GTF_C_PRIME * 1000 -\n \t\t\t\t(GTF_M_PRIME * 1000000 / hfreq_est);\n+\tif (ideal_duty_cycle >= 100000) {\n+\t\tdrm_mode_destroy(dev, drm_mode);\n+\t\treturn NULL;\n+\t}\n \t/* 19.Find the number of pixels in the blanking time to the nearest\n \t * double character cell: */\n \thblank = total_active_pixels * ideal_duty_cycle /\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "32b18896502c",
+   "hash": "26384ffdf4cd"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64546",
+   "commit": "faaa1e115583",
+   "title": "drm/edid: fix OOB read in drm_parse_tiled_block()",
+   "cvss": "7.1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "48f1878f1c38",
+   "hash": "154fd15d8e03"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b524abef16a8",
+   "hash": "9204cc1450b9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "032c30f3e944",
+   "hash": "cbf94135cc35"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ff1febbf194f",
+   "hash": "070c25b0fc4b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6f4079306d54",
+   "hash": "19b559332ac1"
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "3dc22abc21f5",
+   "title": "btrfs: tree-checker: validate INODE_REF's namelen",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "b0d27d43791b",
+   "title": "btrfs: lzo: reject compressed segment that overflows the compressed input",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "eb09c106c8c1",
+   "hash": "78e95af98e30"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0c7ca09bed85",
+   "hash": "c36249c5f90b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6221b75485da",
+   "hash": "98c44edd9ae6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9ae31f570cb5",
+   "hash": "c5ade06b98fb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a991ff01a40c",
+   "hash": "32a142a1aca9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1c2b4eb5de9b",
+   "hash": "866c9ff100e6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "80208d0b6157",
+   "hash": "8c77c61b762d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "87f7cb204b4b",
+   "hash": "21de486d05fe"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6004910901b9",
+   "hash": "c26a680e59c7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4f314db020c2",
+   "hash": "b599e00aa37b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "80d36a577368",
+   "hash": "554d1513caff"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ddfca34f234e",
+   "hash": "d8691c28dc6f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "95f4056ef3ba",
+   "hash": "8e599d91ed67"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b462f6bf14c4",
+   "hash": "cef5c203f996"
+  },
+  {
+   "view": "processing",
+   "bug_id": "c66ee17c0d5a",
+   "title": "ext4: fix out-of-bounds read in ext4_read_inline_dir()",
+   "lore": "",
+   "patch": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6c1bb50f4583",
+   "hash": "590060dd5195"
+  },
+  {
+   "view": "processing",
+   "bug_id": "dd26122306d9",
+   "title": "ext4: check dir entry fits before reading the hash trailer in ext4_search_dir()",
+   "lore": "20260709184101.441348-1-xmei5@asu.edu",
+   "patch": "diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c\nindex cc49ae04a6f6..3b9740c1c16d 100644\n--- a/fs/ext4/namei.c\n+++ b/fs/ext4/namei.c\n@@ -1467,6 +1467,8 @@ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,\n \t\t/* this code is executed quadratically often */\n \t\t/* do minimal checking `by hand' */\n \t\tif (de->name + de->name_len <= dlimit &&\n+\t\t    (!ext4_hash_in_dirent(dir) ||\n+\t\t     (char *)de + ext4_dir_rec_len(de->name_len, dir) <= dlimit) &&\n \t\t    ext4_match(dir, fname, de)) {\n \t\t\t/* found a match - just to be sure, do\n \t\t\t * a full check */\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "aa72c65bf581",
+   "hash": "81217cb43bff"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c7b0aee50ffb",
+   "hash": "761fc6e2b901"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f13166500bcb",
+   "hash": "a84ff876a48e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9570d8768a77",
+   "hash": "0e52b4c29425"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7b5ac0b5e8a2",
+   "hash": "de59f20abd04"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "77cf87241fba",
+   "hash": "8607ecdf0a24"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "19282108591e",
+   "hash": "850fbcb2b504"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "22ec6032c7d3",
+   "hash": "379de8859bca"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f754020b679c",
+   "hash": "4cf0e10c5a7c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "004fb6f1a205",
+   "hash": "b61d99968dbc"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64187",
+   "commit": "2094dab19d45",
+   "title": "xfs: fail recovery on a committed log item with no regions",
+   "cvss": ""
+  },
+  {
+   "view": "processing",
+   "bug_id": "ca9d72bef8f6",
+   "title": "xfs: reject log continuation for a header-only item in recovery",
+   "lore": "20260712220854.3131445-1-xmei5@asu.edu",
+   "patch": "diff --git a/fs/xfs/xfs_log_recover.c b/fs/xfs/xfs_log_recover.c\nindex 5f984bf5698a..fa8e04bf1aac 100644\n--- a/fs/xfs/xfs_log_recover.c\n+++ b/fs/xfs/xfs_log_recover.c\n@@ -2131,6 +2131,9 @@ xlog_recover_add_to_cont_trans(\n \titem = list_entry(trans->r_itemq.prev, struct xlog_recover_item,\n \t\t\t  ri_list);\n \n+\tif (item->ri_cnt == 0)\n+\t\treturn -EFSCORRUPTED;\n+\n \told_ptr = item->ri_buf[item->ri_cnt-1].iov_base;\n \told_len = item->ri_buf[item->ri_cnt-1].iov_len;\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "da918d5a6e20",
+   "hash": "b9352bbb6cca"
+  },
+  {
+   "view": "processing",
+   "bug_id": "3332abc5a8d5",
+   "title": "xfs: reject attr leaf blocks with inconsistent usedbytes",
+   "lore": "20260707180235.1142581-4-bestswngs@gmail.com",
+   "patch": "diff --git a/fs/xfs/libxfs/xfs_attr_leaf.c b/fs/xfs/libxfs/xfs_attr_leaf.c\nindex 86c5c09a5db4..9814dcfbd7ac 100644\n--- a/fs/xfs/libxfs/xfs_attr_leaf.c\n+++ b/fs/xfs/libxfs/xfs_attr_leaf.c\n@@ -300,7 +300,8 @@ xfs_attr3_leaf_verify_entry(\n \tstruct xfs_attr3_icleaf_hdr\t\t*leafhdr,\n \tstruct xfs_attr_leaf_entry\t\t*ent,\n \tint\t\t\t\t\tidx,\n-\t__u32\t\t\t\t\t*last_hashval)\n+\t__u32\t\t\t\t\t*last_hashval,\n+\tunsigned int\t\t\t\t*usedbytes)\n {\n \tstruct xfs_attr_leaf_name_local\t\t*lentry;\n \tstruct xfs_attr_leaf_name_remote\t*rentry;\n@@ -344,6 +345,7 @@ xfs_attr3_leaf_verify_entry(\n \tif (name_end > buf_end)\n \t\treturn __this_address;\n \n+\t*usedbytes += namesize;\n \treturn NULL;\n }\n \n@@ -376,6 +378,7 @@ xfs_attr3_leaf_verify(\n \tchar\t\t\t\t*buf_end;\n \tuint32_t\t\t\tend;\t/* must be 32bit - see below */\n \t__u32\t\t\t\tlast_hashval = 0;\n+\tunsigned int\t\t\tusedbytes = 0;\n \tint\t\t\t\ti;\n \txfs_failaddr_t\t\t\tfa;\n \n@@ -410,11 +413,21 @@ xfs_attr3_leaf_verify(\n \tbuf_end = (char *)bp->b_addr + mp->m_attr_geo->blksize;\n \tfor (i = 0, ent = entries; i < ichdr.count; ent++, i++) {\n \t\tfa = xfs_attr3_leaf_verify_entry(mp, buf_end, leaf, &ichdr,\n-\t\t\t\tent, i, &last_hashval);\n+\t\t\t\tent, i, &last_hashval, &usedbytes);\n \t\tif (fa)\n \t\t\treturn fa;\n \t}\n \n+\t/*\n+\t * usedbytes must equal the summed entry sizes and fit in the\n+\t * nameval region; otherwise a later repack underflows firstused\n+\t * in xfs_attr3_leaf_moveents().\n+\t */\n+\tif (usedbytes != ichdr.usedbytes)\n+\t\treturn __this_address;\n+\tif (ichdr.usedbytes > mp->m_attr_geo->blksize - ichdr.firstused)\n+\t\treturn __this_address;\n+\n \t/*\n \t * Quickly check the freemap information.  Attribute data has to be\n \t * aligned to 4-byte boundaries, and likewise for the free space.\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "171c44555f9b",
+   "hash": "115477bb86ad"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64549",
+   "commit": "dd068ef04412",
+   "title": "Bluetooth: bpa10x: avoid OOB read of revision string in bpa10x_setup()",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c58e9b9722c4",
+   "hash": "bbc0b1b1f20e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "97fcbbbfb921",
+   "hash": "e28b548c314d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3b373f125145",
+   "hash": "65c70412f346"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d797133107fb",
+   "hash": "9272fae8ba7c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4d9c12305b09",
+   "hash": "b453e30a0383"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64573",
+   "commit": "c90164ca0f70",
+   "title": "Bluetooth: qca: fix NVM tag length underflow in TLV parser",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "059aa7c80423",
+   "hash": "376b3d771d91"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c4f761d88c4e",
+   "hash": "c3c0ead5e099"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "04ecaf86ac3e",
+   "hash": "b4ce6a51c6cc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "74e867ef611e",
+   "hash": "5cf0497c7ec1"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-45843",
+   "commit": "4c1367a2d7aa",
+   "title": "slip: bound decode() reads against the compressed packet length",
+   "cvss": "8.2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cd06050643bc",
+   "hash": "2e5ec759b907"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "465b8b13ec70",
+   "hash": "d12f730fc63a"
+  },
+  {
+   "view": "processing",
+   "bug_id": "f58139ce3b0e",
+   "title": "fuse: reject oversized payload_sz in fuse_uring_copy_from_ring()",
+   "lore": "20260707184417.3682270-2-xmei5@asu.edu",
+   "patch": "diff --git a/fs/fuse/dev_uring.c b/fs/fuse/dev_uring.c\nindex 0814681eb04b..f6127c230dd9 100644\n--- a/fs/fuse/dev_uring.c\n+++ b/fs/fuse/dev_uring.c\n@@ -679,6 +679,9 @@ static int fuse_uring_copy_from_ring(struct fuse_ring *ring,\n \tif (err)\n \t\treturn err;\n \n+\tif (ring_in_out.payload_sz > ring->max_payload_sz)\n+\t\treturn -EINVAL;\n+\n \terr = setup_fuse_copy_state(&cs, ring, req, ent, ITER_SOURCE, &iter);\n \tif (err)\n \t\treturn err;\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b24c2a4bee2c",
+   "hash": "6a33cb4ff016"
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "9f00f9cf2be2",
+   "title": "libceph: bound pg_{temp,upmap,upmap_items} length to CEPH_PG_MAX_SIZE",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "75473f34ba64",
+   "hash": "e9b228496a0e"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64539",
+   "commit": "6f5fb689fdf8",
+   "title": "Bluetooth: eir: Fix stack OOB write when prepending the Flags AD",
+   "cvss": "7.8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5efce939e945",
+   "hash": "0742ca3dc8c4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "45fd5f29e72e",
+   "hash": "93926e69511e"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-53257",
+   "commit": "cb9959ab5f99",
+   "title": "wifi: cfg80211: enforce HE/EHT cap/oper consistency",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "353b6aa358fc",
+   "hash": "f74fe2c6ad90"
+  },
+  {
+   "view": "processing",
+   "bug_id": "178f1a43c6fc",
+   "title": "can: j1939: zero the reassembly buffer to avoid uninitialized slab leak",
+   "lore": "20260706011131.2445034-1-xmei5@asu.edu",
+   "patch": "diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c\nindex df93d57907da..2e062f7d277d 100644\n--- a/net/can/j1939/transport.c\n+++ b/net/can/j1939/transport.c\n@@ -1568,7 +1568,7 @@ j1939_session *j1939_session_fresh_new(struct j1939_priv *priv,\n \t}\n \n \t/* alloc data area */\n-\tskb_put(skb, size);\n+\tskb_put_zero(skb, size);\n \t/* skb is recounted in j1939_session_new() */\n \treturn session;\n }\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c5f8d0bd4027",
+   "hash": "9405ac102fe0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "639c5736ed06",
+   "hash": "7b075e94fcb4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2f57fa4a5ecc",
+   "hash": "9a50a2d8934e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ff243a9751ad",
+   "hash": "eec03379dfb3"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-52939",
+   "commit": "34080db3e70d",
+   "title": "net/rds: fix NULL deref in rds_ib_send_cqe_handler() on masked atomic completion",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d1b760081f1c",
+   "hash": "a55de8002e02"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c185e8211751",
+   "hash": "718ec932a1a3"
+  },
+  {
+   "view": "processing",
+   "bug_id": "f900458c1dff",
+   "title": "atm: fix use-after-free in sigd_put_skb()",
+   "lore": "20260609162107.2865310-2-bestswngs@gmail.com",
+   "patch": "diff --git a/net/atm/signaling.c b/net/atm/signaling.c\nindex 358fbe5e4d1d0..346fb969166e8 100644\n--- a/net/atm/signaling.c\n+++ b/net/atm/signaling.c\n@@ -54,14 +54,32 @@ static struct atm_vcc *find_get_vcc(struct atm_vcc *vcc)\n \n static void sigd_put_skb(struct sk_buff *skb)\n {\n-\tif (!sigd) {\n+\tstruct atm_vcc *vcc;\n+\tstruct sock *sk;\n+\n+\tvcc = find_get_vcc(READ_ONCE(sigd));\n+\tif (!vcc) {\n \t\tpr_debug(\"atmsvc: no signaling daemon\\n\");\n \t\tkfree_skb(skb);\n \t\treturn;\n \t}\n-\tatm_force_charge(sigd, skb->truesize);\n-\tskb_queue_tail(&sk_atm(sigd)->sk_receive_queue, skb);\n-\tsk_atm(sigd)->sk_data_ready(sk_atm(sigd));\n+\tsk = sk_atm(vcc);\n+\n+\t/* Pairs with sock_orphan() in sigd_close(). */\n+\tread_lock_bh(&sk->sk_callback_lock);\n+\t/* Bail if torn down, or if the slot was reused by another VCC. */\n+\tif (sock_flag(sk, SOCK_DEAD) || READ_ONCE(sigd) != vcc) {\n+\t\tread_unlock_bh(&sk->sk_callback_lock);\n+\t\tsock_put(sk);\n+\t\tkfree_skb(skb);\n+\t\treturn;\n+\t}\n+\tatm_force_charge(vcc, skb->truesize);\n+\tskb_queue_tail(&sk->sk_receive_queue, skb);\n+\tsk->sk_data_ready(sk);\n+\tread_unlock_bh(&sk->sk_callback_lock);\n+\n+\tsock_put(sk);\n }\n \n static void modify_qos(struct atm_vcc *vcc, struct atmsvc_msg *msg)\n@@ -257,6 +275,9 @@ static void sigd_close(struct atm_vcc *vcc)\n \t\tpr_err(\"closing with requests pending\\n\");\n \tskb_queue_purge(&sk_atm(vcc)->sk_receive_queue);\n \n+\t/* Make a concurrent sigd_put_skb() observe SOCK_DEAD and bail. */\n+\tsock_orphan(sk_atm(vcc));\n+\n \tread_lock(&vcc_sklist_lock);\n \tfor (i = 0; i < VCC_HTABLE_SIZE; ++i) {\n \t\tstruct hlist_head *head = &vcc_hash[i];\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "409d0ab01134",
+   "hash": "ad97077e98b8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "22635e84eca3",
+   "hash": "40edb803b006"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64543",
+   "commit": "1579342d7113",
+   "title": "tipc: fix use-after-free of the discoverer in tipc_disc_rcv()",
+   "cvss": "7.8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2ed82e54eea5",
+   "hash": "b0391349c0d6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2817f7b7eb65",
+   "hash": "8b5101fe53e2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fc241e2899ca",
+   "hash": "d9de0464c110"
+  },
+  {
+   "view": "processing",
+   "bug_id": "c5a8d51e4bd9",
+   "title": "sctp: validate the body of a STALE_COOKIE error before reading it",
+   "lore": "20260705003013.1134430-1-xmei5@asu.edu",
+   "patch": "diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c\nindex d23d935e128e..e4b4b63162cf 100644\n--- a/net/sctp/sm_statefuns.c\n+++ b/net/sctp/sm_statefuns.c\n@@ -2592,6 +2592,9 @@ static enum sctp_disposition sctp_sf_do_5_2_6_stale(\n \n \terr = (struct sctp_errhdr *)(chunk->skb->data);\n \n+\tif ((u8 *)err + sizeof(*err) + sizeof(__be32) > chunk->chunk_end)\n+\t\treturn sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);\n+\n \t/* When calculating the time extension, an implementation\n \t * SHOULD use the RTT information measured based on the\n \t * previous COOKIE ECHO / ERROR exchange, and should add no\n"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64551",
+   "commit": "1cd23ca80784",
+   "title": "sctp: validate STALE_COOKIE cause length before reading staleness",
+   "cvss": "9.1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "eccc3f9093cc",
+   "hash": "4909c87a8a51"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d80b64a59466",
+   "hash": "f92bf524b83f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0758dcba4b94",
+   "hash": "57c2eec07e96"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "83f439b08ea5",
+   "hash": "448b8081225a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5c821fa86528",
+   "hash": "6de565ba4933"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "16da6fad0ac7",
+   "hash": "3f01ae1ba7f6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "67f16df7c031",
+   "hash": "81423afea893"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "731f9abd9cc5",
+   "hash": "935875386d93"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e749d9cef701",
+   "hash": "dbbe89e4559d"
+  },
+  {
+   "view": "processing",
+   "bug_id": "47a3a670856c",
+   "title": "can: j1939: fix NULL pointer dereference in j1939_session_completed()",
+   "lore": "",
+   "patch": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "11c5d212fbd2",
+   "hash": "e2ad6f808a10"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-52941",
+   "commit": "7bf563badd37",
+   "title": "net/smc: avoid NULL deref of conn->lnk in smc_msg_event tracepoint",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64048",
+   "commit": "277740023def",
+   "title": "net/smc: reject CHID-0 ACCEPT that matches an empty ism_dev slot",
+   "cvss": "7.5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "58bdac5924ec",
+   "hash": "0be7c2cb3630"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "28c310ed61b5",
+   "hash": "8ca6dc96af20"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "448019fb1531",
+   "hash": "edb864cfa1cd"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64553",
+   "commit": "aedd02af1f8b",
+   "title": "net: psample: fix info leak in PSAMPLE_ATTR_DATA",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0a83cbd968b5",
+   "hash": "d6b5ea99789a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "60773d5b6d82",
+   "hash": "be1900edfc96"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f26c9d04e277",
+   "hash": "47762b909795"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "03b472e3322d",
+   "hash": "d0a59ee5d64a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7855bef08c3c",
+   "hash": "f96813a45da0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6bf5727a81fe",
+   "hash": "aba9af3b3be1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e0a76ebee355",
+   "hash": "d0dcda65bc4e"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64569",
+   "commit": "56d96fededd6",
+   "title": "mpls: fix NULL deref in mpls_valid_fib_dump_req() on CONFIG_INET=n",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3fac30c38811",
+   "hash": "a9cd79953999"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1ca0ab32bf7a",
+   "hash": "57edec4aa828"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e3d3e16ada7b",
+   "hash": "ffa0c911bcf5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cce8a094ef8c",
+   "hash": "cf1bb7d1eafd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c552087f1cdb",
+   "hash": "1d103c6c9e2c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3c66cf357cf3",
+   "hash": "df613443953e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a380fcb6a723",
+   "hash": "5bfbba9b23e3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "075e04d9c62e",
+   "hash": "74f665becba5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "afc855482439",
+   "hash": "4a71feb87b53"
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "9e7f36ab5b7b",
+   "title": "net: appletalk: fix NULL pointer dereference in aarp_send_ddp()",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "95eae3e52f30",
+   "hash": "49792b550423"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f00379ac03ad",
+   "hash": "9bba6b64363b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fac668929e53",
+   "hash": "92c04488a05d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c0b6b9b1cc41",
+   "hash": "ab2797567ce2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "66365fd60c22",
+   "hash": "c9b224d17eda"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5ee74e76aa7d",
+   "hash": "7a2ec1dd1c2f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ead6415a0b5b",
+   "hash": "05bcea2fd307"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6764434314f5",
+   "hash": "1a00c082f107"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fd73cdf5ffab",
+   "hash": "86d94b0a1ace"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ed4a5d66d64d",
+   "hash": "cc580e68ecd4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b5ac348f6a0e",
+   "hash": "128e3a18412f"
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "350e592ff4e3",
+   "title": "tipc: serialize udp bearer replicast list updates",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cffc83f95b51",
+   "hash": "f225f6c78655"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2c4c6084cce4",
+   "hash": "5ba0a7732c1a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4e5480507700",
+   "hash": "50e572e36ed9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b662cd87e9dd",
+   "hash": "f01bb158b6eb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0133b4f4333d",
+   "hash": "63dd52b86b8b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1ec5cf0228df",
+   "hash": "6258bf491f96"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "315c00b29e3e",
+   "hash": "217aa49f3f7a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6b6dc94069df",
+   "hash": "046e7e1cfaa6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "24e02e6e4b47",
+   "hash": "43687057e545"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c3049becee2f",
+   "hash": "79a2cc53aac2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b118d6ecb3db",
+   "hash": "82356559e393"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b2b86ed30c8c",
+   "hash": "315316ecf905"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "dc68740ee7af",
+   "hash": "69141064cfc0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9f516f9f3ce4",
+   "hash": "ea2d51c28fa8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "400238ca63bf",
+   "hash": "ff46f18dcfd2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7c7ee009fa78",
+   "hash": "b9a144a0ed1b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f4b8ea5e4297",
+   "hash": "8d38649be352"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-52942",
+   "commit": "a84b6fedbc97",
+   "title": "netfilter: nf_log: validate MAC header was set before dumping it",
+   "cvss": "7.1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "59785bb5404c",
+   "hash": "d0c3d2cccd4f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a7ff98f889d0",
+   "hash": "94610dc4ce0b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "1d8843650dca",
+   "hash": "becb2edbf6f2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "60d977009e6c",
+   "hash": "c585a6994709"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "02a44429baa4",
+   "hash": "2ba6bb1119ab"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0c60b73d8876",
+   "hash": "5157c941e85f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2db22d0a644a",
+   "hash": "0c8e87d5e589"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e771b3dcb810",
+   "hash": "ff18a8b1bc06"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b0f85dfb9c71",
+   "hash": "c1f17b5485f3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4a4c0a01d31b",
+   "hash": "82f29cc3542b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a7191b8436d2",
+   "hash": "f2a39d2f5237"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9b13831656df",
+   "hash": "e929091a0908"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e85cfd22e45e",
+   "hash": "4136f8074ef5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "04a0779db936",
+   "hash": "cc56fa138574"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9e235ff062c6",
+   "hash": "33e24be7d123"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "68075353650b",
+   "hash": "ebf6ed634113"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "50f6e765a01a",
+   "hash": "c5582a9e00c6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7d5de52815da",
+   "hash": "0fd7375872b3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "dbc8f5a59860",
+   "hash": "a219e6e16dbc"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "208ae8437a36",
+   "hash": "7d62531198ca"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c6051ce6889e",
+   "hash": "640dfb774c23"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64574",
+   "commit": "952c02b33f56",
+   "title": "wifi: mac80211: tear down new links on vif update error path",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5674eaae0b7f",
+   "hash": "97fe74a4a6a7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7d2f40417ba7",
+   "hash": "5cc9d465ac87"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "410fa0fee879",
+   "hash": "a9e88f591858"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fe3f20f9ee1a",
+   "hash": "6d4e226b0376"
+  },
+  {
+   "view": "processing",
+   "bug_id": "a99a3587adcd",
+   "title": "xfrm6: fix out-of-bounds write in xfrm6_input_addr() when secpath is full",
+   "lore": "",
+   "patch": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7e7f58918725",
+   "hash": "30852c6971f5"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64572",
+   "commit": "f2f152e94a67",
+   "title": "ipv4: fib: free fib_alias with kfree_rcu() on insert error path",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d49bebd39871",
+   "hash": "fe78a8c3162b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0ff80e52ebb7",
+   "hash": "fa4b40d2a962"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64548",
+   "commit": "0c0a8ed85349",
+   "title": "bpf, sockmap: reject overflowing copy + len in bpf_msg_push_data()",
+   "cvss": "8.4"
+  },
+  {
+   "view": "processing",
+   "bug_id": "246b6a95e617",
+   "title": "asymmetric_keys: check asymmetric_key_ids() for NULL before dereference",
+   "lore": "",
+   "patch": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64544",
+   "commit": "f7dd32c5179d",
+   "title": "crypto: asymmetric_keys - fix OOB read in pefile_digest_pe_contents",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e37a08650c16",
+   "hash": "2ca2f156baaf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9ef889b80cc7",
+   "hash": "e66ae8f5cf39"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "15bbbcadfb25",
+   "hash": "6f7fa7c96c68"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64552",
+   "commit": "9e5ad06ea826",
+   "title": "virtio-net: fix len check in receive_big()",
+   "cvss": "8.4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "20e7526695e5",
+   "hash": "85f3d86b6dd8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "943b66b0abcd",
+   "hash": "8b62b7a4e027"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7f6b5178903f",
+   "hash": "f476aa5a2037"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "619c67cf4a3b",
+   "hash": "ddfaa1f29bb1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "605a0bf4873b",
+   "hash": "8e9ceb07f3af"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f27ab0bdbc68",
+   "hash": "b8d6924fdc91"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b630d85712f5",
+   "hash": "c1402c3625e2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2cf741c3005a",
+   "hash": "da8950d370e8"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64190",
+   "commit": "25fe708bbc59",
+   "title": "net: team: fix NULL pointer dereference in team_xmit during mode change",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-46321",
+   "commit": "f4feb1e20058",
+   "title": "tun: free page on short-frame rejection in tun_xdp_one()",
+   "cvss": "7.1"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-52940",
+   "commit": "7f2fcff15e99",
+   "title": "tun: zero the whole vnet header in tun_put_user()",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6c4edb260d0e",
+   "hash": "5bd6b326398c"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-52937",
+   "commit": "bddc09212c24",
+   "title": "tap: fix stack info leak in tap_ioctl() SIOCGIFHWADDR",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5f360be2ae70",
+   "hash": "e2059d986b44"
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "2651c1744458",
+   "title": "geneve: gate GRO hint in geneve_gro_complete() on gs->gro_hint",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-45846",
+   "commit": "aa6c6d9ee064",
+   "title": "bareudp: fix NULL pointer dereference in bareudp_fill_metadata_dst()",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "69745678b17f",
+   "hash": "48035f3766eb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8416e192ae03",
+   "hash": "63b7ab1089f0"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-52938",
+   "commit": "375e4e33c18d",
+   "title": "bpf: Fix NULL pointer dereference in bpf_sk_storage_clone and diag paths",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "1081de1accb2",
+   "title": "bpf: Fix NULL pointer dereference in bpf_skb_fib_lookup()",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "f3f34ca45b96",
+   "title": "bpf, sockmap: Fix wrong rsge offset in bpf_msg_push_data()",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3081cf4386d4",
+   "hash": "8a44ca6e6c49"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3f7d9b028022",
+   "hash": "f0178ff58050"
+  },
+  {
+   "view": "processing",
+   "bug_id": "4644aedaab01",
+   "title": "can: esd_usb: free_candev() after unlink_all_urbs() in disconnect",
+   "lore": "20260705010005.1169943-1-xmei5@asu.edu",
+   "patch": "diff --git a/drivers/net/can/usb/esd_usb.c b/drivers/net/can/usb/esd_usb.c\nindex d257440fa01f..34c0ca187283 100644\n--- a/drivers/net/can/usb/esd_usb.c\n+++ b/drivers/net/can/usb/esd_usb.c\n@@ -1385,6 +1385,7 @@ static void esd_usb_disconnect(struct usb_interface *intf)\n \n \tif (dev) {\n \t\tdev->in_usb_disconnect = 1;\n+\t\tunlink_all_urbs(dev);\n \t\tfor (i = 0; i < dev->net_count; i++) {\n \t\t\tif (dev->nets[i]) {\n \t\t\t\tnetdev = dev->nets[i]->netdev;\n@@ -1393,7 +1394,6 @@ static void esd_usb_disconnect(struct usb_interface *intf)\n \t\t\t\tfree_candev(netdev);\n \t\t\t}\n \t\t}\n-\t\tunlink_all_urbs(dev);\n \t\tkfree(dev);\n \t}\n }\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "adeaa3729870",
+   "hash": "5b0bc764de2f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "01f09764e744",
+   "hash": "cb92a3775bf1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "36090dba04e2",
+   "hash": "436b73195756"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b593a6ac37ee",
+   "hash": "30b9842383a9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "df55f8906b66",
+   "hash": "5963301ab7ee"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "aad7aa1ca98c",
+   "hash": "bf63057ad739"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "dcc6a5ef554c",
+   "hash": "ca67da658f43"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5ae8f93c2bcd",
+   "hash": "c51f66e239a0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fc50706d084b",
+   "hash": "aa6a5245635e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3be61815ad1d",
+   "hash": "3aec041cd8b5"
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "2f768d638d97",
+   "title": "netfilter: nft_compat: run xt_check_hooks_{match,target}() from .validate",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "74296123466b",
+   "hash": "8ffab87d000e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "46967dc9223d",
+   "hash": "e8b6ba64c649"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-53349",
+   "commit": "c3009418f9fa",
+   "title": "netfilter: nf_conntrack: destroy stale expectfn expectations on unregister",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "73c29f620344",
+   "hash": "3b4e709ac6ea"
+  },
+  {
+   "view": "processing",
+   "bug_id": "5b88405c1a6a",
+   "title": "netfilter: ipset: skip extension destroy on hash resize replay",
+   "lore": "20260713163354.3533575-2-bestswngs@gmail.com",
+   "patch": "diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h\nindex 8231317b0..d15530241 100644\n--- a/net/netfilter/ipset/ip_set_hash_gen.h\n+++ b/net/netfilter/ipset/ip_set_hash_gen.h\n@@ -1112,7 +1112,9 @@ mtype_del(struct ip_set *set, void *value, const struct ip_set_ext *ext,\n \t\t\tmtype_del_cidr(set, h,\n \t\t\t\t       NCIDR_PUT(DCIDR_GET(d->cidr, j)), j);\n #endif\n-\t\tip_set_ext_destroy(set, data);\n+\t\t/* On a resize replay the extensions were already destroyed. */\n+\t\tif (ext)\n+\t\t\tip_set_ext_destroy(set, data);\n \n \t\tif (t->resizing && ext && ext->target) {\n \t\t\t/* Resize is in process and kernel side del,\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f2d0e5e5d68f",
+   "hash": "37e41b9bf911"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c68b4dab6ed7",
+   "hash": "fbf08f94d98e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e4204d90a949",
+   "hash": "f239b9f5b535"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "015b77dd2878",
+   "hash": "99818e4ee38c"
+  },
+  {
+   "view": "processing",
+   "bug_id": "01afbb6b1e9c",
+   "title": "vxlan: vnifilter: enforce exact length of GROUP/GROUP6 attributes",
+   "lore": "20260704222254.914567-1-xmei5@asu.edu",
+   "patch": "diff --git a/drivers/net/vxlan/vxlan_vnifilter.c b/drivers/net/vxlan/vxlan_vnifilter.c\nindex 3e76f4e21094..dd94085e0886 100644\n--- a/drivers/net/vxlan/vxlan_vnifilter.c\n+++ b/drivers/net/vxlan/vxlan_vnifilter.c\n@@ -462,10 +462,8 @@ static int vxlan_vnifilter_dump(struct sk_buff *skb, struct netlink_callback *cb\n static const struct nla_policy vni_filter_entry_policy[VXLAN_VNIFILTER_ENTRY_MAX + 1] = {\n \t[VXLAN_VNIFILTER_ENTRY_START] = { .type = NLA_U32 },\n \t[VXLAN_VNIFILTER_ENTRY_END] = { .type = NLA_U32 },\n-\t[VXLAN_VNIFILTER_ENTRY_GROUP]\t= { .type = NLA_BINARY,\n-\t\t\t\t\t    .len = sizeof_field(struct iphdr, daddr) },\n-\t[VXLAN_VNIFILTER_ENTRY_GROUP6]\t= { .type = NLA_BINARY,\n-\t\t\t\t\t    .len = sizeof(struct in6_addr) },\n+\t[VXLAN_VNIFILTER_ENTRY_GROUP]\t= NLA_POLICY_EXACT_LEN(sizeof_field(struct iphdr, daddr)),\n+\t[VXLAN_VNIFILTER_ENTRY_GROUP6]\t= NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),\n };\n \n static const struct nla_policy vni_filter_policy[VXLAN_VNIFILTER_MAX + 1] = {\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c6a12dfe2c6b",
+   "hash": "1792581f1441"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "df6c437fb3dc",
+   "hash": "a6bb5465ab0b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cc7f2cb42b0b",
+   "hash": "8731577f1b7c"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-45841",
+   "commit": "2195574dc6d9",
+   "title": "netfilter: nfnetlink_osf: fix divide-by-zero in OSF_WSS_MODULO",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b6c220e7581b",
+   "hash": "e485117bd876"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "93a1fae0ef3c",
+   "hash": "519c8708cfa9"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-43086",
+   "commit": "9a91797e61d2",
+   "title": "ipvs: fix NULL deref in ip_vs_add_service error path",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5bfe39f3b371",
+   "hash": "37da4c3e8122"
+  },
+  {
+   "view": "processing",
+   "bug_id": "b730d21a8441",
+   "title": "netdevsim: tc: serialize access to nsim_block_cb_list",
+   "lore": "20260719175028.988301-2-bestswngs@gmail.com",
+   "patch": "diff --git a/drivers/net/netdevsim/tc.c b/drivers/net/netdevsim/tc.c\nindex a415e02a6df1..30dd7f924b71 100644\n--- a/drivers/net/netdevsim/tc.c\n+++ b/drivers/net/netdevsim/tc.c\n@@ -72,11 +72,13 @@ static int nsim_setup_tc_ets(struct net_device *dev,\n }\n \n static LIST_HEAD(nsim_block_cb_list);\n+static DEFINE_MUTEX(nsim_block_cb_lock);\n \n int\n nsim_setup_tc(struct net_device *dev, enum tc_setup_type type, void *type_data)\n {\n \tstruct netdevsim *ns = netdev_priv(dev);\n+\tint err;\n \n \tswitch (type) {\n \tcase TC_SETUP_QDISC_TAPRIO:\n@@ -84,10 +86,13 @@ nsim_setup_tc(struct net_device *dev, enum tc_setup_type type, void *type_data)\n \tcase TC_SETUP_QDISC_ETS:\n \t\treturn nsim_setup_tc_ets(dev, type_data);\n \tcase TC_SETUP_BLOCK:\n-\t\treturn flow_block_cb_setup_simple(type_data,\n-\t\t\t\t\t\t  &nsim_block_cb_list,\n-\t\t\t\t\t\t  nsim_setup_tc_block_cb,\n-\t\t\t\t\t\t  ns, ns, true);\n+\t\tmutex_lock(&nsim_block_cb_lock);\n+\t\terr = flow_block_cb_setup_simple(type_data,\n+\t\t\t\t\t\t &nsim_block_cb_list,\n+\t\t\t\t\t\t nsim_setup_tc_block_cb,\n+\t\t\t\t\t\t ns, ns, true);\n+\t\tmutex_unlock(&nsim_block_cb_lock);\n+\t\treturn err;\n \tcase TC_SETUP_FT:\n \t\treturn 0;\n \tdefault:\n"
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "db3d0e0e5d4b",
+   "title": "netfilter: nf_conntrack_sip: widen NAT rewrite delta to s32 in sip_help_tcp()",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "708c2943d2a0",
+   "hash": "010fdb0c65ca"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-43085",
+   "commit": "1f3083aec883",
+   "title": "netfilter: nfnetlink_log: initialize nfgenmsg in NLMSG_DONE terminator",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e2a4af558b7e",
+   "hash": "0d2bc3e5fde8"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-31422",
+   "commit": "1a280dd4bd1d",
+   "title": "net/sched: cls_flow: fix NULL pointer dereference on shared blocks",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3bf1545b42a2",
+   "hash": "1e0d1e650e6d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a0348354247d",
+   "hash": "cae3d8e57741"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "45eae07d9b7d",
+   "hash": "48d3481267ed"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b32b17fd567c",
+   "hash": "cade8c14568b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "32977be8716c",
+   "hash": "79997d53a83a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "51ad1d12630f",
+   "hash": "a02e9bf914a2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6a3836610dea",
+   "hash": "103ae371c3be"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ce6bf1c60e9c",
+   "hash": "5c9c6d498ba6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5dabad47ff43",
+   "hash": "a562afa21251"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6fe2a658ffcb",
+   "hash": "1453fb6a1d66"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5137702fe550",
+   "hash": "f978c91a66b0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "94a8dd9b862a",
+   "hash": "8c268af8d193"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "86fe167ea393",
+   "hash": "db53ba03446f"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-31425",
+   "commit": "a54ecccfae62",
+   "title": "rds: ib: reject FRMR registration before IB connection is established",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f97a4a8451c0",
+   "hash": "64daea14413f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "835ecab4d1c8",
+   "hash": "64a932563502"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5ba1dc6effa9",
+   "hash": "0a10bd51a356"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "231cf3b8465d",
+   "hash": "46273f562a60"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b75e43137a24",
+   "hash": "727a86fa5a6a"
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "78f75d632f74",
+   "title": "rds: tcp: hold the RCU lock across ipv6_chk_addr() in rds_tcp_laddr_check()",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-31423",
+   "commit": "4576100b8cd0",
+   "title": "net/sched: sch_hfsc: fix divide-by-zero in rtsc_min()",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-45845",
+   "commit": "3d07ca5c0fae",
+   "title": "net/sched: taprio: fix NULL pointer dereference in class dump",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "05222e128ff8",
+   "hash": "6e31aea898c0"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-31421",
+   "commit": "faeea8bbf6e9",
+   "title": "net/sched: cls_fw: fix NULL pointer dereference on shared blocks",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-23276",
+   "commit": "6f1a9140ecda",
+   "title": "net: add xmit recursion limit to tunnel xmit functions",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-22977",
+   "commit": "2a71a1a8d0ed",
+   "title": "net: sock: fix hardened usercopy panic in sock_recv_errqueue",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-22976",
+   "commit": "c1d73b148023",
+   "title": "net/sched: sch_qfq: Fix NULL deref when deactivating inactive aggregate in qfq_reset",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-31428",
+   "commit": "52025ebaa29f",
+   "title": "netfilter: nfnetlink_log: fix uninitialized padding leak in NFULA_PAYLOAD",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-31424",
+   "commit": "3d5d488f1177",
+   "title": "netfilter: x_tables: restrict xt_check_match/xt_check_target extensions for NFPROTO_ARP",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "1d47b55b36d2",
+   "title": "netfilter: nft_fwd_netdev: use recursion counter in neigh egress path",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "14ef5a52f3c6",
+   "hash": "b28a3efbcd61"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-31427",
+   "commit": "6a2b724460cb",
+   "title": "netfilter: nf_conntrack_sip: fix use of uninitialized rtp_addr in process_sdp",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-63858",
+   "commit": "10f79dbd7719",
+   "title": "netfilter: nf_tables: add hook transactions for device deletions",
+   "cvss": "7.8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2fa0932cf78a",
+   "hash": "29fc6592ecda"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-45838",
+   "commit": "5828b9e5b272",
+   "title": "bpf: fix end-of-list detection in cgroup_storage_get_next_key()",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-45839",
+   "commit": "1c22483a2c4b",
+   "title": "bpf: reject negative CO-RE accessor indices in bpf_core_parse_spec()",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-45837",
+   "commit": "4fddde2a732d",
+   "title": "bpf: Fix use-after-free in arena_vm_close on fork",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ee60598d5c74",
+   "hash": "993ba3351695"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9918de67ed48",
+   "hash": "d92dca6af291"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6aa59ba25426",
+   "hash": "2457eb6617c0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "73f84d7ab1d2",
+   "hash": "185c5e2d09c0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cedea2a4b830",
+   "hash": "50f067d26e5d"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64571",
+   "commit": "ebd6d37fa94b",
+   "title": "wifi: p54: validate RX frame length in p54_rx_eeprom_readback()",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "52572888476b",
+   "hash": "47aa5ce1ebe6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f77b4c1d1510",
+   "hash": "c380b254e5e2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "adafc73e9597",
+   "hash": "6af365e8730f"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64550",
+   "commit": "f0f1887a9e30",
+   "title": "net: qualcomm: rmnet: validate MAP frame length before ingress parsing",
+   "cvss": "7.3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "144439897367",
+   "hash": "086c07a28532"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f306e566f4f1",
+   "hash": "e6a47755df4c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e076165fa018",
+   "hash": "9929cf26322a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b3d309366fcb",
+   "hash": "8faa74a98a48"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b562b1c05b51",
+   "hash": "c5056bc2bdf1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "dbf6de3fa378",
+   "hash": "937323dede87"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f015efc45937",
+   "hash": "a4e8c50b4f57"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4e8be5c34a5a",
+   "hash": "e84be7f4300c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "48131b128f39",
+   "hash": "041be0f1d423"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a7aa1c56906b",
+   "hash": "98f454742a43"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7a387d0e7477",
+   "hash": "ee0adfb9fc2d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9ca8493d6c24",
+   "hash": "3df8df38c25e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "974ac14b7268",
+   "hash": "2789bb6ec941"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0e3c3526d159",
+   "hash": "fb990b2ca21f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "833aa7f83b10",
+   "hash": "30424daedbef"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d11c1c25b6f0",
+   "hash": "2c45c63bca06"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "d91987aaeb24",
+   "hash": "9ec4761fbc2d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "db79d4ac2d18",
+   "hash": "bd127beed3cb"
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "f8d14b7bb006",
+   "title": "ACPICA: Fix NULL pointer dereference in acpi_ns_custom_package()",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "744f8b6ef090",
+   "hash": "7e1d4a6d9d59"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4664ca549417",
+   "hash": "08cbad5eb60b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f1fddc7da1f0",
+   "hash": "8808d268b77a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c44d71cb905d",
+   "hash": "99f5f29a05b2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e7ac849f6e3c",
+   "hash": "c7ddef27f652"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9db206d621c4",
+   "hash": "9c1fd7131ccd"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3900dfabb777",
+   "hash": "34299edd3574"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5bb5885eb473",
+   "hash": "cc090959ab75"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-31426",
+   "commit": "f6484cadbcaf",
+   "title": "ACPI: EC: clean up handlers on probe failure in acpi_ec_setup()",
+   "cvss": "7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "eed280e057cc",
+   "hash": "95a5155c6b9a"
+  },
+  {
+   "view": "processing",
+   "bug_id": "c7c7ab77f00f",
+   "title": "i2c: i801: keep the byte-by-byte ISR buffer private to the driver",
+   "lore": "20260718090329.1622366-2-bestswngs@gmail.com",
+   "patch": "diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c\nindex c8cb5ed55..37741fdca 100644\n--- a/drivers/i2c/busses/i2c-i801.c\n+++ b/drivers/i2c/busses/i2c-i801.c\n@@ -279,6 +279,9 @@ struct i801_priv {\n \tint count;\n \tint len;\n \tu8 *data;\n+\t/* Driver-private buffer the isr fills/drains, so a late interrupt\n+\t * never dereferences a pointer into the caller's block buffer. */\n+\tu8 data_buf[I2C_SMBUS_BLOCK_MAX + 2];\n \n #if IS_ENABLED(CONFIG_I2C_MUX_GPIO) && defined CONFIG_DMI\n \tconst struct i801_mux_config *mux_drvdata;\n@@ -671,12 +674,23 @@ static int i801_block_transaction_byte_by_byte(struct i801_priv *priv,\n \t\tpriv->cmd = smbcmd | SMBHSTCNT_INTREN;\n \t\tpriv->len = len;\n \t\tpriv->count = 0;\n-\t\tpriv->data = &data->block[1];\n+\t\t/*\n+\t\t * The interrupt handler fills or drains this buffer\n+\t\t * asynchronously and may still run after a timeout, so keep it\n+\t\t * in driver-private storage instead of pointing into the\n+\t\t * caller's block buffer, which is freed once we return.\n+\t\t */\n+\t\tmemcpy(priv->data_buf, data->block, len + 1);\n+\t\tpriv->data = &priv->data_buf[1];\n \n \t\treinit_completion(&priv->done);\n \t\toutb_p(priv->cmd | SMBHSTCNT_START, SMBHSTCNT(priv));\n \t\tresult = wait_for_completion_timeout(&priv->done, adap->timeout);\n-\t\treturn result ? priv->status : -ETIMEDOUT;\n+\t\tif (!result)\n+\t\t\treturn -ETIMEDOUT;\n+\t\tif (priv->is_read)\n+\t\t\tmemcpy(data->block, priv->data_buf, priv->len + 1);\n+\t\treturn priv->status;\n \t}\n \n \tfor (i = 1; i <= len; i++) {\n"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ac30dde367d9",
+   "hash": "555d451172b8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9261f1160251",
+   "hash": "185941d746b7"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64191",
+   "commit": "6036b5067a81",
+   "title": "i2c: stub: Reject I2C block transfers with invalid length",
+   "cvss": "7.8"
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "3051cd060fa4",
+   "title": "i2c: smbus: reject oversized block transfers in the common path",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64188",
+   "commit": "d00c953a8f69",
+   "title": "net: qualcomm: rmnet: fix endpoint use-after-free in rmnet_dellink()",
+   "cvss": "7.8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b358d4d7a899",
+   "hash": "9b1098940f58"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "913cde7b8708",
+   "hash": "8df5ca608bd7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ae3dee202049",
+   "hash": "a9a9fd308842"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "846f262d355c",
+   "hash": "2f2265290233"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "68b46277bb2d",
+   "hash": "98754bb28935"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "954669f169fd",
+   "hash": "f8a5ab05e843"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3043fbc9f98b",
+   "hash": "faa7098a8893"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b647d2a74d9a",
+   "hash": "9637d5a5d0e7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f57f70bc2524",
+   "hash": "3c42ca116faa"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-45840",
+   "commit": "2091c6aa0df6",
+   "title": "openvswitch: cap upcall PID array size and pre-size vport replies",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "654e330b64d3",
+   "hash": "97d948a16d34"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "acbe0173521d",
+   "hash": "2b4d29670870"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "dc114a2f3ee0",
+   "hash": "e97d0c6ece6f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "570cbdc4ec9c",
+   "hash": "cc46193c11b2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fb6565ecbdef",
+   "hash": "f7e4a95653a5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3a337bfb0528",
+   "hash": "3ef1241ef973"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-23396",
+   "commit": "c73bb9a2d33b",
+   "title": "wifi: mac80211: fix NULL deref in mesh_matches_local()",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-45842",
+   "commit": "e76607442d5b",
+   "title": "slip: reject VJ receive packets on instances with no rstate array",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "967e7cf940ce",
+   "hash": "51b5c6e77077"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "03765f8567a2",
+   "hash": "df9e0c47f373"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-23397",
+   "commit": "dbdfaae96096",
+   "title": "nfnetlink_osf: validate individual option lengths in fingerprints",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "913973ea1d98",
+   "hash": "2512103f13ff"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a75b8f3fe5fd",
+   "hash": "a4fdd4d41f73"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0a1b5d1dcb03",
+   "hash": "8c935fabc7e3"
+  },
+  {
+   "view": "patched",
+   "cve": "",
+   "commit": "3b08fed5b7e0",
+   "title": "netfilter: nf_conntrack_reasm: guard mac_header adjustment after IPv6 defrag",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3c5dbb1f5cc6",
+   "hash": "281e9b0a0452"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-45844",
+   "commit": "1e8e3f449b1e",
+   "title": "netfilter: arp_tables: fix IEEE1394 ARP payload parsing",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a8362046bbfc",
+   "hash": "89061c5fcf88"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-23439",
+   "commit": "b3a6df291fec",
+   "title": "udp_tunnel: fix NULL deref caused by udp_sock_create6 when CONFIG_IPV6=n",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-23398",
+   "commit": "614aefe56af8",
+   "title": "icmp: fix NULL pointer dereference in icmp_tag_validation()",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-31420",
+   "commit": "fa6e24963342",
+   "title": "bridge: mrp: reject zero test interval to avoid OOM panic",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64537",
+   "commit": "f3e02edd8322",
+   "title": "bridge: cfm: reject invalid CCM interval at configuration time",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "19671d39079d",
+   "hash": "3ce19be16b54"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4bff713b9fed",
+   "hash": "25cfe1ab65ce"
+  },
+  {
+   "view": "processing",
+   "bug_id": "54667a1982ee",
+   "title": "xfrm: espintcp: check for NULL dev in handle_esp()",
+   "lore": "",
+   "patch": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-64411",
+   "commit": "a622d2e9608c",
+   "title": "netfilter: ebtables: terminate table name before find_table_lock()",
+   "cvss": "7.1"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cc4d81eb33d6",
+   "hash": "c06cb771f94a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4f655d3909d3",
+   "hash": "b00452bee8e8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c0eece78b4ae",
+   "hash": "ea1fe6bf7bc4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "08bb23167e81",
+   "hash": "fdd5d95363bb"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-31546",
+   "commit": "605b52497bf8",
+   "title": "net: bonding: fix NULL deref in bond_debug_rlb_hash_show",
+   "cvss": ""
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "01501439fcd1",
+   "hash": "8cdc2a62b585"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-23277",
+   "commit": "0cc0c2e661af",
+   "title": "net/sched: teql: fix NULL pointer dereference in iptunnel_xmit on TEQL slave xmit",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2025-40083",
+   "commit": "dd831ac8221e",
+   "title": "net/sched: sch_qfq: Fix null-deref in agg_dequeue",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2025-38477",
+   "commit": "5e28d5a3f774",
+   "title": "net/sched: sch_qfq: Fix race condition on qfq_aggregate",
+   "cvss": "7.8"
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2025-68325",
+   "commit": "9fefc78f7f02",
+   "title": "net/sched: sch_cake: Fix incorrect qlen reduction in cake_drop",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
+   "cve": "CVE-2026-31419",
+   "commit": "2884bf72fb8f",
+   "title": "net: bonding: fix use-after-free in bond_xmit_broadcast()",
+   "cvss": "7.8"
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" width="400" height="260">
+  <rect width="400" height="260" fill="#000000"/>
+
+  <!-- left ring -->
+  <circle cx="125" cy="130" r="69" fill="none" stroke="#ffffff" stroke-width="29"/>
+
+  <!-- white gap: concentric with the O, radius larger than the O's outer edge
+       (95) so it carves the channel that opens the left ring into a C -->
+  <circle cx="273" cy="130" r="110" fill="#000000"/>
+
+  <!-- right ring: the closed O. fill="none" so the gap circle above is the only
+       thing controlling the white cut into the left ring -->
+  <circle cx="273" cy="130" r="69" fill="none" stroke="#ffffff" stroke-width="29"/>
+</svg>

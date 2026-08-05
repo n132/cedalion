@@ -1,0 +1,60 @@
+# bugs.json is COMMITTED, deliberately. It is derived rather than source, which
+# normally argues for ignoring it, but it is also the register itself: a clone
+# without it is a page with nothing to draw, and the point of publishing this is
+# that the state of the work is checkable by anyone.
+#
+# What that publishes is bounded and enforced, not assumed. A Vulnerable row —
+# the great majority — carries an opaque bug id and a fingerprint of its report
+# and nothing else: no path, no function, no description, no crash text, no
+# reproducer. extract.py's check_published() refuses to write a row carrying
+# more, and refuses a Vulnerable value that is not an opaque digest, so it holds
+# on every extraction rather than having been reviewed once. Processing and
+# Patched rows carry titles, message-ids, diffs and CVE numbers already public
+# on lore and in the kernel's own history.
+#
+# The half-written file the extractor renames over is not source at all.
+bugs.json.tmp
+
+# Credentials and keys. Nothing here needs any today; these patterns exist so
+# that an .env or a key dropped in during debugging cannot be committed by a
+# reflexive `git add -A`.
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.jks
+id_rsa*
+id_ed25519*
+*.token
+*_token
+*.secret
+secrets.*
+credentials.*
+.netrc
+.htpasswd
+service-account*.json
+
+# Logs — they record the IPs of everyone who visited.
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editor / OS noise
+.DS_Store
+*.swp
+*~
+.idea/
+.vscode/
+
+# Static build for GitHub Pages. Assembled by build.py from web/ and bugs.json,
+# so it is derived rather than source — and it contains a copy of bugs.json,
+# which is ignored right above for good reason. Publishing means adding it
+# deliberately with `git add -f docs`, which is the point.
+docs/

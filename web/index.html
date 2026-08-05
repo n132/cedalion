@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cedalion</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+
+<div class="topbar">
+  <div class="wrap">
+    <!-- No nav: there is one page, and a bar of links pointing at the page you
+         are already on is a signpost to here. What stands against the right
+         edge instead is what the mark cannot say: the project's name does not
+         name its subject, and somebody arriving cold reads this before the
+         table. -->
+    <a class="brand" href="."><img src="logo-light.svg" alt="Cedalion"></a>
+    <span class="tag">Linux kernel</span>
+    <!-- The one link off this page, and a mark rather than a word: the bar
+         carries the register's name and what the register is, and a third
+         thing spelled out across it would read as the nav that is
+         deliberately not there. The path is inline for the same reason the
+         logos are files and nothing else is: no request leaves the page to
+         draw it. -->
+    <a class="gh" href="https://github.com/n132/cedalion"
+       target="_blank" rel="noopener" aria-label="Cedalion on GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.65 7.65 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+    </a>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="lead" id="bugs">
+    <div class="toolbar">
+      <div class="tabs" id="tabs">
+        <!-- Ordered by how far a finding has got, furthest first: the view the
+             page opens on is the one at the left, and the two after it are what
+             is still in flight. -->
+        <button type="button" data-view="patched" class="on">Patched<span class="n" id="n-patched"></span></button>
+        <button type="button" data-view="processing">Processing<span class="n" id="n-processing"></span></button>
+        <button type="button" data-view="vulnerable">Vulnerable<span class="n" id="n-vulnerable"></span></button>
+      </div>
+      <!-- The glyph is what makes a bare input read as a search without a
+           label over it, and the key hint is there because a register you
+           filter all day is worth one keystroke. Both are inside the field and
+           neither takes the click: it belongs to the input. -->
+      <span class="search">
+        <svg class="glyph" viewBox="0 0 16 16" aria-hidden="true">
+          <circle cx="7" cy="7" r="4.4"/><path d="M10.4 10.4 14 14"/>
+        </svg>
+        <input type="search" id="q" placeholder="filter…"
+               autocomplete="off" spellcheck="false" aria-label="filter rows">
+        <kbd>/</kbd>
+      </span>
+      <!-- Sorting, for the phone. A wide screen sorts by clicking a column
+           head; the card view has no heads to click, and dropping sort there
+           would leave the Vulnerable list in file order with no way to rank
+           it. Same sortKey and sortDir as the heads drive, so the two controls
+           can never disagree. Hidden on a wide screen, where the heads say it
+           better and a second control would only be a second way to say it. -->
+      <span class="sort">
+        <select id="sortby" aria-label="sort rows by column"></select>
+        <button type="button" id="sortdir" aria-label="reverse sort order">▲</button>
+      </span>
+    </div>
+    <!-- Two boxes, not one: the outer is the well the table is set into and
+         stays put, the inner is what scrolls. Scrolling the well itself would
+         carry its tint and its inner shadow up with the rows, and would pin the
+         sticky header to the top of the padding rather than to the table. -->
+    <div class="well">
+      <div class="tablescroll">
+        <table id="tbl">
+          <thead id="head"></thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <div class="empty" id="empty" hidden>Nothing matches that filter.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- #foot is a span inside the footer rather than the footer itself:
+       cedalion.js writes the extraction date into it with textContent, which
+       would otherwise wipe the note standing with it. It comes after the note:
+       what the register says about itself is the point, and the stamp saying
+       when it was last built closes the page. -->
+  <footer>
+    <!-- Three claims, each made once and in one place. They used to overlap:
+         the security-boundary test was the whole of Scope and again the reason
+         a CVE was not asked for, and why the register is open at all was
+         argued in Disclosure and then again in Patching. Each note now answers
+         one question the table raises — what counts, what is shown, how a fix
+         is made — and answers no part of another. Set side by side rather than
+         stacked: each keeps a column's measure instead of running the whole
+         window. Patching is last because it is the one addressed to the
+         reader. -->
+    <div class="notes">
+      <div>
+        <h3>Scope</h3>
+        <p>
+          A finding counts when it crosses a security boundary in a stock
+          distribution configuration. Root-only and generic bugs do not, and
+          the bar sits above what the CVE process applies: no CVE is requested
+          below it, though one assigned to the patch commit is carried anyway.
+          Every finding has a reproducible PoC.
+        </p>
+      </div>
+      <div>
+        <h3>Disclosure</h3>
+        <p>
+          Patched and in-process issues are opened; an unfixed one carries only
+          its identifier and the fingerprint of its report. No PoC, environment
+          or report is published yet. We are working on a responsible way to
+          open them, similar to how syzbot discloses what it finds.
+        </p>
+      </div>
+      <div>
+        <h3>Patching</h3>
+        <p>
+          LLMs assist, but nothing is sent until the human who signs it off has
+          understood the bug, validated the patch and tested the patched kernel.
+          We follow the community's documented process, and condemn any use of
+          this register to send LLM-generated patches no human has validated.
+          Our thanks to the maintainers, reviewers and contributors who keep
+          that process running.
+        </p>
+      </div>
+    </div>
+    <span id="foot"></span>
+  </footer>
+</div>
+
+<script src="cedalion.js"></script>
+<script>
+let DATA = [];
+// Patched is what the page opens on: it is the view where the work has an
+// outcome to show, and the only one whose rows carry a CVE, a commit and a
+// title. The other two are what is still in flight. A URL with no #hash lands
+// here; the tab still lives in the hash, so any view is linkable.
+const DEFAULT_VIEW = "patched";
+let view = DEFAULT_VIEW;
+let sortKey = null, sortDir = 1;
+
+// Each view answers a different question, so each has its own columns — and
+// each row carries only its own, which is why a Vulnerable row has no patch
+// title and a Patched one has no id.
+// In the order the tabs stand, so the two say the same thing.
+const COLUMNS = {
+  // The same field under the same name in both views that carry it: it is the
+  // subject the patch went out under before it lands and the subject it landed
+  // with after, which is one thing at two moments, not two things.
+  patched:    [["cve", "cve"], ["commit", "patch commit"],
+               ["title", "patch title"], ["cvss", "cvss"]],
+  processing: [["bug_id", "bug id"], ["title", "patch title"],
+               ["lore", "lore links"], ["patch", "patch"]],
+  vulnerable: [["bug_id", "bug id"], ["hash", "hash"],
+               ["kernel_commit", "kernel commit"], ["config", "config"],
+               ["poc", "poc"], ["sanitizer", "sanitizer report"],
+               ["lore", "lore links"]],
+};
+
+// Columns whose answer is the same for every row in the view, so the answer
+// lives here rather than on the rows. A Vulnerable finding has no artifacts
+// published and no posting to point at — that is what the view means, not a
+// fact about any one row — and writing the word onto all 1,124 of them would
+// put the same five words in bugs.json 5,620 times to say nothing. Keyed by
+// view because Processing has a real `lore` column and this must not shadow it.
+//
+// They are named one per artifact rather than one "artifacts" column because
+// they are released separately and will land separately: the commit the bug was
+// found on, the CONFIG that builds it, the reproducer, and the sanitizer report
+// it trips. A single column would have to go from pending to done in one step.
+const PENDING = { vulnerable: new Set(
+  ["kernel_commit", "config", "poc", "sanitizer", "lore"]) };
+const isPending = k => PENDING[view]?.has(k);
+
+// Processing rows whose diff is open, by index into DATA. Kept out of the DOM
+// because the table is rebuilt from scratch on every filter and sort, and a
+// box you opened should still be open after you type in the search field.
+const open = new Set();
+
+const DASH = '<span class="none">—</span>';
+
+// Standard CVSS bands. The kernel CNA leaves most of its CVEs unscored, so a
+// blank score is the common case rather than a fault.
+function sevClass(score) {
+  const n = parseFloat(score);
+  if (!(n > 0)) return "";
+  return n >= 9 ? "sev-critical" : n >= 7 ? "sev-high" : n >= 4 ? "sev-medium" : "sev-low";
+}
+
+// The message-id the extractor read off the local lore mirror, which is the
+// posting's permanent address. Where the mirror had no copy the row carries no
+// id and this falls back to what the page always did before: a search for the
+// exact title the patch went out under.
+function loreLink(b) {
+  if (b.lore)
+    return `<a class="ext" href="https://lore.kernel.org/all/${encodeURIComponent(b.lore)}/"
+               target="_blank" rel="noopener" title="${esc(b.lore)}">lore ↗</a>`;
+  if (!b.title) return DASH;
+  const url = "https://lore.kernel.org/all/?q=" + encodeURIComponent('"' + b.title + '"');
+  return `<a class="ext" href="${esc(url)}" target="_blank" rel="noopener"
+             title="not in the local mirror; search lore for this title">search ↗</a>`;
+}
+
+// A diff, coloured the way one is read: the +/- lines are the change, @@ says
+// where, and the file headers are neither. Every line is its own block and
+// carries its own newline, so a blank line in the patch still occupies one.
+function diffHTML(text) {
+  return text.split("\n").map(line => {
+    const k = line.startsWith("diff --git") || line.startsWith("index ") ||
+              line.startsWith("+++") || line.startsWith("---") ? "d-meta"
+            : line.startsWith("@@") ? "d-hunk"
+            : line[0] === "+" ? "d-add"
+            : line[0] === "-" ? "d-del" : "";
+    return `<span class="${k}">${esc(line)}\n</span>`;
+  }).join("");
+}
+
+// What goes in the cell, and the class its <td> takes: [class, html]. Split
+// from the <td> itself because the card view needs the column's head written
+// onto every cell as data-label — a table prints a head once, a list of cards
+// has to repeat it — and threading that through eight return statements is how
+// one cell ends up without its label.
+function cellHTML(k, b) {
+  if (isPending(k)) return ["", `<span class="pending">pending</span>`];
+  const v = b[k];
+  switch (k) {
+    case "title":
+      return ["desc", v ? esc(v) : DASH];
+    case "lore":
+      return ["", loreLink(b)];
+    // The diff itself is in a row of its own below this one; this is the
+    // handle that shows it. A row with no patch has nothing to open — the
+    // mirror has no copy of the posting — and gets a dash rather than a
+    // button that would do nothing.
+    case "patch":
+      if (!v) return ["", DASH];
+      return ["", `<button type="button" class="disc" data-i="${b.i}"
+        aria-expanded="${open.has(b.i)}">${open.has(b.i) ? "hide" : "diff"}</button>`];
+    case "cvss":
+      return ["", v ? `<span class="sev ${sevClass(v)}">${esc(v)}</span>` : DASH];
+    case "cve":
+      if (!v) return ["", DASH];
+      return ["mono", `<a class="ext" target="_blank" rel="noopener"
+        href="https://nvd.nist.gov/vuln/detail/${encodeURIComponent(v)}"
+        >${esc(v)}</a>`];
+    case "commit":
+      if (!v) return ["", DASH];
+      return ["mono", `<a class="ext" target="_blank" rel="noopener"
+        href="https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=${esc(v)}"
+        >${esc(v)}</a>`];
+    default:
+      return ["mono", cell(v)];
+  }
+}
+
+function renderCell([k, label], b) {
+  const [cls, html] = cellHTML(k, b);
+  return `<td${cls ? ` class="${cls}"` : ""} data-label="${esc(label)}">${html}</td>`;
+}
+
+// The patch column holds a diff, and ordering rows by the text of one puts
+// them in the alphabetical order of the first file each touches, which is not
+// an order anybody wants. Its header says so by not offering to be clicked.
+const NOSORT = new Set(["patch"]);
+
+function renderHead() {
+  document.getElementById("head").innerHTML =
+    `<tr><th class="idx">#</th>` +
+    COLUMNS[view].map(([k, label]) => {
+      // A pending column is the same word all the way down, so there is
+      // nothing to order by. `lore` is only one of those in Vulnerable —
+      // in Processing it is a real message-id and sorts by send date.
+      if (NOSORT.has(k) || isPending(k)) return `<th class="fixed">${esc(label)}</th>`;
+      const arrow = sortKey === k ? (sortDir > 0 ? " ▲" : " ▼") : "";
+      return `<th data-key="${k}">${esc(label)}${arrow}</th>`;
+    }).join("") + `</tr>`;
+  document.querySelectorAll("th[data-key]").forEach(th =>
+    th.addEventListener("click", () => {
+      const k = th.dataset.key;
+      sortDir = sortKey === k ? -sortDir : 1;
+      sortKey = k;
+      renderHead(); renderTable();
+    }));
+  renderSort();
+}
+
+// The same choice the column heads offer, as a control that survives them:
+// the card view the page falls back to on a phone has no heads to click. It
+// offers exactly the columns a head would — a pending column is one word all
+// the way down, and a diff sorts by the first file it touches — and reading
+// from sortKey rather than its own state means a header click on a wide screen
+// is already reflected here. Redrawn by renderHead, so it follows both.
+function renderSort() {
+  const sel = document.getElementById("sortby");
+  sel.innerHTML = `<option value="">default order</option>` +
+    COLUMNS[view].filter(([k]) => !NOSORT.has(k) && !isPending(k))
+      .map(([k, label]) => `<option value="${esc(k)}">${esc(label)}</option>`).join("");
+  sel.value = sortKey || "";
+  const dir = document.getElementById("sortdir");
+  dir.textContent = sortDir > 0 ? "▲" : "▼";
+  // Nothing to reverse while the view is in its own order, and the arrow would
+  // otherwise claim a direction the rows are not in.
+  dir.disabled = !sortKey;
+}
+
+function renderTable() {
+  const q = document.getElementById("q").value.trim().toLowerCase();
+  const cols = COLUMNS[view];
+  let rows = DATA.filter(b => b.view === view);
+  const total = rows.length;
+  // Only the columns on screen are searchable — they are all a row holds. On
+  // Processing that includes the patch, so typing a function name finds the
+  // row whose diff touches it even before the box is open.
+  // A column is searched by what it shows, which for a pending one is a word
+  // the row does not carry.
+  if (q) rows = rows.filter(b => cols.some(([k]) =>
+    (isPending(k) ? "pending" : String(b[k] || "")).toLowerCase().includes(q)));
+  // Worst score first, then assigned CVEs ahead of the rest, then by title.
+  // Severity is what people come here to rank by; a CVE only breaks ties among
+  // rows the score already called equal, and the title settles the rest so the
+  // order does not drift between extractions. Unscored sorts below every score
+  // rather than above — the kernel CNA leaves most CVEs unscored, and "no
+  // score" is not "harmless". Clicking a header replaces all of it.
+  if (!sortKey && view === "patched")
+    rows = rows.slice().sort((a, b) =>
+      (parseFloat(b.cvss) || -1) - (parseFloat(a.cvss) || -1) ||
+      (b.cve ? 1 : 0) - (a.cve ? 1 : 0) ||
+      String(a.title || "").localeCompare(String(b.title || "")));
+  // Processing: the rows carrying a diff first, then by title. A row with a
+  // patch is one you can read here rather than having to leave for lore, so it
+  // is the one worth putting at the top; below that, title order keeps a
+  // subsystem's patches together. An untitled row sorts last within its group
+  // rather than first, where a row of dashes reads as a fault in the page.
+  else if (!sortKey && view === "processing")
+    rows = rows.slice().sort((a, b) =>
+      (b.patch ? 1 : 0) - (a.patch ? 1 : 0) ||
+      (a.title ? 0 : 1) - (b.title ? 0 : 1) ||
+      String(a.title || "").localeCompare(String(b.title || "")));
+  // cvss sorts as a number — as text, 10 lands between 1 and 2.
+  else if (sortKey === "cvss") rows = rows.slice().sort((a, b) =>
+    sortDir * ((parseFloat(a.cvss) || -1) - (parseFloat(b.cvss) || -1)));
+  else if (sortKey) rows = rows.slice().sort((a, b) =>
+    sortDir * String(a[sortKey] || "").localeCompare(String(b[sortKey] || "")));
+
+  // Banding is a class rather than :nth-child(even), because a Processing row
+  // is followed by the row holding its diff and that row must not take a turn
+  // in the stripe — with it counted, every row below the first patch was
+  // shaded the wrong way.
+  document.getElementById("rows").innerHTML = rows.map((b, i) => {
+    const tr = `
+    <tr class="${i % 2 ? "alt" : ""}">
+      <td class="idx">${i + 1}</td>
+      ${cols.map(c => renderCell(c, b)).join("")}
+    </tr>`;
+    if (!b.patch) return tr;
+    return tr + `
+    <tr class="patchrow" data-i="${b.i}"${open.has(b.i) ? "" : " hidden"}>
+      <td class="idx"></td>
+      <td colspan="${cols.length}"><pre class="diff">${diffHTML(b.patch)}</pre></td>
+    </tr>`;
+  }).join("");
+  document.getElementById("empty").hidden = rows.length > 0;
+  // With the heading gone the tab carries the count. While a filter is on it
+  // shows what matched, which is the number you actually want then.
+  document.getElementById("n-" + view).textContent =
+    q ? `${num(rows.length)}/${num(total)}` : num(total);
+}
+
+function setView(v) {
+  if (!COLUMNS[v]) v = DEFAULT_VIEW;
+  view = v;
+  sortKey = null; sortDir = 1;   // columns changed; the old sort key may be gone
+  // Which column absorbs the width the page has to spare depends on the view,
+  // and only the stylesheet needs to know — it reads this.
+  document.getElementById("tbl").dataset.view = v;
+  // A filter reaches the columns on screen and nothing else, so the field says
+  // which ones those are rather than leaving you to guess what it searches.
+  document.getElementById("q").placeholder =
+    "filter " + COLUMNS[v].map(([, label]) => label).join(", ") + "…";
+  document.querySelectorAll("#tabs button").forEach(btn =>
+    btn.classList.toggle("on", btn.dataset.view === v));
+  // The tab lives in the URL, so a view can be linked and survives a reload.
+  if (location.hash.slice(1) !== v) history.replaceState(null, "", "#" + v);
+  renderHead(); renderTable();
+}
+
+document.getElementById("tabs").addEventListener("click", e => {
+  const btn = e.target.closest("button[data-view]");
+  if (btn) setView(btn.dataset.view);
+});
+// Show or hide one diff without redrawing the table: rebuilding it would throw
+// away where you had scrolled to, which on a box a hundred lines tall is the
+// thing you were just looking at.
+document.getElementById("rows").addEventListener("click", e => {
+  const btn = e.target.closest("button.disc");
+  if (!btn) return;
+  const i = Number(btn.dataset.i);
+  const row = document.querySelector(`tr.patchrow[data-i="${i}"]`);
+  if (!row) return;
+  const show = row.hidden;
+  row.hidden = !show;
+  if (show) open.add(i); else open.delete(i);
+  btn.textContent = show ? "hide" : "diff";
+  btn.setAttribute("aria-expanded", show);
+});
+
+document.getElementById("sortby").addEventListener("change", e => {
+  sortKey = e.target.value || null;
+  sortDir = 1;
+  renderHead(); renderTable();
+});
+document.getElementById("sortdir").addEventListener("click", () => {
+  if (!sortKey) return;
+  sortDir = -sortDir;
+  renderHead(); renderTable();
+});
+
+document.getElementById("q").addEventListener("input", renderTable);
+// The field is one key away from anywhere on the page, and Escape is the way
+// back out: it drops the filter first, and lets go of the field once there is
+// no filter left to drop.
+addEventListener("keydown", e => {
+  const q = document.getElementById("q");
+  const typing = e.target instanceof HTMLInputElement;
+  if (e.key === "/" && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) {
+    e.preventDefault();
+    q.focus(); q.select();
+  } else if (e.key === "Escape" && e.target === q) {
+    if (q.value) { q.value = ""; renderTable(); } else q.blur();
+  }
+});
+addEventListener("hashchange", () => setView(location.hash.slice(1)));
+
+load(d => {
+  DATA = d.bugs || [];
+  // A row's place in the file, so an open diff can be named by something that
+  // survives sorting and filtering. Not a published field — the extractor does
+  // not emit it, the browser adds it here.
+  DATA.forEach((b, i) => { b.i = i; });
+  const counts = d.views || {};
+  for (const v of Object.keys(COLUMNS)) {
+    document.getElementById("n-" + v).textContent = num(counts[v] || 0);
+  }
+  setView(location.hash.slice(1) || DEFAULT_VIEW);
+});
+</script>
+</html>
