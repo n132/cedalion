@@ -312,7 +312,10 @@ function renderTable() {
   // Processing that includes the patch, so typing a function name finds the
   // row whose diff touches it even before the box is open.
   // A column is searched by what it shows, which for a pending one is a word
-  // the row does not carry.
+  // the row does not carry. The two Vulnerable digests are the exception, and
+  // in the useful direction: they are held whole and drawn cut, so pasting a
+  // full sha256 of a report.md finds its row as well as typing the 12 hex on
+  // screen does.
   if (q) rows = rows.filter(b => cols.some(([k]) =>
     (isPending(k) ? "pending" : String(b[k] || "")).toLowerCase().includes(q)));
   // Worst score first, then assigned CVEs ahead of the rest, then by title.

@@ -480,10 +480,20 @@ def report_path(hash_id: str) -> str | None:
     return None
 
 
-# Every published identifier is cut to this. 12 hex is the length the kernel
-# uses to cite a commit, and it is applied to the bug id and the report hash too
-# so the three columns read as one kind of thing. Verified collision-free across
+# How long an identifier reads on the page: 12 hex, the length the kernel uses
+# to cite a commit, applied to the bug id, the report hash and the fix commit
+# alike so the columns read as one kind of thing. Verified collision-free across
 # the current set: 1238 bug ids and 1208 report hashes stay distinct at 12.
+#
+# Processing's bug id and Patched's commit are cut HERE, so what is published is
+# what is shown. A Vulnerable row is the exception: it carries both values in
+# full and the page cuts them for display. Those two fields are the entire row —
+# with no title, no path and no description beside them, a truncated value is
+# the only thing a reader has, and 12 hex is not enough to do the one check the
+# fingerprint exists for (sha256 a report.md and compare) or to look an id up by
+# anything but a prefix search. Publishing the full digest costs nothing the
+# prefix did not already cost: both confirm a report you already hold, and
+# neither yields one you do not.
 ID_LEN = 12
 
 
@@ -561,7 +571,12 @@ PUBLISHED = {
 # description. The other two views describe patches that are already public on
 # lore, which is why only this one is checked for shape as well as for shape's
 # absence.
-_OPAQUE = re.compile(r"[0-9a-f]{0,%d}" % ID_LEN)
+#
+# The bound is a sha256's 64 hex, the longest digest this view carries, and not
+# ID_LEN: these two fields are published whole and cut by the page. It still
+# does the job the check is here for, which is to catch a value that is not a
+# digest at all — a title, a path, a sentence — rather than to measure one.
+_OPAQUE = re.compile(r"[0-9a-f]{0,64}")
 
 
 def check_published(bugs: list) -> None:
@@ -693,10 +708,13 @@ def collect() -> dict:
             # from it dated the scan and not the finding. There is no column in
             # the database that dates the finding itself, so rather than publish
             # a number that reads like one and is not, the view shows none.
+            #
+            # Both in full, unlike the other two views: see ID_LEN. The page
+            # shows the same 12 hex it always did.
             bugs.append({
                 "view": view,
-                "bug_id": short(hash_id),
-                "hash": short(report_hash),
+                "bug_id": hash_id,
+                "hash": report_hash,
             })
         elif view == VIEW_PROCESSING:
             subject = patch_subject(notes)
@@ -720,9 +738,10 @@ def collect() -> dict:
                 postings_seen.add(posting[0])
             bugs.append({
                 "view": view,
-                # The same identifier a Vulnerable row publishes, so a finding
-                # keeps its name as it moves between the tabs and a row here
-                # can still be looked up in the manager.
+                # The same identifier a Vulnerable row publishes — cut, where
+                # that one is published whole, but to the length both are drawn
+                # at — so a finding keeps its name as it moves between the tabs
+                # and a row here can still be looked up in the manager.
                 "bug_id": short(hash_id),
                 # The patch's own title, taken from the posting where the
                 # mirror has it — the note is typed by hand and drifts (one

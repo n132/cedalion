@@ -5,16 +5,63 @@ const esc = s => String(s ?? "").replace(/[&<>"]/g, c =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const num = n => Number(n || 0).toLocaleString("en-US");
 
-// Values arrive already cut to 12 by the extractor, so there is nothing to
-// truncate here and the copied text is exactly what is on screen.
+// Identifiers read as 12 hex, the length the kernel cites a commit at. Most
+// arrive that long already; a Vulnerable row's bug id and report hash arrive
+// whole, because those two fields are the entire row and a reader who wants to
+// check the fingerprint against a report.md needs all of it. So the cut happens
+// here, and what is copied — and what the tooltip shows — is the full value
+// rather than the shortened one on screen.
+const SHOWN = 12;
+
 function cell(v) {
   if (!v) return '<span class="none">—</span>';
-  return `<span class="copy" title="click to copy" data-full="${esc(v)}">${esc(v)}</span>`;
+  const s = String(v), cut = s.slice(0, SHOWN);
+  const title = cut === s ? "click to copy" : `${s} — click to copy`;
+  return `<span class="copy" title="${esc(title)}" data-full="${esc(s)}">${esc(cut)}</span>`;
 }
 
+// The clipboard write, by whichever route the page has. The Clipboard API is
+// not merely blocked outside a secure context — navigator.clipboard is not
+// defined at all — so on the register served over plain http by app.py the
+// `?.` call used to evaluate to undefined and do nothing, which looked exactly
+// like a copy that worked. Pages is https and had it; the LAN copy did not.
+// Resolves to false only when nothing reached the clipboard.
+function copyText(text) {
+  if (navigator.clipboard?.writeText)
+    return navigator.clipboard.writeText(text).then(() => true, () => selectionCopy(text));
+  return Promise.resolve(selectionCopy(text));
+}
+
+// The pre-Clipboard-API way, and the only one that works on http: put the text
+// in a field, select it, and let the browser copy the selection. Off-screen
+// rather than hidden — display:none and visibility:hidden both leave nothing
+// to select — and readonly so a phone does not raise its keyboard for it.
+function selectionCopy(text) {
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.setAttribute("readonly", "");
+  ta.style.cssText = "position:fixed;top:0;left:-9999px;opacity:0";
+  document.body.appendChild(ta);
+  ta.select();
+  let ok = false;
+  try { ok = document.execCommand("copy"); } catch { ok = false; }
+  ta.remove();
+  return ok;
+}
+
+// A hash is 12 identical-looking hex either way, so a copy that worked and a
+// copy that did not look the same on screen unless the page says which. It
+// says so by inverting the value for a moment, and says nothing at all when
+// the clipboard refused — better a click that visibly did nothing than a
+// confirmation of something that did not happen.
 document.addEventListener("click", e => {
   const el = e.target.closest(".copy");
-  if (el) navigator.clipboard?.writeText(el.dataset.full);
+  if (!el) return;
+  copyText(el.dataset.full).then(ok => {
+    if (ok === false) return;
+    el.classList.add("copied");
+    setTimeout(() => el.classList.remove("copied"), 900);
+  });
 });
 
 // One fetch of the one published document.

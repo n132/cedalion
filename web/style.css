@@ -321,6 +321,15 @@ tr.patchrow:hover { background: none; }
 .none { color: var(--text-3); }
 .copy { cursor: pointer; border-bottom: 1px dotted transparent; }
 .copy:hover { border-bottom-color: var(--text-3); }
+/* The moment after a click, so a copy that worked can be told from one that
+   did not. The same two colours turned over rather than a third one, and the
+   ring stands in for padding the inline box cannot have — both it and the
+   background are outside the layout, so nothing on the row moves. */
+.copy.copied {
+  background: var(--text); color: var(--surface);
+  border-bottom-color: transparent; border-radius: 2px;
+  box-shadow: 0 0 0 2px var(--text);
+}
 .empty { padding: 34px 14px; color: var(--text-3); }
 /* Close under the rule, with room left at the very bottom so the last line of
    the page is not flush against the window edge. The note and the stamp stack:
