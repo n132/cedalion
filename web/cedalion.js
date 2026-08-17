@@ -71,6 +71,13 @@ async function load(render) {
   // there is no server to answer /api/bugs. app.py routes /bugs.json to the
   // same document, so one fetch covers both.
   const d = await (await fetch("bugs.json")).json();
+  // Which artifacts are disclosed, if any. Absent until the first bug is
+  // published, and a 404 is the normal state rather than a fault -- every
+  // column simply stays pending.
+  try {
+    const r = await fetch("artifacts.json");
+    d.artifacts = r.ok ? await r.json() : {};
+  } catch { d.artifacts = {}; }
   const foot = document.getElementById("foot");
   if (foot) foot.textContent = `Data extracted ${d.generated_at || "—"}`;
   render(d);

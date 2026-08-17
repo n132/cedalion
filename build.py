@@ -42,7 +42,7 @@ OUT = os.path.join(HERE, "docs")
 # Everything the page loads. Named rather than globbed, for the same reason
 # app.py names its routes: a stray file in web/ should not become published by
 # having been dropped there.
-ASSETS = ("index.html", "style.css", "cedalion.js",
+ASSETS = ("index.html", "style.css", "cedalion.js", "bugpage.js",
           "logo.svg", "logo-light.svg", "favicon.svg")
 
 
@@ -60,6 +60,18 @@ def main() -> None:
             sys.exit(f"missing asset: {src}")
         shutil.copy2(src, os.path.join(OUT, name))
     shutil.copy2(data, os.path.join(OUT, "bugs.json"))
+
+    # Disclosed artifacts. Nothing reaches docs/ that publish.py did not name
+    # in artifacts.json -- the tree is copied, but the index is what the
+    # request path consults, so an unlisted stray file is unreachable.
+    index = os.path.join(HERE, "artifacts.json")
+    if os.path.isfile(index):
+        shutil.copy2(index, os.path.join(OUT, "artifacts.json"))
+        src = os.path.join(HERE, "published")
+        if os.path.isdir(src):
+            dst = os.path.join(OUT, "a")
+            shutil.rmtree(dst, ignore_errors=True)
+            shutil.copytree(src, dst)
 
     # Pages runs Jekyll over the site unless told not to, and Jekyll drops any
     # file or directory whose name starts with an underscore. Nothing here does

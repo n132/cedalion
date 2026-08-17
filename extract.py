@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Extract the Cedalion bug list from claudeManager's data. READ-ONLY.
+"""Extract the Cedalion bug list from the triage database. READ-ONLY.
 
-This script never writes to claudes.db and never touches a bug's artifacts —
+This script never writes to that database and never touches a bug's artifacts —
 it opens the database with mode=ro and only ever reads report.md files. Its one
 output is bugs.json next to this file. It reads three other things, all of them
 local and all of them read-only: the kernel CVE corpus for a base score, the
@@ -39,9 +39,20 @@ import time
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "bugs.json")
 
-DB = os.environ.get("CEDALION_DB", "/home/n132/KFC/claudeManager/claudes.db")
-TRIAGED_DIR = os.environ.get("CEDALION_TRIAGED", "/home/n132/KFC/Triaged")
-TRIAGE_DIR = os.environ.get("CEDALION_TRIAGE", os.path.expanduser("~/Triage"))
+# Every path this reads comes from the environment. There are no defaults: a
+# default is a description of one machine's layout, and this file is public.
+# See the README for the variables and what each one points at.
+def path(var: str) -> str:
+    v = os.environ.get(var)
+    if not v:
+        sys.exit(f"{var} is not set -- see the README for the paths "
+                 f"extract.py needs")
+    return os.path.expanduser(v)
+
+
+DB = path("CEDALION_DB")
+TRIAGED_DIR = path("CEDALION_TRIAGED")
+TRIAGE_DIR = path("CEDALION_TRIAGE")
 
 # Kernel findings only. The database also carries chrome-v8 and chromium rows
 # from the same pipeline; this register is about the kernel, so other repos are
@@ -74,7 +85,7 @@ SCOOPED_STATE = "Fixed by others"
 # no field that says where a bug came from:
 #
 #   * typed in by hand — a synthetic "manual-" + a 16-hex digest of the
-#     description (see the manual-add endpoint in claudeManager);
+#     description (see the manual-add endpoint in the triage tool);
 #   * from syzbot — named by syzbot's own 40-hex sha1.
 #
 # The pipeline names its own findings with a bare 16-hex digest, so the three
@@ -113,7 +124,7 @@ VIEW_VULNERABLE = "vulnerable"    # still live, nothing sent
 _VIEW_BY_STATE = {
     "Fixed": VIEW_PATCHED,
     "CVE Claimed": VIEW_PATCHED,
-    # "Reported" is claudeManager's term for sent upstream, which is the same
+    # "Reported" is the triage tool's term for sent upstream, which is the same
     # thing as being on lore. There is no separate lore marker in the database
     # to key off, and the local mirror is empty, so this is the signal.
     "Reported": VIEW_PROCESSING,
@@ -131,7 +142,7 @@ PATCHED_STATES = tuple(s for s, v in _VIEW_BY_STATE.items() if v == VIEW_PATCHED
 
 
 # The kernel CVE corpus, one JSON record per CVE, for the CVSS base score.
-CVE_DIR = os.environ.get("CEDALION_CVE_DIR", "/lake/cves/cve/published")
+CVE_DIR = path("CEDALION_CVE_DIR")
 
 # Notes on a Reported bug hold the subject line the patch was posted under —
 # except for a handful that hold a status instead. Those are not subjects.
@@ -157,10 +168,10 @@ def patch_subject(notes: str | None) -> str:
 
 # ------------------------------------------------------------------- lore --
 #
-# The local mirror kept by /lake/lore-fetch/lore.py: each list's public-inbox
+# The local lore mirror at CEDALION_LORE_DB: each list's public-inbox
 # epochs as bare git repos, plus an FTS5 index over the messages in them. Read
 # strictly — this never fetches, never syncs and never writes to the mirror.
-LORE_DB = os.environ.get("CEDALION_LORE_DB", "/lake/lore/lore.db")
+LORE_DB = path("CEDALION_LORE_DB")
 
 # The addresses this project's patches go out from. Subject alone is not enough
 # to identify a posting as ours — it would just as happily match a stranger's
@@ -432,7 +443,7 @@ def fix_commit_of(link: str | None) -> str:
 
 
 # The local kernel clone the fixing commits are resolved against.
-STABLE_REPO = os.path.expanduser(os.environ.get("STABLE_REPO", "~/kernel/stable"))
+STABLE_REPO = path("CEDALION_STABLE_REPO")
 
 
 def commit_title(sha: str, _cache: dict = {}) -> str:
@@ -462,14 +473,14 @@ def commit_title(sha: str, _cache: dict = {}) -> str:
 
 
 def triage_dir_name(hash_id: str) -> str:
-    """Directory name used under ~/Triage/ — mirrors claudeManager's rule."""
+    """Directory name used under CEDALION_TRIAGE — mirrors the triage rule."""
     if hash_id.startswith("manual-"):
         return hash_id
     return hash_id[:16]
 
 
 def report_path(hash_id: str) -> str | None:
-    """Locate a bug's report.md, preferring Triaged/ like the manager does."""
+    """Locate a bug's report.md, preferring CEDALION_TRIAGED."""
     candidates = (
         os.path.join(TRIAGED_DIR, hash_id, "report.md"),
         os.path.join(TRIAGE_DIR, triage_dir_name(hash_id), "Results", "report.md"),
@@ -702,7 +713,7 @@ def collect() -> dict:
         # all. It was written for triage, not for the list, and it said things
         # the patch does not.
         if view == VIEW_VULNERABLE:
-            # No date. `first_added_at` is when the row reached claudeManager,
+            # No date. `first_added_at` is when the row reached the triage tool,
             # not when the bug was found — it moves in scan-sized batches (605
             # rows share one month, 246 share five days), so an age computed
             # from it dated the scan and not the finding. There is no column in
@@ -768,7 +779,7 @@ def collect() -> dict:
             # row with neither draws four dashes and says nothing. Two records
             # are in that state: marked Fixed, with commit_link, cve_number and
             # description all empty and only "CVE Claimed" typed in the notes.
-            # Filling in either field in claudeManager brings the row back.
+            # Filling in either field in the triage tool brings the row back.
             if not cve_id and not fix:
                 incomplete += 1
                 states[s] -= 1    # not listed, so not counted as fixed either

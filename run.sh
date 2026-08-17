@@ -3,7 +3,7 @@
 #
 # bugs.json is gitignored, so a fresh clone has no data at all. This is the
 # entry point that makes that work: extract.py rebuilds the file from
-# claudeManager's database (read-only) and only then does the server start.
+# the triage database (read-only) and only then does the server start.
 #
 # The two stay separate processes on purpose. app.py never opens the database
 # and never shells out, so the surface reachable over the network stays exactly
