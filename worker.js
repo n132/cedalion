@@ -2,9 +2,23 @@
 //
 // Reports mailed to public lists are immutable -- whatever URL they carry is
 // in the LKML archive forever. So they carry bugs.sh/b/<bug_id>/<artifact>
-// and this function decides what that means today. Moving to a different
+// and this Worker decides what that means today. Moving to a different
 // storage provider later is a change to STORAGE_BASE, not to any URL that has
 // already been published.
+//
+// A Worker, not a Pages Function, and the distinction is not cosmetic. This
+// lived at functions/b/[id]/[[path]].js, which is Pages' file-based routing --
+// and the site is deployed with `wrangler deploy`, which is Workers. Wrangler
+// saw the directory, asked whether this was a Pages project, and answered its
+// own question with the non-interactive default:
+//
+//     ? We have identified a `functions` directory ... Is this correct?
+//     Using fallback value in non-interactive context: no
+//
+// So docs/ went up as static files and the routing was never compiled. Every
+// /b/ URL 404ed with an empty body -- indistinguishable from a typo -- while
+// the bytes sat reachable under /a/. The lesson is in wrangler.jsonc beside
+// this: with no config committed, the deploy is whatever a robot guessed.
 //
 //   /b/<id>                 -> the bug's page on the site
 //   /b/<id>/<artifact>      -> 302 to wherever the artifact currently lives
@@ -64,12 +78,34 @@ const text = (body, status) =>
     headers: { "content-type": "text/plain; charset=utf-8" },
   });
 
-export async function onRequest({ params, env }) {
-  const id = params.id;
+// The one route this Worker owns. Everything else on the site is a file and is
+// answered by the asset store before this runs -- so /, /bugs.json, /style.css
+// and the artifacts under /a/ never reach here.
+//
+// The id is read out of the path rather than handed over by the platform. On
+// Pages the filename did it: functions/b/[id]/[[path]].js bound `params.id` and
+// `params.path` by directory name. A Worker has no such routing, so the same
+// two values come from one regex -- deliberately the one preview.py already
+// uses, since the two have to agree about what a bug URL is.
+const BUG_PATH = /^\/b\/([0-9a-f]{8,64})(?:\/(.+))?\/?$/;
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    const m = BUG_PATH.exec(url.pathname);
+    // Not a bug URL. Assets are served ahead of the Worker, so arriving here
+    // means no such file: hand it back for the asset store's own 404 rather
+    // than inventing one, and keep this file to the one thing it is for.
+    if (!m) return env.ASSETS.fetch(request);
+    return bug(m[1], m[2], env);
+  },
+};
+
+async function bug(id, rest, env) {
   if (!/^[0-9a-f]{8,64}$/.test(id)) return text("bad bug id", 400);
 
   // Path segments after the id; absent for a bare /b/<id>.
-  const parts = [].concat(params.path || []).filter(Boolean);
+  const parts = (rest || "").split("/").filter(Boolean);
 
   const entry = (await manifest(env))[id];
 
