@@ -1,0 +1,34 @@
+// How bugs.sh is deployed. Committed rather than left to be inferred: without
+// this file wrangler improvises a config on the build machine every time, and
+// one of the things it improvises is whether the repo's routing exists at all.
+// It decided it did not, so the site served files and ran no code of ours for
+// as long as nobody checked a /b/ URL.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cedalion",
+
+  // The Worker itself: it owns /b/<id>/<artifact>, the URL a mailed report
+  // carries, and nothing else.
+  "main": "worker.js",
+
+  // Pinned, not floating. A compatibility date is the set of runtime
+  // behaviours the code was written against; leaving it to default means the
+  // date moves every time the project is set up somewhere new, which is a
+  // silent change to what the code does.
+  "compatibility_date": "2026-08-18",
+
+  "assets": {
+    // Built by build.py from web/, bugs.json and the disclosed artifacts. Not
+    // in the repo -- it is output, and build.py runs during the deploy.
+    "directory": "docs",
+
+    // The binding is what makes env.ASSETS exist. Without it the Worker has no
+    // way to read the files it is deployed alongside, and every artifact
+    // request fails inside the fetch it cannot make.
+    "binding": "ASSETS"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}

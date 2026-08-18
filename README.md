@@ -32,10 +32,10 @@ individual file recorded in `artifacts.json`. Anything absent from that index
 answers "request from co@bugs.sh" — the default is deny, per bug and per
 file.
 
-`published/` holds the files themselves. `functions/b/[id]/[[path]].js` serves
+`published/` holds the files themselves. `worker.js` serves
 them at `bugs.sh/b/<bug_id>/<artifact>`, which is the URL a mailed report
 carries. Reports are immutable once sent, so that URL never changes: setting
-`STORAGE_BASE` on the Pages project turns the same paths into redirects to a
+`STORAGE_BASE` on the Worker turns the same paths into redirects to a
 storage provider, and everything already sent keeps resolving. The redirects
 are 302, so no client caches a destination that may need to move.
 
@@ -49,7 +49,8 @@ belongs in the generator that writes it.
     build.py        docs/ from web/, bugs.json and published/
     app.py          local server for the register
     preview.py      local server including the /b/<id> routes
-    functions/      Cloudflare Pages Function serving artifacts
+    worker.js       the Worker serving /b/<id>/<artifact>
+    wrangler.jsonc  how it is deployed
     web/            the register and the bug page
     published/      disclosed artifacts
     artifacts.json  what is disclosed, and where it lives

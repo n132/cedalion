@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Serve docs/ locally, including the /b/<id> routes the Pages Function owns.
+"""Serve docs/ locally, including the /b/<id> routes the Worker owns.
 
-Local preview only. wrangler runs the real function but needs Node 22; this
+Local preview only. wrangler runs the real Worker but needs Node 22; this
 covers the same routes so the register, a bug's artifact page and a download
 can be checked without it.
 
-It deliberately mirrors functions/b/[id]/[[path]].js rather than sharing code
-with it, so treat that file as the authority: if the two ever disagree, the
-deployed behaviour is whatever the Function says.
+It deliberately mirrors worker.js rather than sharing code with it, so treat
+that file as the authority: if the two ever disagree, the deployed behaviour is
+whatever the Worker says.
 
     python3 preview.py            # http://127.0.0.1:60002
 """

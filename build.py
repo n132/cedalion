@@ -66,7 +66,7 @@ def main() -> None:
     # tree. The index is the only thing that decides, in both places a file can
     # be reached from -- and there are two, which is why this is not a copytree.
     #
-    #   /b/<id>/<file>   the URL a mailed report carries. The Pages function
+    #   /b/<id>/<file>   the URL a mailed report carries. worker.js
     #                    reads artifacts.json and answers 404 for anything not
     #                    in it, 403 for an embargoed bug.
     #   /a/<id>/<file>   where the bytes sit. Served as a plain static path, by
@@ -122,10 +122,10 @@ def main() -> None:
     print(f"{n} files -> {OUT}  ({size // 1024} KiB)")
     print(f"  data   : {data}")
     print(f"  check  : python3 -m http.server -d {OUT} 8000")
-    print(f"  publish: git add -f docs && git commit && git push, then set")
-    print(f"           Pages to deploy from the docs/ folder. This puts the")
-    print(f"           register on the public internet — see the note in this")
-    print(f"           script before doing it.")
+    print(f"  publish: push. Cloudflare runs this script and `wrangler deploy`,")
+    print(f"           which uploads docs/ and the Worker beside it (see")
+    print(f"           wrangler.jsonc). This puts the register on the public")
+    print(f"           internet — see the note at the top of this script.")
 
 
 if __name__ == "__main__":

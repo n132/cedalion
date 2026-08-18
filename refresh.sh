@@ -1,13 +1,13 @@
 #!/bin/sh
 # Rebuild the register and publish it.
 #
-# The site is built by Cloudflare Pages from this repo, so publishing is a push:
+# The site is built by Cloudflare from this repo, so publishing is a push:
 # `python3 build.py` runs there, on their side, against whatever bugs.json this
 # commit carries. Nothing here copies files anywhere, and docs/ stays ignored —
 # it is build output, and the only machine that needs to produce it is the one
 # doing the deploy. The repo itself stays private; only the built site is public.
 #
-#   ./refresh.sh            # extract, commit, push — Pages rebuilds
+#   ./refresh.sh            # extract, commit, push — Cloudflare rebuilds
 #   ./refresh.sh --dry-run  # extract and stop, showing what changed
 #
 # What a push publishes, and why it is safe to, is written down in the README's
@@ -50,4 +50,4 @@ git add bugs.json
 git commit -q -m "Refresh the register, $(date -u '+%Y-%m-%d')"
 git push -q
 echo "pushed: $(git log --oneline -1)"
-echo "Cloudflare Pages rebuilds from this commit; the site follows in a minute."
+echo "Cloudflare rebuilds from this commit; the site follows in a minute."
