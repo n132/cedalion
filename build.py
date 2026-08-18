@@ -31,6 +31,7 @@ adding it, and this script says so rather than deciding for you.
 """
 from __future__ import annotations
 
+import json
 import os
 import shutil
 import sys
@@ -61,17 +62,55 @@ def main() -> None:
         shutil.copy2(src, os.path.join(OUT, name))
     shutil.copy2(data, os.path.join(OUT, "bugs.json"))
 
-    # Disclosed artifacts. Nothing reaches docs/ that publish.py did not name
-    # in artifacts.json -- the tree is copied, but the index is what the
-    # request path consults, so an unlisted stray file is unreachable.
+    # Disclosed artifacts, copied ONE BY ONE off the index rather than as a
+    # tree. The index is the only thing that decides, in both places a file can
+    # be reached from -- and there are two, which is why this is not a copytree.
+    #
+    #   /b/<id>/<file>   the URL a mailed report carries. The Pages function
+    #                    reads artifacts.json and answers 404 for anything not
+    #                    in it, 403 for an embargoed bug.
+    #   /a/<id>/<file>   where the bytes sit. Served as a plain static path, by
+    #                    the host, with no function in front of it and so no
+    #                    index consulted.
+    #
+    # Copying the tree published everything under published/ at /a/ whatever
+    # artifacts.json said. A file dropped in that directory and never passed to
+    # publish.py was live; an embargoed bug answered 403 at /b/ and handed the
+    # file over at /a/. The gate was on one door of two.
+    #
+    # This also outlives /a/ itself: setting STORAGE_BASE moves artifacts to a
+    # provider and the function stops reading /a/ at all, but a copytree here
+    # would go on publishing that directory to a site nothing reads it from.
     index = os.path.join(HERE, "artifacts.json")
     if os.path.isfile(index):
         shutil.copy2(index, os.path.join(OUT, "artifacts.json"))
-        src = os.path.join(HERE, "published")
-        if os.path.isdir(src):
-            dst = os.path.join(OUT, "a")
-            shutil.rmtree(dst, ignore_errors=True)
-            shutil.copytree(src, dst)
+        with open(index) as f:
+            entries = json.load(f)
+        dst = os.path.join(OUT, "a")
+        shutil.rmtree(dst, ignore_errors=True)
+        for bug_id, entry in entries.items():
+            # An embargoed bug is answered 403 by the function, which only
+            # works while the bytes are not also sitting at a static path.
+            if entry.get("embargoed"):
+                continue
+            for name, key in (entry.get("files") or {}).items():
+                # Named with no key: listed so a reader knows the artifact
+                # exists, withheld until it is cleared. There are no bytes to
+                # copy, and there must not be -- /b/ answers 403 for it, which
+                # is only true while nothing sits at a static path.
+                if not key:
+                    continue
+                src = os.path.join(HERE, "published", bug_id, name)
+                if not os.path.isfile(src):
+                    sys.exit(f"artifacts.json names {bug_id}/{name}, which is "
+                             f"not in published/ -- publish it or revoke it")
+                # The key is the path the function fetches under /a/. Writing to
+                # exactly that path is what keeps the two in agreement; a key
+                # that disagrees with the file's own name would 404 at /b/ while
+                # the file sat there under another name.
+                out = os.path.join(dst, key)
+                os.makedirs(os.path.dirname(out), exist_ok=True)
+                shutil.copy2(src, out)
 
     # Pages runs Jekyll over the site unless told not to, and Jekyll drops any
     # file or directory whose name starts with an underscore. Nothing here does

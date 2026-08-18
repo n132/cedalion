@@ -20,8 +20,6 @@ variable if one is missing.
 | variable | points at |
 |---|---|
 | `CEDALION_DB` | the triage SQLite database, opened read-only |
-| `CEDALION_TRIAGED` | directory of triaged bug reports |
-| `CEDALION_TRIAGE` | directory of bugs still in triage |
 | `CEDALION_CVE_DIR` | a clone of the kernel CVE corpus (`cve/published`) |
 | `CEDALION_LORE_DB` | a local lore mirror's SQLite index |
 | `CEDALION_STABLE_REPO` | a clone of the stable kernel, for a fix's subject |
@@ -31,7 +29,7 @@ variable if one is missing.
 Nothing about a bug is public until it is named twice: once in
 `disclose_allow.json`, which lists the bugs cleared to share, and again as an
 individual file recorded in `artifacts.json`. Anything absent from that index
-answers "request from todo@bugs.sh" — the default is deny, per bug and per
+answers "request from co@bugs.sh" — the default is deny, per bug and per
 file.
 
 `published/` holds the files themselves. `functions/b/[id]/[[path]].js` serves

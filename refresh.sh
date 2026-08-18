@@ -15,6 +15,11 @@
 set -e
 cd "$(dirname "$0")"
 
+# See run.sh. It matters more here: this one commits and pushes, so an
+# extraction that ran without the lore mirror or the CVE corpus would publish a
+# register with the columns they fill silently blank.
+[ -f .env ] && . ./.env
+
 python3 extract.py
 
 if [ "$1" = "--dry-run" ]; then

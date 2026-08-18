@@ -14,5 +14,11 @@
 set -e
 cd "$(dirname "$0")"
 
+# Where extract.py's paths come from. The file is gitignored and names this
+# machine's layout, which is exactly what extract.py refuses to carry itself --
+# it exits naming the variable if one is missing, so a clone with no .env stops
+# here with a readable error rather than serving a stale register.
+[ -f .env ] && . ./.env
+
 python3 extract.py
 exec python3 app.py

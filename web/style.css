@@ -543,7 +543,19 @@ body.bug { zoom: 1; }
    and the reproducer are set as code -- the rest is text that merely arrived
    preformatted because it had to be mail. */
 
-.bugpage { max-width: 110rem; margin: 0 auto; padding: 1.25rem 1.5rem 3rem; }
+/* Wide enough for the report, not for its widest line. The mail is wrapped at
+   72 columns and nothing outside the crash runs past 112, which is about 58rem
+   at this face and size -- so the text sets the measure. The crash does not:
+   its lines are 50 columns at the median and 427 at the worst, and a column
+   built to hold that one line would leave every other line of the page
+   stranded in whitespace. Those 54 lines scroll inside their own block
+   instead, which is also where the copy control is for anyone who would rather
+   take the whole thing than drag a scrollbar.
+
+   Left-aligned rather than centred, the way lore sets a message: a report is
+   read from its left edge, and centring the column moves that edge to a
+   different place on every window width. */
+.bugpage { max-width: 58rem; margin: 0; padding: 1.25rem 1.5rem 3rem; }
 .bugpage h1 { font-size: 1.15rem; margin: .25rem 0 .2rem; font-weight: 600;
               font-family: ui-sans-serif, system-ui, -apple-system,
                            "Segoe UI", Roboto, sans-serif; }
@@ -562,7 +574,11 @@ body.bug { zoom: 1; }
               font-size: .95rem; font-weight: 600; color: var(--text);
               margin: 1.25rem 0 .35rem; }
 
+/* max-width and min-width together are what actually make the scroll happen:
+   without them a pre in a flex or grid context sizes to its longest line and
+   pushes the page wide instead of scrolling inside itself. */
 .bugpage pre { margin: 0; padding: 0; overflow-x: auto; white-space: pre;
+               max-width: 100%; min-width: 0;
                font-size: .78rem; line-height: 1.5;
                /* the stack the register already uses, not the browser's
                   default monospace */
@@ -596,5 +612,9 @@ body.bug { zoom: 1; }
 
 .bugpage hr { border: 0; border-top: 1px solid var(--line-soft);
               margin: 1rem 0 .6rem; }
-.bugpage a { color: var(--text); text-decoration: underline;
-             text-underline-offset: 2px; }
+/* Set like every other link on the site (a.ext): the report's body is
+   monospace, and an underline under a URL in monospace collides with the
+   underscores and the descenders in it. The border sits clear of both. */
+.bugpage a { color: var(--text); text-decoration: none;
+             border-bottom: 1px solid var(--line); }
+.bugpage a:hover { border-bottom-color: var(--text); }

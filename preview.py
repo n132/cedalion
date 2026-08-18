@@ -24,7 +24,7 @@ PORT = int(os.environ.get("PORT", "60002"))
 # 0.0.0.0 so it is reachable from another machine. It serves docs/ only,
 # which holds nothing that publish.py has not already disclosed.
 HOST = os.environ.get("HOST", "0.0.0.0")
-CONTACT = "todo@bugs.sh"
+CONTACT = "co@bugs.sh"
 BUG_PATH = re.compile(r"^/b/([0-9a-f]{8,64})(?:/(.+))?$")
 
 
@@ -92,9 +92,19 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return self.send_body(
                 f"Artifacts for {bug_id} are under embargo.\n", 403,
                 "text/plain; charset=utf-8")
-        key = entry.get("files", {}).get(name)
+        files = entry.get("files", {})
+        # Named with no key: the artifact exists and is deliberately not
+        # disclosed yet. Distinct from a name that is absent, which is "no such
+        # artifact" -- this one says the file is real and the answer is "not
+        # yet", so nobody has to guess whether it is worth asking for.
+        if name in files and not files[name]:
+            return self.send_body(
+                f'"{name}" for {bug_id} is not public yet.\n'
+                f"Request it from {CONTACT}, quoting the bug id.\n",
+                403, "text/plain; charset=utf-8")
+        key = files.get(name)
         if not key:
-            have = ", ".join(sorted(entry.get("files", {}))) or "none"
+            have = ", ".join(sorted(files)) or "none"
             return self.send_body(
                 f'No artifact "{name}" for {bug_id}. Available: {have}\n',
                 404, "text/plain; charset=utf-8")

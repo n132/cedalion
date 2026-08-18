@@ -10,10 +10,10 @@
 //   /b/<id>/<artifact>      -> 302 to wherever the artifact currently lives
 //
 // Phase 1 (no storage yet): artifacts.json is absent or has no entry, and
-// every artifact request answers "mail todo@bugs.sh". Nothing else changes
+// every artifact request answers "mail co@bugs.sh". Nothing else changes
 // when storage arrives.
 
-const CONTACT = "todo@bugs.sh";
+const CONTACT = "co@bugs.sh";
 
 // 302, never 301. A permanent redirect is cached by browsers and
 // intermediaries with no way to invalidate it, so a later provider move would
@@ -95,9 +95,23 @@ export async function onRequest({ params, env }) {
     );
   }
 
-  const key = entry.files && entry.files[name];
+  const files = entry.files || {};
+
+  // Named with no key: the artifact exists and is deliberately not disclosed
+  // yet. Distinct from a name that is absent, which is "no such artifact" --
+  // this one says the file is real and the answer is "not yet", so nobody has
+  // to guess whether it is worth asking for.
+  if (name in files && !files[name]) {
+    return text(
+      `"${name}" for ${id} is not public yet.\n` +
+        `Request it from ${CONTACT}, quoting the bug id.`,
+      403,
+    );
+  }
+
+  const key = files[name];
   if (!key) {
-    const have = Object.keys(entry.files || {}).sort().join(", ") || "none";
+    const have = Object.keys(files).sort().join(", ") || "none";
     return text(`No artifact "${name}" for ${id}. Available: ${have}`, 404);
   }
 

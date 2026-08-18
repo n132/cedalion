@@ -70,7 +70,6 @@ METHOD = ("Found by LLM-assisted source analysis, not fuzzing. The finding "
 # maintainer should be able to read the verifiable parts -- config, the
 # sanitizer report,
 # reproducer -- without wading through a model's analysis first.
-ANALYSIS_CONTACT = "todo@bugs.sh"
 FEEDBACK_CONTACT = "cedalion@bugs.sh"
 
 # Carried as the reproducer's first line rather than an Environment row:
@@ -82,26 +81,13 @@ REPO_URL = "https://github.com/n132/cedalion"
 # lore link, artifacts.json for what has been disclosed.
 CEDALION = Path(__file__).resolve().parent
 BUGS_JSON = CEDALION / "bugs.json"
-ARTIFACTS_JSON = CEDALION / "artifacts.json"
 SITE = "https://bugs.sh"
 
-
-def disclosed(bug_id):
-    """Artifacts published for this bug, as {name: url}.
-
-    The report links to bugs.sh/b/<id>/<file>, never to a storage location:
-    a mailed report is immutable, so the URL it carries has to be one whose
-    meaning we still control after the files move.
-    """
-    try:
-        index = json.loads(ARTIFACTS_JSON.read_text())
-    except (OSError, ValueError):
-        return {}
-    entry = index.get(bug_id) or {}
-    if entry.get("embargoed"):
-        return {}
-    return {name: f"{SITE}/b/{bug_id}/{name}"
-            for name in sorted(entry.get("files", {}))}
+# The report links to bugs.sh/b/<id>/<file> and never to a storage location,
+# and never conditionally: a mailed report is immutable, so the URL it carries
+# has to be the one whose meaning we still control after the files move -- and
+# after they are disclosed. It reads artifacts.json for nothing, because what
+# is disclosed on the day of sending is not what the link has to be right for.
 
 
 def known_bug(bug_id):
@@ -335,6 +321,27 @@ def title_of(bugdir):
     return bugdir.name
 
 
+# Anything that opens a crash report, and the subset that means the machine
+# actually died. A WARNING is in the first and not the second: kernels warn
+# during a healthy boot, and none of those is the bug being reported.
+CRASH_ANY = re.compile(
+    r"(BUG:|Oops:|WARNING:|general protection fault|KASAN:|UBSAN:|KCSAN:)")
+CRASH_HARD = re.compile(
+    r"(KASAN:|KCSAN:|UBSAN:|Oops:|general protection fault"
+    r"|BUG: unable to handle|BUG: kernel NULL|BUG: soft lockup|BUG: sleeping)")
+
+# A symbolized frame: decode_stacktrace.sh rewrites `func+0x12/0x34` into
+# `func (path/file.c:123)`. Nothing else in a console log looks like that.
+SYMBOLIZED = re.compile(r"\([^()]*\.[ch]:\d+")
+
+# How far apart two crash markers can be and still be one crash. A KASAN
+# report runs about 100 lines from its header to the Oops that follows it,
+# with the allocation and free stacks in between; an unrelated warning from
+# earlier in the boot is thousands of lines away. 200 separates the two
+# comfortably without joining two real crashes that happened back to back.
+CRASH_GAP = 200
+
+
 def crash_block(bugdir, trim=False):
     """The crash log.
 
@@ -346,22 +353,49 @@ def crash_block(bugdir, trim=False):
         text = read(bugdir / name)
         if not text:
             continue
+        # Falling back is not a detail. decoded.txt is the symbolized trace;
+        # qemu_output.log is the raw console, whose frames carry no file:line
+        # at all. A report built from the second one looks finished and is
+        # worth much less, so say which one this is.
+        if name != "decoded.txt":
+            print(f"warning: no decoded.txt in {bugdir} -- building the crash "
+                  f"from {name}, whose trace is not symbolized", file=sys.stderr)
         lines = text.splitlines()
-        start = next(
-            (i for i, l in enumerate(lines)
-             if re.search(r"(BUG:|Oops:|WARNING:|general protection fault|KASAN:)", l)),
-            None,
-        )
-        if start is None:
+
+        # The crash that ended the run, not the first thing in the log that
+        # looked like one. A boot carries warnings of its own -- an "Invalid
+        # wait context" from timekeeping_init, a firmware complaint -- and
+        # taking the first match reports one of those instead of the bug,
+        # symbolized and formatted and completely wrong. So: prefer a hard
+        # crash over a warning, prefer the last one, and ignore anything after
+        # the panic, which is teardown.
+        panic = next((i for i, l in enumerate(lines) if "Kernel panic" in l), None)
+        found = [i for i, l in enumerate(lines) if CRASH_ANY.search(l)
+                 and (panic is None or i <= panic)]
+        strong = [i for i in found if CRASH_HARD.search(lines[i])]
+        marks = strong or found
+        if not marks:
             continue
+        # One crash prints several of these. A KASAN null deref opens with
+        # "BUG: KASAN: ..." and goes on to "BUG: kernel NULL pointer
+        # dereference" and "Oops:" a hundred lines later, all one event -- so
+        # the last marker is the middle of the report, and starting there drops
+        # the line that says what the bug actually is. Walk back through
+        # markers that are close enough to belong to the same crash; a boot
+        # warning hundreds of lines earlier is not one of them.
+        start = marks[-1]
+        for i in range(len(marks) - 1, 0, -1):
+            if marks[i] - marks[i - 1] > CRASH_GAP:
+                break
+            start = marks[i - 1]
 
         if not trim:
             last = max((i for i, l in enumerate(lines) if "Kernel panic" in l),
                        default=len(lines) - 1)
             # Drop the console timestamp prefix only: it is noise, and it
             # costs ~15 columns on every line. Nothing else is touched.
-            return "\n".join(TIMESTAMP.sub("", l)
-                             for l in lines[start:last + 1])
+            return checked("\n".join(TIMESTAMP.sub("", l)
+                                     for l in lines[start:last + 1]), bugdir)
 
         end = next(
             (i for i, l in enumerate(lines[start + 1:], start + 1)
@@ -384,8 +418,24 @@ def crash_block(bugdir, trim=False):
             out.append(l)
         if panic:
             out.append(re.sub(r"^\[\s*\d+\.\d+\]\s*", "", panic).rstrip())
-        return "\n".join(out)
+        return checked("\n".join(out), bugdir)
     return "(no crash log found)"
+
+
+def checked(block, bugdir):
+    """The crash block, having said so if it is not symbolized.
+
+    The whole value of the Sanitizer Report to a maintainer is that every frame
+    names a file and a line. An unsymbolized block is the same crash with that
+    thrown away, and it is not visible in the output that anything is missing --
+    it just reads as a shorter trace. So this is the last thing between a broken
+    input and a mailed report that looks right.
+    """
+    if block and not SYMBOLIZED.search(block):
+        print(f"warning: the crash in {bugdir} has no symbolized frames -- "
+              f"decode it (scripts/decode_stacktrace.sh against this build's "
+              f"vmlinux) into decoded.txt before sending", file=sys.stderr)
+    return block
 
 
 def crash_signature(crash):
@@ -539,19 +589,28 @@ def build(bugdir, kdir, slim=False, trim=False,
     required = ((",\n" + " " * 16).join(syms) if syms
                 else "(nothing beyond defconfig identified)")
 
-    pub = disclosed(bug_id)
+    # Every row is the URL, disclosed or not. This mail is archived on lore the
+    # day it is sent and never edited again, so the link has to be the one that
+    # will be right later: /b/<id>/<file> says "not public yet" now and serves
+    # the file once it is cleared, and the reader who kept the mail follows the
+    # same link to get it.
     env = rows([
         ("Reproduced on", head_ref),
-        ("VM setup", pub.get("run.sh", ANALYSIS_CONTACT)),
-        ("config", pub.get("config.gz", ANALYSIS_CONTACT)),
-        ("poc", pub.get("repro.c", ANALYSIS_CONTACT)),
+        ("VM setup", f"{SITE}/b/{bug_id}/run.sh"),
+        ("config", f"{SITE}/b/{bug_id}/config.gz"),
+        ("poc", f"{SITE}/b/{bug_id}/repro.c"),
     ])
 
-    analysis = ""
-    if with_analysis:
-        analysis = (f"{sec('Analysis (LLM-generated, unverified)')}\n"
-                    f"{wrap(summary)}\n\n"
-                    + (f"{wrap(impact)}\n\n" if impact else ""))
+    # What NOTE_LLM's "Available on:" points at: the patch and the analysis it
+    # just described, one URL each, whatever is disclosed today.
+    #
+    # This mail lands in the LKML archive and stays there, so the link has to
+    # outlive the state it was written in. A URL does: /b/<id>/report.md answers
+    # "not public yet" now and serves the file the day it is cleared, and the
+    # reader who saved the mail follows the same link to get it. The word
+    # "pending" would be frozen at the moment of sending and never become true.
+    llm_where = rows([(name, f"{SITE}/b/{bug_id}/{name}")
+                      for name in ("patch.diff", "report.md")], n=8)
 
     # The "net: qualcomm: rmnet" form is for the subject line; here a
     # maintainer wants the path. Broken out as a block rather than a
@@ -586,7 +645,7 @@ Reported-by: {report_addr}
 
 {wrap(NOTE_LLM)}
 
-        {ANALYSIS_CONTACT}
+{llm_where}
 
 {wrap(NOTE_PROJECT)}
 

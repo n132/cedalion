@@ -175,6 +175,11 @@ fetch(REPORT.dataset.src)
       // the one that needs to stand out.
       pre.textContent = "";
       pre.append(head, tail);
+      // Rebuilding the block from two strings threw away everything linkify()
+      // put in it, and this is the block that carries the artifact URLs -- the
+      // trailer and the "Available on:" links live in the same section, so the
+      // one place a reader is given links is the one place they were lost.
+      linkify(pre);
     }
   })
   .then(() => {
