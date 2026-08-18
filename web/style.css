@@ -531,3 +531,90 @@ footer { padding: 14px 0 40px; color: var(--text-3); font-size: 13px; }
   .notes { grid-template-columns: 1fr; gap: 18px; }
   footer { padding: 12px 0 32px; }
 }
+
+/* The register is served at --zoom 1.8 because it is a dense table read at a
+   glance. A bug's page is a document -- prose, a sanitizer report, a reproducer -- and
+   at that scale it wastes most of the window, so it opts out and is read at
+   the browser's own size. */
+body.bug { zoom: 1; }
+
+/* A bug's own page. lore sets a message as text and separates it with rules
+   rather than boxes; the palette and the faces are this site's. Only the crash
+   and the reproducer are set as code -- the rest is text that merely arrived
+   preformatted because it had to be mail. */
+
+/* Wide enough for the report, not for its widest line. The mail is wrapped at
+   72 columns and nothing outside the crash runs past 112, which is about 58rem
+   at this face and size -- so the text sets the measure. The crash does not:
+   its lines are 50 columns at the median and 427 at the worst, and a column
+   built to hold that one line would leave every other line of the page
+   stranded in whitespace. Those 54 lines scroll inside their own block
+   instead, which is also where the copy control is for anyone who would rather
+   take the whole thing than drag a scrollbar.
+
+   Left-aligned rather than centred, the way lore sets a message: a report is
+   read from its left edge, and centring the column moves that edge to a
+   different place on every window width. */
+.bugpage { max-width: 58rem; margin: 0; padding: 1.25rem 1.5rem 3rem; }
+.bugpage h1 { font-size: 1.15rem; margin: .25rem 0 .2rem; font-weight: 600;
+              font-family: ui-sans-serif, system-ui, -apple-system,
+                           "Segoe UI", Roboto, sans-serif; }
+.bugpage .bugid { margin: 0 0 1.5rem; font-size: .78rem;
+                  color: var(--text-3);
+                  font-family: ui-monospace, SFMono-Regular, Menlo,
+                               Consolas, monospace; }
+
+/* A section title is a label on the block under it, so it sits close to that
+   block and is separated from what came before by space rather than a rule --
+   the rules were competing with the ones the code blocks already draw. The
+   copy control goes to the right edge of the same line. */
+.bugpage h2 { display: flex; align-items: baseline; justify-content: space-between;
+              font-family: ui-sans-serif, system-ui, -apple-system,
+                           "Segoe UI", Roboto, sans-serif;
+              font-size: .95rem; font-weight: 600; color: var(--text);
+              margin: 1.25rem 0 .35rem; }
+
+/* max-width and min-width together are what actually make the scroll happen:
+   without them a pre in a flex or grid context sizes to its longest line and
+   pushes the page wide instead of scrolling inside itself. */
+.bugpage pre { margin: 0; padding: 0; overflow-x: auto; white-space: pre;
+               max-width: 100%; min-width: 0;
+               font-size: .78rem; line-height: 1.5;
+               /* the stack the register already uses, not the browser's
+                  default monospace */
+               font-family: ui-monospace, SFMono-Regular, Menlo, Consolas,
+                            monospace; }
+.bugpage pre.code { padding: .7rem .9rem; background: var(--surface-2);
+                    border: 1px solid var(--line-soft); }
+.bugpage pre.fields { margin-bottom: 1.5rem; }
+/* The id of a bug whose report is published: still copies on click, and takes
+   you there. Underlined so it reads as a link without changing its colour. */
+.idlink { text-decoration: underline; text-underline-offset: 2px; }
+
+/* The trailer again, pinned: a report runs to hundreds of lines and the tag
+   is what a reader came for, so it stays reachable without scrolling back. */
+.trailerbar { position: fixed; top: .75rem; right: 1rem; z-index: 5;
+              font-family: ui-sans-serif, system-ui, -apple-system,
+                           "Segoe UI", Roboto, sans-serif;
+              cursor: pointer;
+              font-size: .95rem; font-weight: 600; color: var(--text);
+              background: var(--surface); border: 1px solid var(--line);
+              border-radius: 4px; padding: .3rem .55rem;
+              box-shadow: 0 1px 4px rgba(0, 0, 0, .06); }
+.trailerbar:hover { background: var(--surface-2); }
+
+.copybtn { margin-left: auto; font-size: 1rem; line-height: 1;
+           color: var(--text-3); background: none; border: 0; padding: 0;
+           cursor: pointer; vertical-align: -.1em; }
+.copybtn:hover { color: var(--text); }
+/* The footer is ordinary text of the report, so it is set like the rest of
+   it rather than as a differently-faced aside. */
+
+.bugpage hr { border: 0; border-top: 1px solid var(--line-soft);
+              margin: 1rem 0 .6rem; }
+/* Set like every other link on the site (a.ext): the report's body is
+   monospace, and an underline under a URL in monospace collides with the
+   underscores and the descenders in it. The border sits clear of both. */
+.bugpage a { color: var(--text); text-decoration: none;
+             border-bottom: 1px solid var(--line); }
+.bugpage a:hover { border-bottom-color: var(--text); }

@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-"""Extract the Cedalion bug list from claudeManager's data. READ-ONLY.
+"""Extract the Cedalion bug list from the triage database. READ-ONLY.
 
-This script never writes to claudes.db and never touches a bug's artifacts —
-it opens the database with mode=ro and only ever reads report.md files. Its one
-output is bugs.json next to this file. It reads three other things, all of them
-local and all of them read-only: the kernel CVE corpus for a base score, the
-stable clone for a fixing commit's subject, and the lore mirror for the postings
-behind the Processing rows.
+This script never writes to that database and never touches a bug's artifacts —
+it opens the database with mode=ro and reads nothing off a bug's own directory.
+Its one output is bugs.json next to this file. It reads three other things, all
+of them local and all of them read-only: the kernel CVE corpus for a base score,
+the stable clone for a fixing commit's subject, and the lore mirror for the
+postings behind the Processing rows.
 
 Per bug it produces:
 
   bug_id  the bug's hash_id, the identifier bugs are referred to by
-  hash    sha256 of the report.md bytes, i.e. a fingerprint of the report's
-          exact content (NOT the same thing as hash_id, which identifies the
-          bug rather than the text of its report)
+  hash    sha256 of the report the database holds, i.e. a fingerprint of the
+          report's exact content (NOT the same thing as hash_id, which
+          identifies the bug rather than the text of its report)
   view    vulnerable | processing | patched — which tab it belongs to
 
 Each view emits only its own columns; see the README.
@@ -39,9 +39,18 @@ import time
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "bugs.json")
 
-DB = os.environ.get("CEDALION_DB", "/home/n132/KFC/claudeManager/claudes.db")
-TRIAGED_DIR = os.environ.get("CEDALION_TRIAGED", "/home/n132/KFC/Triaged")
-TRIAGE_DIR = os.environ.get("CEDALION_TRIAGE", os.path.expanduser("~/Triage"))
+# Every path this reads comes from the environment. There are no defaults: a
+# default is a description of one machine's layout, and this file is public.
+# See the README for the variables and what each one points at.
+def path(var: str) -> str:
+    v = os.environ.get(var)
+    if not v:
+        sys.exit(f"{var} is not set -- see the README for the paths "
+                 f"extract.py needs")
+    return os.path.expanduser(v)
+
+
+DB = path("CEDALION_DB")
 
 # Kernel findings only. The database also carries chrome-v8 and chromium rows
 # from the same pipeline; this register is about the kernel, so other repos are
@@ -74,7 +83,7 @@ SCOOPED_STATE = "Fixed by others"
 # no field that says where a bug came from:
 #
 #   * typed in by hand — a synthetic "manual-" + a 16-hex digest of the
-#     description (see the manual-add endpoint in claudeManager);
+#     description (see the manual-add endpoint in the triage tool);
 #   * from syzbot — named by syzbot's own 40-hex sha1.
 #
 # The pipeline names its own findings with a bare 16-hex digest, so the three
@@ -113,7 +122,7 @@ VIEW_VULNERABLE = "vulnerable"    # still live, nothing sent
 _VIEW_BY_STATE = {
     "Fixed": VIEW_PATCHED,
     "CVE Claimed": VIEW_PATCHED,
-    # "Reported" is claudeManager's term for sent upstream, which is the same
+    # "Reported" is the triage tool's term for sent upstream, which is the same
     # thing as being on lore. There is no separate lore marker in the database
     # to key off, and the local mirror is empty, so this is the signal.
     "Reported": VIEW_PROCESSING,
@@ -131,7 +140,7 @@ PATCHED_STATES = tuple(s for s, v in _VIEW_BY_STATE.items() if v == VIEW_PATCHED
 
 
 # The kernel CVE corpus, one JSON record per CVE, for the CVSS base score.
-CVE_DIR = os.environ.get("CEDALION_CVE_DIR", "/lake/cves/cve/published")
+CVE_DIR = path("CEDALION_CVE_DIR")
 
 # Notes on a Reported bug hold the subject line the patch was posted under —
 # except for a handful that hold a status instead. Those are not subjects.
@@ -157,10 +166,10 @@ def patch_subject(notes: str | None) -> str:
 
 # ------------------------------------------------------------------- lore --
 #
-# The local mirror kept by /lake/lore-fetch/lore.py: each list's public-inbox
+# The local lore mirror at CEDALION_LORE_DB: each list's public-inbox
 # epochs as bare git repos, plus an FTS5 index over the messages in them. Read
 # strictly — this never fetches, never syncs and never writes to the mirror.
-LORE_DB = os.environ.get("CEDALION_LORE_DB", "/lake/lore/lore.db")
+LORE_DB = path("CEDALION_LORE_DB")
 
 # The addresses this project's patches go out from. Subject alone is not enough
 # to identify a posting as ours — it would just as happily match a stranger's
@@ -432,7 +441,7 @@ def fix_commit_of(link: str | None) -> str:
 
 
 # The local kernel clone the fixing commits are resolved against.
-STABLE_REPO = os.path.expanduser(os.environ.get("STABLE_REPO", "~/kernel/stable"))
+STABLE_REPO = path("CEDALION_STABLE_REPO")
 
 
 def commit_title(sha: str, _cache: dict = {}) -> str:
@@ -461,23 +470,37 @@ def commit_title(sha: str, _cache: dict = {}) -> str:
     return title
 
 
-def triage_dir_name(hash_id: str) -> str:
-    """Directory name used under ~/Triage/ — mirrors claudeManager's rule."""
-    if hash_id.startswith("manual-"):
-        return hash_id
-    return hash_id[:16]
+def own_finding(hash_id: str) -> bool:
+    """Whether this row is one of ours, told by the shape of its id.
+
+    A bare 16-hex digest is this pipeline's own. The two other populations are
+    a hand-entered `manual-` row and syzbot's 40-hex sha1 — both reach Patched
+    when they carry a CVE, and neither has a bug id worth publishing: syzbot's
+    names somebody else's finding, `manual-` names nothing at all, and no
+    artifact exists under either, so both would only 404 on /b/<id>.
+    """
+    return not (hash_id.startswith(MANUAL_ID_PREFIX)
+                or len(hash_id) == SYZBOT_ID_LEN)
 
 
-def report_path(hash_id: str) -> str | None:
-    """Locate a bug's report.md, preferring Triaged/ like the manager does."""
-    candidates = (
-        os.path.join(TRIAGED_DIR, hash_id, "report.md"),
-        os.path.join(TRIAGE_DIR, triage_dir_name(hash_id), "Results", "report.md"),
-    )
-    for path in candidates:
-        if os.path.isfile(path):
-            return path
-    return None
+def report_hash_of(report: str | None) -> str:
+    """Fingerprint of a bug's report, from the database's own copy of it.
+
+    This used to sha256 a report.md off disk, out of one of two triage
+    directories. That made the fingerprint depend on a layout that exists on
+    exactly one machine, and on a tree nothing maintains: of the rows in scope,
+    the first directory held 772 and the second 1196, they overlapped on 804,
+    and 49 bugs were in neither. The database is the store that is actually kept
+    — every row has passed through it, and it is what gets backed up — so the
+    fingerprint is taken there.
+
+    The two disagree on 148 of 1307 rows, and only ever by whitespace: the
+    triage tool's copy is missing a newline ahead of a `## ` heading that the
+    file on disk has. Same report, different digest, so the switch does move
+    those 148 values. It moves nothing that has been handed out: of the bugs
+    disclosed so far, every one hashes identically from either source.
+    """
+    return hashlib.sha256(report.encode()).hexdigest() if report else ""
 
 
 # How long an identifier reads on the page: 12 hex, the length the kernel uses
@@ -563,7 +586,7 @@ def collapse_link_groups(rows):
 PUBLISHED = {
     VIEW_VULNERABLE: {"view", "bug_id", "hash"},
     VIEW_PROCESSING: {"view", "bug_id", "title", "lore", "patch"},
-    VIEW_PATCHED:    {"view", "cve", "commit", "title", "cvss"},
+    VIEW_PATCHED:    {"view", "bug_id", "cve", "commit", "title", "cvss"},
 }
 
 # A Vulnerable row names a live, unfixed bug, so every value on one has to be an
@@ -609,7 +632,7 @@ def collect() -> dict:
                    (lower(COALESCE(notes, '')) LIKE ?
                     AND lower(COALESCE(notes, '')) NOT LIKE ?
                     AND trim(COALESCE(cve_number, '')) = '') AS scooped,
-                   cve_number, notes, commit_link
+                   cve_number, notes, commit_link, report
             FROM bugs
             WHERE ((hash_id NOT LIKE ? AND length(hash_id) != ?)
                    OR (state IN ({patched_states})
@@ -644,8 +667,11 @@ def collect() -> dict:
     # Scooped overrides whatever state the row was left in — it is the outcome
     # that actually happened. `notes` itself is never published; it is read here
     # only to classify.
-    rows = [(i, h, SCOOPED_STATE if sc else st, li, cv, nt, cl)
-            for i, h, st, li, sc, cv, nt, cl in rows]
+    # `report` rides on the end: collapse_link_groups() reads this tuple by
+    # position (id, hash_id, state, linked_ids), so nothing may be inserted
+    # ahead of those four.
+    rows = [(i, h, SCOOPED_STATE if sc else st, li, cv, nt, cl, rp)
+            for i, h, st, li, sc, cv, nt, cl, rp in rows]
 
     conn.close()
 
@@ -657,18 +683,15 @@ def collect() -> dict:
     scooped = 0
     incomplete = 0
     cves_seen = set()
+    fixes_seen = set()
     postings_seen = set()
     for (_id, hash_id, state, _linked, cve,
-         notes, commit_link) in rows:
-        # Read for every row, not just the Vulnerable ones that publish the
+         notes, commit_link, report) in rows:
+        # Taken for every row, not just the Vulnerable ones that publish the
         # fingerprint: `with a report` counts the whole register, so skipping
         # the others would report them all as missing.
-        report_hash = ""
-        path = report_path(hash_id)
-        if path:
-            with open(path, "rb") as f:
-                report_hash = hashlib.sha256(f.read()).hexdigest()
-        else:
+        report_hash = report_hash_of(report)
+        if not report_hash:
             missing_report += 1
 
         # Scooped findings are counted, not listed. Somebody upstream fixed the
@@ -702,7 +725,7 @@ def collect() -> dict:
         # all. It was written for triage, not for the list, and it said things
         # the patch does not.
         if view == VIEW_VULNERABLE:
-            # No date. `first_added_at` is when the row reached claudeManager,
+            # No date. `first_added_at` is when the row reached the triage tool,
             # not when the bug was found — it moves in scan-sized batches (605
             # rows share one month, 246 share five days), so an age computed
             # from it dated the scan and not the finding. There is no column in
@@ -757,24 +780,52 @@ def collect() -> dict:
             })
         else:
             cve_id = (cve or "").strip().upper()
-            # One row per CVE. Several findings can share one — the same defect
-            # reached by different routes — and the fix is one fix.
             if cve_id:
-                if cve_id in cves_seen:
-                    continue
                 cves_seen.add(cve_id)
             fix = fix_commit_of(commit_link)
             # Every column in this view derives from the CVE or the commit, so a
             # row with neither draws four dashes and says nothing. Two records
             # are in that state: marked Fixed, with commit_link, cve_number and
             # description all empty and only "CVE Claimed" typed in the notes.
-            # Filling in either field in claudeManager brings the row back.
+            # Filling in either field in the triage tool brings the row back.
             if not cve_id and not fix:
                 incomplete += 1
                 states[s] -= 1    # not listed, so not counted as fixed either
                 continue
+
+            # One row per FIX. A bug is what a row IS — that is why the id below
+            # is on it, and why nothing here merges two rows for sharing a value
+            # in general. But this tab answers "what got fixed", and a fix is one
+            # fix however many findings reached it: two rows carrying the same
+            # commit and the same CVE read as the register double-counting.
+            #
+            # Keyed on the CVE where there is one and the commit otherwise, not
+            # on the CVE alone — 108 distinct commits are shared by 16 bug pairs
+            # against the CVE's 15, and the extra pair landed without a number.
+            # Neither key fires today: linked_ids already merges all 16 upstream
+            # of here. This is the guard for the pair that is not linked yet.
+            #
+            # The survivor is the first seen under `ORDER BY id DESC`, the newest
+            # row — the same tie-break collapse_link_groups() uses.
+            fix_key = cve_id or fix
+            if fix_key in fixes_seen:
+                states[s] -= 1    # not listed, so not counted as fixed either
+                continue
+            fixes_seen.add(fix_key)
+
             bugs.append({
                 "view": view,
+                # The bug's own id, as on the other two tabs. The page does not
+                # draw it here — a row that has a CVE is named by its CVE, which
+                # is the name the rest of the world uses — but the row is still
+                # a bug, and this is what says which one: it keys the artifacts
+                # and it is the /b/<id> the mailed report points at.
+                #
+                # Empty on a row that is here for its CVE alone. Those 13 are
+                # syzbot's findings and hand-entered numbers; the exception that
+                # lets them in is that they contribute a CVE and nothing else,
+                # and an id is something else.
+                "bug_id": short(hash_id) if own_finding(hash_id) else "",
                 "cve": cve_id,
                 "commit": fix,
                 "title": commit_title(fix),

@@ -3,7 +3,7 @@
 
 Serves the page, its logo and bugs.json on port 60001, and nothing else. Of
 those, bugs.json is the only one carrying data. This process never opens
-claudeManager's database, never reads a bug's artifacts, and never shells out:
+the triage database, never reads a bug's artifacts, and never shells out:
 the only file it touches is the extracted bugs.json beside it. Producing that
 file is extract.py's job, run separately.
 

@@ -1,0 +1,14 @@
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c
+index add0f5ade2e6..3944925566fc 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c
+@@ -79,6 +79,8 @@ void rmnet_map_command(struct sk_buff *skb, struct rmnet_port *port)
+ 	unsigned char command_name;
+ 	unsigned char rc = 0;
+ 
++	skb->dev = port->dev;
++
+ 	/* Command data immediately follows the MAP header */
+ 	cmd = (struct rmnet_map_control_command *)(map_header + 1);
+ 	command_name = cmd->command_name;
+
