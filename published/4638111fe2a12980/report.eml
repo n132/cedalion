@@ -23,7 +23,8 @@ Reported-by: co+4638111fe2a12980@bugs.sh
     human review, so both still require validation before you send or
     apply them. Available on:
 
-        todo@bugs.sh
+        patch.diff  https://bugs.sh/b/4638111fe2a12980/patch.diff
+        report.md   https://bugs.sh/b/4638111fe2a12980/report.md
 
     This is an open science project. The code and the full set of PoCs
     are not public at this moment, as we intend to disclose our findings

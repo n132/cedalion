@@ -1,50 +1,3 @@
-From 840497cd2add2b2e58328be6b190fb631953aedf Mon Sep 17 00:00:00 2001
-From: Xiang Mei <xmei5@asu.edu>
-Date: Sat, 11 Jul 2026 17:42:27 -0700
-Subject: [PATCH net] net: qualcomm: rmnet: set skb->dev for deaggregated MAP
- commands
-
-rmnet_map_deaggregate() allocates each sub-frame with alloc_skb() and
-leaves skb->dev NULL. __rmnet_map_ingress_handler() assigns
-skb->dev = ep->egress_dev only on the data path, but a MAP command frame
-is dispatched to rmnet_map_command() before that, so rmnet_map_send_ack()
-runs netif_tx_lock(skb->dev) on a NULL device. An unprivileged user
-reaches this by unsharing a user+net namespace, creating an rmnet link
-over a tap device with INGRESS_DEAGGREGATION and INGRESS_MAP_COMMANDS,
-and writing an aggregated frame carrying a flow-control command to the
-tap fd.
-
-Assign port->dev before dispatch: the command was received on the real
-device tracked by port->dev and the ACK must egress on that same device.
-The non-deaggregated path already has skb->dev == real_dev.
-
-  BUG: KASAN: null-ptr-deref in _raw_spin_lock (kernel/locking/spinlock.c:158)
-  Write of size 4 at addr 00000000000004b4 by task exploit/144
-  Call Trace:
-   _raw_spin_lock (kernel/locking/spinlock.c:158)
-   netif_tx_lock (net/sched/sch_generic.c:497)
-   rmnet_map_command (drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c:67)
-   rmnet_rx_handler (drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c:125)
-   __netif_receive_skb_core.constprop.0 (net/core/dev.c:6103)
-   ...
-   __netif_receive_skb_one_core (net/core/dev.c:6214)
-   netif_receive_skb (net/core/dev.c:6474)
-   tun_get_user (drivers/net/tun.c:1966)
-   tun_chr_write_iter (drivers/net/tun.c:2012)
-   vfs_write (fs/read_write.c:687)
-   ksys_write (fs/read_write.c:739)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-Fixes: 378e25357ac7 ("net: qualcomm: rmnet: Remove unnecessary device assignment")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
----
- drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c | 2 ++
- 1 file changed, 2 insertions(+)
-
 diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c
 index add0f5ade2e6..3944925566fc 100644
 --- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c
@@ -58,6 +11,4 @@ index add0f5ade2e6..3944925566fc 100644
  	/* Command data immediately follows the MAP header */
  	cmd = (struct rmnet_map_control_command *)(map_header + 1);
  	command_name = cmd->command_name;
--- 
-2.43.0
 
