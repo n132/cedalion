@@ -56,8 +56,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     def bug_page(self, bug_id, entry):
         """The page is the report. Content changes belong in the generator."""
-        has = (bool(entry) and not entry.get("embargoed")
-               and "report.eml" in entry.get("files", {}))
+        has = bool(entry) and "report.eml" in entry.get("files", {})
         body = (f"<div id='report' data-src='/b/{bug_id}/report.eml'>loading…"
                 f"</div><script src='/bugpage.js'></script>") if has else (
                "<p class='none'>The report for this bug is not public yet.</p>")
@@ -88,10 +87,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 f"No artifacts published for {bug_id} yet.\n"
                 f"Request them from {CONTACT}, quoting the bug id.\n",
                 404, "text/plain; charset=utf-8")
-        if entry.get("embargoed"):
-            return self.send_body(
-                f"Artifacts for {bug_id} are under embargo.\n", 403,
-                "text/plain; charset=utf-8")
         files = entry.get("files", {})
         # Named with no key: the artifact exists and is deliberately not
         # disclosed yet. Distinct from a name that is absent, which is "no such

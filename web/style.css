@@ -544,8 +544,10 @@ body.bug { zoom: 1; }
    preformatted because it had to be mail. */
 
 /* Wide enough for the report, not for its widest line. The mail is wrapped at
-   72 columns and nothing outside the crash runs past 112, which is about 58rem
-   at this face and size -- so the text sets the measure. The crash does not:
+   72 columns and nothing outside the crash runs past 112, which is about 65rem
+   at this face and size -- so the text sets the measure. It is derived from the
+   font size below and has to move with it: at .875rem a monospace column of 112
+   is roughly 59rem, plus the padding. The crash does not set it:
    its lines are 50 columns at the median and 427 at the worst, and a column
    built to hold that one line would leave every other line of the page
    stranded in whitespace. Those 54 lines scroll inside their own block
@@ -555,7 +557,7 @@ body.bug { zoom: 1; }
    Left-aligned rather than centred, the way lore sets a message: a report is
    read from its left edge, and centring the column moves that edge to a
    different place on every window width. */
-.bugpage { max-width: 58rem; margin: 0; padding: 1.25rem 1.5rem 3rem; }
+.bugpage { max-width: 65rem; margin: 0; padding: 1.25rem 1.5rem 3rem; }
 .bugpage h1 { font-size: 1.15rem; margin: .25rem 0 .2rem; font-weight: 600;
               font-family: ui-sans-serif, system-ui, -apple-system,
                            "Segoe UI", Roboto, sans-serif; }
@@ -579,7 +581,7 @@ body.bug { zoom: 1; }
    pushes the page wide instead of scrolling inside itself. */
 .bugpage pre { margin: 0; padding: 0; overflow-x: auto; white-space: pre;
                max-width: 100%; min-width: 0;
-               font-size: .78rem; line-height: 1.5;
+               font-size: .875rem; line-height: 1.55;
                /* the stack the register already uses, not the browser's
                   default monospace */
                font-family: ui-monospace, SFMono-Regular, Menlo, Consolas,

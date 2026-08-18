@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Assemble the static site into docs/, for GitHub Pages or any file host.
+"""Assemble the static site into docs/, uploaded as a Worker's static assets.
 
 The register is a table drawn in the browser from one JSON document, so it does
-not need a server: app.py exists to serve that document over the LAN, not to
-compute anything. Copying web/ and bugs.json into one directory is the whole
-build.
+not need a server at all -- preview.py exists to serve the built directory over
+the LAN, not to compute anything. Copying web/ and bugs.json into one directory
+is the whole build.
 
     python3 build.py                  # docs/ from ./bugs.json
     python3 build.py path/to/bugs.json
@@ -14,9 +14,9 @@ and `bugs.json` by relative path, so the same index.html works at a domain root,
 under a project path like /cedalion/, and from a file:// directory. If that ever
 stops being true, this script is not the place to patch it — the page is.
 
-WHAT THIS PUBLISHES. docs/bugs.json is the register itself, and putting it on a
-public Pages site puts it on the open internet, where it will be crawled and
-cached. That is a disclosure decision, not a build step:
+WHAT THIS PUBLISHES. docs/bugs.json is the register itself, and deploying it
+puts it on the open internet, where it will be crawled and cached. That is a
+disclosure decision, not a build step:
 
   * Vulnerable rows carry an opaque bug id and a report fingerprint, nothing
     else — no path, no description, no PoC. extract.py's check_published()
@@ -41,8 +41,10 @@ WEB = os.path.join(HERE, "web")
 OUT = os.path.join(HERE, "docs")
 
 # Everything the page loads. Named rather than globbed, for the same reason
-# app.py names its routes: a stray file in web/ should not become published by
-# having been dropped there.
+# artifacts.json names each artifact: a stray file in web/ should not become
+# published by having been dropped there. This list is now the only thing
+# standing between web/ and the internet -- app.py used to repeat it as a route
+# allowlist, and when it went the guarantee stayed here.
 ASSETS = ("index.html", "style.css", "cedalion.js", "bugpage.js",
           "logo.svg", "logo-light.svg", "favicon.svg")
 
@@ -68,15 +70,15 @@ def main() -> None:
     #
     #   /b/<id>/<file>   the URL a mailed report carries. worker.js
     #                    reads artifacts.json and answers 404 for anything not
-    #                    in it, 403 for an embargoed bug.
+    #                    in it, 403 for a name it holds but withholds.
     #   /a/<id>/<file>   where the bytes sit. Served as a plain static path, by
     #                    the host, with no function in front of it and so no
     #                    index consulted.
     #
     # Copying the tree published everything under published/ at /a/ whatever
     # artifacts.json said. A file dropped in that directory and never passed to
-    # publish.py was live; an embargoed bug answered 403 at /b/ and handed the
-    # file over at /a/. The gate was on one door of two.
+    # publish.py was live; a withheld artifact answered 403 at /b/ and handed
+    # the file over at /a/. The gate was on one door of two.
     #
     # This also outlives /a/ itself: setting STORAGE_BASE moves artifacts to a
     # provider and the function stops reading /a/ at all, but a copytree here
@@ -89,10 +91,6 @@ def main() -> None:
         dst = os.path.join(OUT, "a")
         shutil.rmtree(dst, ignore_errors=True)
         for bug_id, entry in entries.items():
-            # An embargoed bug is answered 403 by the function, which only
-            # works while the bytes are not also sitting at a static path.
-            if entry.get("embargoed"):
-                continue
             for name, key in (entry.get("files") or {}).items():
                 # Named with no key: listed so a reader knows the artifact
                 # exists, withheld until it is cleared. There are no bytes to
@@ -112,9 +110,10 @@ def main() -> None:
                 os.makedirs(os.path.dirname(out), exist_ok=True)
                 shutil.copy2(src, out)
 
-    # Pages runs Jekyll over the site unless told not to, and Jekyll drops any
-    # file or directory whose name starts with an underscore. Nothing here does
-    # today, but the failure is silent when it happens.
+    # Harmless here and kept deliberately: it costs nothing, and it is what
+    # stops a static host that runs Jekyll from dropping any file whose name
+    # begins with an underscore. Nothing here does today, and the failure would
+    # be silent if one ever did.
     open(os.path.join(OUT, ".nojekyll"), "w").close()
 
     n = len(ASSETS) + 2

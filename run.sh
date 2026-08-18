@@ -1,16 +1,24 @@
 #!/bin/sh
-# Build the data, then serve it.
+# Build the data, build the site, then serve it.
 #
 # bugs.json is gitignored, so a fresh clone has no data at all. This is the
-# entry point that makes that work: extract.py rebuilds the file from
-# the triage database (read-only) and only then does the server start.
+# entry point that makes that work: extract.py rebuilds the file from the
+# triage database (read-only), build.py assembles docs/ from it, and only then
+# does the server start.
 #
-# The two stay separate processes on purpose. app.py never opens the database
-# and never shells out, so the surface reachable over the network stays exactly
-# one JSON document — running the extractor here, before the socket is open,
-# keeps that true.
+# One server, not two. There used to be an app.py that served web/ and
+# bugs.json directly, skipping the build -- and it could not serve an artifact,
+# so every artifact column read "pending" whether or not the bug was disclosed.
+# A page that looked right in it could still be wrong on the site, which is the
+# opposite of what a local server is for. preview.py serves what build.py
+# produced and answers the /b/ routes the way the Worker does, so what you see
+# is what is deployed.
 #
-# Serving without refreshing first is still just `python3 app.py`.
+# The steps stay separate processes on purpose. Nothing that opens the database
+# is still running once the socket is open, so the surface reachable over the
+# network is exactly the built directory.
+#
+# Serving without refreshing first is still just `python3 preview.py`.
 set -e
 cd "$(dirname "$0")"
 
@@ -21,4 +29,5 @@ cd "$(dirname "$0")"
 [ -f .env ] && . ./.env
 
 python3 extract.py
-exec python3 app.py
+python3 build.py
+exec python3 preview.py

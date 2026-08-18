@@ -50,7 +50,7 @@ async function manifest(env) {
 function page(id, entry) {
   // The page is the report. Anything that should read differently is a change
   // to the generator, not to this file.
-  const has = entry && !entry.embargoed && "report.eml" in (entry.files || {});
+  const has = entry && "report.eml" in (entry.files || {});
 
   const body = has
     ? `<div id="report" data-src="/b/${id}/report.eml">loading…</div>
@@ -120,14 +120,6 @@ async function bug(id, rest, env) {
       `No artifacts published for ${id} yet.\n` +
         `Request them from ${CONTACT}, quoting the bug id.`,
       404,
-    );
-  }
-
-  if (entry.embargoed) {
-    return text(
-      `Artifacts for ${id} are under embargo pending upstream fixes.\n` +
-        `Request access from ${CONTACT}, quoting the bug id.`,
-      403,
     );
   }
 

@@ -3,10 +3,13 @@
 
 This script never writes to that database and never touches a bug's artifacts —
 it opens the database with mode=ro and reads nothing off a bug's own directory.
-Its one output is bugs.json next to this file. It reads three other things, all
-of them local and all of them read-only: the kernel CVE corpus for a base score,
-the stable clone for a fixing commit's subject, and the lore mirror for the
-postings behind the Processing rows.
+Its one output is bugs.json next to this file. It reads two other things, both of
+them local and both read-only: the kernel CVE corpus for a base score, and the
+lore mirror for the postings behind the Processing rows.
+
+Three sources, and no fourth. A fixing commit's subject used to come from a
+kernel clone -- 25 GB of it, for one column -- and now comes from the database
+beside everything else about the same row.
 
 Per bug it produces:
 
@@ -440,36 +443,6 @@ def fix_commit_of(link: str | None) -> str:
     return short(m.group(1).lower()) if m else ""
 
 
-# The local kernel clone the fixing commits are resolved against.
-STABLE_REPO = path("CEDALION_STABLE_REPO")
-
-
-def commit_title(sha: str, _cache: dict = {}) -> str:
-    """Subject line of a fixing commit, read from the local clone.
-
-    Offline: this reads STABLE_REPO, never the network. A commit not in that
-    tree comes back empty and prints as a dash. The subject of a merged commit
-    is public the moment it lands, so publishing it discloses nothing.
-    """
-    if not sha:
-        return ""
-    if sha in _cache:
-        return _cache[sha]
-    title = ""
-    if os.path.isdir(STABLE_REPO):
-        try:
-            p = subprocess.run(
-                ["git", "-C", STABLE_REPO, "log", "-1", "--format=%s", sha],
-                capture_output=True, text=True, timeout=30,
-            )
-            if p.returncode == 0:
-                title = p.stdout.strip()
-        except (OSError, subprocess.SubprocessError):
-            title = ""
-    _cache[sha] = title
-    return title
-
-
 def own_finding(hash_id: str) -> bool:
     """Whether this row is one of ours, told by the shape of its id.
 
@@ -632,7 +605,7 @@ def collect() -> dict:
                    (lower(COALESCE(notes, '')) LIKE ?
                     AND lower(COALESCE(notes, '')) NOT LIKE ?
                     AND trim(COALESCE(cve_number, '')) = '') AS scooped,
-                   cve_number, notes, commit_link, report
+                   cve_number, notes, commit_link, report, patch_title
             FROM bugs
             WHERE ((hash_id NOT LIKE ? AND length(hash_id) != ?)
                    OR (state IN ({patched_states})
@@ -670,8 +643,8 @@ def collect() -> dict:
     # `report` rides on the end: collapse_link_groups() reads this tuple by
     # position (id, hash_id, state, linked_ids), so nothing may be inserted
     # ahead of those four.
-    rows = [(i, h, SCOOPED_STATE if sc else st, li, cv, nt, cl, rp)
-            for i, h, st, li, sc, cv, nt, cl, rp in rows]
+    rows = [(i, h, SCOOPED_STATE if sc else st, li, cv, nt, cl, rp, pt)
+            for i, h, st, li, sc, cv, nt, cl, rp, pt in rows]
 
     conn.close()
 
@@ -686,7 +659,7 @@ def collect() -> dict:
     fixes_seen = set()
     postings_seen = set()
     for (_id, hash_id, state, _linked, cve,
-         notes, commit_link, report) in rows:
+         notes, commit_link, report, patch_title) in rows:
         # Taken for every row, not just the Vulnerable ones that publish the
         # fingerprint: `with a report` counts the whole register, so skipping
         # the others would report them all as missing.
@@ -828,7 +801,7 @@ def collect() -> dict:
                 "bug_id": short(hash_id) if own_finding(hash_id) else "",
                 "cve": cve_id,
                 "commit": fix,
-                "title": commit_title(fix),
+                "title": (patch_title or "").strip(),
                 "cvss": cvss_score(cve_id),
             })
 

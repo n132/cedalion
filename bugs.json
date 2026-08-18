@@ -1,23 +1,23 @@
 {
- "generated_at": "2026-08-17 17:59:22",
+ "generated_at": "2026-08-18 13:32:29",
  "counts": {
-  "bugs": 1407,
-  "with_report": 1397,
+  "bugs": 1406,
+  "with_report": 1396,
   "fixed": 97,
-  "reported": 135,
+  "reported": 136,
   "scooped": 13,
   "incomplete": 0,
   "merged_links": 85,
   "cves": 86
  },
  "states": {
-  "PoC Available": 1272,
-  "Reported": 38,
+  "PoC Available": 1270,
+  "Reported": 39,
   "Fixed": 97
  },
  "views": {
-  "vulnerable": 1272,
-  "processing": 38,
+  "vulnerable": 1270,
+  "processing": 39,
   "patched": 97
  },
  "bugs": [
@@ -1353,11 +1353,6 @@
   },
   {
    "view": "vulnerable",
-   "bug_id": "b1da965a6463c41f",
-   "hash": "090417bab55d85398454bdddcb4f2b64e5edc35652592aaa60219c65d7e3f245"
-  },
-  {
-   "view": "vulnerable",
    "bug_id": "fd76853c07bed26a",
    "hash": "3238b757c70c61803d92887cf4ecb7bc95f3525ba3500525193935c6ef863d20"
   },
@@ -1407,9 +1402,11 @@
    "hash": "b0c5754faf60ac3fd23d0628a56f4de0022b39c993e6330131eecae144d19f44"
   },
   {
-   "view": "vulnerable",
-   "bug_id": "b74fcfb4ab1ee9a8",
-   "hash": "294c66b47629f9f8eced5939f6a2cdd7fe9a2ee1edf6122ad7b348bce58f0abd"
+   "view": "processing",
+   "bug_id": "b74fcfb4ab1e",
+   "title": "xdp: fix zero-copy frame layout",
+   "lore": "",
+   "patch": ""
   },
   {
    "view": "vulnerable",
