@@ -247,6 +247,7 @@ const columnPending = k =>
 const open = new Set();
 
 const DASH = '<span class="none">—</span>';
+const UNKNOWN = '<span class="none">Unknown</span>';
 
 // Standard CVSS bands. The kernel CNA leaves most of its CVEs unscored, so a
 // blank score is the common case rather than a fault.
@@ -303,7 +304,7 @@ function cellHTML(k, b) {
   const v = b[k];
   switch (k) {
     case "title":
-      return ["desc", v ? esc(v) : DASH];
+      return ["desc", v ? esc(v) : UNKNOWN];
     case "lore":
       return ["", loreLink(b)];
     // The diff itself is in a row of its own below this one; this is the
