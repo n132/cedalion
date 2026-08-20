@@ -1,14 +1,12 @@
-diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c
-index add0f5ade2e6..3944925566fc 100644
---- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c
-+++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c
-@@ -79,6 +79,8 @@ void rmnet_map_command(struct sk_buff *skb, struct rmnet_port *port)
- 	unsigned char command_name;
- 	unsigned char rc = 0;
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+index 305ae15ae8f3..e6f48dc9fe64 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+@@ -394,6 +394,7 @@ struct sk_buff *rmnet_map_deaggregate(struct sk_buff *skb,
+ 	if (!skbn)
+ 		return NULL;
  
-+	skb->dev = port->dev;
-+
- 	/* Command data immediately follows the MAP header */
- 	cmd = (struct rmnet_map_control_command *)(map_header + 1);
- 	command_name = cmd->command_name;
-
++	skbn->dev = skb->dev;
+ 	skb_reserve(skbn, RMNET_MAP_DEAGGR_HEADROOM);
+ 	skb_put(skbn, packet_len);
+ 	memcpy(skbn->data, skb->data, packet_len);
