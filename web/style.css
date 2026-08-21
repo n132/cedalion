@@ -78,20 +78,15 @@ body {
    in real pixels while everything it governs is measured in zoomed ones, and
    the two drift apart the moment --zoom changes. Letting flex do it needs no
    number at all. */
-.tag {
-  margin-left: auto; min-width: 0;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  color: var(--text-3); font-size: 13px; line-height: 1;
-  position: relative; top: 1px;
-}
-
-/* The mark at the right end of the bar, standing on the rule with the logo and
-   the tag. Grey until it is pointed at, like everything else here that can be
-   clicked — it is a way out of the page, not a thing to be read on the way in,
-   so it does not compete with the two marks it sits beside. */
-.gh { display: inline-flex; color: var(--text-3); }
+/* The mark at the right end of the bar, standing on the rule with the logo.
+   margin-left: auto is what pushes it there now that there is no tag between
+   the two to carry that margin instead. Grey until it is pointed at, like
+   everything else here that can be clicked — it is a way out of the page, not
+   a thing to be read on the way in. Sized up from 17px so it reads as the
+   one thing in the bar worth pressing, not a footnote beside the logo. */
+.gh { display: inline-flex; margin-left: auto; color: var(--text-3); }
 .gh:hover { color: var(--text); }
-.gh svg { display: block; width: 17px; height: 17px; fill: currentColor; }
+.gh svg { display: block; width: 22px; height: 22px; fill: currentColor; }
 
 /* The box the page is set into: a tinted, ruled frame with the light falling in
    at its top edge, and whatever it holds recessed inside it keeping the page's
@@ -434,15 +429,13 @@ footer { padding: 14px 0 40px; color: var(--text-3); font-size: 13px; }
 
   .wrap { padding: 0 14px; }
 
-  /* Room for the mark and the tag on a narrow bar. .tag already shrinks and
-     ellipses on its own — see its rule — so it needs no breakpoint of its own,
-     only somewhere to shrink to. */
+  /* Room for the mark on a narrow bar. */
   .topbar .wrap { gap: 8px; }
   .brand img { height: 22px; }
   /* The glyph stays where it was drawn; the negative margins let the box it is
      hit in grow past it to something a finger can land on. */
-  .gh { padding: 7px; margin: -7px -7px -7px 0; }
-  .gh svg { width: 19px; height: 19px; }
+  .gh { padding: 7px; margin: -7px -7px -7px auto; }
+  .gh svg { width: 24px; height: 24px; }
 
   /* The controls stay with the reader. On a phone the list is the page's own
      scroll rather than a box inside it, so the filter that narrows 1,124 rows
