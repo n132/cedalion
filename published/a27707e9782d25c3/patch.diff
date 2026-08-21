@@ -1,0 +1,44 @@
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 0e8d8866b2..1a2b3c4d5e 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -755,7 +755,7 @@ int ni_create_attr_list(struct ntfs_inode *ni)
+ 	u32 lsize;
+ 	struct ATTRIB *attr;
+ 	struct ATTRIB *arr_move[7];
+-	struct ATTR_LIST_ENTRY *le, *le_b[7];
++	struct ATTR_LIST_ENTRY *le, *le_b[7], *le_end;
+ 	struct MFT_REC *rec;
+ 	bool is_mft;
+ 	CLST rno = 0;
+@@ -775,6 +775,8 @@ int ni_create_attr_list(struct ntfs_inode *ni)
+ 	if (!le)
+ 		return -ENOMEM;
+
++	le_end = Add2Ptr(le, al_aligned(rs));
++
+ 	mi_get_ref(&ni->mi, &le->ref);
+ 	ni->attr_list.le = le;
+
+@@ -785,6 +787,19 @@ int ni_create_attr_list(struct ntfs_inode *ni)
+
+ 	for (; (attr = mi_enum_attr(ni, &ni->mi, attr)); le = Add2Ptr(le, sz)) {
+ 		sz = le_size(attr->name_len);
++
++		/*
++		 * A corrupted base record packed with many small attributes
++		 * can generate an attribute list larger than the destination
++		 * buffer: each minimal resident attribute occupies only
++		 * SIZEOF_RESIDENT bytes in the record but needs a larger
++		 * ATTR_LIST_ENTRY.  Bail out instead of writing past the buffer.
++		 */
++		if (Add2Ptr(le, sz) > (void *)le_end) {
++			err = -EINVAL;
++			goto out;
++		}
++
+ 		le->type = attr->type;
+ 		le->size = cpu_to_le16(sz);
+ 		le->name_len = attr->name_len;
+--
+2.43.0

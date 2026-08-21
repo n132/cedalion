@@ -1,0 +1,30 @@
+diff --git a/fs/isofs/compress.c b/fs/isofs/compress.c
+index 397568b9c7e7..d6a3732e96eb 100644
+--- a/fs/isofs/compress.c
++++ b/fs/isofs/compress.c
+@@ -65,12 +65,23 @@ static loff_t zisofs_uncompress_block(struct inode *inode, loff_t block_start,
+ 	/* Empty block? */
+ 	if (block_size == 0) {
+ 		for ( i = 0 ; i < pcount ; i++ ) {
++			unsigned int off = i ? 0 : poffset;
++
+ 			if (!pages[i])
+ 				continue;
+-			memzero_page(pages[i], 0, PAGE_SIZE);
++			memzero_page(pages[i], off, PAGE_SIZE - off);
+ 			SetPageUptodate(pages[i]);
+ 		}
+-		return ((loff_t)pcount) << PAGE_SHIFT;
++		/*
++		 * Like the decompression path below, report the number of
++		 * bytes produced relative to the incoming @poffset.  A previous
++		 * sub-page block may have already filled [0, poffset) of the
++		 * first page (possible when the zisofs block size is smaller
++		 * than PAGE_SIZE), so returning the full pcount*PAGE_SIZE here
++		 * would make zisofs_fill_pages() over-advance its page cursor
++		 * past the end of the pages[] array.
++		 */
++		return (((loff_t)pcount) << PAGE_SHIFT) - poffset;
+ 	}
+
+ 	/* Because zlib is not thread-safe, do all the I/O at the top. */

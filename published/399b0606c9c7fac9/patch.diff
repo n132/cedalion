@@ -1,0 +1,34 @@
+diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
+index 9eeac0ab2b71..8f22fa48105f 100644
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -155,13 +155,28 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,
+ 			ea_size = le32_to_cpu(ef->size);
+ 			if (ea_size > bytes)
+ 				goto out1;
+-			continue;
+ 		}
+ 
+ 		/* Check if we can use fields ef->name_len and ef->elength. */
+ 		if (bytes < offsetof(struct EA_FULL, name))
+ 			goto out1;
+ 
++		if (ef->size) {
++			/*
++			 * ef->size is only checked to fit in the remaining list
++			 * above; it may still be too small to cover the record's
++			 * own name and value. If so, a later ntfs_get_ea() /
++			 * ntfs_set_ea() would read ef->elength bytes past the
++			 * record (and past the ea_p allocation). Reject such
++			 * records here.
++			 */
++			if (ea_size < struct_size(ef, name,
++						  1 + ef->name_len +
++							  le16_to_cpu(ef->elength)))
++				goto out1;
++			continue;
++		}
++
+ 		ea_size = ALIGN(struct_size(ef, name,
+ 					    1 + ef->name_len +
+ 						    le16_to_cpu(ef->elength)),

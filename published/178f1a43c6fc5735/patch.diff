@@ -1,0 +1,15 @@
+diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
+index df93d57907da..2e062f7d277d 100644
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -1568,7 +1568,7 @@ j1939_session *j1939_session_fresh_new(struct j1939_priv *priv,
+ 	}
+
+ 	/* alloc data area */
+-	skb_put(skb, size);
++	skb_put_zero(skb, size);
+ 	/* skb is recounted in j1939_session_new() */
+ 	return session;
+ }
+--
+2.43.0

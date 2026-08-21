@@ -1,0 +1,15 @@
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index bc7469d0a34d..6d81ae6c1f11 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -2145,6 +2145,9 @@ int ntfs_insert_security(struct ntfs_sb_info *sbi,
+ 		goto out;
+ 
+ 	while (e) {
++		if (le16_to_cpu(e->de.size) < SIZEOF_SDH_DIRENTRY)
++			break;
++
+ 		if (le32_to_cpu(e->sec_hdr.size) == new_sec_size) {
+ 			err = ntfs_read_run_nb(sbi, &ni->file.run,
+ 					       le64_to_cpu(e->sec_hdr.off),
+

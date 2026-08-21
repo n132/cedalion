@@ -1,0 +1,24 @@
+diff --git a/fs/xfs/xfs_inode_item_recover.c b/fs/xfs/xfs_inode_item_recover.c
+index 0000000..0000001 100644
+--- a/fs/xfs/xfs_inode_item_recover.c
++++ b/fs/xfs/xfs_inode_item_recover.c
+@@ -366,6 +366,18 @@
+ 		error = -EFSCORRUPTED;
+ 		goto out_release;
+ 	}
++	/*
++	 * The second region holds the log dinode.  A crafted or truncated log
++	 * can declare the item with ilf_size >= 2 but never add the region (so
++	 * ri_buf[1].i_addr is NULL), or add one smaller than a log dinode.
++	 * Reject it here, before ldip is dereferenced, to avoid a NULL deref or
++	 * an out-of-bounds read in xfs_log_dinode_to_disk().
++	 */
++	if (XFS_IS_CORRUPT(mp,
++			   item->ri_buf[1].i_len < xfs_log_dinode_size(mp))) {
++		error = -EFSCORRUPTED;
++		goto out_release;
++	}
+ 	ldip = item->ri_buf[1].i_addr;
+ 	if (XFS_IS_CORRUPT(mp, ldip->di_magic != XFS_DINODE_MAGIC)) {
+ 		xfs_alert(mp,
+

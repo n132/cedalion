@@ -1,0 +1,37 @@
+diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
+index bb0e46130..89e844e60 100644
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -1546,6 +1546,9 @@ int ext4_read_inline_dir(struct file *file,
+ 			/* for other entry, the real offset in
+ 			 * the buf has to be tuned accordingly.
+ 			 */
++			if (i - extra_offset + ext4_dir_rec_len(1, NULL) >
++			    inline_size)
++				break;
+ 			de = (struct ext4_dir_entry_2 *)
+ 				(dir_buf + i - extra_offset);
+ 			/* It's too expensive to do a full
+@@ -1580,10 +1583,21 @@ int ext4_read_inline_dir(struct file *file,
+ 			continue;
+ 		}
+ 
++		/*
++		 * ctx->pos can be set to an arbitrary value via lseek(), and
++		 * the rescan above may also advance it.  Make sure the dirent
++		 * header lies within the inline_size payload before
++		 * dereferencing it: extra_offset only inflates the logical
++		 * position of "." and "..", the dirent itself always lives in
++		 * the kmalloc(inline_size) buffer.
++		 */
++		if (ctx->pos - extra_offset + ext4_dir_rec_len(1, NULL) >
++		    inline_size)
++			goto out;
+ 		de = (struct ext4_dir_entry_2 *)
+ 			(dir_buf + ctx->pos - extra_offset);
+ 		if (ext4_check_dir_entry(inode, file, de, iloc.bh, dir_buf,
+-					 extra_size, ctx->pos))
++					 inline_size, ctx->pos))
+ 			goto out;
+ 		if (le32_to_cpu(de->inode)) {
+ 			if (!dir_emit(ctx, de->name, de->name_len,

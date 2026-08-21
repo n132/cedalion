@@ -1,0 +1,73 @@
+diff --git a/include/linux/netfilter/ipset/ip_set.h b/include/linux/netfilter/ipset/ip_set.h
+index e9f4f84..a424efd 100644
+--- a/include/linux/netfilter/ipset/ip_set.h
++++ b/include/linux/netfilter/ipset/ip_set.h
+@@ -501,6 +501,8 @@ ip_set_timeout_set(unsigned long *timeout, u32 value)
+
+ void ip_set_init_comment(struct ip_set *set, struct ip_set_comment *comment,
+ 			 const struct ip_set_ext *ext);
++void ip_set_comment_dup(struct ip_set *set,
++			struct ip_set_comment *comment);
+
+ static inline void
+ ip_set_init_counter(struct ip_set_counter *counter,
+diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
+index cc20e6d..90f6a5f 100644
+--- a/net/netfilter/ipset/ip_set_core.c
++++ b/net/netfilter/ipset/ip_set_core.c
+@@ -367,6 +367,35 @@ ip_set_init_comment(struct ip_set *set, struct ip_set_comment *comment,
+ }
+ EXPORT_SYMBOL_GPL(ip_set_init_comment);
+
++/* Replace the comment pointer with an independent copy of its current
++ * value.  Called on the new-table element right after mtype_resize()
++ * memcpy()s the old element, so that the old and new tables do not share
++ * one ip_set_comment_rcu object and cannot free it twice.
++ */
++void
++ip_set_comment_dup(struct ip_set *set, struct ip_set_comment *comment)
++{
++	struct ip_set_comment_rcu *c = rcu_dereference_protected(comment->c, 1);
++	struct ip_set_comment_rcu *dup;
++	size_t len;
++
++	if (likely(!c)) {
++		rcu_assign_pointer(comment->c, NULL);
++		return;
++	}
++	len = strlen(c->str);
++	dup = kmalloc(sizeof(*dup) + len + 1, GFP_ATOMIC);
++	if (unlikely(!dup)) {
++		/* Do not share the source object; drop the comment instead. */
++		rcu_assign_pointer(comment->c, NULL);
++		return;
++	}
++	memcpy(dup->str, c->str, len + 1);
++	set->ext_size += sizeof(*dup) + len + 1;
++	rcu_assign_pointer(comment->c, dup);
++}
++EXPORT_SYMBOL_GPL(ip_set_comment_dup);
++
+ /* Used only when dumping a set, protected by rcu_read_lock() */
+ static int
+ ip_set_put_comment(struct sk_buff *skb, const struct ip_set_comment *comment)
+diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
+index 5e4453e..762c767 100644
+--- a/net/netfilter/ipset/ip_set_hash_gen.h
++++ b/net/netfilter/ipset/ip_set_hash_gen.h
+@@ -743,6 +743,15 @@ retry:
+ 				}
+ 				d = ahash_data(m, m->pos, dsize);
+ 				memcpy(d, data, dsize);
++				/* The memcpy() above duplicated the comment
++				 * extension pointer, so the old and new tables
++				 * would share one ip_set_comment_rcu object and
++				 * a kernel side delete on the old table plus its
++				 * replay on the new table would free it twice.
++				 * Give the new element its own copy.
++				 */
++				if (SET_WITH_COMMENT(set))
++					ip_set_comment_dup(set, ext_comment(d, set));
+ 				set_bit(m->pos++, m->used);
+ 				t->hregion[nr].elements++;
+ #ifdef IP_SET_HASH_WITH_NETS

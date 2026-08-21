@@ -1,0 +1,16 @@
+diff --git a/fs/fuse/dev_uring.c b/fs/fuse/dev_uring.c
+index 7b9822e8837b..55c9c9966c2c 100644
+--- a/fs/fuse/dev_uring.c
++++ b/fs/fuse/dev_uring.c
+@@ -586,6 +586,9 @@ static int fuse_uring_copy_from_ring(struct fuse_ring *ring,
+ 	if (err)
+ 		return -EFAULT;
+
++	if (ring_in_out.payload_sz > ring->max_payload_sz)
++		return -EINVAL;
++
+ 	err = import_ubuf(ITER_SOURCE, ent->payload, ring->max_payload_sz,
+ 			  &iter);
+ 	if (err)
+--
+2.43.0

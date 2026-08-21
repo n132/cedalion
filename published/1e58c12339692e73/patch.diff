@@ -1,0 +1,23 @@
+diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
+index 04814dd29375..84c55710a7d3 100644
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -155,6 +155,17 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,
+ 			ea_size = le32_to_cpu(ef->size);
+ 			if (ea_size > bytes)
+ 				goto out1;
++			/*
++			 * Make sure the declared name and value fit inside the
++			 * entry; otherwise find_ea()/ntfs_get_ea() would read
++			 * past the buffer using ef->name_len and ef->elength.
++			 */
++			if (bytes < offsetof(struct EA_FULL, name) ||
++			    struct_size(ef, name,
++					1 + ef->name_len +
++						le16_to_cpu(ef->elength)) >
++				    ea_size)
++				goto out1;
+ 			continue;
+ 		}
+ 
+

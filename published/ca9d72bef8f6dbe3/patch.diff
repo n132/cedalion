@@ -1,0 +1,24 @@
+diff --git a/fs/xfs/xfs_log_recover.c b/fs/xfs/xfs_log_recover.c
+--- a/fs/xfs/xfs_log_recover.c
++++ b/fs/xfs/xfs_log_recover.c
+@@ -2131,6 +2131,18 @@ xlog_recover_add_to_cont_trans(
+ 	item = list_entry(trans->r_itemq.prev, struct xlog_recover_item,
+ 			  ri_list);
+
++	/*
++	 * The tail item must already have at least one region for a
++	 * continuation to extend. A header-only item (created when a split
++	 * transaction header is the first op of the transaction) has ri_cnt == 0
++	 * and ri_buf == NULL, so a continuation op here means the on-disk log is
++	 * corrupt. Reject it instead of dereferencing ri_buf[-1].
++	 */
++	if (item->ri_cnt == 0) {
++		xfs_warn(log->l_mp, "%s: bad continuation", __func__);
++		return -EFSCORRUPTED;
++	}
++
+ 	old_ptr = item->ri_buf[item->ri_cnt-1].iov_base;
+ 	old_len = item->ri_buf[item->ri_cnt-1].iov_len;
+
+--
+2.43.0

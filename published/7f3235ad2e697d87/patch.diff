@@ -1,0 +1,16 @@
+diff --git a/drivers/net/vxlan/vxlan_vnifilter.c b/drivers/net/vxlan/vxlan_vnifilter.c
+index 3e76f4e21094..1a3cbf747112 100644
+--- a/drivers/net/vxlan/vxlan_vnifilter.c
++++ b/drivers/net/vxlan/vxlan_vnifilter.c
+@@ -462,8 +462,8 @@ static int vxlan_vnifilter_dump(struct sk_buff *skb, struct netlink_callback *cb
+ static const struct nla_policy vni_filter_entry_policy[VXLAN_VNIFILTER_ENTRY_MAX + 1] = {
+ 	[VXLAN_VNIFILTER_ENTRY_START] = { .type = NLA_U32 },
+ 	[VXLAN_VNIFILTER_ENTRY_END] = { .type = NLA_U32 },
+-	[VXLAN_VNIFILTER_ENTRY_GROUP]	= { .type = NLA_BINARY,
+-					    .len = sizeof_field(struct iphdr, daddr) },
++	[VXLAN_VNIFILTER_ENTRY_GROUP]	=
++		NLA_POLICY_EXACT_LEN(sizeof_field(struct iphdr, daddr)),
+ 	[VXLAN_VNIFILTER_ENTRY_GROUP6]	= { .type = NLA_BINARY,
+ 					    .len = sizeof(struct in6_addr) },
+ };
+

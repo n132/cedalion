@@ -1,0 +1,15 @@
+diff --git a/net/tipc/node.c b/net/tipc/node.c
+index 8e4ef2630ae4..cd05269e5335 100644
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -1695,6 +1695,9 @@ int tipc_node_xmit(struct net *net, struct sk_buff_head *list,
+ 	int bearer_id;
+ 	int rc;
+ 
++	if (skb_queue_empty(list))
++		return 0;
++
+ 	if (in_own_node(net, dnode)) {
+ 		tipc_loopback_trace(net, list);
+ 		spin_lock_init(&list->lock);
+

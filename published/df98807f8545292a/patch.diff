@@ -1,0 +1,21 @@
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index acfa18b84..74161d427 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -4649,6 +4649,15 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)
+ 		if (dp) {
+ 			size_t j = le64_to_cpu(lrh->target_vcn) -
+ 				   le64_to_cpu(dp->vcn);
++			u16 dsz = le16_to_cpu(dptbl->size);
++
++			if (dsz < sizeof(struct DIR_PAGE_ENTRY) ||
++			    j >= (dsz - sizeof(struct DIR_PAGE_ENTRY)) /
++					 sizeof(u64)) {
++				err = -EINVAL;
++				log->set_dirty = true;
++				goto out;
++			}
+ 			if (dp->page_lcns[j])
+ 				dp->page_lcns[j] = lrh->page_lcns[0];
+ 		}
+

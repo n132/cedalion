@@ -1,0 +1,14 @@
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 2b49bc077558..ca3b46a2c9c5 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -2469,6 +2469,8 @@ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
+ out:
+ 	for (i = 0; i < pages_per_frame; i++) {
+ 		pg = pages[i];
++		if (err)
++			clear_highpage(pg);
+ 		SetPageUptodate(pg);
+ 	}
+ 
+

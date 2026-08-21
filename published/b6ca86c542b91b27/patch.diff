@@ -1,0 +1,23 @@
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 42af1abe17f8..b4c5e30469a5 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -204,6 +204,17 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 		if (fname->type == FILE_NAME_DOS)
+ 			goto next_attr;
+ 
++		/*
++		 * fname->name_len is a count of UTF-16 chars taken from the
++		 * on-disk record. The header check above only guarantees the
++		 * 0x44-byte FILE_NAME header; the name itself occupies
++		 * 2 * name_len bytes at fname->name. Make sure the resident
++		 * data actually holds the whole name before comparing it,
++		 * otherwise ntfs_cmp_names_cpu() reads past the record buffer.
++		 */
++		if (rsize < fname_full_size(fname))
++			goto out;
++
+ 		links += 1;
+ 		if (name && name->len == fname->name_len &&
+ 		    !ntfs_cmp_names_cpu(name, (struct le_str *)&fname->name_len,
+

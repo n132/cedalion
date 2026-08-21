@@ -1,0 +1,19 @@
+diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -2556,6 +2556,15 @@ static enum sctp_disposition sctp_sf_do_5_2_6_stale(
+
+ 	err = (struct sctp_errhdr *)(chunk->skb->data);
+
++	/* The 32-bit Measure of Staleness immediately follows the error
++	 * header.  A peer can send a malformed STALE_COOKIE cause with no
++	 * body (length == sizeof(*err)), which still passes sctp_walk_errors()
++	 * in the caller; reading the staleness field would then access memory
++	 * past the validated error cause.  Discard such a chunk.
++	 */
++	if ((u8 *)err + sizeof(*err) + sizeof(__be32) > chunk->chunk_end)
++		return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
++
+ 	/* When calculating the time extension, an implementation
+ 	 * SHOULD use the RTT information measured based on the
+ 	 * previous COOKIE ECHO / ERROR exchange, and should add no

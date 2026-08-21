@@ -1,0 +1,15 @@
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 86821c97814a..f3e8e7bd5b59 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -853,6 +853,9 @@ static inline struct RESTART_TABLE *extend_rsttbl(struct RESTART_TABLE *tbl,
+ 	u32 used = le16_to_cpu(tbl->used);
+ 	struct RESTART_TABLE *rt;
+ 
++	if (used + add > U16_MAX)
++		return NULL;
++
+ 	rt = init_rsttbl(esize, used + add);
+ 	if (!rt)
+ 		return NULL;
+

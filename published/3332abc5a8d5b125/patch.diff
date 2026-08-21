@@ -1,0 +1,61 @@
+diff --git a/fs/xfs/libxfs/xfs_attr_leaf.c b/fs/xfs/libxfs/xfs_attr_leaf.c
+index 2b78041e8672..4206410735b1 100644
+--- a/fs/xfs/libxfs/xfs_attr_leaf.c
++++ b/fs/xfs/libxfs/xfs_attr_leaf.c
+@@ -300,7 +300,8 @@ xfs_attr3_leaf_verify_entry(
+ 	struct xfs_attr3_icleaf_hdr		*leafhdr,
+ 	struct xfs_attr_leaf_entry		*ent,
+ 	int					idx,
+-	__u32					*last_hashval)
++	__u32					*last_hashval,
++	unsigned int				*usedbytes)
+ {
+ 	struct xfs_attr_leaf_name_local		*lentry;
+ 	struct xfs_attr_leaf_name_remote	*rentry;
+@@ -344,6 +345,7 @@ xfs_attr3_leaf_verify_entry(
+ 	if (name_end > buf_end)
+ 		return __this_address;
+ 
++	*usedbytes += namesize;
+ 	return NULL;
+ }
+ 
+@@ -376,6 +378,7 @@ xfs_attr3_leaf_verify(
+ 	char				*buf_end;
+ 	uint32_t			end;	/* must be 32bit - see below */
+ 	__u32				last_hashval = 0;
++	unsigned int			usedbytes = 0;
+ 	int				i;
+ 	xfs_failaddr_t			fa;
+ 
+@@ -410,11 +413,28 @@ xfs_attr3_leaf_verify(
+ 	buf_end = (char *)bp->b_addr + mp->m_attr_geo->blksize;
+ 	for (i = 0, ent = entries; i < ichdr.count; ent++, i++) {
+ 		fa = xfs_attr3_leaf_verify_entry(mp, buf_end, leaf, &ichdr,
+-				ent, i, &last_hashval);
++				ent, i, &last_hashval, &usedbytes);
+ 		if (fa)
+ 			return fa;
+ 	}
+ 
++	/*
++	 * usedbytes is maintained as the exact sum of every entry's
++	 * xfs_attr_leaf_entsize() (see xfs_attr3_leaf_add/remove and the
++	 * entries_end + usedbytes space accounting).  The per-entry checks
++	 * above only bound each name/value region individually, so distinct
++	 * entries may still point at overlapping nameval offsets.  Such a leaf
++	 * makes the summed entry sizes exceed the nameval region; when it is
++	 * later repacked, xfs_attr3_leaf_moveents() subtracts each entry size
++	 * from firstused and underflows it, writing out of bounds.  Reject any
++	 * leaf whose entry sizes do not sum to usedbytes or do not fit in the
++	 * nameval region [firstused, blksize).
++	 */
++	if (usedbytes != ichdr.usedbytes)
++		return __this_address;
++	if (ichdr.usedbytes > mp->m_attr_geo->blksize - ichdr.firstused)
++		return __this_address;
++
+ 	/*
+ 	 * Quickly check the freemap information.  Attribute data has to be
+ 	 * aligned to 4-byte boundaries, and likewise for the free space.
+

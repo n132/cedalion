@@ -1,0 +1,22 @@
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index f038c799e7ac..ee413dc80d3a 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -2276,7 +2276,15 @@ static int read_log_rec_buf(struct ntfs_log *log,
+ 	 */
+ 	for (;;) {
+ 		bool usa_error;
+-		u32 tail = log->page_size - off;
++		u32 tail;
++
++		/* off comes from the on-disk restart area; bound it. */
++		if (off >= log->page_size) {
++			err = -EINVAL;
++			goto out;
++		}
++
++		tail = log->page_size - off;
+ 
+ 		if (tail >= data_len)
+ 			tail = data_len;
+
