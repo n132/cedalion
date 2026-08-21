@@ -259,6 +259,28 @@ table:is([data-view=vulnerable], [data-view=processing]) td:last-child { width: 
 a.ext { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--line); }
 a.ext:hover { border-bottom-color: var(--text); }
 
+/* The sanitizer column's report-fallback link (a bug's own name, which can run
+   long) capped rather than left to stretch the row -- inline-block is what
+   makes max-width/ellipsis apply to an inline element at all. Kept narrow
+   enough that a bug name does not push the table past 100% zoom on an
+   ordinary window into a horizontal scroll the other six columns did not need. */
+a.ext.trunc {
+  display: inline-block; max-width: 14em; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom;
+}
+
+/* Auto table layout sizes a column to its widest cell, and this column's
+   content varies more than any other's: "pending" on nearly every Vulnerable
+   row versus a name up to the trunc cap above on most Processing rows. Left
+   alone, the column measured ~160px narrower on Vulnerable than on
+   Processing -- same table, same code, different width only because the
+   data differs. A width set on the <th> itself does not survive auto layout
+   once real content is wider or narrower than it in the rows below, so the
+   fix has to sit on the one thing every row in this column actually has: the
+   pending badge. Giving IT the same floor as the trunc cap converges both
+   views on the same natural column width regardless of which is showing. */
+td[data-label="sanitizer report"] .pending { min-width: 20em; }
+
 /* The handle that opens a diff. Set as a word on a rule rather than a filled
    button: it sits in a table of links and hashes, and a chrome button in one
    cell would be the loudest thing in the view. */
@@ -593,7 +615,13 @@ body.bug { zoom: 1; }
 .bugpage pre.fields { margin-bottom: 1.5rem; }
 /* The id of a bug whose report is published: still copies on click, and takes
    you there. Underlined so it reads as a link without changing its colour. */
-.idlink { text-decoration: underline; text-underline-offset: 2px; }
+/* color is explicit here for the same reason a.ext sets it: without it this
+   falls back to the browser's default link blue, which is why a bug_id with a
+   report (mostly Processing rows) used to look like a different palette from
+   one without (mostly Vulnerable rows) -- the same cell, same weight, just an
+   unstyled link versus a plain span. */
+.idlink { color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
+.idlink:hover { color: var(--text); }
 
 /* The trailer again, pinned: a report runs to hundreds of lines and the tag
    is what a reader came for, so it stays reachable without scrolling back. */

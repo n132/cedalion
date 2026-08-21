@@ -230,27 +230,56 @@ function artifactFile(k, b) {
   return (e.files || {})[ARTIFACT_OF[k]] ? ARTIFACT_OF[k] : null;
 }
 
+// The one column with no file behind it at all, ever — sanitizer's
+// ARTIFACT_OF entry ("report.txt") is never produced by any part of the
+// pipeline, so it can ONLY be answered by the report. config/poc/vm_setup are
+// different: config.gz/repro.c/run.sh are real files publish.py does
+// produce, and a bug can have report.eml published (co/mkbugreport.py runs
+// independently of co/publish.py) while one of those is still withheld — hit
+// in practice after generating report.eml for bugs whose repro.c the leak
+// scan or the exp.c-completeness gap was still blocking. Falling back to
+// "report" there claimed the column was answered when the link the report
+// itself carries 404s.
+const REPORT_ONLY = new Set(["sanitizer"]);
+
 function artifactOf(k, b) {
   // Only the columns an artifact can answer. Without this the fallback below
   // claims every column, and the id and the hash render as links to a report.
   if (!(k in ARTIFACT_OF) && k !== "kernel_commit") return null;
   const e = artifactEntry(b);
   if (!e || e.embargoed) return null;
+  // A hash to read, not a file to link to — either the real value is on
+  // record (co/publish.py --set kernel_commit=...) or it is not, full stop.
+  // No report fallback: showing "report" here would be a placeholder standing
+  // in for a value that must exist verbatim in the report anyway (mkbugreport.py
+  // refuses to build one without a real commit), so there is nothing a link
+  // would add that the field itself does not already say once it is set.
+  if (k === "kernel_commit") return e.kernel_commit || null;
   const files = e.files || {};
   if (files[ARTIFACT_OF[k]]) return ARTIFACT_OF[k];
+  if (!REPORT_ONLY.has(k)) return null;
   if (!files["report.eml"]) return null;
-  if (k === "kernel_commit") return e.kernel_commit || "report";
   return "report";
 }
 
+// Whether a row answers a column at all -- artifactOf() for the columns
+// backed by a published file (config/poc/sanitizer) or a --set field
+// (kernel_commit), OR the bug's own field directly for one that isn't:
+// lore is extract.py's own resolve_lore() result, sitting on the row like
+// `hash` or `bug_id` does, never routed through artifacts.json. Without the
+// `|| b[k]` half, artifactOf("lore", b) is always null (lore is not in
+// ARTIFACT_OF) and the column reads "pending" forever regardless of whether
+// resolve_lore() actually found something.
+const columnAnswered = (k, b) => !!(artifactOf(k, b) || b[k]);
+
 const isPending = (k, b) =>
-  PENDING[view]?.has(k) && !(b && artifactOf(k, b));
+  PENDING[view]?.has(k) && !(b && columnAnswered(k, b));
 
 // A header cannot ask about one row, so it asks about all of them: a column
 // stays fixed and unsortable only while no row in the view has published the
 // file behind it. The first disclosure turns the column into a real one.
 const columnPending = k =>
-  PENDING[view]?.has(k) && !DATA.some(b => artifactOf(k, b));
+  PENDING[view]?.has(k) && !DATA.some(b => columnAnswered(k, b));
 
 // Processing rows whose diff is open, by index into DATA. Kept out of the DOM
 // because the table is rebuilt from scratch on every filter and sort, and a
@@ -310,14 +339,42 @@ function diffHTML(text) {
 const ID_SHOWN = { processing: 12, vulnerable: 12 };
 
 function cellHTML(k, b) {
+  // A hash to read, not a file to link to — see the comment in artifactOf().
+  // Handled before the generic "shown -> link" branch below, which would
+  // otherwise wrap this in an <a> like every other artifact-backed column.
+  // Cut to 12 -- git's own short-hash length, the same width mkbugreport.py
+  // already shows in the mailed report's "Reproduced on" line -- rather than
+  // SHOWN's 16: a commit id has no fingerprint-checking use for the extra
+  // digits the way a bug id or a report hash does, so the column can be
+  // narrower.
+  if (k === "kernel_commit") {
+    const v = artifactOf(k, b);
+    return ["mono", v ? cell(v, 12) : `<span class="pending">pending</span>`];
+  }
   const shown = artifactOf(k, b);
   if (shown) {
     // A real file is linked directly; a column the report answers links at the
     // section of it that does.
     const file = artifactFile(k, b);
-    const href = file ? `/b/${esc(b.bug_id)}/${esc(file)}`
-                      : `/b/${esc(b.bug_id)}#${esc(SECTION_OF[k] || "")}`;
-    return ["", `<a class="ext" href="${href}" title="${esc(shown)}">${esc(shown)}</a>`];
+    const id = bugPathId(b);
+    const href = file ? `/b/${esc(id)}/${esc(file)}`
+                      : `/b/${esc(id)}#${esc(SECTION_OF[k] || "")}`;
+    // A real file's name is shown as itself. The report fallback (today, only
+    // `sanitizer`) shows the bug's own name instead of the bare word "report"
+    // -- `title` is set alongside report.eml (co/publish.py --set title=...),
+    // safe to show here because report.eml's own subject already makes it
+    // public the moment that file exists, which is the same condition gating
+    // this fallback in the first place. Falls back to the word itself if a
+    // bug somehow has report.eml without a title set yet.
+    //
+    // A bug's name can run long, and unlike td.desc (patched's title column,
+    // which has room to wrap) this sits in a compact column beside several
+    // others -- truncated with an ellipsis rather than left to stretch the
+    // row. The full name is still the title attribute (hover) and what a
+    // selection/copy actually picks up.
+    const label = file ? shown : (artifactEntry(b)?.title || shown);
+    const cls = file ? "ext" : "ext trunc";
+    return ["", `<a class="${cls}" href="${href}" title="${esc(label)}">${esc(label)}</a>`];
   }
   if (isPending(k, b)) return ["", `<span class="pending">pending</span>`];
   const v = b[k];
