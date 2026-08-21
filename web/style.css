@@ -208,7 +208,15 @@ input[type=search]:focus {
   overscroll-behavior: contain;   /* reaching the end does not then scroll the page */
 }
 table { border-collapse: collapse; width: 100%; min-width: 760px; }
-th, td { text-align: left; padding: 10px 14px; white-space: nowrap; }
+/* height on a table cell is a floor, not a fixed size -- a taller cell still
+   grows the row, but every row is at least this tall regardless of which
+   content happens to fill it. Without it, a row's height tracked whichever
+   inline element was tallest: a.ext (real config/poc links, ~38px) versus
+   .pending (a deliberately smaller chip, ~33px) versus a.ext.trunc (the
+   sanitizer name, ~45.5px) -- so a Processing row (mostly real links) and a
+   Vulnerable row (mostly pending) measured a full pixel apart even with
+   identical column widths. */
+th, td { text-align: left; padding: 10px 14px; white-space: nowrap; height: 46px; }
 /* Sticky, and now correctly so. A sticky header positions against its nearest
    scroll container, which is what broke this before — the outer box scrolled, so
    `top: 56px` (aimed at clearing the page's top bar) parked the header 56px
@@ -233,10 +241,19 @@ tbody td + td { box-shadow: inset 1px 0 0 var(--line-soft); }
 tbody tr.alt { background: rgba(0, 0, 0, .028); }
 tbody tr:hover { background: rgba(0, 0, 0, .085); }
 tbody tr:hover td.idx { box-shadow: inset 3px 0 0 var(--text); }
-td.idx {
+th.idx, td.idx {
   color: var(--text-3); text-align: right; width: 1%;
   font-variant-numeric: tabular-nums; font-size: 12px;
 }
+/* min-width on the cell itself does not survive auto table layout once the
+   actual content is narrower -- the same thing that made the sanitizer fix
+   above land on the badge rather than the <th>. So the floor sits on the
+   number itself: 4ch (a digit's own width; tabular-nums above makes every
+   digit the same one) covers every count this register has today. Without
+   it the column shrinks to however many digits the CURRENT view's row count
+   needs -- 40 Processing rows fits in 2, 1,270 Vulnerable needs 4 -- which is
+   exactly the per-view drift the rest of this file has been removing. */
+.idxnum { display: inline-block; min-width: 4ch; }
 td.mono {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 12.5px; letter-spacing: -.01em;
