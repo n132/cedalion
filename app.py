@@ -44,6 +44,7 @@ LOGO_LIGHT_FILE = os.path.join(WEB, "logo-light.svg")
 FAVICON_FILE = os.path.join(WEB, "favicon.svg")
 CSS_FILE = os.path.join(WEB, "style.css")
 JS_FILE = os.path.join(WEB, "cedalion.js")
+ALLOW_FILE = os.path.join(HERE, "disclose_allow.json")
 PORT = int(os.environ.get("CEDALION_PORT", "60001"))
 HOST = os.environ.get("CEDALION_HOST", "0.0.0.0")
 
@@ -70,6 +71,11 @@ async def api_bugs():
 @app.get("/bugs.json")
 async def bugs_json():
     return JSONResponse(load())
+
+
+@app.get("/disclose_allow.json")
+async def disclose_allow():
+    return _asset(ALLOW_FILE, "application/json")
 
 
 def _asset(path: str, media_type: str) -> Response:

@@ -139,37 +139,40 @@ const DEFAULT_VIEW = "patched";
 let view = DEFAULT_VIEW;
 let sortKey = null, sortDir = 1;
 
-// Each view answers a different question, so each has its own columns — and
-// each row carries only its own, which is why a Vulnerable row has no patch
-// title and a Patched one has no id.
-// In the order the tabs stand, so the two say the same thing.
+// Patched answers a different question, so it has its own columns — and each
+// row carries only its own, which is why a Vulnerable row has no patch title
+// and a Patched one has no id. Processing and Vulnerable answer the SAME
+// question (is this bug reachable, and what do we have on it), so they get
+// one column list between them, not two copies of it: Processing is not a
+// different kind of row, just a Vulnerable one on disclose_allow.json, and a
+// second literal array here would be exactly the kind of drift this whole
+// page has spent its comments arguing against.
+const VULN_COLUMNS = [["bug_id", "bug id"], ["hash", "hash"],
+               ["kernel_commit", "kernel commit"], ["config", "config"],
+               ["poc", "poc"], ["sanitizer", "sanitizer report"],
+               ["lore", "lore links"]];
 const COLUMNS = {
   // The same field under the same name in both views that carry it: it is the
   // subject the patch went out under before it lands and the subject it landed
   // with after, which is one thing at two moments, not two things.
   patched:    [["cve", "cve"], ["commit", "patch commit"],
                ["title", "patch title"], ["cvss", "cvss"]],
-  processing: [["bug_id", "bug id"], ["title", "patch title"],
-               ["lore", "lore links"], ["patch", "patch"]],
-  vulnerable: [["bug_id", "bug id"], ["hash", "hash"],
-               ["kernel_commit", "kernel commit"], ["config", "config"],
-               ["poc", "poc"], ["sanitizer", "sanitizer report"],
-               ["lore", "lore links"]],
+  processing: VULN_COLUMNS,
+  vulnerable: VULN_COLUMNS,
 };
 
 // Columns whose answer is the same for every row in the view, so the answer
 // lives here rather than on the rows. A Vulnerable finding has no artifacts
 // published and no posting to point at — that is what the view means, not a
 // fact about any one row — and writing the word onto all 1,124 of them would
-// put the same five words in bugs.json 5,620 times to say nothing. Keyed by
-// view because Processing has a real `lore` column and this must not shadow it.
+// put the same five words in bugs.json 5,620 times to say nothing.
 //
 // They are named one per artifact rather than one "artifacts" column because
 // they are released separately and will land separately: the commit the bug was
 // found on, the CONFIG that builds it, the reproducer, and the sanitizer report
 // it trips. A single column would have to go from pending to done in one step.
-const PENDING = { vulnerable: new Set(
-  ["kernel_commit", "config", "poc", "sanitizer", "lore"]) };
+const VULN_PENDING = new Set(["kernel_commit", "config", "poc", "sanitizer", "lore"]);
+const PENDING = { processing: VULN_PENDING, vulnerable: VULN_PENDING };
 
 // Which file answers which column. A column is pending for a row until that
 // row's bug has published the file behind it, which is what "released
@@ -195,11 +198,19 @@ const SECTION_OF = {
 // location itself: the link in a mailed report is the same URL, and it has to
 // keep resolving after the files move.
 let ARTIFACTS = {};
-// Has this bug had anything published? Used as the default order and as the
-// tiebreak under any column the reader sorts by.
-const shared = b => (ARTIFACTS[b.bug_id]?.files
-  && !ARTIFACTS[b.bug_id].embargoed
-  && Object.keys(ARTIFACTS[b.bug_id].files).length) ? 1 : 0;
+// bug_id is full and un-truncated for both Vulnerable and Processing rows (see
+// extract.py) and ARTIFACTS is keyed the same way publish.py writes it — the
+// full hash_id — so the two line up directly with no view-specific lookup.
+// Processing is not a different kind of row, just a Vulnerable one that
+// happens to be on disclose_allow.json: it needs no special-casing anywhere
+// in this file, only in what view_of() decided server-side.
+const bugPathId = b => b.bug_id;
+const artifactEntry = b => ARTIFACTS[bugPathId(b)];
+const shared = b => {
+  const e = artifactEntry(b);
+  if (!e?.files || e.embargoed) return 0;
+  return Object.values(e.files).filter(Boolean).length;
+};
 // What a column shows once the bug is disclosed. A published file answers by
 // name; anything else the report answers, because the report carries all of
 // these and the link goes to the section rather than to a file.
@@ -207,14 +218,14 @@ const shared = b => (ARTIFACTS[b.bug_id]?.files
 // everything else /b/<id> answers "not public yet", and a link to that is a
 // link to a dead end.
 const hasReport = b => {
-  const e = ARTIFACTS[b.bug_id];
+  const e = artifactEntry(b);
   return !!(e && !e.embargoed && (e.files || {})["report.eml"]);
 };
 
 // The published file behind a column, if there is one. A column answered only
 // by the report has none, and links into the report instead.
 function artifactFile(k, b) {
-  const e = ARTIFACTS[b.bug_id];
+  const e = artifactEntry(b);
   if (!e || e.embargoed) return null;
   return (e.files || {})[ARTIFACT_OF[k]] ? ARTIFACT_OF[k] : null;
 }
@@ -223,7 +234,7 @@ function artifactOf(k, b) {
   // Only the columns an artifact can answer. Without this the fallback below
   // claims every column, and the id and the hash render as links to a report.
   if (!(k in ARTIFACT_OF) && k !== "kernel_commit") return null;
-  const e = ARTIFACTS[b.bug_id];
+  const e = artifactEntry(b);
   if (!e || e.embargoed) return null;
   const files = e.files || {};
   if (files[ARTIFACT_OF[k]]) return ARTIFACT_OF[k];
@@ -420,20 +431,12 @@ function renderTable() {
       (parseFloat(b.cvss) || -1) - (parseFloat(a.cvss) || -1) ||
       (b.cve ? 1 : 0) - (a.cve ? 1 : 0) ||
       String(a.title || "").localeCompare(String(b.title || "")));
-  // Processing: the rows carrying a diff first, then by title. A row with a
-  // patch is one you can read here rather than having to leave for lore, so it
-  // is the one worth putting at the top; below that, title order keeps a
-  // subsystem's patches together. An untitled row sorts last within its group
-  // rather than first, where a row of dashes reads as a fault in the page.
-  else if (!sortKey && view === "processing")
-    rows = rows.slice().sort((a, b) =>
-      (b.patch ? 1 : 0) - (a.patch ? 1 : 0) ||
-      (a.title ? 0 : 1) - (b.title ? 0 : 1) ||
-      String(a.title || "").localeCompare(String(b.title || "")));
-  // Vulnerable: the rows whose artifacts are published first. Those are the
-  // bugs deliberately cleared for disclosure, so they are the only ones a
-  // reader can actually do anything with; the rest are an id and a hash.
-  else if (!sortKey && view === "vulnerable")
+  // Processing and Vulnerable are the same sort for the same reason they are
+  // everything else the same way: Processing is not a different kind of row,
+  // just a Vulnerable one on disclose_allow.json. Rows with published
+  // artifacts first, in either view — those are the only ones a reader can
+  // actually do anything with; the rest are an id and a hash.
+  else if (!sortKey && (view === "processing" || view === "vulnerable"))
     rows = rows.slice().sort((a, b) => shared(b) - shared(a));
   // cvss sorts as a number — as text, 10 lands between 1 and 2.
   else if (sortKey === "cvss") rows = rows.slice().sort((a, b) =>
@@ -450,13 +453,14 @@ function renderTable() {
   // is followed by the row holding its diff and that row must not take a turn
   // in the stripe — with it counted, every row below the first patch was
   // shaded the wrong way.
+  const hasPatchColumn = cols.some(([k]) => k === "patch");
   document.getElementById("rows").innerHTML = rows.map((b, i) => {
     const tr = `
     <tr class="${i % 2 ? "alt" : ""}">
-      <td class="idx">${i + 1}</td>
+      <td class="idx"><span class="idxnum">${i + 1}</span></td>
       ${cols.map(c => renderCell(c, b)).join("")}
     </tr>`;
-    if (!b.patch) return tr;
+    if (!hasPatchColumn || !b.patch) return tr;
     return tr + `
     <tr class="patchrow" data-i="${b.i}"${open.has(b.i) ? "" : " hidden"}>
       <td class="idx"></td>
@@ -544,7 +548,11 @@ load(d => {
   DATA.forEach((b, i) => { b.i = i; });
   const counts = d.views || {};
   for (const v of Object.keys(COLUMNS)) {
-    document.getElementById("n-" + v).textContent = num(counts[v] || 0);
+    // counts comes straight from extract.py's own view_of() tally for every
+    // view alike — Processing needs no separate count here any more than
+    // Vulnerable does.
+    const total = counts[v] || 0;
+    document.getElementById("n-" + v).textContent = num(total);
   }
   setView(location.hash.slice(1) || DEFAULT_VIEW);
 });

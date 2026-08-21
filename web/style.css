@@ -250,10 +250,12 @@ tbody td:nth-child(2) { font-weight: 600; }
    column absorbing it keeps the rest packed left, and a sentence is the thing
    that actually benefits from the room. */
 td.desc { white-space: normal; min-width: 26em; width: 100%; }
-/* Vulnerable carries no title, so there the slack collects in the last column
-   and the values stay together at the left where they can be read across. */
-table[data-view=vulnerable] th:last-child,
-table[data-view=vulnerable] td:last-child { width: 100%; }
+/* Vulnerable and Processing carry no title, so on both the slack collects in
+   the last column and the values stay together at the left where they can be
+   read across. One rule for both -- they are the same table with a different
+   filter applied, not two tables that happen to agree today. */
+table:is([data-view=vulnerable], [data-view=processing]) th:last-child,
+table:is([data-view=vulnerable], [data-view=processing]) td:last-child { width: 100%; }
 a.ext { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--line); }
 a.ext:hover { border-bottom-color: var(--text); }
 
@@ -504,7 +506,9 @@ footer { padding: 14px 0 40px; color: var(--text-3); font-size: 13px; }
   tbody td.idx::before { content: "#"; }
   /* Both of these hand a column the width the table had spare. There is no
      spare width and no columns to hand it to. */
-  td.desc, table[data-view=vulnerable] td:last-child { min-width: 0; width: auto; }
+  td.desc,
+  table:is([data-view=vulnerable], [data-view=processing]) td:last-child
+    { min-width: 0; width: auto; }
   /* A hash is 12 characters that must not be broken across a line, and the
      column it sits in is narrower here than the value it holds. */
   td.mono { font-size: 12px; overflow-wrap: anywhere; }

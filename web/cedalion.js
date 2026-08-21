@@ -78,6 +78,10 @@ async function load(render) {
     const r = await fetch("artifacts.json");
     d.artifacts = r.ok ? await r.json() : {};
   } catch { d.artifacts = {}; }
+  try {
+    const r = await fetch("disclose_allow.json");
+    d.disclose_allow = r.ok ? await r.json() : [];
+  } catch { d.disclose_allow = []; }
   const foot = document.getElementById("foot");
   if (foot) foot.textContent = `Data extracted ${d.generated_at || "—"}`;
   render(d);

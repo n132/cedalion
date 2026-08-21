@@ -61,6 +61,9 @@ def main() -> None:
             sys.exit(f"missing asset: {src}")
         shutil.copy2(src, os.path.join(OUT, name))
     shutil.copy2(data, os.path.join(OUT, "bugs.json"))
+    allow = os.path.join(HERE, "disclose_allow.json")
+    if os.path.isfile(allow):
+        shutil.copy2(allow, os.path.join(OUT, "disclose_allow.json"))
 
     # Disclosed artifacts, copied ONE BY ONE off the index rather than as a
     # tree. The index is the only thing that decides, in both places a file can

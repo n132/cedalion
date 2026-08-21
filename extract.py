@@ -117,26 +117,36 @@ STATE_ALIASES = {"CVE Claimed": "Fixed"}
 # still-unfixed id would tell a reader a working exploit exists for it, which is
 # a different disclosure from "not fixed yet"; the view says only the latter.
 VIEW_PATCHED = "patched"          # landed upstream, ours or somebody else's
-VIEW_PROCESSING = "processing"    # posted to the list, not merged yet
-VIEW_VULNERABLE = "vulnerable"    # still live, nothing sent
-_VIEW_BY_STATE = {
-    "Fixed": VIEW_PATCHED,
-    "CVE Claimed": VIEW_PATCHED,
-    # "Reported" is the triage tool's term for sent upstream, which is the same
-    # thing as being on lore. There is no separate lore marker in the database
-    # to key off, and the local mirror is empty, so this is the signal.
-    "Reported": VIEW_PROCESSING,
-}
+VIEW_PROCESSING = "processing"    # a live bug we've chosen to extract something for
+VIEW_VULNERABLE = "vulnerable"    # still live, nothing disclosed
+_PATCHED_BY_STATE = {"Fixed": VIEW_PATCHED, "CVE Claimed": VIEW_PATCHED}
+
+# The states that land in Patched — derived rather than written out again, so
+# the CVE exception below cannot drift from this map.
+PATCHED_STATES = tuple(_PATCHED_BY_STATE)
+
+# co/disclose_allow.json — the same file publish.py gates on — read here too.
+# Processing is not a triage state at all: it used to be "Reported" (sent
+# upstream), but that conflated "we mailed it" with "we disclosed something
+# about it", and those are different facts. The only thing that makes a row
+# Processing instead of Vulnerable is being on this list: a live bug we have
+# chosen to extract artifacts for. Everything else about it — its shape in
+# this register — is identical to Vulnerable; see PUBLISHED below.
+ALLOW_FILE = os.path.join(HERE, "disclose_allow.json")
 
 
-def view_of(state: str) -> str:
-    return _VIEW_BY_STATE.get(state or "", VIEW_VULNERABLE)
+def load_disclose_allow() -> set:
+    try:
+        with open(ALLOW_FILE) as f:
+            return set(json.load(f))
+    except (OSError, ValueError):
+        return set()
 
 
-# The states that land in Patched, derived from the map above rather than
-# written out again — the CVE exception below is gated on them, and the two
-# must not be able to drift apart.
-PATCHED_STATES = tuple(s for s, v in _VIEW_BY_STATE.items() if v == VIEW_PATCHED)
+def view_of(state: str, hash_id: str, allowed: set) -> str:
+    if state in _PATCHED_BY_STATE:
+        return VIEW_PATCHED
+    return VIEW_PROCESSING if hash_id in allowed else VIEW_VULNERABLE
 
 
 # The kernel CVE corpus, one JSON record per CVE, for the CVSS base score.
@@ -365,6 +375,55 @@ def resolve_posting(subject: str):
     return found[0] if len(found) == 1 else None
 
 
+def own_report_posting(pub_name: str, _cache: dict = {}) -> str | None:
+    """The lore posting of OUR OWN mailed bug report, found by its exact
+    subject.
+
+    Different problem from resolve_posting() above: that one matches a
+    STRANGER's [PATCH] wording, recovered from a triage note typed by hand,
+    with an anchored-prefix fallback because a stranger's subject can drift
+    slightly from the note. Our own report needs no guessing at all —
+    co/mkbugreport.py always sends exactly `f"[BUG] {bug['pub_name']}"` — so
+    an exact, indexed equality check on msgs.subj finds it directly. Nothing
+    fuzzy: an exact string or nothing.
+    """
+    if not pub_name:
+        return None
+    subject = f"[BUG] {pub_name}"
+    if subject in _cache:
+        return _cache[subject]
+    if not os.path.exists(LORE_DB):
+        _cache[subject] = None
+        return None
+    try:
+        conn = sqlite3.connect(f"file:{LORE_DB}?mode=ro", uri=True)
+        row = conn.execute(
+            "SELECT msgid FROM msgs WHERE subj = ? ORDER BY date LIMIT 1",
+            (subject,)).fetchone()
+        conn.close()
+    except sqlite3.Error:
+        row = None
+    _cache[subject] = row[0] if row else None
+    return _cache[subject]
+
+
+def resolve_lore(notes: str | None, pub_name: str) -> str:
+    """The lore link for a Processing row, tried two ways in order, both
+    exact matches — no fuzzy full-text search:
+
+    1. the fix a stranger posted, resolved off the triage notes
+       (resolve_posting()) — patch_subject() itself skips a note that is not
+       a title (a bare URL, a status line like "scooped"), so there is
+       nothing to look up in that case;
+    2. failing that, our own mailed [BUG] report, by its own exact subject
+       (own_report_posting()).
+    """
+    posting = resolve_posting(patch_subject(notes))
+    if posting:
+        return posting[0]
+    return own_report_posting(pub_name) or ""
+
+
 # git's own trailer: "-- " on a line of its own followed by the version that
 # produced the patch. Not part of the diff. The trailing space is what the
 # standard says and what git sends, but enough mailers strip it on the way
@@ -585,21 +644,30 @@ def collapse_link_groups(rows):
 # where nothing sees them together. This does.
 PUBLISHED = {
     VIEW_VULNERABLE: {"view", "bug_id", "hash"},
-    VIEW_PROCESSING: {"view", "bug_id", "title", "lore", "patch"},
+    # Processing is Vulnerable's shape plus one field. It is not "posted to
+    # the list, so title and patch are already public" any more — that reasoning
+    # left with the state-based view — it is still a live, unfixed bug, and the
+    # opaque check below now runs on it same as Vulnerable. `lore` is the one
+    # addition, and it is not exempt from disclosing something: a link only
+    # exists once a message is actually public, so pointing at it discloses
+    # nothing the message itself has not already.
+    VIEW_PROCESSING: {"view", "bug_id", "hash", "lore"},
     VIEW_PATCHED:    {"view", "bug_id", "cve", "commit", "title", "cvss"},
 }
 
-# A Vulnerable row names a live, unfixed bug, so every value on one has to be an
-# opaque digest and nothing else: no path, no function, no crash text, no
-# description. The other two views describe patches that are already public on
-# lore, which is why only this one is checked for shape as well as for shape's
-# absence.
+# A Vulnerable or Processing row names a live, unfixed bug, so every value on
+# one has to be an opaque digest and nothing else: no path, no function, no
+# crash text, no description — `lore` is the one named exception, checked for
+# presence only (it is a lore message-id or a blank, never a digest). Patched
+# describes a fix that already landed, which is why only these two are checked
+# for shape as well as for shape's absence.
 #
-# The bound is a sha256's 64 hex, the longest digest this view carries, and not
-# ID_LEN: these two fields are published whole and cut by the page. It still
+# The bound is a sha256's 64 hex, the longest digest either view carries, and
+# not ID_LEN: these fields are published whole and cut by the page. It still
 # does the job the check is here for, which is to catch a value that is not a
 # digest at all — a title, a path, a sentence — rather than to measure one.
 _OPAQUE = re.compile(r"[0-9a-f]{0,64}")
+_OPAQUE_EXEMPT = {"view", "lore"}
 
 
 def check_published(bugs: list) -> None:
@@ -612,12 +680,12 @@ def check_published(bugs: list) -> None:
         if extra:
             sys.exit(f"refusing to write: a {b['view']} row carries {extra}, "
                      f"which that view does not publish")
-        if b["view"] != VIEW_VULNERABLE:
+        if b["view"] not in (VIEW_VULNERABLE, VIEW_PROCESSING):
             continue
         for k, v in b.items():
-            if k != "view" and not _OPAQUE.fullmatch(str(v)):
-                sys.exit(f"refusing to write: {k} on a Vulnerable row is not an "
-                         f"opaque digest ({v!r}) — that view names live bugs")
+            if k not in _OPAQUE_EXEMPT and not _OPAQUE.fullmatch(str(v)):
+                sys.exit(f"refusing to write: {k} on a {b['view']} row is not "
+                         f"an opaque digest ({v!r}) — that view names live bugs")
 
 
 def collect() -> dict:
@@ -627,12 +695,14 @@ def collect() -> dict:
     conn = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)
     placeholders = ",".join("?" for _ in EXCLUDED_STATES)
     patched_states = ",".join("?" for _ in PATCHED_STATES)
+    allowed = load_disclose_allow()
     rows = conn.execute(
         f"""SELECT id, hash_id, state, linked_ids,
                    (lower(COALESCE(notes, '')) LIKE ?
                     AND lower(COALESCE(notes, '')) NOT LIKE ?
                     AND trim(COALESCE(cve_number, '')) = '') AS scooped,
-                   cve_number, notes, commit_link, report
+                   cve_number, notes, commit_link, report,
+                   COALESCE(pub_name, '') AS pub_name
             FROM bugs
             WHERE ((hash_id NOT LIKE ? AND length(hash_id) != ?)
                    OR (state IN ({patched_states})
@@ -667,11 +737,11 @@ def collect() -> dict:
     # Scooped overrides whatever state the row was left in — it is the outcome
     # that actually happened. `notes` itself is never published; it is read here
     # only to classify.
-    # `report` rides on the end: collapse_link_groups() reads this tuple by
-    # position (id, hash_id, state, linked_ids), so nothing may be inserted
-    # ahead of those four.
-    rows = [(i, h, SCOOPED_STATE if sc else st, li, cv, nt, cl, rp)
-            for i, h, st, li, sc, cv, nt, cl, rp in rows]
+    # `report`/`pub_name` ride on the end: collapse_link_groups() reads this
+    # tuple by position (id, hash_id, state, linked_ids), so nothing may be
+    # inserted ahead of those four.
+    rows = [(i, h, SCOOPED_STATE if sc else st, li, cv, nt, cl, rp, pn)
+            for i, h, st, li, sc, cv, nt, cl, rp, pn in rows]
 
     conn.close()
 
@@ -684,9 +754,8 @@ def collect() -> dict:
     incomplete = 0
     cves_seen = set()
     fixes_seen = set()
-    postings_seen = set()
     for (_id, hash_id, state, _linked, cve,
-         notes, commit_link, report) in rows:
+         notes, commit_link, report, pub_name) in rows:
         # Taken for every row, not just the Vulnerable ones that publish the
         # fingerprint: `with a report` counts the whole register, so skipping
         # the others would report them all as missing.
@@ -704,26 +773,23 @@ def collect() -> dict:
             scooped += 1
             continue
 
-        view = view_of(state)
+        view = view_of(state, hash_id, allowed)
         s = STATE_ALIASES.get(state or "", state or "Unknown")
         states[s] = states.get(s, 0) + 1
 
         # A row carries EXACTLY the columns its own view draws, and nothing
         # else: bugs.json is handed to the browser verbatim by /api/bugs, so a
-        # field is published whether or not the page paints it. That is why the
-        # three views emit three different shapes rather than one union — a
-        # Vulnerable row must not carry a title, because the title of a patch
-        # that has not been sent names a live, unfixed vulnerability.
+        # field is published whether or not the page paints it.
         #
-        # Processing rows may, and that is the whole difference: a Reported bug
-        # has already been posted to a public mailing list. Its title, its diff
-        # and the file it touches went out with it — three of the four fields
-        # below are copied straight back off that posting, so a Processing row
-        # is a pointer to public mail rather than a disclosure of its own.
+        # Vulnerable and Processing are the same shape — a live, unfixed bug is
+        # a live, unfixed bug whether or not co/disclose_allow.json names it —
+        # plus the one field Processing adds: `lore`, a link to a message that
+        # is already public wherever it lives, so pointing at it discloses
+        # nothing the message itself has not already.
         #
-        # The bug's own `description` from the database is no longer read at
-        # all. It was written for triage, not for the list, and it said things
-        # the patch does not.
+        # The bug's own `description` from the database is not read at all. It
+        # was written for triage, not for the list, and it says things no
+        # published artifact does.
         if view == VIEW_VULNERABLE:
             # No date. `first_added_at` is when the row reached the triage tool,
             # not when the bug was found — it moves in scan-sized batches (605
@@ -731,52 +797,23 @@ def collect() -> dict:
             # from it dated the scan and not the finding. There is no column in
             # the database that dates the finding itself, so rather than publish
             # a number that reads like one and is not, the view shows none.
-            #
-            # Both in full, unlike the other two views: see ID_LEN. The page
-            # shows the same 12 hex it always did.
             bugs.append({
                 "view": view,
                 "bug_id": hash_id,
                 "hash": report_hash,
             })
         elif view == VIEW_PROCESSING:
-            subject = patch_subject(notes)
-            posting = resolve_posting(subject)
-            # One row per posting, the same way Patched is one row per CVE:
-            # several findings can be the same defect reached by different
-            # routes, and the patch that fixes them is one patch. `linked_ids`
-            # catches most such pairs before this, but not all — two tipc rows
-            # arrived under different notes (`tipc_lxc_xmit() on node up` and
-            # `tipc_named_node_up() on empty publication list`) and nothing
-            # short of the posting they both resolve to shows they are one.
-            #
-            # Only rows that found a posting can be paired this way. Two that
-            # did not are two rows: without the mail there is no evidence they
-            # are the same patch, and guessing from the notes is what the whole
-            # of resolve_posting() refuses to do.
-            if posting:
-                if posting[0] in postings_seen:
-                    states[s] -= 1        # not listed, so not counted either
-                    continue
-                postings_seen.add(posting[0])
             bugs.append({
                 "view": view,
-                # The same identifier a Vulnerable row publishes — cut, where
-                # that one is published whole, but to the length both are drawn
-                # at — so a finding keeps its name as it moves between the tabs
-                # and a row here can still be looked up in the manager.
-                "bug_id": short(hash_id),
-                # The patch's own title, taken from the posting where the
-                # mirror has it — the note is typed by hand and drifts (one
-                # carries a mail client's UI chrome). The `[PATCH net v2]` tag
-                # comes off: what is left is the subject the commit will land
-                # under, which is the same thing the Patched view's title is.
-                "title": strip_patch_tag(posting[1]) if posting else subject,
-                # The message-id, which is the permanent lore URL. Empty when
-                # the mirror has no copy; the page then falls back to a search
-                # for the subject, which is what it always used to do.
-                "lore": posting[0] if posting else "",
-                "patch": lore_patch(posting[2]) if posting else "",
+                # Full, same as Vulnerable — not cut with short(): a Processing
+                # row is a Vulnerable row that happens to be on the allow list,
+                # not a different kind of identity.
+                "bug_id": hash_id,
+                "hash": report_hash,
+                # Tried two ways, in order, both exact matches: the fix a
+                # stranger posted (off the triage notes), then our own mailed
+                # [BUG] report by its exact subject. See resolve_lore().
+                "lore": resolve_lore(notes, pub_name),
             })
         else:
             cve_id = (cve or "").strip().upper()
