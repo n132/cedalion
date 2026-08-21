@@ -83,9 +83,13 @@ def main() -> None:
     # would go on publishing that directory to a site nothing reads it from.
     index = os.path.join(HERE, "artifacts.json")
     if os.path.isfile(index):
-        shutil.copy2(index, os.path.join(OUT, "artifacts.json"))
         with open(index) as f:
             entries = json.load(f)
+        for entry in entries.values():
+            if (entry.get("files") or {}).get("report.md"):
+                sys.exit("report.md is reserved for a future feature and "
+                         "must not be published as an artifact")
+        shutil.copy2(index, os.path.join(OUT, "artifacts.json"))
         dst = os.path.join(OUT, "a")
         shutil.rmtree(dst, ignore_errors=True)
         for bug_id, entry in entries.items():
