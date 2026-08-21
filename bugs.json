@@ -1,23 +1,23 @@
 {
- "generated_at": "2026-08-19 17:47:11",
+ "generated_at": "2026-08-20 19:17:52",
  "counts": {
-  "bugs": 1406,
-  "with_report": 1396,
+  "bugs": 1407,
+  "with_report": 1397,
   "fixed": 97,
-  "reported": 136,
+  "reported": 138,
   "scooped": 13,
   "incomplete": 0,
   "merged_links": 85,
   "cves": 86
  },
  "states": {
-  "PoC Available": 1270,
-  "Reported": 39,
+  "PoC Available": 1269,
+  "Reported": 41,
   "Fixed": 97
  },
  "views": {
   "vulnerable": 1270,
-  "processing": 39,
+  "processing": 40,
   "patched": 97
  },
  "bugs": [
@@ -1403,10 +1403,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "b74fcfb4ab1e",
-   "title": "xdp: fix zero-copy frame layout",
-   "lore": "",
-   "patch": ""
+   "bug_id": "b74fcfb4ab1ee9a8",
+   "hash": "294c66b47629f9f8eced5939f6a2cdd7fe9a2ee1edf6122ad7b348bce58f0abd",
+   "lore": ""
   },
   {
    "view": "vulnerable",
@@ -2260,10 +2259,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "2b5d3b3a5b4c",
-   "title": "",
-   "lore": "",
-   "patch": ""
+   "bug_id": "2b5d3b3a5b4c3a3e",
+   "hash": "80b96e72dd113fb21ae1807e4fb52a8effe4b74957a4bc988a5493639eb7817c",
+   "lore": ""
   },
   {
    "view": "vulnerable",
@@ -2276,7 +2274,7 @@
    "cve": "CVE-2026-72407",
    "commit": "cbb0d30a1ad6",
    "title": "geneve: validate inner network offset in geneve_gro_complete()",
-   "cvss": "10"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -2315,11 +2313,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "0f3ca5c1074a",
+   "bug_id": "0f3ca5c1074ad7d0",
    "cve": "CVE-2026-72408",
    "commit": "2651c1744458",
    "title": "geneve: gate GRO hint in geneve_gro_complete() on gs->gro_hint",
-   "cvss": "10"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -2353,7 +2351,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "4fd59d9ef7bb",
+   "bug_id": "4fd59d9ef7bba366",
    "cve": "",
    "commit": "ebac8f6b1ef0",
    "title": "vsock/virtio: read virtqueues under worker locks",
@@ -2361,10 +2359,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "c7a8694b8ade",
-   "title": "tipc: fix NULL deref in deferred bulk distribution on publish failure",
-   "lore": "20260718092544.785289-3-bestswngs@gmail.com",
-   "patch": "diff --git a/net/tipc/name_distr.c b/net/tipc/name_distr.c\nindex b764274df758..5b0fb09226fc 100644\n--- a/net/tipc/name_distr.c\n+++ b/net/tipc/name_distr.c\n@@ -193,6 +193,10 @@ static int named_distribute(struct net *net, struct sk_buff_head *list,\n \t\tskb_trim(skb, INT_H_SIZE + (msg_dsz - msg_rem));\n \t\t__skb_queue_tail(list, skb);\n \t}\n+\tif (skb_queue_empty(list)) {\n+\t\tpr_warn(\"Bulk publication list empty, nothing to distribute\\n\");\n+\t\treturn 1;\n+\t}\n \thdr = buf_msg(skb_peek_tail(list));\n \tmsg_set_last_bulk(hdr);\n \tmsg_set_named_seqno(hdr, seqno);\n@@ -253,6 +257,13 @@ int tipc_named_dist_cluster_scope(struct net *net, u32 dnode)\n \tspin_unlock_bh(&tn->nametbl_lock);\n \n \tread_lock_bh(&nt->cluster_scope_lock);\n+\tif (unlikely(list_empty(&nt->cluster_scope))) {\n+\t\t/* finalize is done but nothing was published (publish\n+\t\t * failed): a permanent state, nothing to synchronize.\n+\t\t */\n+\t\tread_unlock_bh(&nt->cluster_scope_lock);\n+\t\treturn 0;\n+\t}\n \tif (named_distribute(net, &head, dnode, &nt->cluster_scope, seqno)) {\n \t\tread_unlock_bh(&nt->cluster_scope_lock);\n \t\treturn -ENOBUFS;\ndiff --git a/net/tipc/net.c b/net/tipc/net.c\nindex 4c144e720ac1..2aa8812c551a 100644\n--- a/net/tipc/net.c\n+++ b/net/tipc/net.c\n@@ -138,7 +138,8 @@ static void tipc_net_finalize(struct net *net, u32 addr)\n \ttipc_named_reinit(net);\n \ttipc_sk_reinit(net);\n \ttipc_mon_reinit_self(net);\n-\ttipc_nametbl_publish(net, &ua, &sk, addr);\n+\tif (!tipc_nametbl_publish(net, &ua, &sk, addr))\n+\t\tpr_warn(\"Failed to publish own node state\\n\");\n \tatomic_inc(&tn->finalized);\n \twake_up_var(&tn->finalized);\n }\n"
+   "bug_id": "c7a8694b8ade8e85",
+   "hash": "798367eb82bae2153c954fa22e0a5f90fc61f7ab92a79c65654afe13cb9c4603",
+   "lore": "20260718092544.785289-3-bestswngs@gmail.com"
   },
   {
    "view": "vulnerable",
@@ -2413,10 +2410,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "b6ca86c542b9",
-   "title": "ntfs3: fix out-of-bounds read in ntfs_read_mft",
-   "lore": "",
-   "patch": ""
+   "bug_id": "b6ca86c542b91b27",
+   "hash": "e6ef22cc6c03340647ccd127b66161d8a615ce4a4b0e078909327042b276b58b",
+   "lore": ""
   },
   {
    "view": "vulnerable",
@@ -2430,10 +2426,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "d2bbfe99f149",
-   "title": "fs/ntfs3: bound page_lcns[] index by the log record",
-   "lore": "20260617231343.403432-3-xmei5@asu.edu",
-   "patch": "diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c\nindex b1ca84d83de5..1cc7402fdc2c 100644\n--- a/fs/ntfs3/fslog.c\n+++ b/fs/ntfs3/fslog.c\n@@ -647,6 +647,14 @@ static inline void *enum_rstbl(struct RESTART_TABLE *t, void *c)\n \treturn NULL;\n }\n \n+/*\n+ * dp_range_ok - true if [j, j + count) fits in a page_lcns[cap] array.\n+ */\n+static inline bool dp_range_ok(size_t j, u32 count, u32 cap)\n+{\n+\treturn j < cap && count <= cap - j;\n+}\n+\n /*\n  * find_dp - Search for a @vcn in Dirty Page Table.\n  */\n@@ -3801,6 +3809,7 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)\n \tu64 t64;\n \tu16 t16;\n \tu32 t32;\n+\tsize_t j;\n \n \tlog = kzalloc_obj(struct ntfs_log, GFP_NOFS);\n \tif (!log)\n@@ -4566,9 +4575,12 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)\n \t\t * whole routine a loop, case Lcns do not fit below.\n \t\t */\n \t\tt16 = le16_to_cpu(lrh->lcns_follow);\n+\t\tj = le64_to_cpu(lrh->target_vcn) - le64_to_cpu(dp->vcn);\n+\t\tif (!dp_range_ok(j, t16, le32_to_cpu(dp->lcns_follow))) {\n+\t\t\terr = -EINVAL;\n+\t\t\tgoto out;\n+\t\t}\n \t\tfor (i = 0; i < t16; i++) {\n-\t\t\tsize_t j = (size_t)(le64_to_cpu(lrh->target_vcn) -\n-\t\t\t\t\t    le64_to_cpu(dp->vcn));\n \t\t\tdp->page_lcns[j + i] = lrh->page_lcns[i];\n \t\t}\n \n@@ -4985,8 +4997,14 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)\n \t/* Shorten length by any Lcns which were deleted. */\n \tsaved_len = dlen;\n \n+\tj = le64_to_cpu(lrh->target_vcn) - le64_to_cpu(dp->vcn);\n+\tif (!dp_range_ok(j, le16_to_cpu(lrh->lcns_follow),\n+\t\t\t le32_to_cpu(dp->lcns_follow))) {\n+\t\terr = -EINVAL;\n+\t\tgoto out;\n+\t}\n+\n \tfor (i = le16_to_cpu(lrh->lcns_follow); i; i--) {\n-\t\tsize_t j;\n \t\tu32 alen, voff;\n \n \t\tvoff = le16_to_cpu(lrh->record_off) +\n@@ -4994,7 +5012,6 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)\n \t\tvoff += le16_to_cpu(lrh->cluster_off) << SECTOR_SHIFT;\n \n \t\t/* If the Vcn question is allocated, we can just get out. */\n-\t\tj = le64_to_cpu(lrh->target_vcn) - le64_to_cpu(dp->vcn);\n \t\tif (dp->page_lcns[j + i - 1])\n \t\t\tbreak;\n"
+   "bug_id": "d2bbfe99f149acc9",
+   "hash": "07779d8ca87637069e020a4e961d3a176871458538bd687b76eaa06deaca7283",
+   "lore": "20260617231343.403432-3-xmei5@asu.edu"
   },
   {
    "view": "vulnerable",
@@ -2467,10 +2462,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "5cb90f3acf75",
-   "title": "fs/ntfs3: reject restart table growth beyond U16_MAX entries",
-   "lore": "20260623101434.1321291-2-bestswngs@gmail.com",
-   "patch": "diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c\nindex f038c799e7ac..78f34442aaaa 100644\n--- a/fs/ntfs3/fslog.c\n+++ b/fs/ntfs3/fslog.c\n@@ -853,6 +853,9 @@ static inline struct RESTART_TABLE *extend_rsttbl(struct RESTART_TABLE *tbl,\n \tu32 used = le16_to_cpu(tbl->used);\n \tstruct RESTART_TABLE *rt;\n \n+\tif (used + add > U16_MAX)\n+\t\treturn NULL;\n+\n \trt = init_rsttbl(esize, used + add);\n \tif (!rt)\n \t\treturn NULL;\n"
+   "bug_id": "5cb90f3acf756144",
+   "hash": "9954e4a3928bb8415323faca301a305e84bab49c3f85e9b00b2e8da47faddbd9",
+   "lore": "20260623101434.1321291-2-bestswngs@gmail.com"
   },
   {
    "view": "vulnerable",
@@ -2574,11 +2568,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "055d9a3208ab",
+   "bug_id": "055d9a3208ab2437",
    "cve": "CVE-2026-64567",
    "commit": "a2d8d5647ed8",
    "title": "btrfs: reject free space cache with more entries than pages",
-   "cvss": "7.8"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -2632,7 +2626,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "c65a34c5f446",
+   "bug_id": "c65a34c5f44682f0",
    "cve": "CVE-2026-64187",
    "commit": "2094dab19d45",
    "title": "xfs: fail recovery on a committed log item with no regions",
@@ -2815,7 +2809,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "65d7ffed49d6",
+   "bug_id": "65d7ffed49d63568",
    "cve": "CVE-2026-64569",
    "commit": "56d96fededd6",
    "title": "mpls: fix NULL deref in mpls_valid_fib_dump_req() on CONFIG_INET=n",
@@ -2858,10 +2852,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "0d6736579db1",
-   "title": "tipc: guard against empty buffer list in tipc_node_xmit()",
-   "lore": "",
-   "patch": ""
+   "bug_id": "0d6736579db13a8b",
+   "hash": "6c97d86fd1656302a9dc90536509e1bf417717b0fecf39728da503cdd14ca8d1",
+   "lore": ""
   },
   {
    "view": "vulnerable",
@@ -2915,10 +2908,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "98dcb2414482",
-   "title": "xfrm6: fix out-of-bounds write in xfrm6_input_addr() when secpath is full",
-   "lore": "",
-   "patch": ""
+   "bug_id": "98dcb2414482df0b",
+   "hash": "a2ae2d43705c0e22cb614daabafd1035d77da2e49c75a31808ed2b7dd336bceb",
+   "lore": ""
   },
   {
    "view": "vulnerable",
@@ -2981,9 +2973,10 @@
    "hash": "1f9f9ceebf9a8e4440b5d515abb2b9ba5be0872a059f55e3d1951852400c721e"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "4638111fe2a12980",
-   "hash": "3a1111ddc263d0d3c1fdea8c3e7dab31af3a30db19f7c28d341b3f3497e3d7b1"
+   "hash": "3a1111ddc263d0d3c1fdea8c3e7dab31af3a30db19f7c28d341b3f3497e3d7b1",
+   "lore": ""
   },
   {
    "view": "vulnerable",
@@ -3217,10 +3210,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "7a7e8b052c6a",
-   "title": "xfs: validate inode log item regions during recovery",
-   "lore": "20260716174813.3627911-1-bestswngs@gmail.com",
-   "patch": "diff --git a/fs/xfs/libxfs/xfs_inode_buf.c b/fs/xfs/libxfs/xfs_inode_buf.c\nindex 336ef843f2fe..71311c4fc2ed 100644\n--- a/fs/xfs/libxfs/xfs_inode_buf.c\n+++ b/fs/xfs/libxfs/xfs_inode_buf.c\n@@ -479,7 +479,7 @@ xfs_dinode_verify_fork(\n \treturn NULL;\n }\n \n-static xfs_failaddr_t\n+xfs_failaddr_t\n xfs_dinode_verify_forkoff(\n \tstruct xfs_dinode\t*dip,\n \tstruct xfs_mount\t*mp)\ndiff --git a/fs/xfs/libxfs/xfs_inode_buf.h b/fs/xfs/libxfs/xfs_inode_buf.h\nindex f3624532b023..d120675f6c07 100644\n--- a/fs/xfs/libxfs/xfs_inode_buf.h\n+++ b/fs/xfs/libxfs/xfs_inode_buf.h\n@@ -27,6 +27,8 @@ int\txfs_inode_from_disk(struct xfs_inode *ip, struct xfs_dinode *from);\n \n xfs_failaddr_t xfs_dinode_verify(struct xfs_mount *mp, xfs_ino_t ino,\n \t\t\t   struct xfs_dinode *dip);\n+xfs_failaddr_t xfs_dinode_verify_forkoff(struct xfs_dinode *dip,\n+\t\t\t   struct xfs_mount *mp);\n xfs_failaddr_t xfs_dinode_verify_metadir(struct xfs_mount *mp,\n \t\tstruct xfs_dinode *dip, uint16_t mode, uint16_t flags,\n \t\tuint64_t flags2);\ndiff --git a/fs/xfs/xfs_inode_item_recover.c b/fs/xfs/xfs_inode_item_recover.c\nindex 169a8fe3bf0a..8ebc8eaf9e03 100644\n--- a/fs/xfs/xfs_inode_item_recover.c\n+++ b/fs/xfs/xfs_inode_item_recover.c\n@@ -366,6 +366,13 @@ xlog_recover_inode_commit_pass2(\n \t\terror = -EFSCORRUPTED;\n \t\tgoto out_release;\n \t}\n+\t/* ri_buf[1] may be absent or shorter than a log dinode */\n+\tif (XFS_IS_CORRUPT(mp, item->ri_cnt < 2) ||\n+\t    XFS_IS_CORRUPT(mp,\n+\t\t\t   item->ri_buf[1].iov_len < xfs_log_dinode_size(mp))) {\n+\t\terror = -EFSCORRUPTED;\n+\t\tgoto out_release;\n+\t}\n \tldip = item->ri_buf[1].iov_base;\n \tif (XFS_IS_CORRUPT(mp, ldip->di_magic != XFS_DINODE_MAGIC)) {\n \t\txfs_alert(mp,\n@@ -374,6 +381,11 @@ xlog_recover_inode_commit_pass2(\n \t\terror = -EFSCORRUPTED;\n \t\tgoto out_release;\n \t}\n+\t/* the size gate and fork offsets assume the mount's inode version */\n+\tif (XFS_IS_CORRUPT(mp, !xfs_dinode_good_version(mp, ldip->di_version))) {\n+\t\terror = -EFSCORRUPTED;\n+\t\tgoto out_release;\n+\t}\n \n \t/*\n \t * If the inode has an LSN in it, recover the inode only if the on-disk\n@@ -462,15 +474,6 @@ xlog_recover_inode_commit_pass2(\n \tif (error)\n \t\tgoto out_release;\n \n-\tif (unlikely(ldip->di_forkoff > mp->m_sb.sb_inodesize)) {\n-\t\tXFS_CORRUPTION_ERROR(\"Bad log dinode fork offset\",\n-\t\t\t\tXFS_ERRLEVEL_LOW, mp, ldip, sizeof(*ldip));\n-\t\txfs_alert(mp,\n-\t\t\t\"Bad inode 0x%llx, di_forkoff 0x%x\",\n-\t\t\tin_f->ilf_ino, ldip->di_forkoff);\n-\t\terror = -EFSCORRUPTED;\n-\t\tgoto out_release;\n-\t}\n \tisize = xfs_log_dinode_size(mp);\n \tif (unlikely(item->ri_buf[1].iov_len > isize)) {\n \t\tXFS_CORRUPTION_ERROR(\"Bad log dinode size\", XFS_ERRLEVEL_LOW,\n@@ -495,6 +498,30 @@ xlog_recover_inode_commit_pass2(\n \txfs_log_dinode_to_disk(ldip, dip, current_lsn);\n \n \tfields = in_f->ilf_fields;\n+\n+\t/* forks are otherwise ASSERT-only; check di_forkoff and presence */\n+\tif (fields & (XFS_ILOG_DFORK | XFS_ILOG_AFORK)) {\n+\t\tif (XFS_IS_CORRUPT(mp, xfs_dinode_verify_forkoff(dip, mp) != NULL)) {\n+\t\t\terror = -EFSCORRUPTED;\n+\t\t\tgoto out_release;\n+\t\t}\n+\t}\n+\tif (fields & XFS_ILOG_DFORK) {\n+\t\tif (XFS_IS_CORRUPT(mp, item->ri_cnt < 3) ||\n+\t\t    XFS_IS_CORRUPT(mp, item->ri_buf[2].iov_base == NULL)) {\n+\t\t\terror = -EFSCORRUPTED;\n+\t\t\tgoto out_release;\n+\t\t}\n+\t}\n+\tif (fields & XFS_ILOG_AFORK) {\n+\t\tattr_index = (fields & XFS_ILOG_DFORK) ? 3 : 2;\n+\n+\t\tif (XFS_IS_CORRUPT(mp, item->ri_cnt < attr_index + 1) ||\n+\t\t    XFS_IS_CORRUPT(mp, item->ri_buf[attr_index].iov_base == NULL)) {\n+\t\t\terror = -EFSCORRUPTED;\n+\t\t\tgoto out_release;\n+\t\t}\n+\t}\n \tif (fields & XFS_ILOG_DEV)\n \t\txfs_dinode_put_rdev(dip, in_f->ilf_u.ilfu_rdev);\n \n@@ -510,6 +537,10 @@ xlog_recover_inode_commit_pass2(\n \tswitch (fields & XFS_ILOG_DFORK) {\n \tcase XFS_ILOG_DDATA:\n \tcase XFS_ILOG_DEXT:\n+\t\tif (XFS_IS_CORRUPT(mp, len > XFS_DFORK_DSIZE(dip, mp))) {\n+\t\t\terror = -EFSCORRUPTED;\n+\t\t\tgoto out_release;\n+\t\t}\n \t\tmemcpy(XFS_DFORK_DPTR(dip), src, len);\n \t\tbreak;\n \n@@ -533,11 +564,6 @@ xlog_recover_inode_commit_pass2(\n \t * transaction.\n \t */\n \tif (in_f->ilf_fields & XFS_ILOG_AFORK) {\n-\t\tif (in_f->ilf_fields & XFS_ILOG_DFORK) {\n-\t\t\tattr_index = 3;\n-\t\t} else {\n-\t\t\tattr_index = 2;\n-\t\t}\n \t\tlen = item->ri_buf[attr_index].iov_len;\n \t\tsrc = item->ri_buf[attr_index].iov_base;\n \t\tASSERT(len == xlog_calc_iovec_len(in_f->ilf_asize));\n@@ -546,7 +572,10 @@ xlog_recover_inode_commit_pass2(\n \t\tcase XFS_ILOG_ADATA:\n \t\tcase XFS_ILOG_AEXT:\n \t\t\tdest = XFS_DFORK_APTR(dip);\n-\t\t\tASSERT(len <= XFS_DFORK_ASIZE(dip, mp));\n+\t\t\tif (XFS_IS_CORRUPT(mp, len > XFS_DFORK_ASIZE(dip, mp))) {\n+\t\t\t\terror = -EFSCORRUPTED;\n+\t\t\t\tgoto out_release;\n+\t\t\t}\n \t\t\tmemcpy(dest, src, len);\n \t\t\tbreak;\n"
+   "bug_id": "7a7e8b052c6a14f9",
+   "hash": "1677461455ecf8f29d0620a53e3b5be269055a21ce79e00625d487550d1fe68d",
+   "lore": "20260716174813.3627911-1-bestswngs@gmail.com"
   },
   {
    "view": "vulnerable",
@@ -3379,19 +3371,19 @@
   },
   {
    "view": "patched",
-   "bug_id": "becb034cf9b2",
+   "bug_id": "becb034cf9b2ee0d",
    "cve": "CVE-2026-64574",
    "commit": "952c02b33f56",
    "title": "wifi: mac80211: tear down new links on vif update error path",
-   "cvss": "7.8"
+   "cvss": ""
   },
   {
    "view": "patched",
-   "bug_id": "d5e52a039a8f",
+   "bug_id": "d5e52a039a8fce8f",
    "cve": "CVE-2026-64570",
    "commit": "286e52a799fa",
    "title": "wifi: mac80211: fix fils_discovery double free on alloc failure",
-   "cvss": "7.8"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -3405,11 +3397,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "06291ce3b2b6",
+   "bug_id": "06291ce3b2b64713",
    "cve": "CVE-2026-64189",
    "commit": "7cd9103283b2",
    "title": "netfilter: ipset: fix race between dump and ip_set_list resize",
-   "cvss": "7.8"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -3493,10 +3485,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "7f3235ad2e69",
-   "title": "vxlan: vnifilter: enforce exact length of GROUP/GROUP6 attributes",
-   "lore": "20260704222254.914567-1-xmei5@asu.edu",
-   "patch": "diff --git a/drivers/net/vxlan/vxlan_vnifilter.c b/drivers/net/vxlan/vxlan_vnifilter.c\nindex 3e76f4e21094..dd94085e0886 100644\n--- a/drivers/net/vxlan/vxlan_vnifilter.c\n+++ b/drivers/net/vxlan/vxlan_vnifilter.c\n@@ -462,10 +462,8 @@ static int vxlan_vnifilter_dump(struct sk_buff *skb, struct netlink_callback *cb\n static const struct nla_policy vni_filter_entry_policy[VXLAN_VNIFILTER_ENTRY_MAX + 1] = {\n \t[VXLAN_VNIFILTER_ENTRY_START] = { .type = NLA_U32 },\n \t[VXLAN_VNIFILTER_ENTRY_END] = { .type = NLA_U32 },\n-\t[VXLAN_VNIFILTER_ENTRY_GROUP]\t= { .type = NLA_BINARY,\n-\t\t\t\t\t    .len = sizeof_field(struct iphdr, daddr) },\n-\t[VXLAN_VNIFILTER_ENTRY_GROUP6]\t= { .type = NLA_BINARY,\n-\t\t\t\t\t    .len = sizeof(struct in6_addr) },\n+\t[VXLAN_VNIFILTER_ENTRY_GROUP]\t= NLA_POLICY_EXACT_LEN(sizeof_field(struct iphdr, daddr)),\n+\t[VXLAN_VNIFILTER_ENTRY_GROUP6]\t= NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),\n };\n \n static const struct nla_policy vni_filter_policy[VXLAN_VNIFILTER_MAX + 1] = {\n"
+   "bug_id": "7f3235ad2e697d87",
+   "hash": "a4bc6f61c4530a9691a709d5658fd4f06cc0457b767d7fe253df346c7f851a4d",
+   "lore": "20260704222254.914567-1-xmei5@asu.edu"
   },
   {
    "view": "vulnerable",
@@ -3650,17 +3641,15 @@
   },
   {
    "view": "processing",
-   "bug_id": "1e58c1233969",
-   "title": "fs/ntfs3: validate EA entry layout against ef->size in ntfs_read_ea",
-   "lore": "20260703222333.94030-1-xmei5@asu.edu",
-   "patch": "diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c\nindex 04814dd29375..259d7f53b77b 100644\n--- a/fs/ntfs3/xattr.c\n+++ b/fs/ntfs3/xattr.c\n@@ -155,6 +155,11 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,\n \t\t\tea_size = le32_to_cpu(ef->size);\n \t\t\tif (ea_size > bytes)\n \t\t\t\tgoto out1;\n+\t\t\tif (bytes < offsetof(struct EA_FULL, name))\n+\t\t\t\tgoto out1;\n+\t\t\tif (struct_size(ef, name, 1 + ef->name_len +\n+\t\t\t\t\tle16_to_cpu(ef->elength)) > ea_size)\n+\t\t\t\tgoto out1;\n \t\t\tcontinue;\n \t\t}\n"
+   "bug_id": "1e58c12339692e73",
+   "hash": "3ef6c68ace40080f87d88d31e3a7c7b21b010b9a6baa81ac9d898a6442841873",
+   "lore": "20260703222333.94030-1-xmei5@asu.edu"
   },
   {
    "view": "processing",
-   "bug_id": "11ee03ff6051",
-   "title": "fs/ntfs3: validate $SDH entry size in ntfs_insert_security",
-   "lore": "20260703215431.73681-1-xmei5@asu.edu",
-   "patch": "diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c\nindex bc7469d0a34d..6d81ae6c1f11 100644\n--- a/fs/ntfs3/fsntfs.c\n+++ b/fs/ntfs3/fsntfs.c\n@@ -2145,6 +2145,9 @@ int ntfs_insert_security(struct ntfs_sb_info *sbi,\n \t\tgoto out;\n \n \twhile (e) {\n+\t\tif (le16_to_cpu(e->de.size) < SIZEOF_SDH_DIRENTRY)\n+\t\t\tbreak;\n+\n \t\tif (le32_to_cpu(e->sec_hdr.size) == new_sec_size) {\n \t\t\terr = ntfs_read_run_nb(sbi, &ni->file.run,\n \t\t\t\t\t       le64_to_cpu(e->sec_hdr.off),\n"
+   "bug_id": "11ee03ff6051943f",
+   "hash": "be9926d2bf7466870a6fa61aaf8b644ccfb9533ba8ba350cbc8bfb8a192ca730",
+   "lore": "20260703215431.73681-1-xmei5@asu.edu"
   },
   {
    "view": "vulnerable",
@@ -3824,10 +3813,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "d09dcbf05ea0",
-   "title": "fs/ntfs3: do not mark frame pages uptodate on read error",
-   "lore": "20260712133427.435377-2-bestswngs@gmail.com",
-   "patch": "diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c\nindex 2d2644d80017..862baafb80e3 100644\n--- a/fs/ntfs3/frecord.c\n+++ b/fs/ntfs3/frecord.c\n@@ -2467,7 +2467,8 @@ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,\n out:\n \tfor (i = 0; i < pages_per_frame; i++) {\n \t\tpg = pages[i];\n-\t\tSetPageUptodate(pg);\n+\t\tif (!err)\n+\t\t\tSetPageUptodate(pg);\n \t}\n \n \treturn err;\n"
+   "bug_id": "d09dcbf05ea07dba",
+   "hash": "66b758ca3caa2f12f102f4e1109499a6999eb4e53d04b0ce6b60c07c9f368c4f",
+   "lore": "20260712133427.435377-2-bestswngs@gmail.com"
   },
   {
    "view": "vulnerable",
@@ -4136,10 +4124,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "a7d3b3af4d88",
-   "title": "drm/modes: reject out-of-range GTF blanking duty cycle",
-   "lore": "20260711230728.2250485-1-xmei5@asu.edu",
-   "patch": "diff --git a/drivers/gpu/drm/drm_modes.c b/drivers/gpu/drm/drm_modes.c\nindex 3f8e025fd6d9..b6f263e9ba86 100644\n--- a/drivers/gpu/drm/drm_modes.c\n+++ b/drivers/gpu/drm/drm_modes.c\n@@ -966,6 +966,10 @@ drm_gtf_mode_complex(struct drm_device *dev, int hdisplay, int vdisplay,\n \t/* 18.Find the ideal blanking duty cycle from blanking duty cycle */\n \tideal_duty_cycle = GTF_C_PRIME * 1000 -\n \t\t\t\t(GTF_M_PRIME * 1000000 / hfreq_est);\n+\tif (ideal_duty_cycle >= 100000) {\n+\t\tdrm_mode_destroy(dev, drm_mode);\n+\t\treturn NULL;\n+\t}\n \t/* 19.Find the number of pixels in the blanking time to the nearest\n \t * double character cell: */\n \thblank = total_active_pixels * ideal_duty_cycle /\n"
+   "bug_id": "a7d3b3af4d8884bc",
+   "hash": "abb20cbe879744c26f6e1aa220ed28b601774c37550ff668ebbcd30492970287",
+   "lore": "20260711230728.2250485-1-xmei5@asu.edu"
   },
   {
    "view": "vulnerable",
@@ -4288,7 +4275,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "4741c833a192",
+   "bug_id": "4741c833a192233c",
    "cve": "",
    "commit": "cc3144da377d",
    "title": "xfs: fix off-by-one in rtrefcount btree root level validation",
@@ -4366,11 +4353,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "3708dfb351ca",
+   "bug_id": "3708dfb351ca8c1a",
    "cve": "CVE-2026-68159",
    "commit": "9f00f9cf2be2",
    "title": "libceph: bound pg_{temp,upmap,upmap_items} length to CEPH_PG_MAX_SIZE",
-   "cvss": "9.8"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -4469,10 +4456,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "0bfc402647f5",
-   "title": "Bluetooth: hci_sync: take hci_dev_lock in hci_clear_adv_instance_sync",
-   "lore": "20260703234350.225221-1-xmei5@asu.edu",
-   "patch": "diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c\nindex 3be8c3581c6c..6b566c67ee98 100644\n--- a/net/bluetooth/hci_sync.c\n+++ b/net/bluetooth/hci_sync.c\n@@ -487,6 +487,8 @@ int hci_clear_adv_instance_sync(struct hci_dev *hdev, struct sock *sk,\n \tint err;\n \tu8 rem_inst;\n \n+\thci_dev_lock(hdev);\n+\n \t/* Cancel any timeout concerning the removed instance(s). */\n \tif (!instance || hdev->cur_adv_instance == instance)\n \t\tcancel_adv_timeout(hdev);\n@@ -525,6 +527,8 @@ int hci_clear_adv_instance_sync(struct hci_dev *hdev, struct sock *sk,\n \t\t}\n \t}\n \n+\thci_dev_unlock(hdev);\n+\n \tif (!hdev_is_powered(hdev) || hci_dev_test_flag(hdev, HCI_ADVERTISING))\n \t\treturn 0;\n"
+   "bug_id": "0bfc402647f53e3e",
+   "hash": "51d187429cb873d969cc79fc69b4f58d241fede8141fc78f75230b5d531fdf60",
+   "lore": "20260703234350.225221-1-xmei5@asu.edu"
   },
   {
    "view": "vulnerable",
@@ -4508,6 +4494,11 @@
    "view": "vulnerable",
    "bug_id": "1643a5ec440576e4",
    "hash": "3c051d9380589e3150980c653548f5708ebe2a85c411dd6ba376c2cf9e480687"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "714ae219610a0415",
+   "hash": "891dfe38323342d34226e3f3034f72de8a0870a1be758fa346f7a262f58273ec"
   },
   {
    "view": "vulnerable",
@@ -4756,10 +4747,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "058d6946d88a",
-   "title": "can: esd_usb: free_candev() after unlink_all_urbs() in disconnect",
-   "lore": "20260705010005.1169943-1-xmei5@asu.edu",
-   "patch": "diff --git a/drivers/net/can/usb/esd_usb.c b/drivers/net/can/usb/esd_usb.c\nindex d257440fa01f..34c0ca187283 100644\n--- a/drivers/net/can/usb/esd_usb.c\n+++ b/drivers/net/can/usb/esd_usb.c\n@@ -1385,6 +1385,7 @@ static void esd_usb_disconnect(struct usb_interface *intf)\n \n \tif (dev) {\n \t\tdev->in_usb_disconnect = 1;\n+\t\tunlink_all_urbs(dev);\n \t\tfor (i = 0; i < dev->net_count; i++) {\n \t\t\tif (dev->nets[i]) {\n \t\t\t\tnetdev = dev->nets[i]->netdev;\n@@ -1393,7 +1394,6 @@ static void esd_usb_disconnect(struct usb_interface *intf)\n \t\t\t\tfree_candev(netdev);\n \t\t\t}\n \t\t}\n-\t\tunlink_all_urbs(dev);\n \t\tkfree(dev);\n \t}\n }\n"
+   "bug_id": "058d6946d88a289a",
+   "hash": "f57ad2aafe0e13313de93e9b49e7a8a1be1dbc0ed1dccb21d2aadc1540022fe5",
+   "lore": "20260705010005.1169943-1-xmei5@asu.edu"
   },
   {
    "view": "vulnerable",
@@ -4968,19 +4958,19 @@
   },
   {
    "view": "patched",
-   "bug_id": "66cd66ff15de",
+   "bug_id": "66cd66ff15de0e55",
    "cve": "CVE-2026-64545",
    "commit": "e82d8cc4321c",
    "title": "net, bpf: check master for NULL in xdp_master_redirect()",
-   "cvss": "7.5"
+   "cvss": ""
   },
   {
    "view": "patched",
-   "bug_id": "d41363d16b2a",
+   "bug_id": "d41363d16b2a65ef",
    "cve": "CVE-2026-64541",
    "commit": "9d160b35cc34",
    "title": "net/smc: fix UAF in smc_cdc_rx_handler() by pinning the socket",
-   "cvss": "9.8"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -4989,7 +4979,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "b3f7f509062d",
+   "bug_id": "b3f7f509062d9c12",
    "cve": "CVE-2026-64542",
    "commit": "d186e942365a",
    "title": "ipv6: ndisc: fix NULL deref in accept_untracked_na()",
@@ -5007,34 +4997,33 @@
   },
   {
    "view": "patched",
-   "bug_id": "fab7fd80cacf",
+   "bug_id": "fab7fd80cacf553c",
    "cve": "CVE-2026-64568",
    "commit": "1d067abcd370",
    "title": "wifi: mac80211: fix unsol_bcast_probe_resp double free on alloc failure",
-   "cvss": "7.8"
+   "cvss": ""
   },
   {
    "view": "patched",
-   "bug_id": "b82a462d6128",
+   "bug_id": "b82a462d61285f1d",
    "cve": "CVE-2026-64547",
    "commit": "03f384bc0cb8",
    "title": "net: usb: net1080: validate packet_len before pad-byte access in rx_fixup",
-   "cvss": "8.1"
+   "cvss": ""
   },
   {
    "view": "patched",
-   "bug_id": "4320fc056c36",
+   "bug_id": "4320fc056c362a60",
    "cve": "CVE-2026-64540",
    "commit": "8ff7f2a6da4f",
    "title": "usbnet: gl620a: fix out-of-bounds read in genelink_rx_fixup()",
-   "cvss": "8.1"
+   "cvss": ""
   },
   {
    "view": "processing",
-   "bug_id": "df98807f8545",
-   "title": "fs/ntfs3: validate dirty page table on log replay",
-   "lore": "20260617231343.403432-2-xmei5@asu.edu",
-   "patch": "diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c\nindex acfa18b84401..b1ca84d83de5 100644\n--- a/fs/ntfs3/fslog.c\n+++ b/fs/ntfs3/fslog.c\n@@ -778,6 +778,20 @@ static bool check_rstbl(const struct RESTART_TABLE *rt, size_t bytes)\n \treturn true;\n }\n \n+static bool check_dp_table(const struct RESTART_TABLE *dptbl)\n+{\n+\tu32 rsize = le16_to_cpu(dptbl->size);\n+\tstruct DIR_PAGE_ENTRY *dp = NULL;\n+\n+\twhile ((dp = enum_rstbl((struct RESTART_TABLE *)dptbl, dp))) {\n+\t\tif (struct_size(dp, page_lcns, le32_to_cpu(dp->lcns_follow)) >\n+\t\t    rsize)\n+\t\t\treturn false;\n+\t}\n+\n+\treturn true;\n+}\n+\n /*\n  * free_rsttbl_idx - Free a previously allocated index a Restart Table.\n  */\n@@ -4209,6 +4223,11 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)\n \t\tgoto out;\n \t}\n \n+\tif (!check_dp_table(rt)) {\n+\t\terr = -EINVAL;\n+\t\tgoto out;\n+\t}\n+\n \tdptbl = kmemdup(rt, t32, GFP_NOFS);\n \tif (!dptbl) {\n \t\terr = -ENOMEM;\n"
+   "bug_id": "df98807f8545292a",
+   "hash": "9d1f81293af5c0a4b27ca86d6646d97f071179c1e1422c634dd0e9594b8620bb",
+   "lore": "20260617231343.403432-2-xmei5@asu.edu"
   },
   {
    "view": "vulnerable",
@@ -5058,11 +5047,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "1ee7c8b1b8c5",
+   "bug_id": "1ee7c8b1b8c54fd3",
    "cve": "CVE-2026-64411",
    "commit": "a622d2e9608c",
    "title": "netfilter: ebtables: terminate table name before find_table_lock()",
-   "cvss": "7.1"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -5071,7 +5060,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "1d1bf60f7fd2",
+   "bug_id": "1d1bf60f7fd2ecb9",
    "cve": "CVE-2026-64538",
    "commit": "46c3b8191aad",
    "title": "ipv6: Fix null-ptr-deref in fib6_nh_mtu_change().",
@@ -5079,10 +5068,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "20b3d0eed673",
-   "title": "vxlan: fix NULL dereference in vxlan_igmp_join() and vxlan_igmp_leave()",
-   "lore": "",
-   "patch": ""
+   "bug_id": "20b3d0eed6733afe",
+   "hash": "8090f525df450eba12d5b1005b332dd02f23d44eec21656506107727dde9fb93",
+   "lore": ""
   },
   {
    "view": "vulnerable",
@@ -5095,7 +5083,7 @@
    "cve": "CVE-2026-46322",
    "commit": "aa8963fdce66",
    "title": "tun: free page on build_skb failure in tun_xdp_one()",
-   "cvss": "7.1"
+   "cvss": ""
   },
   {
    "view": "patched",
@@ -5103,7 +5091,7 @@
    "cve": "CVE-2026-46320",
    "commit": "3bcf7aec6a9d",
    "title": "tap: free page on error paths in tap_get_user_xdp()",
-   "cvss": "7.4"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -5137,17 +5125,15 @@
   },
   {
    "view": "processing",
-   "bug_id": "b27792546e50",
-   "title": "fs/ntfs3: fix out-of-bounds read of INDEX_ROOT in reparse/objid init",
-   "lore": "20260610115724.1813176-2-bestswngs@gmail.com",
-   "patch": "diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c\nindex d0434756029b6..42493a2da24ef 100644\n--- a/fs/ntfs3/fsntfs.c\n+++ b/fs/ntfs3/fsntfs.c\n@@ -2302,8 +2302,8 @@ int ntfs_reparse_init(struct ntfs_sb_info *sbi)\n \t\tgoto out;\n \t}\n \n-\troot_r = resident_data(attr);\n-\tif (root_r->type != ATTR_ZERO ||\n+\troot_r = resident_data_ex(attr, sizeof(struct INDEX_ROOT));\n+\tif (!root_r || root_r->type != ATTR_ZERO ||\n \t    root_r->rule != NTFS_COLLATION_TYPE_UINTS) {\n \t\terr = -EINVAL;\n \t\tgoto out;\n@@ -2340,8 +2340,8 @@ int ntfs_objid_init(struct ntfs_sb_info *sbi)\n \t\tgoto out;\n \t}\n \n-\troot = resident_data(attr);\n-\tif (root->type != ATTR_ZERO ||\n+\troot = resident_data_ex(attr, sizeof(struct INDEX_ROOT));\n+\tif (!root || root->type != ATTR_ZERO ||\n \t    root->rule != NTFS_COLLATION_TYPE_UINTS) {\n \t\terr = -EINVAL;\n \t\tgoto out;\n"
+   "bug_id": "b27792546e50dd00",
+   "hash": "72d94a4a71f4a968d1477acfb651a72ac6fed859d208b78099eca6aafdb9f8f4",
+   "lore": "20260610115724.1813176-2-bestswngs@gmail.com"
   },
   {
    "view": "processing",
-   "bug_id": "399b0606c9c7",
-   "title": "fs/ntfs3: validate ef->size covers the record's name and value",
-   "lore": "20260625040036.996396-3-bestswngs@gmail.com",
-   "patch": "diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c\nindex 9eeac0ab2b71..9097ded7d7dc 100644\n--- a/fs/ntfs3/xattr.c\n+++ b/fs/ntfs3/xattr.c\n@@ -146,26 +146,29 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,\n \tfor (off = 0; off < size; off += ea_size) {\n \t\tconst struct EA_FULL *ef = Add2Ptr(ea_p, off);\n \t\tu32 bytes = size - off;\n+\t\tsize_t need;\n \n \t\t/* Check if we can use field ea->size. */\n \t\tif (bytes < sizeof(ef->size))\n \t\t\tgoto out1;\n \n+\t\t/* Check if we can use fields ef->name_len and ef->elength. */\n+\t\tif (bytes < offsetof(struct EA_FULL, name))\n+\t\t\tgoto out1;\n+\n+\t\t/* Size needed to hold this record's name and value. */\n+\t\tneed = struct_size(ef, name,\n+\t\t\t\t   1 + ef->name_len + le16_to_cpu(ef->elength));\n+\n \t\tif (ef->size) {\n \t\t\tea_size = le32_to_cpu(ef->size);\n-\t\t\tif (ea_size > bytes)\n+\t\t\t/* ef->size must fit the list and cover the record. */\n+\t\t\tif (ea_size > bytes || ea_size < need)\n \t\t\t\tgoto out1;\n \t\t\tcontinue;\n \t\t}\n \n-\t\t/* Check if we can use fields ef->name_len and ef->elength. */\n-\t\tif (bytes < offsetof(struct EA_FULL, name))\n-\t\t\tgoto out1;\n-\n-\t\tea_size = ALIGN(struct_size(ef, name,\n-\t\t\t\t\t    1 + ef->name_len +\n-\t\t\t\t\t\t    le16_to_cpu(ef->elength)),\n-\t\t\t\t4);\n+\t\tea_size = ALIGN(need, 4);\n \t\tif (ea_size > bytes)\n \t\t\tgoto out1;\n \t}\n"
+   "bug_id": "399b0606c9c7fac9",
+   "hash": "64823f641310df2a2b477d56925d83f5d5b8ac50d26230f416fcf03ec336e39b",
+   "lore": "20260625040036.996396-3-bestswngs@gmail.com"
   },
   {
    "view": "vulnerable",
@@ -5171,10 +5157,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "4fcca17e38ba",
-   "title": "fs/ntfs3: fix out-of-bounds read in read_log_rec_buf()",
-   "lore": "20260623062230.1236506-2-bestswngs@gmail.com",
-   "patch": "diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c\nindex f038c799e7ac..ee413dc80d3a 100644\n--- a/fs/ntfs3/fslog.c\n+++ b/fs/ntfs3/fslog.c\n@@ -2276,7 +2276,15 @@ static int read_log_rec_buf(struct ntfs_log *log,\n \t */\n \tfor (;;) {\n \t\tbool usa_error;\n-\t\tu32 tail = log->page_size - off;\n+\t\tu32 tail;\n+\n+\t\t/* off comes from the on-disk restart area; bound it. */\n+\t\tif (off >= log->page_size) {\n+\t\t\terr = -EINVAL;\n+\t\t\tgoto out;\n+\t\t}\n+\n+\t\ttail = log->page_size - off;\n \n \t\tif (tail >= data_len)\n \t\t\ttail = data_len;\n"
+   "bug_id": "4fcca17e38baccf4",
+   "hash": "fc2292f11c7c01d3391547b9f8152b6acdcfaf10f29e9723bc074f9dd88bfb29",
+   "lore": "20260623062230.1236506-2-bestswngs@gmail.com"
   },
   {
    "view": "vulnerable",
@@ -5193,24 +5178,21 @@
   },
   {
    "view": "processing",
-   "bug_id": "2a7fab38eb17",
-   "title": "fs/ntfs3: take run_lock when freeing offs_folio in ni_decompress_file",
-   "lore": "20260626102341.1909289-3-bestswngs@gmail.com",
-   "patch": "diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c\nindex 2b49bc077558..b11961a1f8d8 100644\n--- a/fs/ntfs3/frecord.c\n+++ b/fs/ntfs3/frecord.c\n@@ -2148,10 +2148,13 @@ int ni_decompress_file(struct ntfs_inode *ni)\n \n \t/* Clear cached flag. */\n \tni->ni_flags &= ~NI_FLAG_COMPRESSED_MASK;\n+\t/* offs_folio is accessed under run_lock in attr_wof_frame_info(). */\n+\tdown_write(&ni->file.run_lock);\n \tif (ni->file.offs_folio) {\n \t\tfolio_put(ni->file.offs_folio);\n \t\tni->file.offs_folio = NULL;\n \t}\n+\tup_write(&ni->file.run_lock);\n \tmapping->a_ops = &ntfs_aops;\n \n out:\n"
+   "bug_id": "2a7fab38eb17bffd",
+   "hash": "7604b26cd45edd6c3dfef10aafe01127204fef0bdb9b27f406fae427dee28521",
+   "lore": "20260626102341.1909289-3-bestswngs@gmail.com"
   },
   {
    "view": "processing",
-   "bug_id": "57eff147b621",
-   "title": "fs/ntfs3: zero frame pages on read error",
-   "lore": "",
-   "patch": ""
+   "bug_id": "57eff147b621eef5",
+   "hash": "dad368a48322b88c5fe23b6136346f7c200f82a7c78b95229feccd152d516998",
+   "lore": ""
   },
   {
    "view": "processing",
-   "bug_id": "a27707e9782d",
-   "title": "fs/ntfs3: fix out-of-bounds write in ni_create_attr_lis",
-   "lore": "",
-   "patch": ""
+   "bug_id": "a27707e9782d25c3",
+   "hash": "68430bbfce06e3dd3f07d3c94e59fdc0cbe28907098952bed97c03ef5fcafeaf",
+   "lore": ""
   },
   {
    "view": "vulnerable",
@@ -5229,10 +5211,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "198b31896226",
-   "title": "isofs: fix out-of-bounds page array access on empty zisofs block",
-   "lore": "20260712234150.3213467-1-xmei5@asu.edu",
-   "patch": "diff --git a/fs/isofs/compress.c b/fs/isofs/compress.c\nindex 397568b9c7e7..3fda92358e22 100644\n--- a/fs/isofs/compress.c\n+++ b/fs/isofs/compress.c\n@@ -65,12 +65,14 @@ static loff_t zisofs_uncompress_block(struct inode *inode, loff_t block_start,\n \t/* Empty block? */\n \tif (block_size == 0) {\n \t\tfor ( i = 0 ; i < pcount ; i++ ) {\n+\t\t\tunsigned int off = i ? 0 : poffset;\n+\n \t\t\tif (!pages[i])\n \t\t\t\tcontinue;\n-\t\t\tmemzero_page(pages[i], 0, PAGE_SIZE);\n+\t\t\tmemzero_page(pages[i], off, PAGE_SIZE - off);\n \t\t\tSetPageUptodate(pages[i]);\n \t\t}\n-\t\treturn ((loff_t)pcount) << PAGE_SHIFT;\n+\t\treturn (((loff_t)pcount) << PAGE_SHIFT) - poffset;\n \t}\n \n \t/* Because zlib is not thread-safe, do all the I/O at the top. */\n"
+   "bug_id": "198b31896226c413",
+   "hash": "abba004b17d437e669ce6475911dc5b06454a65c69c996e46849b5355731f361",
+   "lore": "20260712234150.3213467-1-xmei5@asu.edu"
   },
   {
    "view": "vulnerable",
@@ -5416,11 +5397,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "8f7642e7a60b",
+   "bug_id": "8f7642e7a60be153",
    "cve": "CVE-2026-64546",
    "commit": "faaa1e115583",
    "title": "drm/edid: fix OOB read in drm_parse_tiled_block()",
-   "cvss": "7.1"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -5444,7 +5425,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "6f9d38d7cb14",
+   "bug_id": "6f9d38d7cb14c256",
    "cve": "",
    "commit": "3dc22abc21f5",
    "title": "btrfs: tree-checker: validate INODE_REF's namelen",
@@ -5452,7 +5433,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "a40303260e7d",
+   "bug_id": "a40303260e7de346",
    "cve": "",
    "commit": "b0d27d43791b",
    "title": "btrfs: lzo: reject compressed segment that overflows the compressed input",
@@ -5525,10 +5506,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "c66ee17c0d5a",
-   "title": "ext4: fix out-of-bounds read in ext4_read_inline_dir()",
-   "lore": "",
-   "patch": ""
+   "bug_id": "c66ee17c0d5ab0c4",
+   "hash": "70b9268f332c9e3edfa4b6fb0ce764de2579bdedee593ba73d2635ac65192734",
+   "lore": ""
   },
   {
    "view": "vulnerable",
@@ -5537,10 +5517,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "dd26122306d9",
-   "title": "ext4: check dir entry fits before reading the hash trailer in ext4_search_dir()",
-   "lore": "20260709184101.441348-1-xmei5@asu.edu",
-   "patch": "diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c\nindex cc49ae04a6f6..3b9740c1c16d 100644\n--- a/fs/ext4/namei.c\n+++ b/fs/ext4/namei.c\n@@ -1467,6 +1467,8 @@ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,\n \t\t/* this code is executed quadratically often */\n \t\t/* do minimal checking `by hand' */\n \t\tif (de->name + de->name_len <= dlimit &&\n+\t\t    (!ext4_hash_in_dirent(dir) ||\n+\t\t     (char *)de + ext4_dir_rec_len(de->name_len, dir) <= dlimit) &&\n \t\t    ext4_match(dir, fname, de)) {\n \t\t\t/* found a match - just to be sure, do\n \t\t\t * a full check */\n"
+   "bug_id": "dd26122306d9ead6",
+   "hash": "5fc59160a47d971162de8e25f5a8ed248461d9f75e0c5ec5ca9507c7f5312060",
+   "lore": "20260709184101.441348-1-xmei5@asu.edu"
   },
   {
    "view": "vulnerable",
@@ -5589,10 +5568,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "ca9d72bef8f6",
-   "title": "xfs: reject log continuation for a header-only item in recovery",
-   "lore": "20260712220854.3131445-1-xmei5@asu.edu",
-   "patch": "diff --git a/fs/xfs/xfs_log_recover.c b/fs/xfs/xfs_log_recover.c\nindex 5f984bf5698a..fa8e04bf1aac 100644\n--- a/fs/xfs/xfs_log_recover.c\n+++ b/fs/xfs/xfs_log_recover.c\n@@ -2131,6 +2131,9 @@ xlog_recover_add_to_cont_trans(\n \titem = list_entry(trans->r_itemq.prev, struct xlog_recover_item,\n \t\t\t  ri_list);\n \n+\tif (item->ri_cnt == 0)\n+\t\treturn -EFSCORRUPTED;\n+\n \told_ptr = item->ri_buf[item->ri_cnt-1].iov_base;\n \told_len = item->ri_buf[item->ri_cnt-1].iov_len;\n"
+   "bug_id": "ca9d72bef8f6dbe3",
+   "hash": "71cf5bfef9d462305c1bba7dee17bd92c2fee86f5c14ec643eaeaa9fe015b455",
+   "lore": "20260712220854.3131445-1-xmei5@asu.edu"
   },
   {
    "view": "vulnerable",
@@ -5601,10 +5579,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "3332abc5a8d5",
-   "title": "xfs: reject attr leaf blocks with inconsistent usedbytes",
-   "lore": "20260707180235.1142581-4-bestswngs@gmail.com",
-   "patch": "diff --git a/fs/xfs/libxfs/xfs_attr_leaf.c b/fs/xfs/libxfs/xfs_attr_leaf.c\nindex 86c5c09a5db4..9814dcfbd7ac 100644\n--- a/fs/xfs/libxfs/xfs_attr_leaf.c\n+++ b/fs/xfs/libxfs/xfs_attr_leaf.c\n@@ -300,7 +300,8 @@ xfs_attr3_leaf_verify_entry(\n \tstruct xfs_attr3_icleaf_hdr\t\t*leafhdr,\n \tstruct xfs_attr_leaf_entry\t\t*ent,\n \tint\t\t\t\t\tidx,\n-\t__u32\t\t\t\t\t*last_hashval)\n+\t__u32\t\t\t\t\t*last_hashval,\n+\tunsigned int\t\t\t\t*usedbytes)\n {\n \tstruct xfs_attr_leaf_name_local\t\t*lentry;\n \tstruct xfs_attr_leaf_name_remote\t*rentry;\n@@ -344,6 +345,7 @@ xfs_attr3_leaf_verify_entry(\n \tif (name_end > buf_end)\n \t\treturn __this_address;\n \n+\t*usedbytes += namesize;\n \treturn NULL;\n }\n \n@@ -376,6 +378,7 @@ xfs_attr3_leaf_verify(\n \tchar\t\t\t\t*buf_end;\n \tuint32_t\t\t\tend;\t/* must be 32bit - see below */\n \t__u32\t\t\t\tlast_hashval = 0;\n+\tunsigned int\t\t\tusedbytes = 0;\n \tint\t\t\t\ti;\n \txfs_failaddr_t\t\t\tfa;\n \n@@ -410,11 +413,21 @@ xfs_attr3_leaf_verify(\n \tbuf_end = (char *)bp->b_addr + mp->m_attr_geo->blksize;\n \tfor (i = 0, ent = entries; i < ichdr.count; ent++, i++) {\n \t\tfa = xfs_attr3_leaf_verify_entry(mp, buf_end, leaf, &ichdr,\n-\t\t\t\tent, i, &last_hashval);\n+\t\t\t\tent, i, &last_hashval, &usedbytes);\n \t\tif (fa)\n \t\t\treturn fa;\n \t}\n \n+\t/*\n+\t * usedbytes must equal the summed entry sizes and fit in the\n+\t * nameval region; otherwise a later repack underflows firstused\n+\t * in xfs_attr3_leaf_moveents().\n+\t */\n+\tif (usedbytes != ichdr.usedbytes)\n+\t\treturn __this_address;\n+\tif (ichdr.usedbytes > mp->m_attr_geo->blksize - ichdr.firstused)\n+\t\treturn __this_address;\n+\n \t/*\n \t * Quickly check the freemap information.  Attribute data has to be\n \t * aligned to 4-byte boundaries, and likewise for the free space.\n"
+   "bug_id": "3332abc5a8d5b125",
+   "hash": "c60d50e28f69b081f1ffbccfe51ff9cd328ddae365a849a9c5c7fce0754acf01",
+   "lore": "20260707180235.1142581-4-bestswngs@gmail.com"
   },
   {
    "view": "vulnerable",
@@ -5613,7 +5590,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "cda1a047e6af",
+   "bug_id": "cda1a047e6afbfd5",
    "cve": "CVE-2026-64549",
    "commit": "dd068ef04412",
    "title": "Bluetooth: bpa10x: avoid OOB read of revision string in bpa10x_setup()",
@@ -5646,7 +5623,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "91d86e1e323a",
+   "bug_id": "91d86e1e323a8058",
    "cve": "CVE-2026-64573",
    "commit": "c90164ca0f70",
    "title": "Bluetooth: qca: fix NVM tag length underflow in TLV parser",
@@ -5678,7 +5655,7 @@
    "cve": "CVE-2026-45843",
    "commit": "4c1367a2d7aa",
    "title": "slip: bound decode() reads against the compressed packet length",
-   "cvss": "8.2"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -5692,10 +5669,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "f58139ce3b0e",
-   "title": "fuse: reject oversized payload_sz in fuse_uring_copy_from_ring()",
-   "lore": "20260707184417.3682270-2-xmei5@asu.edu",
-   "patch": "diff --git a/fs/fuse/dev_uring.c b/fs/fuse/dev_uring.c\nindex 0814681eb04b..f6127c230dd9 100644\n--- a/fs/fuse/dev_uring.c\n+++ b/fs/fuse/dev_uring.c\n@@ -679,6 +679,9 @@ static int fuse_uring_copy_from_ring(struct fuse_ring *ring,\n \tif (err)\n \t\treturn err;\n \n+\tif (ring_in_out.payload_sz > ring->max_payload_sz)\n+\t\treturn -EINVAL;\n+\n \terr = setup_fuse_copy_state(&cs, ring, req, ent, ITER_SOURCE, &iter);\n \tif (err)\n \t\treturn err;\n"
+   "bug_id": "f58139ce3b0e13bf",
+   "hash": "90dde45f69a67b8117853c59bc2d1b8dd15f534861e6447f633530e07b9a125b",
+   "lore": "20260707184417.3682270-2-xmei5@asu.edu"
   },
   {
    "view": "vulnerable",
@@ -5704,11 +5680,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "2be3ee109a6b",
+   "bug_id": "2be3ee109a6b6581",
    "cve": "CVE-2026-64539",
    "commit": "6f5fb689fdf8",
    "title": "Bluetooth: eir: Fix stack OOB write when prepending the Flags AD",
-   "cvss": "7.8"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -5722,7 +5698,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "3ce0f007e791",
+   "bug_id": "3ce0f007e7916374",
    "cve": "CVE-2026-53257",
    "commit": "cb9959ab5f99",
    "title": "wifi: cfg80211: enforce HE/EHT cap/oper consistency",
@@ -5735,10 +5711,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "178f1a43c6fc",
-   "title": "can: j1939: zero the reassembly buffer to avoid uninitialized slab leak",
-   "lore": "20260706011131.2445034-1-xmei5@asu.edu",
-   "patch": "diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c\nindex df93d57907da..2e062f7d277d 100644\n--- a/net/can/j1939/transport.c\n+++ b/net/can/j1939/transport.c\n@@ -1568,7 +1568,7 @@ j1939_session *j1939_session_fresh_new(struct j1939_priv *priv,\n \t}\n \n \t/* alloc data area */\n-\tskb_put(skb, size);\n+\tskb_put_zero(skb, size);\n \t/* skb is recounted in j1939_session_new() */\n \treturn session;\n }\n"
+   "bug_id": "178f1a43c6fc5735",
+   "hash": "012865d64d26e087037150d8832a0c0b15bff0f249f541ce55ab5e93eeef9e2f",
+   "lore": "20260706011131.2445034-1-xmei5@asu.edu"
   },
   {
    "view": "vulnerable",
@@ -5762,7 +5737,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "42c58b841a85",
+   "bug_id": "42c58b841a852347",
    "cve": "CVE-2026-52939",
    "commit": "34080db3e70d",
    "title": "net/rds: fix NULL deref in rds_ib_send_cqe_handler() on masked atomic completion",
@@ -5775,10 +5750,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "f900458c1dff",
-   "title": "atm: fix use-after-free in sigd_put_skb()",
-   "lore": "20260609162107.2865310-2-bestswngs@gmail.com",
-   "patch": "diff --git a/net/atm/signaling.c b/net/atm/signaling.c\nindex 358fbe5e4d1d0..346fb969166e8 100644\n--- a/net/atm/signaling.c\n+++ b/net/atm/signaling.c\n@@ -54,14 +54,32 @@ static struct atm_vcc *find_get_vcc(struct atm_vcc *vcc)\n \n static void sigd_put_skb(struct sk_buff *skb)\n {\n-\tif (!sigd) {\n+\tstruct atm_vcc *vcc;\n+\tstruct sock *sk;\n+\n+\tvcc = find_get_vcc(READ_ONCE(sigd));\n+\tif (!vcc) {\n \t\tpr_debug(\"atmsvc: no signaling daemon\\n\");\n \t\tkfree_skb(skb);\n \t\treturn;\n \t}\n-\tatm_force_charge(sigd, skb->truesize);\n-\tskb_queue_tail(&sk_atm(sigd)->sk_receive_queue, skb);\n-\tsk_atm(sigd)->sk_data_ready(sk_atm(sigd));\n+\tsk = sk_atm(vcc);\n+\n+\t/* Pairs with sock_orphan() in sigd_close(). */\n+\tread_lock_bh(&sk->sk_callback_lock);\n+\t/* Bail if torn down, or if the slot was reused by another VCC. */\n+\tif (sock_flag(sk, SOCK_DEAD) || READ_ONCE(sigd) != vcc) {\n+\t\tread_unlock_bh(&sk->sk_callback_lock);\n+\t\tsock_put(sk);\n+\t\tkfree_skb(skb);\n+\t\treturn;\n+\t}\n+\tatm_force_charge(vcc, skb->truesize);\n+\tskb_queue_tail(&sk->sk_receive_queue, skb);\n+\tsk->sk_data_ready(sk);\n+\tread_unlock_bh(&sk->sk_callback_lock);\n+\n+\tsock_put(sk);\n }\n \n static void modify_qos(struct atm_vcc *vcc, struct atmsvc_msg *msg)\n@@ -257,6 +275,9 @@ static void sigd_close(struct atm_vcc *vcc)\n \t\tpr_err(\"closing with requests pending\\n\");\n \tskb_queue_purge(&sk_atm(vcc)->sk_receive_queue);\n \n+\t/* Make a concurrent sigd_put_skb() observe SOCK_DEAD and bail. */\n+\tsock_orphan(sk_atm(vcc));\n+\n \tread_lock(&vcc_sklist_lock);\n \tfor (i = 0; i < VCC_HTABLE_SIZE; ++i) {\n \t\tstruct hlist_head *head = &vcc_hash[i];\n"
+   "bug_id": "f900458c1dff2fbd",
+   "hash": "b28b38788f27616091294ea2fddd84b6885411219108f71f281f7a6cd6dc96fd",
+   "lore": "20260609162107.2865310-2-bestswngs@gmail.com"
   },
   {
    "view": "vulnerable",
@@ -5792,11 +5766,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "b24b4a41d6e4",
+   "bug_id": "b24b4a41d6e4b939",
    "cve": "CVE-2026-64543",
    "commit": "1579342d7113",
    "title": "tipc: fix use-after-free of the discoverer in tipc_disc_rcv()",
-   "cvss": "7.8"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -5815,18 +5789,17 @@
   },
   {
    "view": "processing",
-   "bug_id": "c5a8d51e4bd9",
-   "title": "sctp: validate the body of a STALE_COOKIE error before reading it",
-   "lore": "20260705003013.1134430-1-xmei5@asu.edu",
-   "patch": "diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c\nindex d23d935e128e..e4b4b63162cf 100644\n--- a/net/sctp/sm_statefuns.c\n+++ b/net/sctp/sm_statefuns.c\n@@ -2592,6 +2592,9 @@ static enum sctp_disposition sctp_sf_do_5_2_6_stale(\n \n \terr = (struct sctp_errhdr *)(chunk->skb->data);\n \n+\tif ((u8 *)err + sizeof(*err) + sizeof(__be32) > chunk->chunk_end)\n+\t\treturn sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);\n+\n \t/* When calculating the time extension, an implementation\n \t * SHOULD use the RTT information measured based on the\n \t * previous COOKIE ECHO / ERROR exchange, and should add no\n"
+   "bug_id": "c5a8d51e4bd96b96",
+   "hash": "91b3b152ec45f4715b8047b5416b3fb528820e2479b16f0c94cb3da7aeec643f",
+   "lore": "20260705003013.1134430-1-xmei5@asu.edu"
   },
   {
    "view": "patched",
-   "bug_id": "ecebf7813b29",
+   "bug_id": "ecebf7813b29ca90",
    "cve": "CVE-2026-64551",
    "commit": "1cd23ca80784",
    "title": "sctp: validate STALE_COOKIE cause length before reading staleness",
-   "cvss": "9.1"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -5875,10 +5848,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "47a3a670856c",
-   "title": "can: j1939: fix NULL pointer dereference in j1939_session_completed()",
-   "lore": "",
-   "patch": ""
+   "bug_id": "47a3a670856c6c72",
+   "hash": "8cd068bc0e33dfc67dadf70d7c08e020583c8c4565e7ea9cbcd224f74af829af",
+   "lore": ""
   },
   {
    "view": "vulnerable",
@@ -5887,7 +5859,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "7b2640bbd797",
+   "bug_id": "7b2640bbd7975f13",
    "cve": "CVE-2026-52941",
    "commit": "7bf563badd37",
    "title": "net/smc: avoid NULL deref of conn->lnk in smc_msg_event tracepoint",
@@ -5895,11 +5867,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "a4cd857086c5",
+   "bug_id": "a4cd857086c5ac5e",
    "cve": "CVE-2026-64048",
    "commit": "277740023def",
    "title": "net/smc: reject CHID-0 ACCEPT that matches an empty ism_dev slot",
-   "cvss": "7.5"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -5918,7 +5890,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "f7b87868a764",
+   "bug_id": "f7b87868a764bce2",
    "cve": "CVE-2026-64553",
    "commit": "aedd02af1f8b",
    "title": "net: psample: fix info leak in PSAMPLE_ATTR_DATA",
@@ -5996,7 +5968,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "3e7b0dbca413",
+   "bug_id": "3e7b0dbca413d203",
    "cve": "",
    "commit": "9e7f36ab5b7b",
    "title": "net: appletalk: fix NULL pointer dereference in aarp_send_ddp()",
@@ -6059,11 +6031,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "d5e2a8ea5742",
+   "bug_id": "d5e2a8ea5742a5a0",
    "cve": "CVE-2026-68323",
    "commit": "350e592ff4e3",
    "title": "tipc: serialize udp bearer replicast list updates",
-   "cvss": "7.8"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -6142,11 +6114,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "eb710459284b",
+   "bug_id": "eb710459284b86c9",
    "cve": "CVE-2026-52942",
    "commit": "a84b6fedbc97",
    "title": "netfilter: nf_log: validate MAC header was set before dumping it",
-   "cvss": "7.1"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -6270,7 +6242,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "8fa0f232c197",
+   "bug_id": "8fa0f232c1972083",
    "cve": "CVE-2026-64572",
    "commit": "f2f152e94a67",
    "title": "ipv4: fib: free fib_alias with kfree_rcu() on insert error path",
@@ -6288,22 +6260,21 @@
   },
   {
    "view": "patched",
-   "bug_id": "cb67b5a7d995",
+   "bug_id": "cb67b5a7d9957ea3",
    "cve": "CVE-2026-64548",
    "commit": "0c0a8ed85349",
    "title": "bpf, sockmap: reject overflowing copy + len in bpf_msg_push_data()",
-   "cvss": "8.4"
+   "cvss": ""
   },
   {
    "view": "processing",
-   "bug_id": "246b6a95e617",
-   "title": "asymmetric_keys: check asymmetric_key_ids() for NULL before dereference",
-   "lore": "",
-   "patch": ""
+   "bug_id": "246b6a95e617738f",
+   "hash": "36b7f52d76f8b75ccc80efbcd24b71eb610ac3522fe96fd130bd22895ea7fe4f",
+   "lore": ""
   },
   {
    "view": "patched",
-   "bug_id": "5e2e9cf87521",
+   "bug_id": "5e2e9cf8752115fd",
    "cve": "CVE-2026-64544",
    "commit": "f7dd32c5179d",
    "title": "crypto: asymmetric_keys - fix OOB read in pefile_digest_pe_contents",
@@ -6326,11 +6297,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "f61ac4b9ae78",
+   "bug_id": "f61ac4b9ae785b47",
    "cve": "CVE-2026-64552",
    "commit": "9e5ad06ea826",
    "title": "virtio-net: fix len check in receive_big()",
-   "cvss": "8.4"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -6374,7 +6345,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "a99138ae7f4f",
+   "bug_id": "a99138ae7f4f83a6",
    "cve": "CVE-2026-64190",
    "commit": "25fe708bbc59",
    "title": "net: team: fix NULL pointer dereference in team_xmit during mode change",
@@ -6382,15 +6353,15 @@
   },
   {
    "view": "patched",
-   "bug_id": "b75c97c2edb9",
+   "bug_id": "b75c97c2edb9fd26",
    "cve": "CVE-2026-46321",
    "commit": "f4feb1e20058",
    "title": "tun: free page on short-frame rejection in tun_xdp_one()",
-   "cvss": "7.1"
+   "cvss": ""
   },
   {
    "view": "patched",
-   "bug_id": "551ad1f05db2",
+   "bug_id": "551ad1f05db2e781",
    "cve": "CVE-2026-52940",
    "commit": "7f2fcff15e99",
    "title": "tun: zero the whole vnet header in tun_put_user()",
@@ -6403,7 +6374,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "821c7d1cd429",
+   "bug_id": "821c7d1cd4298586",
    "cve": "CVE-2026-52937",
    "commit": "bddc09212c24",
    "title": "tap: fix stack info leak in tap_ioctl() SIOCGIFHWADDR",
@@ -6416,7 +6387,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "8148ea004394",
+   "bug_id": "8148ea00439436cf",
    "cve": "CVE-2026-45846",
    "commit": "aa6c6d9ee064",
    "title": "bareudp: fix NULL pointer dereference in bareudp_fill_metadata_dst()",
@@ -6434,7 +6405,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "17b667445166",
+   "bug_id": "17b66744516660cc",
    "cve": "CVE-2026-52938",
    "commit": "375e4e33c18d",
    "title": "bpf: Fix NULL pointer dereference in bpf_sk_storage_clone and diag paths",
@@ -6442,7 +6413,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "35c31cc109a9",
+   "bug_id": "35c31cc109a93207",
    "cve": "",
    "commit": "1081de1accb2",
    "title": "bpf: Fix NULL pointer dereference in bpf_skb_fib_lookup()",
@@ -6450,7 +6421,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "52c995667bd3",
+   "bug_id": "52c995667bd3d1a4",
    "cve": "",
    "commit": "f3f34ca45b96",
    "title": "bpf, sockmap: Fix wrong rsge offset in bpf_msg_push_data()",
@@ -6518,7 +6489,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "0fcfc6494eaf",
+   "bug_id": "0fcfc6494eafead0",
    "cve": "",
    "commit": "2f768d638d97",
    "title": "netfilter: nft_compat: run xt_check_hooks_{match,target}() from .validate",
@@ -6536,7 +6507,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "063b688724c1",
+   "bug_id": "063b688724c152a6",
    "cve": "CVE-2026-53349",
    "commit": "c3009418f9fa",
    "title": "netfilter: nf_conntrack: destroy stale expectfn expectations on unregister",
@@ -6549,10 +6520,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "5b88405c1a6a",
-   "title": "netfilter: ipset: skip extension destroy on hash resize replay",
-   "lore": "20260713163354.3533575-2-bestswngs@gmail.com",
-   "patch": "diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h\nindex 8231317b0..d15530241 100644\n--- a/net/netfilter/ipset/ip_set_hash_gen.h\n+++ b/net/netfilter/ipset/ip_set_hash_gen.h\n@@ -1112,7 +1112,9 @@ mtype_del(struct ip_set *set, void *value, const struct ip_set_ext *ext,\n \t\t\tmtype_del_cidr(set, h,\n \t\t\t\t       NCIDR_PUT(DCIDR_GET(d->cidr, j)), j);\n #endif\n-\t\tip_set_ext_destroy(set, data);\n+\t\t/* On a resize replay the extensions were already destroyed. */\n+\t\tif (ext)\n+\t\t\tip_set_ext_destroy(set, data);\n \n \t\tif (t->resizing && ext && ext->target) {\n \t\t\t/* Resize is in process and kernel side del,\n"
+   "bug_id": "5b88405c1a6a91d3",
+   "hash": "7b2d710c326acad2a7721db6a3d0a36af0f5c15665571794f3320a2283ec04a2",
+   "lore": "20260713163354.3533575-2-bestswngs@gmail.com"
   },
   {
    "view": "vulnerable",
@@ -6591,7 +6561,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "3ce1d582f383",
+   "bug_id": "3ce1d582f383bf75",
    "cve": "CVE-2026-45841",
    "commit": "2195574dc6d9",
    "title": "netfilter: nfnetlink_osf: fix divide-by-zero in OSF_WSS_MODULO",
@@ -6609,7 +6579,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "dd5e7d40191a",
+   "bug_id": "dd5e7d40191ad4c4",
    "cve": "CVE-2026-43086",
    "commit": "9a91797e61d2",
    "title": "ipvs: fix NULL deref in ip_vs_add_service error path",
@@ -6622,18 +6592,17 @@
   },
   {
    "view": "processing",
-   "bug_id": "b730d21a8441",
-   "title": "netdevsim: tc: serialize access to nsim_block_cb_list",
-   "lore": "20260719175028.988301-2-bestswngs@gmail.com",
-   "patch": "diff --git a/drivers/net/netdevsim/tc.c b/drivers/net/netdevsim/tc.c\nindex a415e02a6df1..30dd7f924b71 100644\n--- a/drivers/net/netdevsim/tc.c\n+++ b/drivers/net/netdevsim/tc.c\n@@ -72,11 +72,13 @@ static int nsim_setup_tc_ets(struct net_device *dev,\n }\n \n static LIST_HEAD(nsim_block_cb_list);\n+static DEFINE_MUTEX(nsim_block_cb_lock);\n \n int\n nsim_setup_tc(struct net_device *dev, enum tc_setup_type type, void *type_data)\n {\n \tstruct netdevsim *ns = netdev_priv(dev);\n+\tint err;\n \n \tswitch (type) {\n \tcase TC_SETUP_QDISC_TAPRIO:\n@@ -84,10 +86,13 @@ nsim_setup_tc(struct net_device *dev, enum tc_setup_type type, void *type_data)\n \tcase TC_SETUP_QDISC_ETS:\n \t\treturn nsim_setup_tc_ets(dev, type_data);\n \tcase TC_SETUP_BLOCK:\n-\t\treturn flow_block_cb_setup_simple(type_data,\n-\t\t\t\t\t\t  &nsim_block_cb_list,\n-\t\t\t\t\t\t  nsim_setup_tc_block_cb,\n-\t\t\t\t\t\t  ns, ns, true);\n+\t\tmutex_lock(&nsim_block_cb_lock);\n+\t\terr = flow_block_cb_setup_simple(type_data,\n+\t\t\t\t\t\t &nsim_block_cb_list,\n+\t\t\t\t\t\t nsim_setup_tc_block_cb,\n+\t\t\t\t\t\t ns, ns, true);\n+\t\tmutex_unlock(&nsim_block_cb_lock);\n+\t\treturn err;\n \tcase TC_SETUP_FT:\n \t\treturn 0;\n \tdefault:\n"
+   "bug_id": "b730d21a84415749",
+   "hash": "0757469801af605564038a134a1794c6fe1c8e0563a829f88e52f298e334da32",
+   "lore": "20260719175028.988301-2-bestswngs@gmail.com"
   },
   {
    "view": "patched",
-   "bug_id": "664f55a418ce",
+   "bug_id": "664f55a418ce814e",
    "cve": "CVE-2026-74569",
    "commit": "db3d0e0e5d4b",
    "title": "netfilter: nf_conntrack_sip: widen NAT rewrite delta to s32 in sip_help_tcp()",
-   "cvss": "9.8"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -6642,7 +6611,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "f750e09a0cdb",
+   "bug_id": "f750e09a0cdbbc86",
    "cve": "CVE-2026-43085",
    "commit": "1f3083aec883",
    "title": "netfilter: nfnetlink_log: initialize nfgenmsg in NLMSG_DONE terminator",
@@ -6655,7 +6624,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "69d27f8951b6",
+   "bug_id": "69d27f8951b6e8a4",
    "cve": "CVE-2026-31422",
    "commit": "1a280dd4bd1d",
    "title": "net/sched: cls_flow: fix NULL pointer dereference on shared blocks",
@@ -6723,7 +6692,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "8fe0a7d6e179",
+   "bug_id": "8fe0a7d6e1790a11",
    "cve": "CVE-2026-31425",
    "commit": "a54ecccfae62",
    "title": "rds: ib: reject FRMR registration before IB connection is established",
@@ -6756,15 +6725,15 @@
   },
   {
    "view": "patched",
-   "bug_id": "c091bed48925",
+   "bug_id": "c091bed48925807d",
    "cve": "CVE-2026-74563",
    "commit": "78f75d632f74",
    "title": "rds: tcp: hold the RCU lock across ipv6_chk_addr() in rds_tcp_laddr_check()",
-   "cvss": "7.8"
+   "cvss": ""
   },
   {
    "view": "patched",
-   "bug_id": "ccde43ef760e",
+   "bug_id": "ccde43ef760e9699",
    "cve": "CVE-2026-31423",
    "commit": "4576100b8cd0",
    "title": "net/sched: sch_hfsc: fix divide-by-zero in rtsc_min()",
@@ -6772,7 +6741,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "7e96516c6e2c",
+   "bug_id": "7e96516c6e2cd436",
    "cve": "CVE-2026-45845",
    "commit": "3d07ca5c0fae",
    "title": "net/sched: taprio: fix NULL pointer dereference in class dump",
@@ -6785,7 +6754,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "e7e63998d9a5",
+   "bug_id": "e7e63998d9a52108",
    "cve": "CVE-2026-31421",
    "commit": "faeea8bbf6e9",
    "title": "net/sched: cls_fw: fix NULL pointer dereference on shared blocks",
@@ -6817,7 +6786,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "cad04543a904",
+   "bug_id": "cad04543a904850d",
    "cve": "CVE-2026-31428",
    "commit": "52025ebaa29f",
    "title": "netfilter: nfnetlink_log: fix uninitialized padding leak in NFULA_PAYLOAD",
@@ -6825,7 +6794,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "6e9da9dc09fc",
+   "bug_id": "6e9da9dc09fc3dfe",
    "cve": "CVE-2026-31424",
    "commit": "3d5d488f1177",
    "title": "netfilter: x_tables: restrict xt_check_match/xt_check_target extensions for NFPROTO_ARP",
@@ -6833,7 +6802,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "16f751ca5863",
+   "bug_id": "16f751ca5863f6c5",
    "cve": "",
    "commit": "1d47b55b36d2",
    "title": "netfilter: nft_fwd_netdev: use recursion counter in neigh egress path",
@@ -6846,7 +6815,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "1d0177e0e524",
+   "bug_id": "1d0177e0e5247ba3",
    "cve": "CVE-2026-31427",
    "commit": "6a2b724460cb",
    "title": "netfilter: nf_conntrack_sip: fix use of uninitialized rtp_addr in process_sdp",
@@ -6854,11 +6823,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "7bcf36c246f9",
+   "bug_id": "7bcf36c246f974cf",
    "cve": "CVE-2026-63858",
    "commit": "10f79dbd7719",
    "title": "netfilter: nf_tables: add hook transactions for device deletions",
-   "cvss": "7.8"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -6867,7 +6836,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "b8b648a8277e",
+   "bug_id": "b8b648a8277e7f99",
    "cve": "CVE-2026-45838",
    "commit": "5828b9e5b272",
    "title": "bpf: fix end-of-list detection in cgroup_storage_get_next_key()",
@@ -6875,7 +6844,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "b3246cc67fe0",
+   "bug_id": "b3246cc67fe0979c",
    "cve": "CVE-2026-45839",
    "commit": "1c22483a2c4b",
    "title": "bpf: reject negative CO-RE accessor indices in bpf_core_parse_spec()",
@@ -6883,7 +6852,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "e1695de01271",
+   "bug_id": "e1695de012719d05",
    "cve": "CVE-2026-45837",
    "commit": "4fddde2a732d",
    "title": "bpf: Fix use-after-free in arena_vm_close on fork",
@@ -6916,7 +6885,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "780bb7162cc2",
+   "bug_id": "780bb7162cc2871b",
    "cve": "CVE-2026-64571",
    "commit": "ebd6d37fa94b",
    "title": "wifi: p54: validate RX frame length in p54_rx_eeprom_readback()",
@@ -6939,11 +6908,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "e6fa5bde1baa",
+   "bug_id": "e6fa5bde1baa91fd",
    "cve": "CVE-2026-64550",
    "commit": "f0f1887a9e30",
    "title": "net: qualcomm: rmnet: validate MAP frame length before ingress parsing",
-   "cvss": "7.3"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -7032,7 +7001,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "5abefeebf33e",
+   "bug_id": "5abefeebf33e1887",
    "cve": "",
    "commit": "f8d14b7bb006",
    "title": "ACPICA: Fix NULL pointer dereference in acpi_ns_custom_package()",
@@ -7080,11 +7049,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "ad17d3866546",
+   "bug_id": "ad17d3866546a6cf",
    "cve": "CVE-2026-31426",
    "commit": "f6484cadbcaf",
    "title": "ACPI: EC: clean up handlers on probe failure in acpi_ec_setup()",
-   "cvss": "7"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -7093,10 +7062,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "c7c7ab77f00f",
-   "title": "i2c: i801: keep the byte-by-byte ISR buffer private to the driver",
-   "lore": "20260718090329.1622366-2-bestswngs@gmail.com",
-   "patch": "diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c\nindex c8cb5ed55..37741fdca 100644\n--- a/drivers/i2c/busses/i2c-i801.c\n+++ b/drivers/i2c/busses/i2c-i801.c\n@@ -279,6 +279,9 @@ struct i801_priv {\n \tint count;\n \tint len;\n \tu8 *data;\n+\t/* Driver-private buffer the isr fills/drains, so a late interrupt\n+\t * never dereferences a pointer into the caller's block buffer. */\n+\tu8 data_buf[I2C_SMBUS_BLOCK_MAX + 2];\n \n #if IS_ENABLED(CONFIG_I2C_MUX_GPIO) && defined CONFIG_DMI\n \tconst struct i801_mux_config *mux_drvdata;\n@@ -671,12 +674,23 @@ static int i801_block_transaction_byte_by_byte(struct i801_priv *priv,\n \t\tpriv->cmd = smbcmd | SMBHSTCNT_INTREN;\n \t\tpriv->len = len;\n \t\tpriv->count = 0;\n-\t\tpriv->data = &data->block[1];\n+\t\t/*\n+\t\t * The interrupt handler fills or drains this buffer\n+\t\t * asynchronously and may still run after a timeout, so keep it\n+\t\t * in driver-private storage instead of pointing into the\n+\t\t * caller's block buffer, which is freed once we return.\n+\t\t */\n+\t\tmemcpy(priv->data_buf, data->block, len + 1);\n+\t\tpriv->data = &priv->data_buf[1];\n \n \t\treinit_completion(&priv->done);\n \t\toutb_p(priv->cmd | SMBHSTCNT_START, SMBHSTCNT(priv));\n \t\tresult = wait_for_completion_timeout(&priv->done, adap->timeout);\n-\t\treturn result ? priv->status : -ETIMEDOUT;\n+\t\tif (!result)\n+\t\t\treturn -ETIMEDOUT;\n+\t\tif (priv->is_read)\n+\t\t\tmemcpy(data->block, priv->data_buf, priv->len + 1);\n+\t\treturn priv->status;\n \t}\n \n \tfor (i = 1; i <= len; i++) {\n"
+   "bug_id": "c7c7ab77f00f7a6d",
+   "hash": "f11b235e599c7d558dad26cc5d20c0f018d1de2e04956bf34a0a2fe2ff73e7be",
+   "lore": "20260718090329.1622366-2-bestswngs@gmail.com"
   },
   {
    "view": "vulnerable",
@@ -7110,15 +7078,15 @@
   },
   {
    "view": "patched",
-   "bug_id": "7def586a7392",
+   "bug_id": "7def586a73923585",
    "cve": "CVE-2026-64191",
    "commit": "6036b5067a81",
    "title": "i2c: stub: Reject I2C block transfers with invalid length",
-   "cvss": "7.8"
+   "cvss": ""
   },
   {
    "view": "patched",
-   "bug_id": "ffb2c5c1df77",
+   "bug_id": "ffb2c5c1df773390",
    "cve": "",
    "commit": "3051cd060fa4",
    "title": "i2c: smbus: reject oversized block transfers in the common path",
@@ -7126,11 +7094,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "2b85ae064f50",
+   "bug_id": "2b85ae064f50e340",
    "cve": "CVE-2026-64188",
    "commit": "d00c953a8f69",
    "title": "net: qualcomm: rmnet: fix endpoint use-after-free in rmnet_dellink()",
-   "cvss": "7.8"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -7179,7 +7147,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "358cb6fbfde0",
+   "bug_id": "358cb6fbfde0cb93",
    "cve": "CVE-2026-45840",
    "commit": "2091c6aa0df6",
    "title": "openvswitch: cap upcall PID array size and pre-size vport replies",
@@ -7217,7 +7185,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "ba8a06c6c571",
+   "bug_id": "ba8a06c6c571b939",
    "cve": "CVE-2026-23396",
    "commit": "c73bb9a2d33b",
    "title": "wifi: mac80211: fix NULL deref in mesh_matches_local()",
@@ -7225,7 +7193,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "f8c0c48515cd",
+   "bug_id": "f8c0c48515cd7916",
    "cve": "CVE-2026-45842",
    "commit": "e76607442d5b",
    "title": "slip: reject VJ receive packets on instances with no rstate array",
@@ -7243,7 +7211,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "dc4fb25c2278",
+   "bug_id": "dc4fb25c2278fce1",
    "cve": "CVE-2026-23397",
    "commit": "dbdfaae96096",
    "title": "nfnetlink_osf: validate individual option lengths in fingerprints",
@@ -7266,11 +7234,11 @@
   },
   {
    "view": "patched",
-   "bug_id": "4b4bf2a96ceb",
+   "bug_id": "4b4bf2a96ceb53f2",
    "cve": "CVE-2026-72250",
    "commit": "3b08fed5b7e0",
    "title": "netfilter: nf_conntrack_reasm: guard mac_header adjustment after IPv6 defrag",
-   "cvss": "7.8"
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -7279,7 +7247,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "bb0406e95979",
+   "bug_id": "bb0406e95979bd69",
    "cve": "CVE-2026-45844",
    "commit": "1e8e3f449b1e",
    "title": "netfilter: arp_tables: fix IEEE1394 ARP payload parsing",
@@ -7292,7 +7260,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "a4d881bde426",
+   "bug_id": "a4d881bde426d93c",
    "cve": "CVE-2026-23439",
    "commit": "b3a6df291fec",
    "title": "udp_tunnel: fix NULL deref caused by udp_sock_create6 when CONFIG_IPV6=n",
@@ -7300,7 +7268,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "d0090818ee47",
+   "bug_id": "d0090818ee47a0ac",
    "cve": "CVE-2026-23398",
    "commit": "614aefe56af8",
    "title": "icmp: fix NULL pointer dereference in icmp_tag_validation()",
@@ -7308,7 +7276,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "a0d28d6ef236",
+   "bug_id": "a0d28d6ef236ef8e",
    "cve": "CVE-2026-31420",
    "commit": "fa6e24963342",
    "title": "bridge: mrp: reject zero test interval to avoid OOM panic",
@@ -7316,7 +7284,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "05d17935bef0",
+   "bug_id": "05d17935bef0f1eb",
    "cve": "CVE-2026-64537",
    "commit": "f3e02edd8322",
    "title": "bridge: cfm: reject invalid CCM interval at configuration time",
@@ -7334,10 +7302,9 @@
   },
   {
    "view": "processing",
-   "bug_id": "54667a1982ee",
-   "title": "xfrm: espintcp: check for NULL dev in handle_esp()",
-   "lore": "",
-   "patch": ""
+   "bug_id": "54667a1982eeaf56",
+   "hash": "f24ea90673a24aff627e89592c33982524029933d3d9d994c31a6bca5b4c3555",
+   "lore": ""
   },
   {
    "view": "vulnerable",
@@ -7361,7 +7328,7 @@
   },
   {
    "view": "patched",
-   "bug_id": "e276629abbbb",
+   "bug_id": "e276629abbbb22ce",
    "cve": "CVE-2026-31546",
    "commit": "605b52497bf8",
    "title": "net: bonding: fix NULL deref in bond_debug_rlb_hash_show",
@@ -7386,7 +7353,7 @@
    "cve": "CVE-2026-72389",
    "commit": "2a00517db8de",
    "title": "bridge: stp: Fix a potential use-after-free when deleting a bridge",
-   "cvss": "7.8"
+   "cvss": ""
   },
   {
    "view": "patched",
@@ -7402,7 +7369,7 @@
    "cve": "CVE-2025-38477",
    "commit": "5e28d5a3f774",
    "title": "net/sched: sch_qfq: Fix race condition on qfq_aggregate",
-   "cvss": "7.8"
+   "cvss": ""
   },
   {
    "view": "patched",
@@ -7418,7 +7385,7 @@
    "cve": "CVE-2026-31419",
    "commit": "2884bf72fb8f",
    "title": "net: bonding: fix use-after-free in bond_xmit_broadcast()",
-   "cvss": "7.8"
+   "cvss": ""
   }
  ]
 }
