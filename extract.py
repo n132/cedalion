@@ -562,10 +562,11 @@ def report_hash_of(report: str | None) -> str:
     return hashlib.sha256(report.encode()).hexdigest() if report else ""
 
 
-# How long an identifier reads on the page: 12 hex, the length the kernel uses
-# to cite a commit, applied to the bug id, the report hash and the fix commit
-# alike so the columns read as one kind of thing. Verified collision-free across
-# the current set: 1238 bug ids and 1208 report hashes stay distinct at 12.
+# How long an identifier reads on the page: 16 hex, enough to keep bug IDs
+# useful as stable lookup keys while still keeping dense columns readable.
+# Applied to the bug id, the report hash and the fix commit alike so the
+# columns read as one kind of thing. Verified collision-free across
+# the current set.
 #
 # Processing's bug id and Patched's commit are cut HERE, so what is published is
 # what is shown. A Vulnerable row is the exception: it carries both values in
@@ -576,7 +577,7 @@ def report_hash_of(report: str | None) -> str:
 # anything but a prefix search. Publishing the full digest costs nothing the
 # prefix did not already cost: both confirm a report you already hold, and
 # neither yields one you do not.
-ID_LEN = 12
+ID_LEN = 16
 
 
 def short(value: str) -> str:

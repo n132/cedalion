@@ -301,6 +301,14 @@ function diffHTML(text) {
 // onto every cell as data-label — a table prints a head once, a list of cards
 // has to repeat it — and threading that through eight return statements is how
 // one cell ends up without its label.
+// Vulnerable and Processing publish bug_id/hash whole (see the comment on
+// SHOWN in cedalion.js) so a fingerprint check always has the full value to
+// work from — the table itself just does not need to show that much of it.
+// Cut to 12 for display in these two views only; other views keep SHOWN's 16
+// (Patched's `commit` is not cut here at all — it is already the 16 hex
+// short() gave it server-side in extract.py, never the full sha).
+const ID_SHOWN = { processing: 12, vulnerable: 12 };
+
 function cellHTML(k, b) {
   const shown = artifactOf(k, b);
   if (shown) {
@@ -313,6 +321,7 @@ function cellHTML(k, b) {
   }
   if (isPending(k, b)) return ["", `<span class="pending">pending</span>`];
   const v = b[k];
+  const n = ID_SHOWN[view] || SHOWN;
   switch (k) {
     case "title":
       return ["desc", v ? esc(v) : UNKNOWN];
@@ -347,10 +356,10 @@ function cellHTML(k, b) {
       if (!v) return ["mono", DASH];
       return ["mono", hasReport(b)
         ? `<a class="idlink" href="/b/${esc(v)}" title="copy and open the report"
-             >${cell(v)}</a>`
-        : cell(v)];
+             >${cell(v, n)}</a>`
+        : cell(v, n)];
     default:
-      return ["mono", cell(v)];
+      return ["mono", cell(v, n)];
   }
 }
 
@@ -415,7 +424,7 @@ function renderTable() {
   // A column is searched by what it shows, which for a pending one is a word
   // the row does not carry. The two Vulnerable digests are the exception, and
   // in the useful direction: they are held whole and drawn cut, so pasting a
-  // full sha256 of a report.md finds its row as well as typing the 12 hex on
+  // full sha256 of a report.md finds its row as well as typing the 16 hex on
   // screen does.
   if (q) rows = rows.filter(b => cols.some(([k]) =>
     (isPending(k, b) ? "pending"

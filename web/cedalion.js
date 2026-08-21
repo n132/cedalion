@@ -5,17 +5,16 @@ const esc = s => String(s ?? "").replace(/[&<>"]/g, c =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const num = n => Number(n || 0).toLocaleString("en-US");
 
-// Identifiers read as 12 hex, the length the kernel cites a commit at. Most
-// arrive that long already; a Vulnerable row's bug id and report hash arrive
-// whole, because those two fields are the entire row and a reader who wants to
-// check the fingerprint against a report.md needs all of it. So the cut happens
-// here, and what is copied — and what the tooltip shows — is the full value
-// rather than the shortened one on screen.
-const SHOWN = 12;
+// Identifiers read as 16 hex by default. A Vulnerable or Processing row's bug
+// id and report hash arrive whole — those fields are most of the row, and a
+// reader checking a fingerprint against a report.md needs all of it — so the
+// cut happens here, and what is copied — and what the tooltip shows — is the
+// full value rather than the shortened one on screen.
+const SHOWN = 16;
 
-function cell(v) {
+function cell(v, n = SHOWN) {
   if (!v) return '<span class="none">—</span>';
-  const s = String(v), cut = s.slice(0, SHOWN);
+  const s = String(v), cut = s.slice(0, n);
   const title = cut === s ? "click to copy" : `${s} — click to copy`;
   return `<span class="copy" title="${esc(title)}" data-full="${esc(s)}">${esc(cut)}</span>`;
 }
