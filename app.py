@@ -124,6 +124,7 @@ async def index():
 
 
 if __name__ == "__main__":
+    import socket
     import sys
     import uvicorn
     # A path on the command line beats the environment, which beats the file
@@ -133,4 +134,10 @@ if __name__ == "__main__":
         DATA = os.path.abspath(sys.argv[1])
     print(f"serving {DATA}"
           f"{'' if os.path.isfile(DATA) else '  (missing — the page will be empty)'}")
+    # HOST is 0.0.0.0 by default so the server accepts connections from
+    # anywhere, but a browser cannot be pointed AT 0.0.0.0 — it means "every
+    # interface", not an address. Print the hostname instead, the same way
+    # preview.py does: not gethostbyname()'s resolution of it, which on this
+    # machine is 127.0.1.1 in /etc/hosts and reachable from nowhere else.
+    print(f"  http://{socket.gethostname()}:{PORT}")
     uvicorn.run(app, host=HOST, port=PORT, log_level="info")

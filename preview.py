@@ -46,6 +46,10 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *a, **kw):
         super().__init__(*a, directory=DOCS, **kw)
 
+    def end_headers(self):
+        self.send_header("Cache-Control", "no-store")
+        super().end_headers()
+
     def send_body(self, body, status=200, ctype="text/html; charset=utf-8"):
         blob = body.encode()
         self.send_response(status)
@@ -132,8 +136,12 @@ Handler.protocol_version = "HTTP/1.1"      # keep-alive; safe now it threads
 
 with Server((HOST, PORT), Handler) as httpd:
     import socket
-    lan = socket.gethostbyname(socket.gethostname())
-    print(f"preview on {HOST}:{PORT}   (ctrl-c to stop)")
-    print(f"  register      http://{lan}:{PORT}/#vulnerable")
-    print(f"  a bug's page  http://{lan}:{PORT}/b/4638111fe2a12980")
+    # The hostname itself, not gethostbyname()'s resolution of it -- on this
+    # machine /etc/hosts maps the hostname to 127.0.1.1, which nothing but
+    # this machine can reach. The bare hostname is what a reader actually
+    # types, and mDNS/LAN DNS resolves it correctly from elsewhere.
+    hostname = socket.gethostname()
+    print(f"preview on {hostname} ({HOST}:{PORT})   (ctrl-c to stop)")
+    print(f"  register      http://{hostname}:{PORT}/#vulnerable")
+    print(f"  a bug's page  http://{hostname}:{PORT}/b/4638111fe2a12980")
     httpd.serve_forever()
