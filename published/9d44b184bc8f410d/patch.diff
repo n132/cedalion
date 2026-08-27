@@ -1,0 +1,24 @@
+diff --git a/drivers/misc/vmw_vmci/vmci_queue_pair.c b/drivers/misc/vmw_vmci/vmci_queue_pair.c
+index 46bba9bef553..74fe248cc67e 100644
+--- a/drivers/misc/vmw_vmci/vmci_queue_pair.c
++++ b/drivers/misc/vmw_vmci/vmci_queue_pair.c
+@@ -2563,6 +2563,9 @@ static ssize_t qp_enqueue_locked(struct vmci_queue *produce_q,
+ 
+ 	written = (size_t) (free_space > buf_size ? buf_size : free_space);
+ 	tail = vmci_q_header_producer_tail(produce_q->q_header);
++	if (unlikely(tail >= produce_q_size))
++		return VMCI_ERROR_INVALID_SIZE;
++
+ 	if (likely(tail + written < produce_q_size)) {
+ 		result = qp_memcpy_to_queue_iter(produce_q, tail, from, written);
+ 	} else {
+@@ -2636,6 +2639,9 @@ static ssize_t qp_dequeue_locked(struct vmci_queue *produce_q,
+ 
+ 	read = (size_t) (buf_ready > buf_size ? buf_size : buf_ready);
+ 	head = vmci_q_header_consumer_head(produce_q->q_header);
++	if (unlikely(head >= consume_q_size))
++		return VMCI_ERROR_INVALID_SIZE;
++
+ 	if (likely(head + read < consume_q_size)) {
+ 		result = qp_memcpy_from_queue_iter(to, consume_q, head, read);
+ 	} else {

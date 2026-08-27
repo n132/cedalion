@@ -1,0 +1,75 @@
+diff --git a/security/keys/trusted-keys/trusted_tpm2.c b/security/keys/trusted-keys/trusted_tpm2.c
+index 6340823f8b53..0ce22476817b 100644
+--- a/security/keys/trusted-keys/trusted_tpm2.c
++++ b/security/keys/trusted-keys/trusted_tpm2.c
+@@ -100,7 +100,7 @@ struct tpm2_key_context {
+ 
+ static int tpm2_key_decode(struct trusted_key_payload *payload,
+ 			   struct trusted_key_options *options,
+-			   u8 **buf)
++			   u8 **buf, unsigned int *buf_len)
+ {
+ 	int ret;
+ 	struct tpm2_key_context ctx;
+@@ -121,6 +121,7 @@ static int tpm2_key_decode(struct trusted_key_payload *payload,
+ 		return -ENOMEM;
+ 
+ 	*buf = blob;
++	*buf_len = ctx.priv_len + ctx.pub_len + 4;
+ 	options->keyhandle = ctx.parent;
+ 
+ 	memcpy(blob, ctx.priv, ctx.priv_len);
+@@ -377,14 +378,16 @@ static int tpm2_load_cmd(struct tpm_chip *chip,
+ 	unsigned int private_len;
+ 	unsigned int public_len;
+ 	unsigned int blob_len;
++	unsigned int buf_len;
+ 	u8 *blob, *pub;
+ 	int rc;
+ 	u32 attrs;
+ 
+-	rc = tpm2_key_decode(payload, options, &blob);
++	rc = tpm2_key_decode(payload, options, &blob, &buf_len);
+ 	if (rc) {
+ 		/* old form */
+ 		blob = payload->blob;
++		buf_len = payload->blob_len;
+ 		payload->old_format = 1;
+ 	} else {
+ 		/* Bind for cleanup: */
+@@ -396,19 +399,23 @@ static int tpm2_load_cmd(struct tpm_chip *chip,
+ 		return -EINVAL;
+ 
+ 	/* must be big enough for at least the two be16 size counts */
+-	if (payload->blob_len < 4)
++	if (buf_len < 4)
+ 		return -EINVAL;
+ 
+ 	private_len = get_unaligned_be16(blob);
+ 
+ 	/* must be big enough for following public_len */
+-	if (private_len + 2 + 2 > (payload->blob_len))
++	if (private_len + 2 + 2 > buf_len)
+ 		return -E2BIG;
+ 
+ 	public_len = get_unaligned_be16(blob + 2 + private_len);
+-	if (private_len + 2 + public_len + 2 > payload->blob_len)
++	if (private_len + 2 + public_len + 2 > buf_len)
+ 		return -E2BIG;
+ 
++	/* the public area must cover the attributes read below */
++	if (public_len < 8)
++		return -EINVAL;
++
+ 	pub = blob + 2 + private_len + 2;
+ 	/* key attributes are always at offset 4 */
+ 	attrs = get_unaligned_be32(pub + 4);
+@@ -420,7 +427,7 @@ static int tpm2_load_cmd(struct tpm_chip *chip,
+ 		payload->migratable = 1;
+ 
+ 	blob_len = private_len + public_len + 4;
+-	if (blob_len > payload->blob_len)
++	if (blob_len > buf_len)
+ 		return -E2BIG;
+ 
+ 	rc = tpm2_start_auth_session(chip);

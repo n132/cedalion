@@ -1,0 +1,16 @@
+diff --git a/net/ipv4/tcp_ao.c b/net/ipv4/tcp_ao.c
+index 5094267447ae..7cc470593b5d 100644
+--- a/net/ipv4/tcp_ao.c
++++ b/net/ipv4/tcp_ao.c
+@@ -428,7 +428,7 @@ void tcp_ao_time_wait(struct tcp_timewait_sock *tcptw, struct tcp_sock *tp)
+ 			omem += tcp_ao_sizeof_key(key);
+ 		}
+ 
+-		refcount_inc(&ao_info->refcnt);
++		rcu_assign_pointer(tp->ao_info, NULL);
+ 		atomic_sub(omem, &(((struct sock *)tp)->sk_omem_alloc));
+ 		rcu_assign_pointer(tcptw->ao_info, ao_info);
+ 	} else {
+--
+2.43.0
+

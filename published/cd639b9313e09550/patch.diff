@@ -1,0 +1,14 @@
+diff --git a/drivers/net/wireless/ath/ar5523/ar5523.c b/drivers/net/wireless/ath/ar5523/ar5523.c
+index 66ac396..098dae9 100644
+--- a/drivers/net/wireless/ath/ar5523/ar5523.c
++++ b/drivers/net/wireless/ath/ar5523/ar5523.c
+@@ -631,6 +631,9 @@ static void ar5523_rx_refill_work(struct work_struct *work)
+ 	int error;
+ 
+ 	ar5523_dbg(ar, "%s\n", __func__);
++	if (!test_bit(AR5523_HW_UP, &ar->flags))
++		return;
++
+ 	do {
+ 		spin_lock_irqsave(&ar->rx_data_list_lock, flags);
+ 

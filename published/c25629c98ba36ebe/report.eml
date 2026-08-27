@@ -1,0 +1,129 @@
+Subject: [BUG] drivers/video: use-after-free in _copy_to_user()
+From: co <co+c25629c98ba36ebe@bugs.sh>
+Message-ID: <bug-c25629c98ba36ebe@bugs.sh>
+
+We found a bug reachable in:
+
+    path    drivers/video/fbdev/core/fb_chrdev.c`, `drivers/video/fbdev/core
+    crash   use-after-free in _copy_to_user()
+    commit  843bc34db94b
+
+Config, environment, the sanitizer report and a C reproducer follow.
+
+== Notes ===============================================================
+    If you patch the bug based on our artifacts, a tag would be
+    appreciated:
+
+Reported-by: co+c25629c98ba36ebe@bugs.sh
+
+    Everything in this mail is validated by the reproducer below.
+
+    We also hold an LLM-generated root-cause analysis and a candidate
+    patch. The patch passes an A/B test: the same reproducer panics the
+    unpatched kernel and runs clean on the patched one. Neither has had
+    human review, so both still require validation before you send or
+    apply them. Available on:
+
+        patch.diff  https://bugs.sh/b/c25629c98ba36ebe/patch.diff
+        report.md   https://bugs.sh/b/c25629c98ba36ebe/report.md
+
+    This is an open science project. The code and the full set of PoCs
+    are not public at this moment, as we intend to disclose our findings
+    in an ethical way.
+
+    Happy to test patches. Complaints and suggestions about our work
+    are welcome at:
+
+        cedalion@bugs.sh
+
+== Environment =========================================================
+    Reproduced on  843bc34db94b
+    VM setup       https://bugs.sh/b/c25629c98ba36ebe/run.sh
+    config         https://bugs.sh/b/c25629c98ba36ebe/config.gz
+    poc            https://bugs.sh/b/c25629c98ba36ebe/repro.c
+
+== Sanitizer Report ====================================================
+BUG: KASAN: slab-use-after-free in _copy_to_user (include/linux/instrumented.h:129 include/linux/uaccess.h:201 lib/usercopy.c:24)
+Read of size 512 at addr ffff88800dd12800 by task exploit/147
+CPU: 1 UID: 0 PID: 147 Comm: exploit Tainted: G        W           7.2.0-rc2+ #6 PREEMPTLAZY
+Call Trace:
+dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+kasan_report (mm/kasan/report.c:595)
+kasan_check_range (mm/kasan/generic.c:186 mm/kasan/generic.c:200)
+_copy_to_user (include/linux/instrumented.h:129 include/linux/uaccess.h:201 lib/usercopy.c:24)
+fb_cmap_to_user (include/linux/uaccess.h:230 drivers/video/fbdev/core/fbcmap.c:211)
+do_fb_ioctl (drivers/video/fbdev/core/fb_chrdev.c:114)
+__x64_sys_ioctl (fs/ioctl.c:51 fs/ioctl.c:597 fs/ioctl.c:583 fs/ioctl.c:583)
+do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+Allocated by task 1:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_save_track (mm/kasan/common.c:78)
+__kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+__kmalloc_noprof (include/linux/kasan.h:263 mm/slub.c:5362 mm/slub.c:5387)
+fb_alloc_cmap_gfp (include/linux/slab.h:973 include/linux/slab.h:1290 drivers/video/fbdev/core/fbcmap.c:108)
+vfb_probe (drivers/video/fbdev/vfb.c:459)
+platform_probe (drivers/base/platform.c:1439)
+really_probe (drivers/base/dd.c:628 drivers/base/dd.c:706)
+__driver_probe_device (drivers/base/dd.c:868)
+driver_probe_device (drivers/base/dd.c:898)
+__device_attach_driver (drivers/base/dd.c:1026)
+bus_for_each_drv (drivers/base/bus.c:500)
+__device_attach (drivers/base/dd.c:1098)
+device_initial_probe (drivers/base/dd.c:1153)
+bus_probe_device (drivers/base/bus.c:620)
+device_add (drivers/base/core.c:3772)
+platform_device_add (drivers/base/platform.c:762)
+vfb_init (drivers/video/fbdev/vfb.c:525)
+do_one_initcall (init/main.c:1347)
+kernel_init_freeable (init/main.c:1409 (discriminator 1) init/main.c:1425 (discriminator 1) init/main.c:1445 (discriminator 1) init/main.c:1658 (discriminator 1))
+kernel_init (init/main.c:1548)
+ret_from_fork (arch/x86/kernel/process.c:158)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+Freed by task 144:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_save_track (mm/kasan/common.c:78)
+kasan_save_free_info (mm/kasan/generic.c:584)
+__kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
+kfree (include/linux/kasan.h:235 mm/slub.c:2705 mm/slub.c:6405 mm/slub.c:6720)
+fb_dealloc_cmap (drivers/video/fbdev/core/fbcmap.c:151)
+vfb_remove (drivers/video/fbdev/vfb.c:489)
+device_release_driver_internal (drivers/base/dd.c:1349 drivers/base/dd.c:1372)
+unbind_store (drivers/base/bus.c:244)
+kernfs_fop_write_iter (fs/kernfs/file.c:345)
+vfs_write (fs/read_write.c:595 fs/read_write.c:687)
+ksys_write (fs/read_write.c:739)
+do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+The buggy address belongs to the object at ffff88800dd12800
+which belongs to the cache kmalloc-512 of size 512
+The buggy address is located 0 bytes inside of
+freed 512-byte region [ffff88800dd12800, ffff88800dd12a00)
+The buggy address belongs to the physical page:
+page dumped because: kasan: bad access detected
+Memory state around the buggy address:
+ffff88800dd12700: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ffff88800dd12780: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+>ffff88800dd12800: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+^
+ffff88800dd12880: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ffff88800dd12900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+
+
+---
+The report format is based on syzbot bug report.
+
+This report is generated by a bot. It may contain errors.
+See https://github.com/n132/cedalion for more information.
+
+For any issue with this report, reach out to cedalion@bugs.sh
+
+If the report is already addressed, let us know by replying with:
+#co fix: <commit hash>
+
+If the report is a duplicate of another one, reply with:
+#co dup: <lore link>
+
+If you want to undo deduplication, reply with:
+#co undup

@@ -1,0 +1,72 @@
+diff --git a/drivers/video/fbdev/core/fb_chrdev.c b/drivers/video/fbdev/core/fb_chrdev.c
+index ba1d0bc214c..b6d234935ed 100644
+--- a/drivers/video/fbdev/core/fb_chrdev.c
++++ b/drivers/video/fbdev/core/fb_chrdev.c
+@@ -59,13 +59,33 @@ static ssize_t fb_write(struct file *file, const char __user *buf, size_t count,
+ 	return info->fbops->fb_write(info, buf, count, ppos);
+ }
+ 
++static int fb_getcmap_to_user(struct fb_info *info, struct fb_cmap_user *cmap)
++{
++	struct fb_cmap cmap_from = {};
++	int ret;
++
++	lock_fb_info(info);
++	ret = fb_alloc_cmap_gfp(&cmap_from, info->cmap.len,
++				info->cmap.transp != NULL, GFP_KERNEL);
++	if (!ret) {
++		cmap_from.start = info->cmap.start;
++		ret = fb_copy_cmap(&info->cmap, &cmap_from);
++	}
++	unlock_fb_info(info);
++
++	if (!ret)
++		ret = fb_cmap_to_user(&cmap_from, cmap);
++	fb_dealloc_cmap(&cmap_from);
++
++	return ret;
++}
++
+ static long do_fb_ioctl(struct fb_info *info, unsigned int cmd,
+ 			unsigned long arg)
+ {
+ 	const struct fb_ops *fb;
+ 	struct fb_var_screeninfo var;
+ 	struct fb_fix_screeninfo fix;
+-	struct fb_cmap cmap_from;
+ 	struct fb_cmap_user cmap;
+ 	void __user *argp = (void __user *)arg;
+ 	long ret = 0;
+@@ -108,10 +128,7 @@ static long do_fb_ioctl(struct fb_info *info, unsigned int cmd,
+ 	case FBIOGETCMAP:
+ 		if (copy_from_user(&cmap, argp, sizeof(cmap)))
+ 			return -EFAULT;
+-		lock_fb_info(info);
+-		cmap_from = info->cmap;
+-		unlock_fb_info(info);
+-		ret = fb_cmap_to_user(&cmap_from, &cmap);
++		ret = fb_getcmap_to_user(info, &cmap);
+ 		break;
+ 	case FBIOPAN_DISPLAY:
+ 		if (copy_from_user(&var, argp, sizeof(var)))
+@@ -194,7 +211,6 @@ static int fb_getput_cmap(struct fb_info *info, unsigned int cmd,
+ 			  unsigned long arg)
+ {
+ 	struct fb_cmap32 cmap32;
+-	struct fb_cmap cmap_from;
+ 	struct fb_cmap_user cmap;
+ 
+ 	if (copy_from_user(&cmap32, compat_ptr(arg), sizeof(cmap32)))
+@@ -212,11 +228,7 @@ static int fb_getput_cmap(struct fb_info *info, unsigned int cmd,
+ 	if (cmd == FBIOPUTCMAP)
+ 		return fb_set_user_cmap(&cmap, info);
+ 
+-	lock_fb_info(info);
+-	cmap_from = info->cmap;
+-	unlock_fb_info(info);
+-
+-	return fb_cmap_to_user(&cmap_from, &cmap);
++	return fb_getcmap_to_user(info, &cmap);
+ }
+ 
+ static int do_fscreeninfo_to_user(struct fb_fix_screeninfo *fix,

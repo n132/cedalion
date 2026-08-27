@@ -1,0 +1,28 @@
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index b52aa70df3ac..69005cc5da82 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2087,18 +2087,19 @@ static int btusb_close(struct hci_dev *hdev)
+ 
+ 	BT_DBG("%s", hdev->name);
+ 
+-	cancel_delayed_work(&data->rx_work);
+ 	cancel_work_sync(&data->work);
+ 	cancel_work_sync(&data->waker);
+ 
+-	skb_queue_purge(&data->acl_q);
+-
+ 	clear_bit(BTUSB_ISOC_RUNNING, &data->flags);
+ 	clear_bit(BTUSB_BULK_RUNNING, &data->flags);
+ 	clear_bit(BTUSB_INTR_RUNNING, &data->flags);
+ 	clear_bit(BTUSB_DIAG_RUNNING, &data->flags);
+ 
+ 	btusb_stop_traffic(data);
++
++	cancel_delayed_work_sync(&data->rx_work);
++	skb_queue_purge(&data->acl_q);
++
+ 	btusb_free_frags(data);
+ 
+ 	err = usb_autopm_get_interface(data->intf);
+

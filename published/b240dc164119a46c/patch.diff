@@ -1,0 +1,36 @@
+diff --git a/drivers/hid/hid-u2fzero.c b/drivers/hid/hid-u2fzero.c
+--- a/drivers/hid/hid-u2fzero.c
++++ b/drivers/hid/hid-u2fzero.c
+@@ -132,6 +132,11 @@ static int u2fzero_recv(struct u2fzero_device *dev,
+ 
+ 	mutex_lock(&dev->lock);
+ 
++	if (!dev->urb) {
++		ret = -ENODEV;
++		goto err;
++	}
++
+ 	memcpy(dev->buf_out, req, sizeof(struct u2f_hid_report));
+ 
+ 	dev->urb->context = &ctx;
+@@ -373,14 +378,17 @@ err_hid_hw_stop:
+ static void u2fzero_remove(struct hid_device *hdev)
+ {
+ 	struct u2fzero_device *dev = hid_get_drvdata(hdev);
++	struct urb *urb;
+ 
+ 	mutex_lock(&dev->lock);
+ 	dev->present = false;
++	urb = dev->urb;
++	dev->urb = NULL;
+ 	mutex_unlock(&dev->lock);
+ 
+ 	hid_hw_stop(hdev);
+-	usb_poison_urb(dev->urb);
+-	usb_free_urb(dev->urb);
++	usb_poison_urb(urb);
++	usb_free_urb(urb);
+ }
+ 
+ static const struct hid_device_id u2fzero_table[] = {
+

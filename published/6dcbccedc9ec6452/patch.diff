@@ -1,0 +1,29 @@
+diff --git a/drivers/vdpa/vdpa.c b/drivers/vdpa/vdpa.c
+index 47c6c3d23f5c..822c4defd840 100644
+--- a/drivers/vdpa/vdpa.c
++++ b/drivers/vdpa/vdpa.c
+@@ -1313,15 +1313,19 @@ static int vdpa_nl_cmd_dev_config_get_doit(struct sk_buff *skb, struct genl_info
+ 	}
+ 	err = vdpa_dev_config_fill(vdev, msg, info->snd_portid, info->snd_seq,
+ 				   0, info->extack);
+-	if (!err)
+-		err = genlmsg_reply(msg, info);
++	if (err)
++		goto mdev_err;
++
++	err = genlmsg_reply(msg, info);
++	put_device(dev);
++	up_read(&vdpa_dev_lock);
++	return err;
+ 
+ mdev_err:
+ 	put_device(dev);
+ dev_err:
+ 	up_read(&vdpa_dev_lock);
+-	if (err)
+-		nlmsg_free(msg);
++	nlmsg_free(msg);
+ 	return err;
+ }
+ 
+

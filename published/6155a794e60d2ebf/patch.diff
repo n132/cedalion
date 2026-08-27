@@ -1,0 +1,46 @@
+diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
+index fbb2742..2eb0b45 100644
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -964,11 +964,16 @@ static void build_proto_ops(struct proto_ops ops[TLS_NUM_CONFIG][TLS_NUM_CONFIG]
+ #endif
+ }
+ 
+-static void tls_build_proto(struct sock *sk)
++static int tls_build_proto(struct sock *sk)
+ {
+ 	int ip_ver = sk->sk_family == AF_INET6 ? TLSV6 : TLSV4;
+ 	struct proto *prot = READ_ONCE(sk->sk_prot);
+ 
++	/* tls_prots[] is global; only a pristine TCP proto may seed it. */
++	if (prot->sendmsg != tcp_sendmsg || prot->recvmsg != tcp_recvmsg ||
++	    prot->close != tcp_close)
++		return -EINVAL;
++
+ 	/* Build IPv6 TLS whenever the address of tcpv6 _prot changes */
+ 	if (ip_ver == TLSV6 &&
+ 	    unlikely(prot != smp_load_acquire(&saved_tcpv6_prot))) {
+@@ -993,6 +998,8 @@ static void tls_build_proto(struct sock *sk)
+ 		}
+ 		mutex_unlock(&tcpv4_prot_mutex);
+ 	}
++
++	return 0;
+ }
+ 
+ static void build_protos(struct proto prot[TLS_NUM_CONFIG][TLS_NUM_CONFIG],
+@@ -1038,9 +1045,11 @@ static void build_protos(struct proto prot[TLS_NUM_CONFIG][TLS_NUM_CONFIG],
+ static int tls_init(struct sock *sk)
+ {
+ 	struct tls_context *ctx;
+-	int rc = 0;
++	int rc;
+ 
+-	tls_build_proto(sk);
++	rc = tls_build_proto(sk);
++	if (rc)
++		return rc;
+ 
+ 	/* The TLS ulp is currently supported only for TCP sockets
+ 	 * in ESTABLISHED state.
+

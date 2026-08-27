@@ -1,0 +1,21 @@
+diff --git a/drivers/video/fbdev/udlfb.c b/drivers/video/fbdev/udlfb.c
+index c341d76bc564..9cd3c7fd741c 100644
+--- a/drivers/video/fbdev/udlfb.c
++++ b/drivers/video/fbdev/udlfb.c
+@@ -1264,6 +1264,15 @@ static int dlfb_setup_modes(struct dlfb_data *dlfb,
+ 		goto error;
+ 	}
+ 
++	/*
++	 * fbcon keeps raw pointers into the mode list in fb_display[].mode,
++	 * so it must not be rebuilt while the framebuffer has users.
++	 */
++	if (dlfb->fb_count) {
++		result = -EINVAL;
++		goto error;
++	}
++
+ 	fb_destroy_modelist(&info->modelist);
+ 	memset(&info->monspecs, 0, sizeof(info->monspecs));
+ 
+

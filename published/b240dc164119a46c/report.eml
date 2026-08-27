@@ -1,0 +1,146 @@
+Subject: [BUG] drivers/hid: use-after-free in u2fzero_recv()
+From: co <co+b240dc164119a46c@bugs.sh>
+Message-ID: <bug-b240dc164119a46c@bugs.sh>
+
+We found a bug reachable in:
+
+    path    drivers/hid
+    crash   use-after-free in u2fzero_recv()
+    commit  6f232446a629 ("Linux 6.12.77")
+
+Config, environment, the sanitizer report and a C reproducer follow.
+
+== Notes ===============================================================
+    If you patch the bug based on our artifacts, a tag would be
+    appreciated:
+
+Reported-by: co+b240dc164119a46c@bugs.sh
+
+    Everything in this mail is validated by the reproducer below.
+
+    We also hold an LLM-generated root-cause analysis and a candidate
+    patch. The patch passes an A/B test: the same reproducer panics the
+    unpatched kernel and runs clean on the patched one. Neither has had
+    human review, so both still require validation before you send or
+    apply them. Available on:
+
+        patch.diff  https://bugs.sh/b/b240dc164119a46c/patch.diff
+        report.md   https://bugs.sh/b/b240dc164119a46c/report.md
+
+    This is an open science project. The code and the full set of PoCs
+    are not public at this moment, as we intend to disclose our findings
+    in an ethical way.
+
+    Happy to test patches. Complaints and suggestions about our work
+    are welcome at:
+
+        cedalion@bugs.sh
+
+== Environment =========================================================
+    Reproduced on  6f232446a629 ("Linux 6.12.77")
+    VM setup       https://bugs.sh/b/b240dc164119a46c/run.sh
+    config         https://bugs.sh/b/b240dc164119a46c/config.gz
+    poc            https://bugs.sh/b/b240dc164119a46c/repro.c
+
+== Sanitizer Report ====================================================
+BUG: KASAN: slab-use-after-free in u2fzero_recv.constprop.0 (drivers/hid/hid-u2fzero.c:160)
+Read of size 4 at addr ffff88801fd0ad84 by task exploit/5205
+CPU: 0 UID: 0 PID: 5205 Comm: exploit Not tainted 6.12.77 #31
+Call Trace:
+dump_stack_lvl (lib/dump_stack.c:123)
+print_report (mm/kasan/report.c:378 mm/kasan/report.c:481)
+kasan_report (mm/kasan/report.c:596)
+u2fzero_recv.constprop.0 (drivers/hid/hid-u2fzero.c:160)
+u2fzero_rng_read (drivers/hid/hid-u2fzero.c:226)
+rng_dev_read (drivers/char/hw_random/core.c:223 drivers/char/hw_random/core.c:257)
+vfs_read (fs/read_write.c:567)
+ksys_read (fs/read_write.c:713)
+do_syscall_64 (arch/x86/entry/common.c:47  arch/x86/entry/common.c:78)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+Allocated by task 5193:
+kasan_save_stack (mm/kasan/common.c:49)
+kasan_save_track (mm/kasan/common.c:61  mm/kasan/common.c:70)
+__kasan_kmalloc (mm/kasan/common.c:378 mm/kasan/common.c:395)
+__kmalloc_noprof (mm/slub.c:4333 mm/slub.c:4344)
+usb_alloc_urb (./include/linux/slab.h:882 drivers/usb/core/urb.c:75)
+u2fzero_probe (drivers/hid/hid-u2fzero.c:288  drivers/hid/hid-u2fzero.c:344)
+hid_device_probe (drivers/hid/hid-core.c:2703 drivers/hid/hid-core.c:2740)
+really_probe (drivers/base/dd.c:579 drivers/base/dd.c:657)
+__driver_probe_device (drivers/base/dd.c:799)
+device_driver_attach (drivers/base/dd.c:1127)
+bind_store (drivers/base/bus.c:268)
+drv_attr_store (drivers/base/bus.c:125)
+sysfs_kf_write (fs/sysfs/file.c:136)
+kernfs_fop_write_iter (fs/kernfs/file.c:88 fs/kernfs/file.c:356)
+vfs_write (fs/read_write.c:591  fs/read_write.c:683)
+ksys_write (fs/read_write.c:737)
+do_syscall_64 (arch/x86/entry/common.c:47  arch/x86/entry/common.c:78)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+Freed by task 5223:
+kasan_save_stack (mm/kasan/common.c:49)
+kasan_save_track (mm/kasan/common.c:61  mm/kasan/common.c:70)
+kasan_save_free_info (mm/kasan/generic.c:582)
+__kasan_slab_free (mm/kasan/common.c:272)
+kfree (mm/slub.c:4651  mm/slub.c:4803)
+usb_free_urb.part.0 (drivers/usb/core/urb.c:98)
+usb_free_urb (drivers/usb/core/urb.c:98)
+hid_device_remove (drivers/hid/hid-core.c:2764)
+device_remove (drivers/base/dd.c:570)
+device_release_driver_internal (drivers/base/dd.c:1274 drivers/base/dd.c:1295)
+unbind_store (drivers/base/bus.c:245)
+drv_attr_store (drivers/base/bus.c:125)
+sysfs_kf_write (fs/sysfs/file.c:136)
+kernfs_fop_write_iter (fs/kernfs/file.c:88 fs/kernfs/file.c:356)
+vfs_write (fs/read_write.c:591  fs/read_write.c:683)
+ksys_write (fs/read_write.c:737)
+do_syscall_64 (arch/x86/entry/common.c:47  arch/x86/entry/common.c:78)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+The buggy address belongs to the object at ffff88801fd0ad00
+which belongs to the cache kmalloc-192 of size 192
+The buggy address is located 132 bytes inside of
+freed 192-byte region [ffff88801fd0ad00, ffff88801fd0adc0)
+The buggy address belongs to the physical page:
+page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1fd0a
+flags: 0xfff00000000000(node=0|zone=1|lastcpupid=0x7ff)
+page_type: f5(slab)
+raw: 00fff00000000000 ffff88801ac413c0 ffffea0000af0fc0 dead000000000002
+raw: 0000000000000000 0000000000100010 00000001f5000000 0000000000000000
+page dumped because: kasan: bad access detected
+page_owner tracks the page as allocated
+page last allocated via order 0, migratetype Unmovable, gfp_mask 0x52cc0(GFP_KERNEL|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP), pid 1, tgid 1 (swapper/0), ts 19090575597, free_ts 16417876266
+post_alloc_hook (./include/linux/page_owner.h:32 mm/page_alloc.c:1592)
+get_page_from_freelist (mm/page_alloc.c:1602 mm/page_alloc.c:3540)
+__alloc_pages_noprof (mm/page_alloc.c:4840)
+alloc_pages_mpol_noprof (mm/mempolicy.c:2271)
+new_slab (mm/slub.c:2463 mm/slub.c:2633 mm/slub.c:2687)
+___slab_alloc (mm/slub.c:3881)
+__slab_alloc.isra.0 (mm/slub.c:3971)
+__kmalloc_cache_noprof (mm/slub.c:4024 mm/slub.c:4185 mm/slub.c:4358)
+drm_atomic_helper_plane_duplicate_state (./include/linux/slab.h:878 drivers/gpu/drm/drm_atomic_state_helper.c:374)
+drm_simple_kms_plane_duplicate_state (drivers/gpu/drm/drm_simple_kms_helper.c:345)
+drm_atomic_get_plane_state (drivers/gpu/drm/drm_atomic.c:545)
+drm_client_modeset_commit_atomic (drivers/gpu/drm/drm_client_modeset.c:1030)
+drm_client_modeset_commit_locked (drivers/gpu/drm/drm_client_modeset.c:1180)
+drm_fb_helper_pan_display (drivers/gpu/drm/drm_fb_helper.c:1372 drivers/gpu/drm/drm_fb_helper.c:1431)
+fb_pan_display (drivers/video/fbdev/core/fbmem.c:191)
+bit_update_start (drivers/video/fbdev/core/bitblit.c:406)
+page last free pid 83 tgid 83 stack trace:
+free_unref_page (./include/linux/page_owner.h:25 mm/page_alloc.c:1161 mm/page_alloc.c:2721)
+
+
+---
+The report format is based on syzbot bug report.
+
+This report is generated by a bot. It may contain errors.
+See https://github.com/n132/cedalion for more information.
+
+For any issue with this report, reach out to cedalion@bugs.sh
+
+If the report is already addressed, let us know by replying with:
+#co fix: <commit hash>
+
+If the report is a duplicate of another one, reply with:
+#co dup: <lore link>
+
+If you want to undo deduplication, reply with:
+#co undup

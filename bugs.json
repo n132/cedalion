@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-27 05:11:26",
+ "generated_at": "2026-08-27 06:11:50",
  "counts": {
   "bugs": 1407,
   "with_report": 1397,
@@ -16,8 +16,8 @@
   "Fixed": 107
  },
  "views": {
-  "vulnerable": 1268,
-  "processing": 32,
+  "vulnerable": 1249,
+  "processing": 51,
   "patched": 107
  },
  "bugs": [
@@ -467,9 +467,10 @@
    "hash": "815abe53ad5a56687353cb8030db1423688c17f93b1b4ef7d91d315c58f4c508"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "1875dd47169bd757",
-   "hash": "185cc6d753076541b7eeca0faeb7abd7e1e4d2fac3756f55b92e75b370922349"
+   "hash": "185cc6d753076541b7eeca0faeb7abd7e1e4d2fac3756f55b92e75b370922349",
+   "lore": "eI5CjpXt3iSkALGbLLgJa6Pj4lq2BbU7Fmjj@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -482,9 +483,10 @@
    "hash": "02a9cf9afa55b9542a1e4d349251cd91375e811b46f37892479a8e1e610b0234"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "c25629c98ba36ebe",
-   "hash": "52d9fa56552e827b4d7d77fdafc6b8d74e4d5df945f8cb446d608e508df87c22"
+   "hash": "52d9fa56552e827b4d7d77fdafc6b8d74e4d5df945f8cb446d608e508df87c22",
+   "lore": "f2Kf9GYn1lKR5S1dbvGVtykMxK1RlgP5z8sW@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -762,9 +764,10 @@
    "hash": "45f8b4f5669cfa2ea67e60fbd2ee52a2be0f0b0f687ebb22e5ca4f8e94b649d4"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "6dcbccedc9ec6452",
-   "hash": "54da5c72c9e8fe13ed8fb42b3a0cb698ce969bbe5c0bddbdd937fe5d48a20c41"
+   "hash": "54da5c72c9e8fe13ed8fb42b3a0cb698ce969bbe5c0bddbdd937fe5d48a20c41",
+   "lore": "ILTHcT8oe1HP47sY25JVxssvKmkCTjYlX9Hs@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -997,9 +1000,10 @@
    "hash": "62a24944d9abe1ce901697226059e36845e02894fede04090b0b8c737f4bf1f9"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "fd80bc5967eb22c3",
-   "hash": "ead70d5fda0aed3a67aac178f9e41c0d744ff50807485f4f8f32c2de74cdb2d3"
+   "hash": "ead70d5fda0aed3a67aac178f9e41c0d744ff50807485f4f8f32c2de74cdb2d3",
+   "lore": "D4tcSGerkYkIV1DmaUo1t8TaR5qQElDLkidn@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -1035,9 +1039,10 @@
    "cvss": ""
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "b240dc164119a46c",
-   "hash": "2f632c02b8fc777855de06ee05963a4d63a1d33b7fdbdd5cb7252ddc026e24a8"
+   "hash": "2f632c02b8fc777855de06ee05963a4d63a1d33b7fdbdd5cb7252ddc026e24a8",
+   "lore": "UFZgYBPFzraRy8BQcngd1LpE4nCofXZsBVbb@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -1270,9 +1275,10 @@
    "hash": "cd8a4a61e42ce7e524a2b821538a16da630ad10047a53ef2fdc3615d3b5a6184"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "a27ae3497f0074da",
-   "hash": "4f2406c71a510c03cc287b7df3451fdb554197a1a951dc1be2086169b52c0c44"
+   "hash": "4f2406c71a510c03cc287b7df3451fdb554197a1a951dc1be2086169b52c0c44",
+   "lore": "K9HvthWDvq4gyjBVMeGsnsvA26mYMZ9v4gW7@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -1280,9 +1286,10 @@
    "hash": "715a545c06fd77ac1f77f44b5b028d91e8b9a1b3c0a0f8a3c8a125d9526f8d08"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "cd639b9313e09550",
-   "hash": "f083f7682e2c1ee94aa57c174a73c4d8978a5729ff7fd3cf9d00c9443f254ae3"
+   "hash": "f083f7682e2c1ee94aa57c174a73c4d8978a5729ff7fd3cf9d00c9443f254ae3",
+   "lore": "v5hPFETntwh5YjR1fbSXichnMBMrX4irbVAf@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -1365,9 +1372,10 @@
    "hash": "3238b757c70c61803d92887cf4ecb7bc95f3525ba3500525193935c6ef863d20"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "63bad23bb3b4cd85",
-   "hash": "3e81a60143c8fb21f24d63637030c77f9af668e05d82fc1c96c8d1dd33b76508"
+   "hash": "3e81a60143c8fb21f24d63637030c77f9af668e05d82fc1c96c8d1dd33b76508",
+   "lore": "fai12uKS5302YnCQV4E3zlDqcsAS5aGcMutS@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -1375,9 +1383,10 @@
    "hash": "01de718f548dad5fa19cdbea0a292289cff429cd97d8496f1f8c3b56e164ebd1"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "a720ac0c47d2d165",
-   "hash": "8fd704bd77d71aecd5ab8291142c1efa23590c888bc187c829eca51be44bcc75"
+   "hash": "8fd704bd77d71aecd5ab8291142c1efa23590c888bc187c829eca51be44bcc75",
+   "lore": "zKVpkZXjE75xVdFiLMgHlG0eo0eFhEoMzS81@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -1390,9 +1399,10 @@
    "hash": "d336070fd28952e940197668a5ebd8a3bc2729bd261e0b4baf1bb1ebc9760c43"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "6155a794e60d2ebf",
-   "hash": "b4404d3ef8de916a21f427b7e1a8df80c6e71fafc81a71e8fa54e3f1de1ffd98"
+   "hash": "b4404d3ef8de916a21f427b7e1a8df80c6e71fafc81a71e8fa54e3f1de1ffd98",
+   "lore": "BC0kQFzqFlua7hmRFXYJxLDaLlY5VAVsVW2p@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -1451,9 +1461,10 @@
    "hash": "e9914a52d206e904ae9450b5ccd845355f387f05c153fd0c794bf99eedd3ee02"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "e5693071d903b832",
-   "hash": "9593fb4906639d81c00d4c6f8c53b8f442f39ecc991600aaf8335ba070b444a9"
+   "hash": "9593fb4906639d81c00d4c6f8c53b8f442f39ecc991600aaf8335ba070b444a9",
+   "lore": "sQDn678D0YppKseC8dIUC0I6uKmzsrOVtoN1@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -1571,9 +1582,10 @@
    "hash": "9af3e29cbe98ed2d7fbfc5353a31b87fd9c0d1d383b1b4f8e4510da069047dbe"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "6a581c4284f721d4",
-   "hash": "2d72192fd0115b04e6b1cdc192bcaf61ea330996ece0da13ab528c0af458d715"
+   "hash": "2d72192fd0115b04e6b1cdc192bcaf61ea330996ece0da13ab528c0af458d715",
+   "lore": "jS2KwfrOeQPAnc2xZL0obs0OW3eVUUvpe6Yt@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -1701,9 +1713,10 @@
    "hash": "943f7cf142c246c74ee63470f9f8454c8233931c480069135827646bf150cb01"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "9d44b184bc8f410d",
-   "hash": "9b9965dcb6d5d7cf7ee36850822f08c2b715e852cc9652ebe2a73f2c8ff71507"
+   "hash": "9b9965dcb6d5d7cf7ee36850822f08c2b715e852cc9652ebe2a73f2c8ff71507",
+   "lore": "1wU0VjMckz7b5ly5tzcr7MbjZKdV9kTFjcc4@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -1796,9 +1809,10 @@
    "hash": "ceee7e978181d1130fff48bafbb2e68d26231f224b7e9a9d05a343add5ee2c7e"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "5a7f44e9dc1eab32",
-   "hash": "aacb68f757f16b13de115b64eb25c9e55e6dbd9cd3863a18b182d619c3dbae0c"
+   "hash": "aacb68f757f16b13de115b64eb25c9e55e6dbd9cd3863a18b182d619c3dbae0c",
+   "lore": "J9JLc2EgME43HXjcdEG2ILy4SDCm76YbQAKb@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -1946,9 +1960,10 @@
    "hash": "67db7a835f0b36b661d490c92bfffe0a62270658a9c0cc622b6f8f3e8f39f846"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "28eef7d8af9428e6",
-   "hash": "f46384a4b7033100903114ad45341894797d370a07913ee17b6ea94adfafbf3d"
+   "hash": "f46384a4b7033100903114ad45341894797d370a07913ee17b6ea94adfafbf3d",
+   "lore": "jH6u350kaBRuqklDjd3k3BW4nWzp0tYRjq3p@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -2021,9 +2036,10 @@
    "hash": "2090058f32635a8b2173638ce754e7bfd788ece9f69dbb1c1fab9b135dd29fba"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "2c72469dbbec34af",
-   "hash": "bd741eff47c8e9ab344bb09dccbf0ecf15644f964387f74070d1fb6bf10507fa"
+   "hash": "bd741eff47c8e9ab344bb09dccbf0ecf15644f964387f74070d1fb6bf10507fa",
+   "lore": "YG9s0PiBKJZcXAKld3MToa1IVRJOUoKiaA57@bugs.sh"
   },
   {
    "view": "processing",
@@ -2102,9 +2118,10 @@
    "hash": "5368b365083e0c3c587828b0fb7d8606dee9d4d1579daf7d4227bcaea83552ca"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "ed9902f2e44184d9",
-   "hash": "6a40161bfc5b6a30b31ad1f853ff9eeb8b02172e4d757a69cbf3ce5595328053"
+   "hash": "6a40161bfc5b6a30b31ad1f853ff9eeb8b02172e4d757a69cbf3ce5595328053",
+   "lore": "1jSCSNaDKmuUG7h40rTsSl1rMaSwdlJef4rp@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -2117,9 +2134,10 @@
    "hash": "5393c7ba26eeb048bfa79144729462be65b7264cafd02947dacf7b1986d2a771"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "46e36dce88fefcb1",
-   "hash": "ac07d42448167cd91412a8b9b71bb40b830fe04d30d96a37b5f11f59796a8998"
+   "hash": "ac07d42448167cd91412a8b9b71bb40b830fe04d30d96a37b5f11f59796a8998",
+   "lore": "xuyIjT8s8MpYkhhzg5iXr7ctaxevT0y0SzfR@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -2132,9 +2150,10 @@
    "hash": "11bcc1a992ea7b638cda06ed981db14b6a31cf41a805d1df27ad59d262853034"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "ef32d1251d8555af",
-   "hash": "b217ddd976862ff5e1d46a871b7c26727fbf171a057be22493af06c623f89c20"
+   "hash": "b217ddd976862ff5e1d46a871b7c26727fbf171a057be22493af06c623f89c20",
+   "lore": "6RpR2fi4iS5th20EWMG6Wt0CzXK0hP6xdKdd@bugs.sh"
   },
   {
    "view": "vulnerable",

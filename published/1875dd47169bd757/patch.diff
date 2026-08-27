@@ -1,0 +1,104 @@
+From: Xiang Mei <xmei5@asu.edu>
+Subject: [PATCH] fbcon: tileblit: clamp tile_putcs() to the pixmap size
+
+tile_putcs() sizes its staging buffer straight from the number of console
+cells it is asked to draw:
+
+	int size = sizeof(u32) * count;
+	blit.indices = (u32 *)fb_get_buffer_offset(info, &info->pixmap, size);
+	for (i = 0; i < count; i++)
+		blit.indices[i] = (u32)(scr_readw(s++) & charmask);
+
+fb_get_buffer_offset() is a bump allocator over info->pixmap: when the
+request does not fit in the space left it rewinds to offset 0 and hands
+back the buffer base, without checking that the request fits in the
+buffer at all.  The default pixmap installed by do_register_framebuffer()
+is a kmalloc(FBPIXMAPSIZE) of 8192 bytes, so any count above 2048 writes
+past the end of that allocation.
+
+The sibling implementations bit_putcs(), cw_putcs(), ccw_putcs() and
+ud_putcs() all cap the per-iteration cell count against info->pixmap.size
+and loop; tile_putcs() is the only one that does not.
+
+count is vc->vc_cols, which tracks info->var.xres / vc->vc_font.width.
+A 1-pixel-wide font installed with KDFONTOP while the device is still in
+a graphics mode stays in effect when the device is switched to tile (text)
+mode, so on arkfb and s3fb, whose maximum xres is 4096, count can reach
+4096 and the repaint writes 4 * count bytes into the 8192-byte pixmap.
+A local user who owns the VT and can open /dev/fbX reaches this:
+
+  BUG: KASAN: slab-out-of-bounds in tile_putcs (drivers/video/fbdev/core/tileblit.c:69)
+  Write of size 4 at addr ffff88800c622000 by task exploit/143
+
+  Call Trace:
+   tile_putcs (drivers/video/fbdev/core/tileblit.c:69)
+   fbcon_putcs (drivers/video/fbdev/core/fbcon.c:1392)
+   do_update_region (drivers/tty/vt/vt.c:656)
+   redraw_screen (drivers/tty/vt/vt.c:1008)
+   fbcon_blank (drivers/video/fbdev/core/fbcon.c:2315)
+   do_unblank_screen (drivers/tty/vt/vt.c:4756)
+   vt_ioctl (drivers/tty/vt/vt_ioctl.c:743)
+   tty_ioctl (drivers/tty/tty_io.c:2792)
+   __x64_sys_ioctl (fs/ioctl.c:597)
+
+  Allocated by task 143:
+   do_register_framebuffer (drivers/video/fbdev/core/fbmem.c:502)
+   register_framebuffer (drivers/video/fbdev/core/fbmem.c:602)
+   ark_pci_probe (drivers/video/fbdev/arkfb.c:1051)
+
+  The buggy address belongs to the object at ffff88800c620000
+   which belongs to the cache kmalloc-8k of size 8192
+  The buggy address is located 0 bytes to the right of
+   allocated 8192-byte region [ffff88800c620000, ffff88800c622000)
+
+Chunk the write against info->pixmap.size the way bit_putcs() does.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+---
+--- a/drivers/video/fbdev/core/tileblit.c
++++ b/drivers/video/fbdev/core/tileblit.c
+@@ -55,20 +55,33 @@ static void tile_putcs(struct vc_data *v
+ {
+ 	struct fb_tileblit blit;
+ 	unsigned short charmask = vc->vc_hi_font_mask ? 0x1ff : 0xff;
+-	int size = sizeof(u32) * count, i;
++	u32 maxcnt = info->pixmap.size / sizeof(u32);
++	u32 cnt, i;
++
++	if (!maxcnt)
++		return;
+ 
+-	blit.sx = xx;
+ 	blit.sy = yy;
+-	blit.width = count;
+ 	blit.height = 1;
+ 	blit.fg = fg;
+ 	blit.bg = bg;
+-	blit.length = count;
+-	blit.indices = (u32 *) fb_get_buffer_offset(info, &info->pixmap, size);
+-	for (i = 0; i < count; i++)
+-		blit.indices[i] = (u32)(scr_readw(s++) & charmask);
+ 
+-	info->tileops->fb_tileblit(info, &blit);
++	while (count) {
++		cnt = min_t(u32, count, maxcnt);
++
++		blit.sx = xx;
++		blit.width = cnt;
++		blit.length = cnt;
++		blit.indices = (u32 *)fb_get_buffer_offset(info, &info->pixmap,
++							  cnt * sizeof(u32));
++		for (i = 0; i < cnt; i++)
++			blit.indices[i] = (u32)(scr_readw(s++) & charmask);
++
++		info->tileops->fb_tileblit(info, &blit);
++
++		count -= cnt;
++		xx += cnt;
++	}
+ }
+ 
+ static void tile_clear_margins(struct vc_data *vc, struct fb_info *info,

@@ -1,0 +1,125 @@
+Subject: [BUG] drivers/video: use-after-free in fb_videomode_to_var()
+From: co <co+ed9902f2e44184d9@bugs.sh>
+Message-ID: <bug-ed9902f2e44184d9@bugs.sh>
+
+We found a bug reachable in:
+
+    path    drivers/video/fbdev
+    crash   use-after-free in fb_videomode_to_var()
+    commit  3cd8b194bf34 ("Merge tag 'v7.1-rc-part1-smbdirect-fixes' of git://git.samba.org/ksmbd")
+
+Config, environment, the sanitizer report and a C reproducer follow.
+
+== Notes ===============================================================
+    If you patch the bug based on our artifacts, a tag would be
+    appreciated:
+
+Reported-by: co+ed9902f2e44184d9@bugs.sh
+
+    Everything in this mail is validated by the reproducer below.
+
+    We also hold an LLM-generated root-cause analysis and a candidate
+    patch. The patch passes an A/B test: the same reproducer panics the
+    unpatched kernel and runs clean on the patched one. Neither has had
+    human review, so both still require validation before you send or
+    apply them. Available on:
+
+        patch.diff  https://bugs.sh/b/ed9902f2e44184d9/patch.diff
+        report.md   https://bugs.sh/b/ed9902f2e44184d9/report.md
+
+    This is an open science project. The code and the full set of PoCs
+    are not public at this moment, as we intend to disclose our findings
+    in an ethical way.
+
+    Happy to test patches. Complaints and suggestions about our work
+    are welcome at:
+
+        cedalion@bugs.sh
+
+== Environment =========================================================
+    Reproduced on  3cd8b194bf34 ("Merge tag 'v7.1-rc-part1-smbdirect-fixes' of git://git.samba.org/ksmbd")
+    VM setup       https://bugs.sh/b/ed9902f2e44184d9/run.sh
+    config         https://bugs.sh/b/ed9902f2e44184d9/config.gz
+    poc            https://bugs.sh/b/ed9902f2e44184d9/repro.c
+
+== Sanitizer Report ====================================================
+BUG: KASAN: slab-use-after-free in fb_videomode_to_var (drivers/video/fbdev/core/modedb.c:906)
+Read of size 4 at addr ffff88801057471c by task kworker/1:2/113
+CPU: 1 UID: 0 PID: 113 Comm: kworker/1:2 Not tainted 7.0.0+ #1 PREEMPT(lazy)
+Workqueue: events console_callback
+Call Trace:
+dump_stack_lvl (lib/dump_stack.c:123)
+print_report (mm/kasan/report.c:379 mm/kasan/report.c:482)
+kasan_report (mm/kasan/report.c:597)
+fb_videomode_to_var (drivers/video/fbdev/core/modedb.c:906)
+display_to_var (drivers/video/fbdev/core/fbcon.c:1000)
+fbcon_switch (drivers/video/fbdev/core/fbcon.c:2190)
+redraw_screen (drivers/tty/vt/vt.c:995)
+complete_change_console (drivers/tty/vt/vt_ioctl.c:1149)
+change_console (drivers/tty/vt/vt_ioctl.c:1263)
+console_callback (drivers/tty/vt/vt.c:3320)
+process_one_work (kernel/workqueue.c:3307)
+worker_thread (kernel/workqueue.c:3379 (discriminator 2) kernel/workqueue.c:3466 (discriminator 2))
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:164)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:255)
+Allocated by task 12:
+kasan_save_stack (mm/kasan/common.c:58)
+kasan_save_track (mm/kasan/common.c:70 (discriminator 1) mm/kasan/common.c:79 (discriminator 1))
+__kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+fb_add_videomode (./include/linux/slab.h:950 drivers/video/fbdev/core/modedb.c:1073)
+dlfb_setup_modes (drivers/video/fbdev/udlfb.c:1316 (discriminator 2))
+dlfb_usb_probe (drivers/video/fbdev/udlfb.c:1685)
+usb_probe_interface (drivers/usb/core/driver.c:397)
+really_probe (drivers/base/dd.c:631 drivers/base/dd.c:709)
+__driver_probe_device (drivers/base/dd.c:851)
+driver_probe_device (drivers/base/dd.c:882)
+__device_attach_driver (drivers/base/dd.c:1010)
+bus_for_each_drv (drivers/base/bus.c:500)
+__device_attach (drivers/base/dd.c:1083)
+device_initial_probe (drivers/base/dd.c:1136)
+bus_probe_device (drivers/base/bus.c:615)
+device_add (drivers/base/core.c:3698)
+usb_new_device (drivers/usb/core/hub.c:2696)
+hub_event (drivers/usb/core/hub.c:5568 drivers/usb/core/hub.c:5707 drivers/usb/core/hub.c:5871 drivers/usb/core/hub.c:5953)
+process_one_work (kernel/workqueue.c:3307)
+worker_thread (kernel/workqueue.c:3379 (discriminator 2) kernel/workqueue.c:3466 (discriminator 2))
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:164)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:255)
+Freed by task 173:
+kasan_save_stack (mm/kasan/common.c:58)
+kasan_save_track (mm/kasan/common.c:70 (discriminator 1) mm/kasan/common.c:79 (discriminator 1))
+kasan_save_free_info (mm/kasan/generic.c:587 (discriminator 1))
+__kasan_slab_free (mm/kasan/common.c:287)
+kfree (mm/slub.c:6246 (discriminator 3) mm/slub.c:6561 (discriminator 3))
+fb_destroy_modelist (drivers/video/fbdev/core/modedb.c:1116 (discriminator 3))
+dlfb_setup_modes (drivers/video/fbdev/udlfb.c:1268)
+edid_store (drivers/video/fbdev/udlfb.c:1456)
+sysfs_kf_bin_write (fs/sysfs/file.c:164)
+kernfs_fop_write_iter (fs/kernfs/file.c:88 fs/kernfs/file.c:356)
+vfs_write (fs/read_write.c:596 (discriminator 1) fs/read_write.c:688 (discriminator 1))
+ksys_write (fs/read_write.c:741)
+do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+The buggy address belongs to the object at ffff888010574700
+which belongs to the cache kmalloc-96 of size 96
+The buggy address is located 28 bytes inside of
+
+
+---
+The report format is based on syzbot bug report.
+
+This report is generated by a bot. It may contain errors.
+See https://github.com/n132/cedalion for more information.
+
+For any issue with this report, reach out to cedalion@bugs.sh
+
+If the report is already addressed, let us know by replying with:
+#co fix: <commit hash>
+
+If the report is a duplicate of another one, reply with:
+#co dup: <lore link>
+
+If you want to undo deduplication, reply with:
+#co undup

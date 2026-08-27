@@ -1,0 +1,33 @@
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 4f98d82..161d1df 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -3517,15 +3517,16 @@ static u32 xhci_td_remainder(struct xhci_hcd *xhci, int transferred,
+ 
+ 
+ static int xhci_align_td(struct xhci_hcd *xhci, struct urb *urb, u32 enqd_len,
+-			 u32 *trb_buff_len, struct xhci_segment *seg)
++			 u32 *trb_buff_len, struct xhci_ring *ring)
+ {
+ 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
++	struct xhci_segment *seg = ring->enq_seg;
+ 	unsigned int unalign;
+ 	unsigned int max_pkt;
+ 	u32 new_buff_len;
+ 	size_t len;
+ 
+-	max_pkt = xhci_usb_endpoint_maxp(urb->dev, urb->ep);
++	max_pkt = ring->bounce_buf_len;
+ 	unalign = (enqd_len + *trb_buff_len) % max_pkt;
+ 
+ 	/* we got lucky, last normal TRB data on segment is packet aligned */
+@@ -3671,8 +3672,7 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
+ 			field |= TRB_CHAIN;
+ 			if (trb_is_link(ring->enqueue + 1)) {
+ 				if (xhci_align_td(xhci, urb, enqd_len,
+-						  &trb_buff_len,
+-						  ring->enq_seg)) {
++						  &trb_buff_len, ring)) {
+ 					send_addr = ring->enq_seg->bounce_dma;
+ 					/* assuming TD won't span 2 segs */
+ 					td->bounce_seg = ring->enq_seg;

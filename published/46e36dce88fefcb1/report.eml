@@ -1,0 +1,144 @@
+Subject: [BUG] drivers/nvme: use-after-free in nvmet_auth_expired_work()
+From: co <co+46e36dce88fefcb1@bugs.sh>
+Message-ID: <bug-46e36dce88fefcb1@bugs.sh>
+
+We found a bug reachable in:
+
+    path    drivers/nvme/target
+    crash   use-after-free in nvmet_auth_expired_work()
+    commit  26260251022f ("Merge tag 'livepatching-for-7.3' of git://git.kernel.org/pub/scm/linux/kernel/git/livepatching/livepatching")
+
+Config, environment, the sanitizer report and a C reproducer follow.
+
+== Notes ===============================================================
+    If you patch the bug based on our artifacts, a tag would be
+    appreciated:
+
+Reported-by: co+46e36dce88fefcb1@bugs.sh
+
+    Everything in this mail is validated by the reproducer below.
+
+    We also hold an LLM-generated root-cause analysis and a candidate
+    patch. The patch passes an A/B test: the same reproducer panics the
+    unpatched kernel and runs clean on the patched one. Neither has had
+    human review, so both still require validation before you send or
+    apply them. Available on:
+
+        patch.diff  https://bugs.sh/b/46e36dce88fefcb1/patch.diff
+        report.md   https://bugs.sh/b/46e36dce88fefcb1/report.md
+
+    This is an open science project. The code and the full set of PoCs
+    are not public at this moment, as we intend to disclose our findings
+    in an ethical way.
+
+    Happy to test patches. Complaints and suggestions about our work
+    are welcome at:
+
+        cedalion@bugs.sh
+
+== Environment =========================================================
+    Reproduced on  26260251022f ("Merge tag 'livepatching-for-7.3' of git://git.kernel.org/pub/scm/linux/kernel/git/livepatching/livepatching")
+    VM setup       https://bugs.sh/b/46e36dce88fefcb1/run.sh
+    config         https://bugs.sh/b/46e36dce88fefcb1/config.gz
+    poc            https://bugs.sh/b/46e36dce88fefcb1/repro.c
+
+== Sanitizer Report ====================================================
+BUG: KASAN: slab-use-after-free in nvmet_auth_expired_work (drivers/nvme/target/fabrics-cmd-auth.c:26)
+Write of size 1 at addr ffff88800c6cb0cc by task kworker/0:0/9
+CPU: 0 UID: 0 PID: 9 Comm: kworker/0:0 Tainted: G        W           7.2.0+ #1 PREEMPTLAZY
+Workqueue: events nvmet_auth_expired_work
+Call Trace:
+dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+kasan_report (mm/kasan/report.c:595)
+nvmet_auth_expired_work (drivers/nvme/target/fabrics-cmd-auth.c:26)
+process_one_work (kernel/workqueue.c:3387)
+worker_thread (kernel/workqueue.c:3470 kernel/workqueue.c:3551)
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:158)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+Allocated by task 108:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_save_track (mm/kasan/common.c:78)
+__kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+__kmalloc_cache_noprof (./include/linux/kasan.h:263 mm/slub.c:5484)
+nvmet_tcp_accept_work (./include/linux/slab.h:988 ./include/linux/slab.h:1309 drivers/nvme/target/tcp.c:1933 drivers/nvme/target/tcp.c:2049)
+process_one_work (kernel/workqueue.c:3387)
+worker_thread (kernel/workqueue.c:3470 kernel/workqueue.c:3551)
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:158)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+Freed by task 108:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_save_track (mm/kasan/common.c:78)
+kasan_save_free_info (mm/kasan/generic.c:584)
+__kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
+kfree (./include/linux/kasan.h:235 mm/slub.c:2678 mm/slub.c:6372 mm/slub.c:6687)
+process_one_work (kernel/workqueue.c:3387)
+worker_thread (kernel/workqueue.c:3470 kernel/workqueue.c:3551)
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:158)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+Last potentially related work creation:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_record_aux_stack (mm/kasan/generic.c:556)
+insert_work (kernel/workqueue.c:2272)
+__queue_work (kernel/workqueue.c:2448)
+call_timer_fn (kernel/time/timer.c:1748)
+__run_timers (kernel/time/timer.c:1794 kernel/time/timer.c:2374)
+run_timer_softirq (kernel/time/timer.c:2386 kernel/time/timer.c:2378 kernel/time/timer.c:2395 kernel/time/timer.c:2405)
+handle_softirqs (kernel/softirq.c:645)
+__irq_exit_rcu (kernel/softirq.c:679 kernel/softirq.c:519 kernel/softirq.c:767)
+sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1062 (discriminator 35) arch/x86/kernel/apic/apic.c:1062 (discriminator 35))
+asm_sysvec_apic_timer_interrupt (./arch/x86/include/asm/idtentry.h:674)
+Second to last potentially related work creation:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_record_aux_stack (mm/kasan/generic.c:556)
+insert_work (kernel/workqueue.c:2272)
+__queue_work (kernel/workqueue.c:2448)
+queue_work_on (kernel/workqueue.c:2501)
+nvmet_tcp_state_change (./include/linux/workqueue.h:699 drivers/nvme/target/tcp.c:1416 ./include/linux/kref.h:65 drivers/nvme/target/tcp.c:1428 drivers/nvme/target/tcp.c:1704)
+tcp_done_with_error (net/ipv4/tcp_input.c:4877)
+tcp_validate_incoming (net/ipv4/tcp_input.c:6472)
+tcp_rcv_established (net/ipv4/tcp_input.c:6672)
+tcp_v4_do_rcv (net/ipv4/tcp_ipv4.c:1854)
+tcp_v4_rcv (net/ipv4/tcp_ipv4.c:2248)
+ip_protocol_deliver_rcu (net/ipv4/ip_input.c:207 (discriminator 1))
+ip_local_deliver_finish (net/ipv4/ip_input.c:241 (discriminator 1))
+ip_local_deliver (./include/linux/netfilter.h:325 ./include/linux/netfilter.h:319 net/ipv4/ip_input.c:262)
+ip_rcv (./include/net/dst.h:480 (discriminator 6) net/ipv4/ip_input.c:492 (discriminator 6) ./include/linux/netfilter.h:325 (discriminator 6) ./include/linux/netfilter.h:319 (discriminator 6) net/ipv4/ip_input.c:612 (discriminator 6))
+__netif_receive_skb_one_core (net/core/dev.c:6264 (discriminator 4))
+process_backlog (net/core/dev.c:6377 net/core/dev.c:6728)
+__napi_poll (net/core/dev.c:7787)
+net_rx_action (net/core/dev.c:7850 net/core/dev.c:8007)
+handle_softirqs (kernel/softirq.c:645)
+do_softirq.part.0 (kernel/softirq.c:546 (discriminator 20))
+__local_bh_enable_ip (kernel/softirq.c:538 kernel/softirq.c:473)
+__dev_queue_xmit (./include/linux/bottom_half.h:33 (discriminator 1) ./include/linux/rcupdate.h:914 (discriminator 1) net/core/dev.c:4961 (discriminator 1))
+ip_finish_output2 (./include/linux/netdevice.h:3461 ./include/net/neighbour.h:544 ./include/net/neighbour.h:558 net/ipv4/ip_output.c:236)
+ip_output (./include/linux/netfilter.h:314 net/ipv4/ip_output.c:437)
+__ip_queue_xmit (net/ipv4/ip_output.c:533)
+__tcp_transmit_skb (net/ipv4/tcp_output.c:1716 (discriminator 4))
+tcp_send_active_reset (net/ipv4/tcp_output.c:1734 net/ipv4/tcp_output.c:3872)
+tcp_disconnect (net/ipv4/tcp.c:3379 (discriminator 1))
+__tcp_close (net/ipv4/tcp.c:3188)
+tcp_close (net/ipv4/tcp.c:3311)
+inet_release (net/ipv4/af_inet.c:442)
+
+
+---
+The report format is based on syzbot bug report.
+
+This report is generated by a bot. It may contain errors.
+See https://github.com/n132/cedalion for more information.
+
+For any issue with this report, reach out to cedalion@bugs.sh
+
+If the report is already addressed, let us know by replying with:
+#co fix: <commit hash>
+
+If the report is a duplicate of another one, reply with:
+#co dup: <lore link>
+
+If you want to undo deduplication, reply with:
+#co undup
