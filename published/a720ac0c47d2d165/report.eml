@@ -25,7 +25,7 @@ Reported-by: co+a720ac0c47d2d165@bugs.sh
     apply them. Available on:
 
         patch.diff  https://bugs.sh/b/a720ac0c47d2d165/patch.diff
-        report.md   https://bugs.sh/b/a720ac0c47d2d165/report.md
+        report.eml   https://bugs.sh/b/a720ac0c47d2d165/report.eml
 
     This is an open science project. The code and the full set of PoCs
     are not public at this moment, as we intend to disclose our findings
