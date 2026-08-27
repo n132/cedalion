@@ -660,3 +660,78 @@ body.bug { zoom: 1; }
 .bugpage a { color: var(--text); text-decoration: none;
              border-bottom: 1px solid var(--line); }
 .bugpage a:hover { border-bottom-color: var(--text); }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   THE PROSE PAGE. reporting.html only. Everything above this line dresses a
+   register — a table that wants the whole window and a footer of notes set in
+   columns beside it. This is the one page that is nothing but running text,
+   and running text has the opposite need: a measure it cannot outgrow. The
+   rules here do not reach the register, and none of the register's do the
+   arguing for them. */
+.doc { max-width: 68ch; padding: 26px 0 8px; }
+/* The page's own name, at the weight the topbar's rule is drawn in. Nothing
+   else on the site carries an h1: the register's title is its logo. */
+.doc h1 {
+  margin: 0 0 14px; font-size: 26px; line-height: 1.2;
+  font-weight: 660; letter-spacing: -.01em;
+}
+/* The uppercase key the table heads its columns with and the footer heads its
+   notes with, used a third time for the same reason: it marks where an answer
+   starts without taking the eye off the answer. The rule above it is the
+   section divider the register already uses, at the same weight. */
+.doc h2 {
+  margin: 30px 0 8px; padding-top: 14px; border-top: 1px solid var(--line);
+  font-size: 18px; font-weight: 650; color: var(--text);
+  letter-spacing: -.005em;
+}
+.doc p { margin: 0 0 11px; color: var(--text-2); }
+/* The opening paragraphs, in the page's own ink rather than the body's grey:
+   they are the claim, and the sections under them are the working. */
+.doc .standfirst { color: var(--text); }
+.doc strong { font-weight: 640; color: var(--text); }
+.doc ul { margin: 0 0 11px; padding-left: 20px; color: var(--text-2); }
+.doc li { margin: 0 0 3px; }
+/* Set in the same face as the rest, only tinted: these are the names of trailers
+   and files, and a monospace switch mid-sentence reads as a code sample. */
+.doc code { font-family: inherit; color: var(--text); font-weight: 560; }
+.doc a { color: var(--text); text-underline-offset: 2px; }
+
+/* The one word in the topbar. It sits with the brand rather than against the
+   right edge, so the bar reads left to right as the site and then its pages,
+   and the GitHub mark keeps the far side to itself. Weight rather than colour
+   marks the page you are on: a second ink in a two-tone bar would read as a
+   different kind of link, not as the same link, here. */
+.topbar .page {
+  margin-left: 18px; align-self: flex-end; padding-bottom: 2px;
+  font-size: 13px; color: var(--text-3); text-decoration: none;
+}
+.topbar .page:hover { color: var(--text); }
+.topbar .page[aria-current="page"] { color: var(--text); font-weight: 620; }
+
+/* The page's one claim, set into the page the way the register's table is set
+   into its well — same tint, same inset light. It is not a callout in the
+   sense of a warning; it is the summary a reader in a hurry is entitled to,
+   and boxing it is what lets them find it without reading down to it. */
+.doc .tldr {
+  margin: 0 0 18px; padding: 12px 14px; color: var(--text);
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: 4px; box-shadow: var(--sunk-soft);
+}
+/* The uppercase key the register heads its columns with, inline: the box is
+   one paragraph, and a heading on its own line would make it two things. */
+.doc .tldr .key {
+  margin-right: 8px; font-size: 11px; font-weight: 640;
+  text-transform: uppercase; letter-spacing: .09em;
+}
+
+/* A named claim inside a section, where the section holds more than one. Set
+   in the page's own ink at body size: the uppercase key belongs to the section
+   above it, and it has to sit under that section rather than beside it: same
+   face, one step down in size, so the eye reads section then claim. */
+.doc h3 { margin: 16px 0 5px; font-size: 15px; font-weight: 640; color: var(--text); }
+.doc h3 + p { margin-top: 0; }
+
+/* The footer of the prose page. The register's footer is a set of notes and a
+   date stamp and styles itself; this one is a single line, and its only need
+   is that the address in it reads as a link. */
+footer a { color: var(--text); text-underline-offset: 2px; }

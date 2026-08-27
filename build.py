@@ -43,8 +43,8 @@ OUT = os.path.join(HERE, "docs")
 # Everything the page loads. Named rather than globbed, for the same reason
 # app.py names its routes: a stray file in web/ should not become published by
 # having been dropped there.
-ASSETS = ("index.html", "style.css", "cedalion.js", "bugpage.js",
-          "logo.svg", "logo-light.svg", "favicon.svg")
+ASSETS = ("index.html", "reporting.html", "style.css", "cedalion.js",
+          "bugpage.js", "logo.svg", "logo-light.svg", "favicon.svg")
 
 
 def main() -> None:

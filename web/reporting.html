@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How it works — Cedalion</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="."><img src="logo-light.svg" alt="Cedalion"></a>
+    <!-- The register is still the site; this page is the one thing standing
+         beside it, so it is a word rather than a mark. It is set on the left,
+         next to the brand, because it belongs to the register — the GitHub
+         mark keeps the right edge, where the one link that leaves has always
+         been. -->
+    <a class="page" href="reporting.html" aria-current="page">How it works</a>
+    <a class="gh" href="https://github.com/n132/cedalion"
+       target="_blank" rel="noopener" aria-label="Cedalion on GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.65 7.65 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+    </a>
+  </div>
+</div>
+
+<div class="wrap">
+  <!-- One column, and narrow. Everything else here is a table that wants the
+       whole window; this is running text, which stops being readable somewhere
+       around 70 characters no matter how much room the screen has. -->
+  <article class="doc">
+
+    <h1>How it works</h1>
+    <!-- The whole page in two sentences, under the title, before anything
+         explains itself: a maintainer who reads nothing else should still
+         leave knowing what the patch in the mail is and is not. -->
+    <p class="tldr">
+      <span class="key">TL;DR</span>
+      We send bug reports, not patches. Any patch attached is AI-generated and
+      has only passed an A/B test. No human has reviewed it.
+    </p>
+
+    <h2>Purpose</h2>
+    <p>
+      We want the Linux kernel to be more secure. We find bugs much faster
+      than we can patch them, so we report them the way syzbot does, to ask
+      the community for help. We respect everyone's time. We also make
+      mistakes, and suggestions and complaints are welcome
+      (<a href="mailto:cedalion@bugs.sh">cedalion@bugs.sh</a>).
+    </p>
+    <p>
+      We ask nothing of you. A <code>Reported-by:</code> tag if you fix the
+      bug lets us close it on our side. Tell us if a report is wrong, a
+      duplicate or already fixed. If you would rather not receive these, for
+      one subsystem or at all, say so and we stop.
+    </p>
+
+    <h2>Verified</h2>
+
+    <h3>Bug</h3>
+    <p>
+      The PoC triggers the sanitizer report we quote, in the environment the
+      report gives you: kernel commit, config and QEMU boot script. We ran it
+      that way. If it does not reproduce for you, that is our bug and we want
+      to hear about it. Race conditions are the exception: they may need
+      several runs.
+    </p>
+
+    <h3>Patch</h3>
+    <p>
+      If a patch is attached, its A/B test is real: we built both kernels and
+      ran the same PoC, and it crashes without the patch and runs clean with
+      it. That does not make the patch ready to apply to the kernel. The
+      reasons are in the next section.
+    </p>
+
+    <h2>Not verified</h2>
+
+    <h3>Patch</h3>
+    <p>
+      The patch in a report is written by an LLM, and a passing A/B test does
+      not make it ready to merge. It can still:
+    </p>
+    <ul>
+      <li>process the data in a way the subsystem never intended</li>
+      <li>suppress the crash without fixing the root cause</li>
+      <li>fail in ways only a reviewer would catch</li>
+      <li>break functionality or hurt performance</li>
+      <li>introduce new bugs</li>
+      <li>&hellip;</li>
+    </ul>
+    <p>
+      So the patch carries no <code>Signed-off-by</code>, is not posted to any
+      list, and nobody is asked to review it. The root-cause analysis in the
+      report is machine-generated and sits in the same category. Do not trust
+      either of them as ground truth.
+    </p>
+
+    <h3>Duplicates</h3>
+    <p>
+      Before sending we search lore and recent patches, and do our best to
+      make sure a report is not a duplicate of a known bug. That check is not
+      complete: two reports can share one root cause and look nothing alike,
+      and root-cause analysis is still a hard problem. If a report duplicates
+      something already known, replying with
+      <code>#co dup: &lt;lore link&gt;</code> closes it on our side.
+    </p>
+
+  </article>
+
+  <!-- The address is in the Purpose section too, where it belongs to the
+       sentence inviting complaints. This is the other thing a footer is for:
+       being where you look when you have finished reading and want to reply. -->
+  <footer>
+    Questions, suggestions and complaints:
+    <a href="mailto:cedalion@bugs.sh">cedalion@bugs.sh</a>
+  </footer>
+</div>
