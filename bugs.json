@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-26 18:31:00",
+ "generated_at": "2026-08-27 05:11:26",
  "counts": {
   "bugs": 1407,
   "with_report": 1397,
@@ -1413,7 +1413,7 @@
    "view": "processing",
    "bug_id": "b74fcfb4ab1ee9a8",
    "hash": "294c66b47629f9f8eced5939f6a2cdd7fe9a2ee1edf6122ad7b348bce58f0abd",
-   "lore": ""
+   "lore": "20260818154516.793517-1-bestswngs@gmail.com"
   },
   {
    "view": "vulnerable",
@@ -2029,7 +2029,7 @@
    "view": "processing",
    "bug_id": "36935f8953d6874a",
    "hash": "65ab08f002f920076eae928561c0d529cacb1d26d3e7c161a68169f42ee64b12",
-   "lore": ""
+   "lore": "s6BRFbJoyNpjUBu6NC9TdJxvXM9vpQsN1FcY@bugs.sh"
   },
   {
    "view": "vulnerable",
@@ -2989,7 +2989,7 @@
    "view": "processing",
    "bug_id": "4638111fe2a12980",
    "hash": "3a1111ddc263d0d3c1fdea8c3e7dab31af3a30db19f7c28d341b3f3497e3d7b1",
-   "lore": ""
+   "lore": "ijg79FFMfIvKJbivdJEKvTO90Q9dTvyBkJck@bugs.sh"
   },
   {
    "view": "vulnerable",
