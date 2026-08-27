@@ -1,0 +1,87 @@
+diff --git a/net/mac80211/key.c b/net/mac80211/key.c
+--- a/net/mac80211/key.c
++++ b/net/mac80211/key.c
+@@ -477,14 +477,16 @@ static int ieee80211_key_replace(struct
+ 	if (link_id >= 0) {
+ 		if (!link) {
+ 			link = sdata_dereference(sdata->link[link_id], sdata);
+-			if (!link)
++			/* only the !sta code below dereferences the link */
++			if (!link && (new || !sta))
+ 				return -ENOLINK;
+ 		}
+ 
+ 		if (sta) {
+ 			link_sta = rcu_dereference_protected(sta->link[link_id],
+ 							     lockdep_is_held(&sta->local->hw.wiphy->mtx));
+-			if (!link_sta)
++			/* on removal keep going, the key must still be unlinked */
++			if (!link_sta && new)
+ 				return -ENOLINK;
+ 		}
+ 	} else {
+@@ -535,7 +537,7 @@ static int ieee80211_key_replace(struct
+ 			if (new &&
+ 			    !(new->conf.flags & IEEE80211_KEY_FLAG_NO_AUTO_TX))
+ 				_ieee80211_set_tx_key(new, true);
+-		} else {
++		} else if (link_sta) {
+ 			rcu_assign_pointer(link_sta->gtk[idx], new);
+ 		}
+ 		/* Only needed for transition from no key -> key.
+@@ -1183,6 +1185,23 @@ void ieee80211_free_keys(struct ieee8021
+ 	}
+ }
+ 
++void ieee80211_free_link_sta_keys(struct ieee80211_local *local,
++				  struct link_sta_info *link_sta)
++{
++	struct ieee80211_key *key;
++	int i;
++
++	lockdep_assert_wiphy(local->hw.wiphy);
++
++	for (i = 0; i < ARRAY_SIZE(link_sta->gtk); i++) {
++		key = wiphy_dereference(local->hw.wiphy, link_sta->gtk[i]);
++		if (!key)
++			continue;
++		ieee80211_key_free(key, key->sdata->vif.type ==
++					NL80211_IFTYPE_STATION);
++	}
++}
++
+ void ieee80211_free_sta_keys(struct ieee80211_local *local,
+ 			     struct sta_info *sta)
+ {
+diff --git a/net/mac80211/key.h b/net/mac80211/key.h
+--- a/net/mac80211/key.h
++++ b/net/mac80211/key.h
+@@ -24,6 +24,7 @@
+ struct ieee80211_local;
+ struct ieee80211_sub_if_data;
+ struct ieee80211_link_data;
++struct link_sta_info;
+ struct sta_info;
+ 
+ /**
+@@ -163,6 +164,8 @@ void ieee80211_free_key_list(struct ieee
+ 			     struct list_head *keys);
+ void ieee80211_free_keys(struct ieee80211_sub_if_data *sdata,
+ 			 bool force_synchronize);
++void ieee80211_free_link_sta_keys(struct ieee80211_local *local,
++				  struct link_sta_info *link_sta);
+ void ieee80211_free_sta_keys(struct ieee80211_local *local,
+ 			     struct sta_info *sta);
+ void ieee80211_reenable_keys(struct ieee80211_sub_if_data *sdata);
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -438,6 +438,8 @@ static void sta_remove_link(struct sta_i
+ 	if (test_sta_flag(sta, WLAN_STA_INSERTED))
+ 		ieee80211_link_sta_debugfs_remove(link_sta);
+ 
++	ieee80211_free_link_sta_keys(sta->local, link_sta);
++
+ 	if (link_sta != &sta->deflink)
+ 		alloc = container_of(link_sta, typeof(*alloc), info);
+ 

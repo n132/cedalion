@@ -1,24 +1,24 @@
 {
- "generated_at": "2026-08-20 19:17:52",
+ "generated_at": "2026-08-26 18:31:00",
  "counts": {
   "bugs": 1407,
   "with_report": 1397,
-  "fixed": 97,
-  "reported": 138,
+  "fixed": 107,
+  "reported": 139,
   "scooped": 13,
   "incomplete": 0,
   "merged_links": 85,
-  "cves": 86
+  "cves": 88
  },
  "states": {
-  "PoC Available": 1269,
-  "Reported": 41,
-  "Fixed": 97
+  "PoC Available": 1268,
+  "Reported": 32,
+  "Fixed": 107
  },
  "views": {
-  "vulnerable": 1270,
-  "processing": 40,
-  "patched": 97
+  "vulnerable": 1268,
+  "processing": 32,
+  "patched": 107
  },
  "bugs": [
   {
@@ -1027,6 +1027,14 @@
    "hash": "3c96978920c87764f188c47dccf59f98d7d4e789794ba5de2d323f74f66f45a7"
   },
   {
+   "view": "patched",
+   "bug_id": "",
+   "cve": "CVE-2026-74613",
+   "commit": "a31e0ad44469",
+   "title": "vsock/virtio: avoid refilling the RX queue after teardown",
+   "cvss": ""
+  },
+  {
    "view": "vulnerable",
    "bug_id": "b240dc164119a46c",
    "hash": "2f632c02b8fc777855de06ee05963a4d63a1d33b7fdbdd5cb7252ddc026e24a8"
@@ -2018,9 +2026,10 @@
    "hash": "bd741eff47c8e9ab344bb09dccbf0ecf15644f964387f74070d1fb6bf10507fa"
   },
   {
-   "view": "vulnerable",
+   "view": "processing",
    "bug_id": "36935f8953d6874a",
-   "hash": "65ab08f002f920076eae928561c0d529cacb1d26d3e7c161a68169f42ee64b12"
+   "hash": "65ab08f002f920076eae928561c0d529cacb1d26d3e7c161a68169f42ee64b12",
+   "lore": ""
   },
   {
    "view": "vulnerable",
@@ -2274,7 +2283,7 @@
    "cve": "CVE-2026-72407",
    "commit": "cbb0d30a1ad6",
    "title": "geneve: validate inner network offset in geneve_gro_complete()",
-   "cvss": ""
+   "cvss": "10"
   },
   {
    "view": "vulnerable",
@@ -2317,7 +2326,7 @@
    "cve": "CVE-2026-72408",
    "commit": "2651c1744458",
    "title": "geneve: gate GRO hint in geneve_gro_complete() on gs->gro_hint",
-   "cvss": ""
+   "cvss": "10"
   },
   {
    "view": "vulnerable",
@@ -2352,7 +2361,7 @@
   {
    "view": "patched",
    "bug_id": "4fd59d9ef7bba366",
-   "cve": "",
+   "cve": "CVE-2026-74614",
    "commit": "ebac8f6b1ef0",
    "title": "vsock/virtio: read virtqueues under worker locks",
    "cvss": ""
@@ -2425,10 +2434,12 @@
    "hash": "476631fb56b5e13261da687ddc3c6b8215d53833f6808120975b63b186a24574"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "d2bbfe99f149acc9",
-   "hash": "07779d8ca87637069e020a4e961d3a176871458538bd687b76eaa06deaca7283",
-   "lore": "20260617231343.403432-3-xmei5@asu.edu"
+   "cve": "",
+   "commit": "6f7b9dbdc1b7",
+   "title": "fs/ntfs3: bound page_lcns[] index by the log record",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -2461,10 +2472,12 @@
    "hash": "911acdd49839d5294beb67e35a25fdd59cc5558a6b3abdac6137234069313ece"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "5cb90f3acf756144",
-   "hash": "9954e4a3928bb8415323faca301a305e84bab49c3f85e9b00b2e8da47faddbd9",
-   "lore": "20260623101434.1321291-2-bestswngs@gmail.com"
+   "cve": "",
+   "commit": "111f8d74a19d",
+   "title": "fs/ntfs3: reject restart table growth beyond U16_MAX entries",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -2572,7 +2585,7 @@
    "cve": "CVE-2026-64567",
    "commit": "a2d8d5647ed8",
    "title": "btrfs: reject free space cache with more entries than pages",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "vulnerable",
@@ -3375,7 +3388,7 @@
    "cve": "CVE-2026-64574",
    "commit": "952c02b33f56",
    "title": "wifi: mac80211: tear down new links on vif update error path",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "patched",
@@ -3383,7 +3396,7 @@
    "cve": "CVE-2026-64570",
    "commit": "286e52a799fa",
    "title": "wifi: mac80211: fix fils_discovery double free on alloc failure",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "vulnerable",
@@ -3401,7 +3414,7 @@
    "cve": "CVE-2026-64189",
    "commit": "7cd9103283b2",
    "title": "netfilter: ipset: fix race between dump and ip_set_list resize",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "vulnerable",
@@ -3484,10 +3497,12 @@
    "hash": "0ebf5e474836b33f12b2afac30f7bf7c0f4aea4a8f04c901df724524a04eec5f"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "7f3235ad2e697d87",
-   "hash": "a4bc6f61c4530a9691a709d5658fd4f06cc0457b767d7fe253df346c7f851a4d",
-   "lore": "20260704222254.914567-1-xmei5@asu.edu"
+   "cve": "",
+   "commit": "984f831dda31",
+   "title": "vxlan: vnifilter: enforce exact length of GROUP/GROUP6 attributes",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -4357,7 +4372,7 @@
    "cve": "CVE-2026-68159",
    "commit": "9f00f9cf2be2",
    "title": "libceph: bound pg_{temp,upmap,upmap_items} length to CEPH_PG_MAX_SIZE",
-   "cvss": ""
+   "cvss": "9.8"
   },
   {
    "view": "vulnerable",
@@ -4962,7 +4977,7 @@
    "cve": "CVE-2026-64545",
    "commit": "e82d8cc4321c",
    "title": "net, bpf: check master for NULL in xdp_master_redirect()",
-   "cvss": ""
+   "cvss": "7.5"
   },
   {
    "view": "patched",
@@ -4970,7 +4985,7 @@
    "cve": "CVE-2026-64541",
    "commit": "9d160b35cc34",
    "title": "net/smc: fix UAF in smc_cdc_rx_handler() by pinning the socket",
-   "cvss": ""
+   "cvss": "9.8"
   },
   {
    "view": "vulnerable",
@@ -5001,7 +5016,7 @@
    "cve": "CVE-2026-64568",
    "commit": "1d067abcd370",
    "title": "wifi: mac80211: fix unsol_bcast_probe_resp double free on alloc failure",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "patched",
@@ -5009,7 +5024,7 @@
    "cve": "CVE-2026-64547",
    "commit": "03f384bc0cb8",
    "title": "net: usb: net1080: validate packet_len before pad-byte access in rx_fixup",
-   "cvss": ""
+   "cvss": "8.1"
   },
   {
    "view": "patched",
@@ -5017,13 +5032,15 @@
    "cve": "CVE-2026-64540",
    "commit": "8ff7f2a6da4f",
    "title": "usbnet: gl620a: fix out-of-bounds read in genelink_rx_fixup()",
-   "cvss": ""
+   "cvss": "8.1"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "df98807f8545292a",
-   "hash": "9d1f81293af5c0a4b27ca86d6646d97f071179c1e1422c634dd0e9594b8620bb",
-   "lore": "20260617231343.403432-2-xmei5@asu.edu"
+   "cve": "",
+   "commit": "006cb7713dec",
+   "title": "fs/ntfs3: validate dirty page table on log replay",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -5051,7 +5068,7 @@
    "cve": "CVE-2026-64411",
    "commit": "a622d2e9608c",
    "title": "netfilter: ebtables: terminate table name before find_table_lock()",
-   "cvss": ""
+   "cvss": "7.1"
   },
   {
    "view": "vulnerable",
@@ -5083,7 +5100,7 @@
    "cve": "CVE-2026-46322",
    "commit": "aa8963fdce66",
    "title": "tun: free page on build_skb failure in tun_xdp_one()",
-   "cvss": ""
+   "cvss": "7.1"
   },
   {
    "view": "patched",
@@ -5091,7 +5108,7 @@
    "cve": "CVE-2026-46320",
    "commit": "3bcf7aec6a9d",
    "title": "tap: free page on error paths in tap_get_user_xdp()",
-   "cvss": ""
+   "cvss": "7.4"
   },
   {
    "view": "vulnerable",
@@ -5124,16 +5141,20 @@
    "hash": "d6835da9c737357ed0e3069e7d3fb84249926fd52c775871889709a315ea208a"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "b27792546e50dd00",
-   "hash": "72d94a4a71f4a968d1477acfb651a72ac6fed859d208b78099eca6aafdb9f8f4",
-   "lore": "20260610115724.1813176-2-bestswngs@gmail.com"
+   "cve": "",
+   "commit": "2064bc663f89",
+   "title": "fs/ntfs3: fix out-of-bounds read of INDEX_ROOT in reparse/objid init",
+   "cvss": ""
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "399b0606c9c7fac9",
-   "hash": "64823f641310df2a2b477d56925d83f5d5b8ac50d26230f416fcf03ec336e39b",
-   "lore": "20260625040036.996396-3-bestswngs@gmail.com"
+   "cve": "",
+   "commit": "c22f91d82cb9",
+   "title": "fs/ntfs3: validate ef->size covers the record's name and value",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -5156,10 +5177,12 @@
    "hash": "90ca165dc0c8cceed73887d2cbedb897db26a943bcee1786a0a4be428eeb8ff8"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "4fcca17e38baccf4",
-   "hash": "fc2292f11c7c01d3391547b9f8152b6acdcfaf10f29e9723bc074f9dd88bfb29",
-   "lore": "20260623062230.1236506-2-bestswngs@gmail.com"
+   "cve": "",
+   "commit": "de603b9d377f",
+   "title": "fs/ntfs3: fix out-of-bounds read in read_log_rec_buf()",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -5210,10 +5233,12 @@
    "hash": "998829b52819b4fde17346ce8b75c85b69bbd7e9c9b8eaef360563a95f5cdf4a"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "198b31896226c413",
-   "hash": "abba004b17d437e669ce6475911dc5b06454a65c69c996e46849b5355731f361",
-   "lore": "20260712234150.3213467-1-xmei5@asu.edu"
+   "cve": "",
+   "commit": "68d4d3e78150",
+   "title": "isofs: fix out-of-bounds page array access on empty zisofs block",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -5401,7 +5426,7 @@
    "cve": "CVE-2026-64546",
    "commit": "faaa1e115583",
    "title": "drm/edid: fix OOB read in drm_parse_tiled_block()",
-   "cvss": ""
+   "cvss": "7.1"
   },
   {
    "view": "vulnerable",
@@ -5505,10 +5530,12 @@
    "hash": "cef5c203f996bc878ff3ef58d959b87c874eb2034aff51b9f14bcbbe03ccbdec"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "c66ee17c0d5ab0c4",
-   "hash": "70b9268f332c9e3edfa4b6fb0ce764de2579bdedee593ba73d2635ac65192734",
-   "lore": ""
+   "cve": "",
+   "commit": "9333cc809f0a",
+   "title": "ext4: fix out-of-bounds read in ext4_read_inline_dir()",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -5655,7 +5682,7 @@
    "cve": "CVE-2026-45843",
    "commit": "4c1367a2d7aa",
    "title": "slip: bound decode() reads against the compressed packet length",
-   "cvss": ""
+   "cvss": "8.2"
   },
   {
    "view": "vulnerable",
@@ -5684,7 +5711,7 @@
    "cve": "CVE-2026-64539",
    "commit": "6f5fb689fdf8",
    "title": "Bluetooth: eir: Fix stack OOB write when prepending the Flags AD",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "vulnerable",
@@ -5770,7 +5797,7 @@
    "cve": "CVE-2026-64543",
    "commit": "1579342d7113",
    "title": "tipc: fix use-after-free of the discoverer in tipc_disc_rcv()",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "vulnerable",
@@ -5799,7 +5826,7 @@
    "cve": "CVE-2026-64551",
    "commit": "1cd23ca80784",
    "title": "sctp: validate STALE_COOKIE cause length before reading staleness",
-   "cvss": ""
+   "cvss": "9.1"
   },
   {
    "view": "vulnerable",
@@ -5871,7 +5898,7 @@
    "cve": "CVE-2026-64048",
    "commit": "277740023def",
    "title": "net/smc: reject CHID-0 ACCEPT that matches an empty ism_dev slot",
-   "cvss": ""
+   "cvss": "7.5"
   },
   {
    "view": "vulnerable",
@@ -6035,7 +6062,7 @@
    "cve": "CVE-2026-68323",
    "commit": "350e592ff4e3",
    "title": "tipc: serialize udp bearer replicast list updates",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "vulnerable",
@@ -6118,7 +6145,7 @@
    "cve": "CVE-2026-52942",
    "commit": "a84b6fedbc97",
    "title": "netfilter: nf_log: validate MAC header was set before dumping it",
-   "cvss": ""
+   "cvss": "7.1"
   },
   {
    "view": "vulnerable",
@@ -6236,11 +6263,6 @@
    "hash": "6d4e226b03762e8af2e80290a4b94bed44eac7db4d348e9e1e667e0da02bba05"
   },
   {
-   "view": "vulnerable",
-   "bug_id": "7e7f589187258267",
-   "hash": "30852c6971f51b046c4a3473137ffb9c932ec13d58914f20e7961797370ed40d"
-  },
-  {
    "view": "patched",
    "bug_id": "8fa0f232c1972083",
    "cve": "CVE-2026-64572",
@@ -6264,7 +6286,7 @@
    "cve": "CVE-2026-64548",
    "commit": "0c0a8ed85349",
    "title": "bpf, sockmap: reject overflowing copy + len in bpf_msg_push_data()",
-   "cvss": ""
+   "cvss": "8.4"
   },
   {
    "view": "processing",
@@ -6301,7 +6323,7 @@
    "cve": "CVE-2026-64552",
    "commit": "9e5ad06ea826",
    "title": "virtio-net: fix len check in receive_big()",
-   "cvss": ""
+   "cvss": "8.4"
   },
   {
    "view": "vulnerable",
@@ -6357,7 +6379,7 @@
    "cve": "CVE-2026-46321",
    "commit": "f4feb1e20058",
    "title": "tun: free page on short-frame rejection in tun_xdp_one()",
-   "cvss": ""
+   "cvss": "7.1"
   },
   {
    "view": "patched",
@@ -6602,7 +6624,7 @@
    "cve": "CVE-2026-74569",
    "commit": "db3d0e0e5d4b",
    "title": "netfilter: nf_conntrack_sip: widen NAT rewrite delta to s32 in sip_help_tcp()",
-   "cvss": ""
+   "cvss": "9.8"
   },
   {
    "view": "vulnerable",
@@ -6729,7 +6751,7 @@
    "cve": "CVE-2026-74563",
    "commit": "78f75d632f74",
    "title": "rds: tcp: hold the RCU lock across ipv6_chk_addr() in rds_tcp_laddr_check()",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "patched",
@@ -6827,7 +6849,7 @@
    "cve": "CVE-2026-63858",
    "commit": "10f79dbd7719",
    "title": "netfilter: nf_tables: add hook transactions for device deletions",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "vulnerable",
@@ -6912,7 +6934,7 @@
    "cve": "CVE-2026-64550",
    "commit": "f0f1887a9e30",
    "title": "net: qualcomm: rmnet: validate MAP frame length before ingress parsing",
-   "cvss": ""
+   "cvss": "7.3"
   },
   {
    "view": "vulnerable",
@@ -7053,7 +7075,7 @@
    "cve": "CVE-2026-31426",
    "commit": "f6484cadbcaf",
    "title": "ACPI: EC: clean up handlers on probe failure in acpi_ec_setup()",
-   "cvss": ""
+   "cvss": "7"
   },
   {
    "view": "vulnerable",
@@ -7082,7 +7104,7 @@
    "cve": "CVE-2026-64191",
    "commit": "6036b5067a81",
    "title": "i2c: stub: Reject I2C block transfers with invalid length",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "patched",
@@ -7098,7 +7120,7 @@
    "cve": "CVE-2026-64188",
    "commit": "d00c953a8f69",
    "title": "net: qualcomm: rmnet: fix endpoint use-after-free in rmnet_dellink()",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "vulnerable",
@@ -7238,7 +7260,7 @@
    "cve": "CVE-2026-72250",
    "commit": "3b08fed5b7e0",
    "title": "netfilter: nf_conntrack_reasm: guard mac_header adjustment after IPv6 defrag",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "vulnerable",
@@ -7353,7 +7375,7 @@
    "cve": "CVE-2026-72389",
    "commit": "2a00517db8de",
    "title": "bridge: stp: Fix a potential use-after-free when deleting a bridge",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "patched",
@@ -7369,7 +7391,7 @@
    "cve": "CVE-2025-38477",
    "commit": "5e28d5a3f774",
    "title": "net/sched: sch_qfq: Fix race condition on qfq_aggregate",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "patched",
@@ -7385,7 +7407,7 @@
    "cve": "CVE-2026-31419",
    "commit": "2884bf72fb8f",
    "title": "net: bonding: fix use-after-free in bond_xmit_broadcast()",
-   "cvss": ""
+   "cvss": "7.8"
   }
  ]
 }
