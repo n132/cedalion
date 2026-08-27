@@ -133,6 +133,13 @@ async function bug(id, rest, env) {
 
   const files = entry.files || {};
 
+  // Older mailed reports used this URL before the public mail copy was named
+  // report.eml. Keep those immutable links useful without ever serving the
+  // private report.md contents.
+  if (name === "report.md" && files["report.eml"]) {
+    return Response.redirect(`https://bugs.sh/b/${id}/report.eml`, REDIRECT);
+  }
+
   // Named with no key: the artifact exists and is deliberately not disclosed
   // yet. Distinct from a name that is absent, which is "no such artifact" --
   // this one says the file is real and the answer is "not yet", so nobody has
