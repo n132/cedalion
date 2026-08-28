@@ -88,10 +88,13 @@ def main() -> None:
     if os.path.isfile(index):
         with open(index) as f:
             entries = json.load(f)
-        for entry in entries.values():
-            if (entry.get("files") or {}).get("report.md"):
-                sys.exit("report.md is reserved for a future feature and "
-                         "must not be published as an artifact")
+        # report.md used to be refused outright here, while the analysis was
+        # a triage document with nothing in it written for a maintainer. What
+        # publish.py indexes under that name now is a deliberate cut of it,
+        # and it gets there only by passing that tool's checks. This build
+        # decides nothing either way: a bug carries the analysis if the index
+        # says so, and one that never had a cut made still names it null and
+        # answers "not public yet".
         shutil.copy2(index, os.path.join(OUT, "artifacts.json"))
         dst = os.path.join(OUT, "a")
         shutil.rmtree(dst, ignore_errors=True)

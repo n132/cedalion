@@ -577,7 +577,7 @@
    "config.gz": "fd80bc5967eb22c3/config.gz",
    "patch.diff": "fd80bc5967eb22c3/patch.diff",
    "report.eml": "fd80bc5967eb22c3/report.eml",
-   "report.md": null,
+   "report.md": "fd80bc5967eb22c3/report.md",
    "repro.c": "fd80bc5967eb22c3/repro.c",
    "run.sh": "fd80bc5967eb22c3/run.sh"
   }
