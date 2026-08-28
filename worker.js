@@ -133,12 +133,15 @@ async function bug(id, rest, env) {
 
   const files = entry.files || {};
 
-  // Older mailed reports used this URL before the public mail copy was named
-  // report.eml. Keep those immutable links useful without ever serving the
-  // private report.md contents.
-  if (name === "report.md" && files["report.eml"]) {
-    return Response.redirect(`https://bugs.sh/b/${id}/report.eml`, REDIRECT);
-  }
+  // report.md is the root-cause analysis and nothing else. It used to redirect
+  // here to report.eml, because mails sent before the public mail copy was
+  // renamed had used this URL for the mail itself. Later mails used the same
+  // URL for the analysis, so that redirect answered the wrong question: a
+  // maintainer following the analysis link landed on the mail they were
+  // already reading. The name now has one meaning, and until the analysis is
+  // published it falls through to the "not public yet" answer below, which is
+  // the truth. Holders of an older mail still have that mail, and it is on
+  // lore.
 
   // Named with no key: the artifact exists and is deliberately not disclosed
   // yet. Distinct from a name that is absent, which is "no such artifact" --
