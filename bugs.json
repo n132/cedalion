@@ -1,26 +1,441 @@
 {
- "generated_at": "2026-08-27 06:11:50",
+ "generated_at": "2026-08-31 11:23:08",
  "counts": {
-  "bugs": 1407,
-  "with_report": 1397,
-  "fixed": 107,
+  "bugs": 1490,
+  "with_report": 1480,
+  "fixed": 110,
   "reported": 139,
   "scooped": 13,
   "incomplete": 0,
   "merged_links": 85,
-  "cves": 88
+  "cves": 90
  },
  "states": {
-  "PoC Available": 1268,
-  "Reported": 32,
-  "Fixed": 107
+  "PoC Available": 1351,
+  "Fixed": 110,
+  "Reported": 29
  },
  "views": {
-  "vulnerable": 1249,
-  "processing": 51,
-  "patched": 107
+  "vulnerable": 1331,
+  "processing": 49,
+  "patched": 110
  },
  "bugs": [
+  {
+   "view": "vulnerable",
+   "bug_id": "fd043b548ad58310",
+   "hash": "539e8c7db1b0437862aa71d69ea56faa0d0ede2e52edfc3acb359d8e2263261f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8735ad6812f81aa7",
+   "hash": "815653d302421b2572ced600a2af76c7d4168e3436c33abe718d5ba669fc476a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "50358a6f28c3dfa6",
+   "hash": "7dff57857dc7921df5214bed6c91bfd553f6a25dab23111293d74e2a95c21d5d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f2f4c4e10ed8fd51",
+   "hash": "30a0e5646aceb936ee723d3c1fd26dd4737638bbcda1bcbd15c612fea13a6786"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "99f9b359dd8a3211",
+   "hash": "9d3224f90e7c1a8512b44722f11dc8685c53fff0e081badcb0e90fb96f5bae3c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6a04efcebe0fc0ce",
+   "hash": "471e59f2c205e814de5e8e037f657c662a30863122f5f5b8071ad8dd2e20399a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a12890ebe2c7acca",
+   "hash": "0f1a7b12bed75b6c25f9fb347b42993dd95fbe39bbee1823dea34ba0661da0d8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ad6d4a0457f8854f",
+   "hash": "8079f223626cae6035a3e6a668fa52e91d0ea1b41639f424c9d3487e149303b9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "2f12121281a5b6a2",
+   "hash": "61d55979c97092ccd1d97b7ea55f048859aa13c5d5c873ea028f4336b2fea7f8"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f54473f5aafebb12",
+   "hash": "670bafcfc31cd808bc79f3402887a4038570de9d04d63ac0ad285cd5972f0f28"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "86d04ac8d52b4b2f",
+   "hash": "5117627c2e0840544b933d688a0739dc2cc0335048992cb88814dce9d5b45114"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "da96e4d8a6c131c3",
+   "hash": "86697e6c196e82048914829221e9c55b4818fc702a00ab1b11b2a77ba054b16d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e5f6d4de8db9d784",
+   "hash": "1e21857fd973f3d2de55d96a27db718a8aa3ebdfde1d598f074aaaf2cf6cb72d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f595d33a1b0a565b",
+   "hash": "2ccea6993f0d8c682c6ddcde0691814d97c13a988f85613b88a75e1e9c8e7401"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "28f60ca68967bdb7",
+   "hash": "a9eba000c10492045eec0f6446f539cf8b860d9f2981ea224acb0ea87335d57d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "31466c1c9400f69e",
+   "hash": "41dea4a3efcbaad7f7c469542fe4e9c6d6a0b2a55aa4bb21f62a2245972bd5d2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "855929c2df672879",
+   "hash": "ff400755c68853d9144a2821ef32cbf5095a7ef08906d5684c70f4e8b6d01087"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "444e5183015773ae",
+   "hash": "c46ad28aa5db05e34dd4aa4ac5abbf0b2131b96d2b187b40978498d26bdb35f6"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "c4be1b07eda30cc9",
+   "hash": "598a2a1c3f99e3da1acc2c0f66ae26ad551529540958eb5ec2111913b849bd96"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e3def54bac7493ea",
+   "hash": "2cad9c9a4529477c7e3a426fb3e4d9aafcc06d162eef469140e629204d5a60d4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "35810ae794a937ce",
+   "hash": "b8c577bc0eac365f59e3aae89165a4a13a6c62ae15d791d27b505f9f18e407e7"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "122f7484de66e789",
+   "hash": "d3679c2c688c826d0ad24731a7adf4afbba037b50ac434237af4e888d6f2d70a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "fd65eb3d0935c4c8",
+   "hash": "1f7d5722e3280ef85fd6c1e38d8f7cd5b604000979f0ccd9b1302b7f202fade9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3e61b7eb66d8b5cd",
+   "hash": "188ed29f896442df2a86d46e943d6133f8a7785ced5485cff89f02f6c648c882"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7efb3b8ba20c6860",
+   "hash": "58487b14bd198fcabfe912bb704a637b89c4a24ac2c289715adf77eef659d2eb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5e2bcf11e7027510",
+   "hash": "2de13f3cbdcb7f723252cef3457950f2f4e62f9a63608129e23c24df6d9c819a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8b8a6046265eda1f",
+   "hash": "e91b14dbdd50411d7c76354fdd137da14458a3bf07b15f5052a1fd6a9785f6a5"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4bda3bf8e1a2b780",
+   "hash": "fd12875b31543b504c2786e2cf74c51ff57c3d01377732d0af302c80a611067f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6234e1830c2bc855",
+   "hash": "cde9c438ca45669bc55596fe4a55e52a649a7ed3300f78ce8f506c02272c27a3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5e98a6ff8d5227bf",
+   "hash": "8d10833368ab20acd2679b9971c63e57c75209964808cd1394d415c581297498"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4c8791cc740fe8b6",
+   "hash": "5ff9954d8623ac1b0cebf09603cb2da7c7a2d2ce1a089a1dc625cb3b31b871d9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a268714a3fec2a0e",
+   "hash": "b7e62bc0d638766c95d83f229231d81b83f4ef51955a76416619d5c0f1b8c3e0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0bc45097ca507dcb",
+   "hash": "64a04f237f73de1e667cd8dd2f560908509c55d27d164c222b5745edf7544217"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a8438d539f32e5a7",
+   "hash": "a699bec12e8d4bbdafeef8da9be17a8bea0ae346177a5fc1de51c00428f2dee4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f11f93b386afda5d",
+   "hash": "16ff9e59ee9299aaa63d54484a488eb0c27c278e7b94d8df56fe04228037106f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9782320f78c23f40",
+   "hash": "56e8445458a227ccfbffa2ae7ba6f0f2654cf056d1abaaedbe84f6edd5757816"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "5dc029a60c016052",
+   "hash": "5c6a39a74caf9a58ee13775717e034ab9c6e48734361cbf0c9d4fea5de79f413"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a4388deed61fff3b",
+   "hash": "2027b062c94b275f1bbfbae2067fe0ec7dc17887f57c2c11db0096a929bc45d4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "24304d323d28f156",
+   "hash": "5a4377960607caf980231b39d336b40dd92a1ff202276285e0d77d70cd3fc082"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "e19bf962c8ccb8db",
+   "hash": "86f047a9678e24cfab564fbc2493732dde4a28980c31c73807949b2147912531"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8eacd4fa193b1b28",
+   "hash": "73b2ea3ad32dcc5715593fe636868579dab639516c65dd5e291ac16d3266fe67"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "cadca7e3186aed8a",
+   "hash": "7198446332312d6d3e319800483d65f89b69ce6cac73a9c47472ae24b2f1a92d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7d6f2c421375508f",
+   "hash": "1f22669b2968c21b35f46300941561c07d3d013db08f086ef816f24b1012011f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "832991690fed76cd",
+   "hash": "e5f020d61616ee35b6b21cf1beda2cd946816514ff66c7db7e7930531b8f5234"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "365ffa55d1b5bfe5",
+   "hash": "e40bb40dbeaf3638eb3be335248d00248780b2650d619fc7c632c36a5fa3933a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "66c3f58096d0bde8",
+   "hash": "ed4b52b2905f49c9c4d9f074615c1968d139ef229880e462835c0e1228f07a07"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "12c7c92ae4bb088a",
+   "hash": "59fd32d55c2b1896bfcc2bb9c951d661b7101b1fb0592f75bb878ac2ebc0156d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "60216d4b7f00485a",
+   "hash": "ea2494a455e1018b255eb8923191f58aaf012b0e2eb63a99a010747478a64010"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f30b88b160fec00b",
+   "hash": "aebe5f529137b2538700e4fad7f9cf71b1a19b89761e161cf53d66b0e9eb1d75"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "45cff590fcb59e67",
+   "hash": "d30731f03dda0a3bf55ac4f97f7069a44f4cf15eae9007bf141c4ad1983b3711"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "77714120b6ca4a73",
+   "hash": "426822930437ad35b1ba916dc020b4b99a9a61309c974af2fb02fce9332b89f9"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b2a6ed61277ef85f",
+   "hash": "1beb120aedec5ee4fdd135f6b5e09c9e9a9536551acb1422b98c36a0d5841990"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3d806e9778676dda",
+   "hash": "edd8b20956ff28b160ae790dd66b6cc7daae632a7256ea3ecc8571a58d915da0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4df929301e497891",
+   "hash": "9d6f1a168f82ee5938df5c8a00ad93fe817245f12ef78d1403381b515bdb413b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "246c1ffb80afb2bd",
+   "hash": "c26dcc00f4f7afc39eafbc10085e344ec4d14c4f8627c4b44f3a4af13224090d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "4a75a490f719d6b5",
+   "hash": "32128ec6aecd04cb8ef1c4093668d133b812a4d2209102da7be905b2415bab56"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6fe3ccdaacf93ae9",
+   "hash": "ad14c9dfaf8ea9d25d3d28bc1117cff064a8de0298dce1f3e3609be9bb37802c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "a97343c7bdd0a9fe",
+   "hash": "36ba966a661893c7e205e4e998e350d7754d2f36864404762a8edb5903a333a3"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "478aafacb5935449",
+   "hash": "e0755886442eada18f6f4f86c997e962d68827512886272e7e8f78e69eb1e58e"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "02c93ba5a6108087",
+   "hash": "8f70a7908dc9ad7bf8bf1ea709d3f2685df32b37aaed38ff56a80a0193eb3219"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b9b27927daf89c18",
+   "hash": "76b8e139bc9632af75c138cb432692d2d26a9de83975fe38443e419bafcfa227"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "7a1717e4e5d8f435",
+   "hash": "e0dc8c36a2e66aa694d13dda529996cdbd6c5f661bcdec5fd502f9a322f2d707"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "adfca3e91be95776",
+   "hash": "4e88bfe39c681e9a9e4e8affb2bdd20629a4fb6b9a7ac7121330f7dd9a755865"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "8944fc87c358a898",
+   "hash": "23738166df83bbbc41590b144ca9a7a4f6f7f1d3eca176b04c57ff6a8214b2be"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "f0612eb1682604e0",
+   "hash": "a1c559a637ee736284e66782d07ad522407de41087795e6ec5d5cd5bd3fcf21b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "91a95383cfbd0640",
+   "hash": "cabe4273fd564e9b2404e1b2e2d6c3550e743c65db7e236980f6e446c9141f0f"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "6a97812b561423e1",
+   "hash": "96fd2caab98dd2a9ac562575790649771656e3690c13a37d9f8f5b752f1fd566"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ce979dac3de3d79b",
+   "hash": "e739f10f5c5ba10c00e009a661ad7f37d0ab10603aefb19985d596b0773a223b"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bc444db173c5a840",
+   "hash": "a7c506badf47185246fe9222380feb7aca6f88d8557992f32f3a254a1ecd26aa"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "b2ceccffc96889e5",
+   "hash": "eeb0c22f268c1c10503072e15de14b914aab48cb73c6f8acaff095e437c22731"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "9e9138f40e29c2af",
+   "hash": "092200facb72a4995419c1a626ca8f7fc139b78a3d1bff3a2a0a0846e2d246af"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3e271f31a071bf26",
+   "hash": "774c88e53f8f66ec8368101d18059685988c7757c8328f0ac0500455640d9d4a"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "ce7e93a44fe10577",
+   "hash": "fcb84612161a10542790ca435b6e615d83c54995abfb6cbb3e036029eb18d255"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0a6a15720ff98968",
+   "hash": "1299d54124a9d61375fcb2675115c08d6e6779d094200c5f67428f194e28766c"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0d6ba1aae6023048",
+   "hash": "be697a200b0f2f9e1cadd86990ec0ad785bc9fc281104865006c0cdf98b7dae0"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "77553a7fc66ac133",
+   "hash": "9d20f6e51356c0e1b2954a607a560c39947a592cf19bcfe2b41ea2365c266ccf"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0efc868ac3e2656e",
+   "hash": "f5790b328560d0cace04381e152eb4153d3f6b118e32eee5ca61c87b05236f1d"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "be71e27ee4e99bb6",
+   "hash": "b3e5c4db1b6eb371acf084c3ddf6b55aefe4e562e87820775e4dbaa17ad1ccc2"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "bc739ceee693d81b",
+   "hash": "207d1f35469b4ad326e40dab5ebf9a9730160ddea717225d18416278f4003ea4"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "459f67f4d8af8ce6",
+   "hash": "b3d6f0e9d2cdcefcd6a36d924169005db8309f2522d9d56f10265402bfab2dae"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "23264b41f7180920",
+   "hash": "ca0033d656fd64be107a25a13c1b630af2a3bb403b1d4272650bfa07988126ad"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "0bd3bb2e6296fc25",
+   "hash": "c9e3abb0c422ad34b635dae5363e40487fb2e0c61ad92fc2b882a3ea7a651deb"
+  },
+  {
+   "view": "vulnerable",
+   "bug_id": "3ba81314ee9db21e",
+   "hash": "5b83c62fa5747407712deb36090a9e61121d68a7f7a003cd4aea4e7042557a64"
+  },
   {
    "view": "vulnerable",
    "bug_id": "6aff4b9d2907df24",
@@ -42,9 +457,12 @@
    "hash": "54baeb19cf21b096d2af4801f50bc2ec8c32abc76845273292803055a62f913e"
   },
   {
-   "view": "vulnerable",
+   "view": "patched",
    "bug_id": "c52844ea66e20e0f",
-   "hash": "073dc612434c8bf46d417f7e8132af32498bb1723c3762117ae6f8645a35cf07"
+   "cve": "",
+   "commit": "2db9bfa3e27b",
+   "title": "sctp: fix NULL deref on untransmitted RECONF completion",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -1036,7 +1454,7 @@
    "cve": "CVE-2026-74613",
    "commit": "a31e0ad44469",
    "title": "vsock/virtio: avoid refilling the RX queue after teardown",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "processing",
@@ -1420,10 +1838,12 @@
    "hash": "b0c5754faf60ac3fd23d0628a56f4de0022b39c993e6330131eecae144d19f44"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "b74fcfb4ab1ee9a8",
-   "hash": "294c66b47629f9f8eced5939f6a2cdd7fe9a2ee1edf6122ad7b348bce58f0abd",
-   "lore": "20260818154516.793517-1-bestswngs@gmail.com"
+   "cve": "",
+   "commit": "71283aaa6c65",
+   "title": "xdp: fix zero-copy frame layout",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -2383,7 +2803,7 @@
    "cve": "CVE-2026-74614",
    "commit": "ebac8f6b1ef0",
    "title": "vsock/virtio: read virtqueues under worker locks",
-   "cvss": ""
+   "cvss": "8.4"
   },
   {
    "view": "processing",
@@ -2939,10 +3359,12 @@
    "hash": "13ce4359b76044a906e5b99e9d89a81bfb0f89ec0836cc9a0f1aea0752e9d7a8"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "98dcb2414482df0b",
-   "hash": "a2ae2d43705c0e22cb614daabafd1035d77da2e49c75a31808ed2b7dd336bceb",
-   "lore": ""
+   "cve": "",
+   "commit": "5d9e3bf34fec",
+   "title": "xfrm6: fix out-of-bounds write in xfrm6_input_addr() when secpath is full",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -4310,10 +4732,10 @@
   {
    "view": "patched",
    "bug_id": "4741c833a192233c",
-   "cve": "",
+   "cve": "CVE-2026-80537",
    "commit": "cc3144da377d",
    "title": "xfs: fix off-by-one in rtrefcount btree root level validation",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "vulnerable",
@@ -5478,10 +5900,10 @@
   {
    "view": "patched",
    "bug_id": "a40303260e7de346",
-   "cve": "",
+   "cve": "CVE-2026-80631",
    "commit": "b0d27d43791b",
    "title": "btrfs: lzo: reject compressed segment that overflows the compressed input",
-   "cvss": ""
+   "cvss": "7.5"
   },
   {
    "view": "vulnerable",
