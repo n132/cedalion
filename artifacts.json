@@ -352,7 +352,7 @@
    "config.gz": "a27ae3497f0074da/config.gz",
    "patch.diff": "a27ae3497f0074da/patch.diff",
    "report.eml": "a27ae3497f0074da/report.eml",
-   "report.md": null,
+   "report.md": "a27ae3497f0074da/report.md",
    "repro.c": "a27ae3497f0074da/repro.c",
    "run.sh": "a27ae3497f0074da/run.sh"
   }
