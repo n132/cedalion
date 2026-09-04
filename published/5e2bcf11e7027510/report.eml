@@ -1,7 +1,7 @@
 Subject: [BUG] drivers/net: out-of-bounds in pcan_usb_decode_buf()
 From: co <co+5e2bcf11e7027510@bugs.sh>
 To: linux-can@vger.kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>, Vincent Mailhol <mailhol@kernel.org>
-Cc: Petr Mladek <pmladek@suse.com>, "Stéphane Grosjean" <s.grosjean@peak-system.fr>, Geert Uytterhoeven <geert+renesas@glider.be>, Song Liu <song@kernel.org>, Oleg Nesterov <oleg@redhat.com>, Biju Das <biju.das.jz@bp.renesas.com>, linux-kernel@vger.kernel.org, co <co+5e2bcf11e7027510@bugs.sh>
+Cc: Petr Mladek <pmladek@suse.com>, "Stéphane Grosjean" <s.grosjean@peak-system.fr>, Geert Uytterhoeven <geert+renesas@glider.be>, John Ogness <john.ogness@linutronix.de>, Oleg Nesterov <oleg@redhat.com>, Song Liu <song@kernel.org>, Biju Das <biju.das.jz@bp.renesas.com>, linux-kernel@vger.kernel.org, co <co+5e2bcf11e7027510@bugs.sh>
 
 We found a bug reachable in:
 
