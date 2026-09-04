@@ -1,0 +1,110 @@
+Subject: [BUG] drivers/net: out-of-bounds in pcan_usb_decode_buf()
+From: co <co+5e2bcf11e7027510@bugs.sh>
+To: linux-can@vger.kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>, Vincent Mailhol <mailhol@kernel.org>
+Cc: Petr Mladek <pmladek@suse.com>, Geert Uytterhoeven <geert+renesas@glider.be>, "Stéphane Grosjean" <s.grosjean@peak-system.fr>, Conor Dooley <conor.dooley@microchip.com>, Song Liu <song@kernel.org>, Oleg Nesterov <oleg@redhat.com>, Biju Das <biju.das.jz@bp.renesas.com>, linux-kernel@vger.kernel.org, co <co+5e2bcf11e7027510@bugs.sh>
+
+We found a bug reachable in:
+
+    path    drivers/net/can/usb/peak_usb
+    crash   out-of-bounds in pcan_usb_decode_buf()
+    commit  2f1baf1fc892 ("Merge tag 'trace-v7.2-rc7' of git://git.kernel.org/pub/scm/linux/kernel/git/trace/linux-trace")
+
+Config, environment, the sanitizer report and a C reproducer follow.
+
+== Notes ===============================================================
+    If you patch the bug based on our artifacts, a tag would be
+    appreciated:
+
+Reported-by: co+5e2bcf11e7027510@bugs.sh
+
+    Everything in this mail is validated by the reproducer below.
+
+    We also hold an LLM-generated root-cause analysis and a candidate
+    patch. The patch passes an A/B test: the same reproducer panics the
+    unpatched kernel and runs clean on the patched one. Neither has had
+    human review, so both still require validation before you send or
+    apply them. Available on:
+
+        patch.diff  https://bugs.sh/b/5e2bcf11e7027510/patch.diff
+        report.md   https://bugs.sh/b/5e2bcf11e7027510/report.md
+
+    This is an open science project. The code and the full set of PoCs
+    are not public at this moment, as we intend to disclose our findings
+    in an ethical way.
+
+    Happy to test patches. Complaints and suggestions about our work
+    are welcome at:
+
+        cedalion@bugs.sh
+
+== Environment =========================================================
+    Reproduced on  2f1baf1fc892 ("Merge tag 'trace-v7.2-rc7' of git://git.kernel.org/pub/scm/linux/kernel/git/trace/linux-trace")
+    VM setup       https://bugs.sh/b/5e2bcf11e7027510/run.sh
+    config         https://bugs.sh/b/5e2bcf11e7027510/config.gz
+    poc            https://bugs.sh/b/5e2bcf11e7027510/repro.c
+
+== Sanitizer Report ====================================================
+BUG: KASAN: slab-out-of-bounds in pcan_usb_decode_buf (drivers/net/can/usb/peak_usb/pcan_usb.c:563 drivers/net/can/usb/peak_usb/pcan_usb.c:630 drivers/net/can/usb/peak_usb/pcan_usb.c:740 drivers/net/can/usb/peak_usb/pcan_usb.c:758)
+Read of size 1 at addr ffff8880253816c1 by task swapper/1/0
+Call Trace:
+<IRQ>
+dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+kasan_report (mm/kasan/report.c:595)
+pcan_usb_decode_buf (drivers/net/can/usb/peak_usb/pcan_usb.c:563 drivers/net/can/usb/peak_usb/pcan_usb.c:630 drivers/net/can/usb/peak_usb/pcan_usb.c:740 drivers/net/can/usb/peak_usb/pcan_usb.c:758)
+peak_usb_read_bulk_callback (drivers/net/can/usb/peak_usb/pcan_usb_core.c:267)
+__usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1657)
+usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1741)
+dummy_timer (drivers/block/aoe/aoedev.c:523 (discriminator 1) drivers/block/aoe/aoedev.c:298 (discriminator 1) drivers/block/aoe/aoedev.c:377 (discriminator 1))
+__hrtimer_run_queues (kernel/time/hrtimer.c:2067 kernel/time/hrtimer.c:2124)
+hrtimer_run_softirq (kernel/time/hrtimer.c:2141)
+handle_softirqs (kernel/softirq.c:645)
+__irq_exit_rcu (kernel/softirq.c:679 kernel/softirq.c:519 kernel/softirq.c:767)
+irq_exit_rcu (kernel/softirq.c:784)
+sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1062 (discriminator 35) arch/x86/kernel/apic/apic.c:1062 (discriminator 35))
+</IRQ>
+asm_sysvec_apic_timer_interrupt (./arch/x86/include/asm/idtentry.h:674)
+default_idle (./arch/x86/include/asm/paravirt.h:62 arch/x86/kernel/process.c:768)
+default_idle_call (kernel/sched/idle.c:122)
+do_idle (kernel/sched/idle.c:199 kernel/sched/idle.c:355)
+cpu_startup_entry (kernel/sched/idle.c:454 (discriminator 1))
+start_secondary (arch/x86/kernel/smpboot.c:312)
+common_startup_64 (arch/x86/kernel/head_64.S:418)
+Allocated by task 5007:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_save_track (mm/kasan/common.c:78)
+__kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+__kmalloc_noprof (./include/linux/kasan.h:263 mm/slub.c:5414 mm/slub.c:5439)
+peak_usb_ndo_open (./include/linux/slab.h:995 drivers/net/can/usb/peak_usb/pcan_usb_core.c:451 drivers/net/can/usb/peak_usb/pcan_usb_core.c:583)
+__dev_open (net/core/dev.c:1724)
+__dev_change_flags (net/core/dev.c:9812)
+netif_change_flags (net/core/dev.c:9877)
+dev_change_flags (net/core/dev_api.c:68)
+devinet_ioctl (net/ipv4/devinet.c:1199)
+inet_ioctl (net/ipv4/af_inet.c:1009)
+sock_do_ioctl (net/socket.c:1325)
+sock_ioctl (net/socket.c:1446)
+__x64_sys_ioctl (fs/ioctl.c:51 fs/ioctl.c:597 fs/ioctl.c:583 fs/ioctl.c:583)
+do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+The buggy address belongs to the object at ffff888025381680
+which belongs to the cache kmalloc-64 of size 64
+The buggy address is located 1 bytes to the right of
+
+
+---
+The report format is based on syzbot bug report.
+
+This report is generated by a bot. It may contain errors.
+See https://github.com/n132/cedalion for more information.
+
+For any issue with this report, reach out to cedalion@bugs.sh
+
+If the report is already addressed, let us know by replying with:
+#co fix: <commit hash>
+
+If the report is a duplicate of another one, reply with:
+#co dup: <lore link>
+
+If you want to undo deduplication, reply with:
+#co undup

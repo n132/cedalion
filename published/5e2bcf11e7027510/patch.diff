@@ -1,0 +1,13 @@
+diff --git a/drivers/net/can/usb/peak_usb/pcan_usb.c b/drivers/net/can/usb/peak_usb/pcan_usb.c
+index 8fd058c..e87ed76 100644
+--- a/drivers/net/can/usb/peak_usb/pcan_usb.c
++++ b/drivers/net/can/usb/peak_usb/pcan_usb.c
+@@ -558,6 +558,8 @@ static int pcan_usb_handle_bus_evt(struct pcan_usb_msg_context *mc, u8 ir)
+ 	switch (ir) {
+ 	case PCAN_USB_ERR_CNT_DEC:
+ 	case PCAN_USB_ERR_CNT_INC:
++		if ((mc->ptr + 3) > mc->end)
++			return -EINVAL;
+ 
+ 		/* save rx/tx error counters from in the device context */
+ 		pdev->bec.rxerr = mc->ptr[1];
