@@ -258,7 +258,7 @@
    "config.gz": "5e2bcf11e7027510/config.gz",
    "patch.diff": "5e2bcf11e7027510/patch.diff",
    "report.eml": "5e2bcf11e7027510/report.eml",
-   "report.md": null,
+   "report.md": "5e2bcf11e7027510/report.md",
    "repro.c": "5e2bcf11e7027510/repro.c",
    "run.sh": "5e2bcf11e7027510/run.sh"
   }
