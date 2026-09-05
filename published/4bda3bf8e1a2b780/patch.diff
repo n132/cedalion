@@ -1,0 +1,40 @@
+diff --git a/drivers/net/can/usb/peak_usb/pcan_usb_pro.c b/drivers/net/can/usb/peak_usb/pcan_usb_pro.c
+index b6be8c19e537..84ebe2904f6e 100644
+--- a/drivers/net/can/usb/peak_usb/pcan_usb_pro.c
++++ b/drivers/net/can/usb/peak_usb/pcan_usb_pro.c
+@@ -531,7 +531,8 @@ struct pcan_usb_pro_interface *pcan_usb_pro_dev_if(struct peak_usb_device *dev)
+ }
+ 
+ static int pcan_usb_pro_handle_canmsg(struct pcan_usb_pro_interface *usb_if,
+-				      struct pcan_usb_pro_rxmsg *rx)
++				      struct pcan_usb_pro_rxmsg *rx,
++				      u16 sizeof_rec)
+ {
+ 	const unsigned int ctrl_idx = (rx->len >> 4) & 0x0f;
+ 	struct peak_usb_device *dev;
+@@ -551,7 +552,14 @@ static int pcan_usb_pro_handle_canmsg(struct pcan_usb_pro_interface *usb_if,
+ 		return -ENOMEM;
+ 
+ 	can_frame->can_id = le32_to_cpu(rx->id);
+-	can_frame->len = rx->len & 0x0f;
++	can_frame_set_cc_len(can_frame, rx->len & 0x0f, dev->can.ctrlmode);
++
++	if (!(rx->flags & PCAN_USBPRO_RTR) &&
++	    sizeof_rec - offsetof(struct pcan_usb_pro_rxmsg, data) <
++	    can_frame->len) {
++		kfree_skb(skb);
++		return -EBADMSG;
++	}
+ 
+ 	if (rx->flags & PCAN_USBPRO_EXT)
+ 		can_frame->can_id |= CAN_EFF_FLAG;
+@@ -750,7 +758,8 @@ static int pcan_usb_pro_decode_buf(struct peak_usb_device *dev, struct urb *urb)
+ 		case PCAN_USBPRO_RXMSG4:
+ 		case PCAN_USBPRO_RXMSG0:
+ 		case PCAN_USBPRO_RXRTR:
+-			err = pcan_usb_pro_handle_canmsg(usb_if, &pr->rx_msg);
++			err = pcan_usb_pro_handle_canmsg(usb_if, &pr->rx_msg,
++							 sizeof_rec);
+ 			if (err < 0)
+ 				goto fail;
+ 			break;
