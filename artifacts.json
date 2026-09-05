@@ -108,7 +108,7 @@
    "config.gz": "28eef7d8af9428e6/config.gz",
    "patch.diff": "28eef7d8af9428e6/patch.diff",
    "report.eml": "28eef7d8af9428e6/report.eml",
-   "report.md": null,
+   "report.md": "28eef7d8af9428e6/report.md",
    "repro.c": "28eef7d8af9428e6/repro.c",
    "run.sh": "28eef7d8af9428e6/run.sh"
   }
@@ -129,7 +129,7 @@
    "config.gz": "2c72469dbbec34af/config.gz",
    "patch.diff": "2c72469dbbec34af/patch.diff",
    "report.eml": "2c72469dbbec34af/report.eml",
-   "report.md": null,
+   "report.md": "2c72469dbbec34af/report.md",
    "repro.c": "2c72469dbbec34af/repro.c",
    "run.sh": "2c72469dbbec34af/run.sh"
   }
@@ -238,7 +238,7 @@
    "config.gz": "5a7f44e9dc1eab32/config.gz",
    "patch.diff": "5a7f44e9dc1eab32/patch.diff",
    "report.eml": "5a7f44e9dc1eab32/report.eml",
-   "report.md": null,
+   "report.md": "5a7f44e9dc1eab32/report.md",
    "repro.c": "5a7f44e9dc1eab32/repro.c",
    "run.sh": "5a7f44e9dc1eab32/run.sh"
   }
@@ -298,7 +298,7 @@
    "config.gz": "6a581c4284f721d4/config.gz",
    "patch.diff": "6a581c4284f721d4/patch.diff",
    "report.eml": "6a581c4284f721d4/report.eml",
-   "report.md": null,
+   "report.md": "6a581c4284f721d4/report.md",
    "repro.c": "6a581c4284f721d4/repro.c",
    "run.sh": "6a581c4284f721d4/run.sh"
   }
@@ -563,7 +563,7 @@
    "config.gz": "ed9902f2e44184d9/config.gz",
    "patch.diff": "ed9902f2e44184d9/patch.diff",
    "report.eml": "ed9902f2e44184d9/report.eml",
-   "report.md": null,
+   "report.md": "ed9902f2e44184d9/report.md",
    "repro.c": "ed9902f2e44184d9/repro.c",
    "run.sh": "ed9902f2e44184d9/run.sh"
   }
