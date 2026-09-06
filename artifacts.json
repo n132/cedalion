@@ -15,7 +15,8 @@
   "files": {
    "patch.diff": null,
    "run.sh": null
-  }
+  },
+  "kernel_commit": "eb3f4b7426cfd2b79d65b7d37155480b32259a11"
  },
  "0d6736579db13a8b": {
   "files": {
@@ -47,7 +48,8 @@
    "report.md": null,
    "repro.c": "178f1a43c6fc5735/repro.c",
    "run.sh": "178f1a43c6fc5735/run.sh"
-  }
+  },
+  "kernel_commit": "4cbfe4502e3d4bda48eb4b83dfad8d7da3b22e90"
  },
  "1875dd47169bd757": {
   "files": {
@@ -57,7 +59,8 @@
    "report.md": null,
    "repro.c": "1875dd47169bd757/repro.c",
    "run.sh": "1875dd47169bd757/run.sh"
-  }
+  },
+  "kernel_commit": "843bc34db94bff0612c8294861b156489958897b"
  },
  "198b31896226c413": {
   "files": {
@@ -111,18 +114,21 @@
    "report.md": "28eef7d8af9428e6/report.md",
    "repro.c": "28eef7d8af9428e6/repro.c",
    "run.sh": "28eef7d8af9428e6/run.sh"
-  }
+  },
+  "kernel_commit": "7cbfb180945ce529608e4d4e24a6d483699fab1e"
  },
  "2a7fab38eb17bffd": {
   "files": {
    "run.sh": null
-  }
+  },
+  "kernel_commit": "5b08dccecf825cbf905f348bc6ccb497507e28e2"
  },
  "2b5d3b3a5b4c3a3e": {
   "files": {
    "patch.diff": null,
    "run.sh": null
-  }
+  },
+  "kernel_commit": "8c13415c8a4383447c21ec832b20b3b283f0e01a"
  },
  "2c72469dbbec34af": {
   "files": {
@@ -132,7 +138,8 @@
    "report.md": "2c72469dbbec34af/report.md",
    "repro.c": "2c72469dbbec34af/repro.c",
    "run.sh": "2c72469dbbec34af/run.sh"
-  }
+  },
+  "kernel_commit": "7cbfb180945ce529608e4d4e24a6d483699fab1e"
  },
  "3332abc5a8d5b125": {
   "files": {
@@ -140,7 +147,8 @@
    "patch.diff": "3332abc5a8d5b125/patch.diff",
    "report.md": null,
    "run.sh": "3332abc5a8d5b125/run.sh"
-  }
+  },
+  "kernel_commit": "eb3f4b7426cfd2b79d65b7d37155480b32259a11"
  },
  "36935f8953d6874a": {
   "files": {
@@ -150,7 +158,8 @@
    "report.md": "36935f8953d6874a/report.md",
    "repro.c": "36935f8953d6874a/repro.c",
    "run.sh": "36935f8953d6874a/run.sh"
-  }
+  },
+  "kernel_commit": "53d3c6ddbb9749ebc06956a13ed6eead31402a7d"
  },
  "399b0606c9c7fac9": {
   "files": {
@@ -171,7 +180,8 @@
    "report.md": "459f67f4d8af8ce6/report.md",
    "repro.c": "459f67f4d8af8ce6/repro.c",
    "run.sh": "459f67f4d8af8ce6/run.sh"
-  }
+  },
+  "kernel_commit": "2f1baf1fc8929e6c48370be543ad028ac7ad4131"
  },
  "4638111fe2a12980": {
   "embargoed": false,
@@ -193,7 +203,8 @@
    "report.md": null,
    "repro.c": "46e36dce88fefcb1/repro.c",
    "run.sh": "46e36dce88fefcb1/run.sh"
-  }
+  },
+  "kernel_commit": "26260251022fbc2f248a3d747a9b2b961b18d2d8"
  },
  "47a3a670856c6c72": {
   "files": {
@@ -215,7 +226,8 @@
    "report.md": "4bda3bf8e1a2b780/report.md",
    "repro.c": "4bda3bf8e1a2b780/repro.c",
    "run.sh": "4bda3bf8e1a2b780/run.sh"
-  }
+  },
+  "kernel_commit": "2f1baf1fc8929e6c48370be543ad028ac7ad4131"
  },
  "4fcca17e38baccf4": {
   "files": {
@@ -232,7 +244,8 @@
   "files": {
    "patch.diff": null,
    "run.sh": null
-  }
+  },
+  "kernel_commit": "39b686f8d57d7506af7789e915fe7fd103b0fe57"
  },
  "57eff147b621eef5": {
   "files": {
@@ -251,7 +264,8 @@
    "report.md": "5a7f44e9dc1eab32/report.md",
    "repro.c": "5a7f44e9dc1eab32/repro.c",
    "run.sh": "5a7f44e9dc1eab32/run.sh"
-  }
+  },
+  "kernel_commit": "7cbfb180945ce529608e4d4e24a6d483699fab1e"
  },
  "5b88405c1a6a91d3": {
   "files": {
@@ -260,7 +274,8 @@
    "report.md": null,
    "repro.c": "5b88405c1a6a91d3/repro.c",
    "run.sh": "5b88405c1a6a91d3/run.sh"
-  }
+  },
+  "kernel_commit": "6f232446a62980e51f537db1c655e686d869b9ed"
  },
  "5cb90f3acf756144": {
   "files": {
@@ -281,7 +296,8 @@
    "report.md": "5e2bcf11e7027510/report.md",
    "repro.c": "5e2bcf11e7027510/repro.c",
    "run.sh": "5e2bcf11e7027510/run.sh"
-  }
+  },
+  "kernel_commit": "2f1baf1fc8929e6c48370be543ad028ac7ad4131"
  },
  "6155a794e60d2ebf": {
   "files": {
@@ -291,7 +307,8 @@
    "report.md": null,
    "repro.c": "6155a794e60d2ebf/repro.c",
    "run.sh": "6155a794e60d2ebf/run.sh"
-  }
+  },
+  "kernel_commit": "4e15e89faac9f308baeb01f46c13a051814d2449"
  },
  "63bad23bb3b4cd85": {
   "files": {
@@ -301,7 +318,8 @@
    "report.md": null,
    "repro.c": "63bad23bb3b4cd85/repro.c",
    "run.sh": "63bad23bb3b4cd85/run.sh"
-  }
+  },
+  "kernel_commit": "7b53449540502cb21b32bca62a6258e22cd97bbe"
  },
  "6a581c4284f721d4": {
   "files": {
@@ -311,7 +329,8 @@
    "report.md": "6a581c4284f721d4/report.md",
    "repro.c": "6a581c4284f721d4/repro.c",
    "run.sh": "6a581c4284f721d4/run.sh"
-  }
+  },
+  "kernel_commit": "2709dd5ae32f0828f386327c76bba9f39f63a1c6"
  },
  "6dcbccedc9ec6452": {
   "files": {
@@ -321,7 +340,8 @@
    "report.md": null,
    "repro.c": "6dcbccedc9ec6452/repro.c",
    "run.sh": "6dcbccedc9ec6452/run.sh"
-  }
+  },
+  "kernel_commit": "bd5f485f3f026225b86573e559af0b7254ef4184"
  },
  "7a7e8b052c6a14f9": {
   "files": {
@@ -364,7 +384,8 @@
    "report.md": null,
    "repro.c": "9d44b184bc8f410d/repro.c",
    "run.sh": "9d44b184bc8f410d/run.sh"
-  }
+  },
+  "kernel_commit": "bd5f485f3f026225b86573e559af0b7254ef4184"
  },
  "a27707e9782d25c3": {
   "files": {
@@ -385,7 +406,8 @@
    "report.md": "a27ae3497f0074da/report.md",
    "repro.c": "a27ae3497f0074da/repro.c",
    "run.sh": "a27ae3497f0074da/run.sh"
-  }
+  },
+  "kernel_commit": "4e15e89faac9f308baeb01f46c13a051814d2449"
  },
  "a720ac0c47d2d165": {
   "files": {
@@ -395,7 +417,8 @@
    "report.md": null,
    "repro.c": "a720ac0c47d2d165/repro.c",
    "run.sh": "a720ac0c47d2d165/run.sh"
-  }
+  },
+  "kernel_commit": "4e15e89faac9f308baeb01f46c13a051814d2449"
  },
  "a7d3b3af4d8884bc": {
   "files": {
@@ -415,7 +438,8 @@
    "report.md": null,
    "repro.c": "b240dc164119a46c/repro.c",
    "run.sh": "b240dc164119a46c/run.sh"
-  }
+  },
+  "kernel_commit": "6f232446a62980e51f537db1c655e686d869b9ed"
  },
  "b27792546e50dd00": {
   "files": {
@@ -446,7 +470,8 @@
    "report.md": null,
    "repro.c": "b730d21a84415749/repro.c",
    "run.sh": "b730d21a84415749/run.sh"
-  }
+  },
+  "kernel_commit": "6f232446a62980e51f537db1c655e686d869b9ed"
  },
  "b74fcfb4ab1ee9a8": {
   "files": {
@@ -464,7 +489,8 @@
    "report.md": null,
    "repro.c": "c25629c98ba36ebe/repro.c",
    "run.sh": "c25629c98ba36ebe/run.sh"
-  }
+  },
+  "kernel_commit": "843bc34db94bff0612c8294861b156489958897b"
  },
  "c5a8d51e4bd96b96": {
   "files": {
@@ -473,7 +499,8 @@
    "report.md": null,
    "repro.c": "c5a8d51e4bd96b96/repro.c",
    "run.sh": "c5a8d51e4bd96b96/run.sh"
-  }
+  },
+  "kernel_commit": "4cbfe4502e3d4bda48eb4b83dfad8d7da3b22e90"
  },
  "c66ee17c0d5ab0c4": {
   "files": {
@@ -487,7 +514,8 @@
   "files": {
    "patch.diff": null,
    "run.sh": null
-  }
+  },
+  "kernel_commit": "8c13415c8a4383447c21ec832b20b3b283f0e01a"
  },
  "c7c7ab77f00f7a6d": {
   "files": {
@@ -495,7 +523,8 @@
    "report.md": null,
    "repro.c": "c7c7ab77f00f7a6d/repro.c",
    "run.sh": "c7c7ab77f00f7a6d/run.sh"
-  }
+  },
+  "kernel_commit": "6f232446a62980e51f537db1c655e686d869b9ed"
  },
  "ca9d72bef8f6dbe3": {
   "files": {
@@ -514,7 +543,8 @@
    "report.md": null,
    "repro.c": "cd639b9313e09550/repro.c",
    "run.sh": "cd639b9313e09550/run.sh"
-  }
+  },
+  "kernel_commit": "3cd8b194bf3428dfa53120fee47e827a7c495815"
  },
  "d09dcbf05ea07dba": {
   "files": {
@@ -566,7 +596,8 @@
    "report.md": null,
    "repro.c": "e5693071d903b832/repro.c",
    "run.sh": "e5693071d903b832/run.sh"
-  }
+  },
+  "kernel_commit": "f5098b6bae761e346ebcd9da7f95622c04733cff"
  },
  "ed9902f2e44184d9": {
   "files": {
@@ -576,7 +607,8 @@
    "report.md": "ed9902f2e44184d9/report.md",
    "repro.c": "ed9902f2e44184d9/repro.c",
    "run.sh": "ed9902f2e44184d9/run.sh"
-  }
+  },
+  "kernel_commit": "3cd8b194bf3428dfa53120fee47e827a7c495815"
  },
  "ef32d1251d8555af": {
   "files": {
@@ -586,7 +618,8 @@
    "report.md": null,
    "repro.c": "ef32d1251d8555af/repro.c",
    "run.sh": "ef32d1251d8555af/run.sh"
-  }
+  },
+  "kernel_commit": "7cbfb180945ce529608e4d4e24a6d483699fab1e"
  },
  "f58139ce3b0e13bf": {
   "files": {
@@ -600,7 +633,8 @@
  "f900458c1dff2fbd": {
   "files": {
    "run.sh": null
-  }
+  },
+  "kernel_commit": "87a1e0fe7776da7ab411be332b4be58ac8840d10"
  },
  "fd80bc5967eb22c3": {
   "files": {
@@ -610,6 +644,7 @@
    "report.md": "fd80bc5967eb22c3/report.md",
    "repro.c": "fd80bc5967eb22c3/repro.c",
    "run.sh": "fd80bc5967eb22c3/run.sh"
-  }
+  },
+  "kernel_commit": "bd5f485f3f026225b86573e559af0b7254ef4184"
  }
 }
