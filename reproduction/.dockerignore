@@ -1,0 +1,4 @@
+# The image copies one file. Everything else -- the register, the published
+# artifacts, a local .env -- has no business in the build context.
+*
+!repro.sh

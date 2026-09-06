@@ -24,6 +24,67 @@ variable if one is missing.
 | `CEDALION_LORE_DB` | a local lore mirror's SQLite index |
 | `CEDALION_STABLE_REPO` | a clone of the stable kernel, for a fix's subject |
 
+## Reproducing a bug
+
+Every disclosed bug publishes what it takes to run it again, so `repro.sh`
+needs nothing but the id:
+
+    reproduction/repro.sh build 5e2bcf11e7027510
+    reproduction/repro.sh run   5e2bcf11e7027510
+
+`build` downloads `repro.c`, `config.gz` and `run.sh` into `./<bug_id>/`,
+builds the kernel at the commit `artifacts.json` records for that bug, and
+compiles the reproducer statically. `run` boots the two and looks for the
+crash: it exits 0 when the console has one and 1 when the VM ran to the end
+without it, and either way the full log is `<bug_id>/repro.log`.
+
+Whatever the bug also publishes about itself -- `report.md`, `report.eml`,
+`patch.diff` -- lands in the same directory, so what a bug is sits next to what
+demonstrates it. None of it is needed to reproduce anything and a bug that
+withholds one is not an error, which is why it is fetched separately from the
+three files that are.
+
+They are separate because building is minutes and booting is seconds, and a
+bug that takes a few attempts to land should cost the second and not the first.
+Both skip whatever is already done, so `build` after a failure resumes rather
+than restarts; `-f` redoes it.
+
+Both work inside the container `reproduction/Dockerfile` describes, which is built on first
+use -- "it reproduces" should be a claim about a toolchain anyone can get
+rather than one about the machine that made it. Everything that is the same for
+every bug is a layer of it: the toolchain, qemu, the 650MB kernelCTF image, and
+a bare clone of mainline. So the image is large and building it is slow, once,
+and after that a bug costs its own kernel build and nothing else. `docker save`
+it and someone else can reproduce a bug needing the network for three files.
+`--host` uses what is installed here and clones into `./.cache/linux.git`
+instead; `--shell` opens a shell in the container.
+
+Nothing is read or written outside the directory it is run from -- that
+directory is the container's `/work` and its only view of the machine, and the
+work happens as the invoking uid, so what lands there belongs to whoever ran
+it. A bug's `linux/` owns nothing but its refs; the objects come from the store
+in the image, which stays read-only and shared. A commit newer than the image
+-- it has aged, or the bug is not on mainline -- is fetched into that clone,
+which is the writable half of the arrangement, so only what the store lacks
+comes down. `rm -rf` is the whole cleanup story.
+
+`run.sh` is left exactly as published -- it is the qemu line the bug was found
+on, down to the cpu count and cmdline flags, and some of those the crash
+depends on. What boots is `run-repro.sh`: that file plus two 9p mounts and
+`init=/init`, which is how the reproducer gets in and gets run. A bug whose
+`run.sh` needs a device set up first (a TPM socket, a usbredir channel) names
+it through the environment, and the script says so before booting rather than
+after.
+
+| variable | points at |
+|---|---|
+| `CEDALION_IMAGE` | the image to build and work in (default `cedalion-repro`) |
+| `CEDALION_LINUX_URL` | the kernel remote a missing commit is fetched from |
+| `CEDALION_LINUX_CACHE` | the bare clone checkouts come out of; the image sets this to its own, and `--host` clones into `.cache/linux.git` |
+| `CEDALION_TIMEOUT` | how long to let the VM run (default 300s) |
+| `CEDALION_ROOTFS` | the kernelCTF image; in the container it is the one baked in, and on `--host` it is fetched once into `.cache/` |
+| `CEDALION_BASE` | the site to fetch from (default `https://bugs.sh`) |
+
 ## Disclosure
 
 Nothing about a bug is public until it is named twice: once in
@@ -55,3 +116,4 @@ belongs in the generator that writes it.
     published/      disclosed artifacts
     artifacts.json  what is disclosed, and where it lives
     disclose_allow.json   which bugs may be disclosed at all
+    reproduction/   repro.sh, and the container it builds and runs itself in
