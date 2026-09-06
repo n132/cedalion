@@ -1,0 +1,16 @@
+diff --git a/net/ipv6/netfilter/ip6t_rpfilter.c b/net/ipv6/netfilter/ip6t_rpfilter.c
+index 67c87a88cde4..845280c5a97b 100644
+--- a/net/ipv6/netfilter/ip6t_rpfilter.c
++++ b/net/ipv6/netfilter/ip6t_rpfilter.c
+@@ -72,8 +72,9 @@ static bool rpfilter_lookup_reverse6(struct net *net, const struct sk_buff *skb,
+ 		goto out;
+ 	}
+ 
+-	if (rt->rt6i_idev->dev == dev ||
+-	    l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) == dev->ifindex ||
++	if ((rt->rt6i_idev &&
++	     (rt->rt6i_idev->dev == dev ||
++	      l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) == dev->ifindex)) ||
+ 	    (flags & XT_RPFILTER_LOOSE))
+ 		ret = true;
+  out:
