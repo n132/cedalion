@@ -1,0 +1,15 @@
+diff --git a/net/core/filter.c b/net/core/filter.c
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -9053,6 +9053,11 @@ lwt_seg6local_func_proto(enum bpf_func_id func_id, const struct bpf_prog *prog)
+ 	case BPF_FUNC_lwt_seg6_adjust_srh:
+ 		return &bpf_lwt_seg6_adjust_srh_proto;
+ #endif
++	case BPF_FUNC_skb_pull_data:
++		/* may reallocate skb->head and leave the srh pointer
++		 * cached in seg6_bpf_srh_states dangling
++		 */
++		return NULL;
+ 	default:
+ 		return lwt_out_func_proto(func_id, prog);
+ 	}
