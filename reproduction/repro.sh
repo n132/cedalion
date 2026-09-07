@@ -45,6 +45,7 @@ JOBS=$(nproc)
 COMMIT=
 RUNAS=root
 FORCE=0
+NO_CACHE=0
 HOST=0
 SHELL_ONLY=0
 CMD=
@@ -60,6 +61,9 @@ usage: $0 build <bug_id>    fetch the bug, build its kernel and reproducer
                      records for this bug)                          [build]
   -j, --jobs N       make -j (default $JOBS)                            [build]
   -f, --force        redo every step, even ones already done         [build]
+      --no-cache     rebuild the container with docker --no-cache --pull
+                     before running; useful when the baked-in kernel mirror
+                     may be older than a moving target branch
   -t, --timeout SEC  how long to let the VM run (default $TIMEOUT)        [run]
   -u, --as-user      run the reproducer as 'user' rather than root     [run]
       --host         work here rather than in the container
@@ -77,6 +81,7 @@ while [ $# -gt 0 ]; do
 	-t|--timeout) TIMEOUT=$2; shift 2 ;;
 	-u|--as-user) RUNAS=user; shift ;;
 	-f|--force)   FORCE=1; shift ;;
+	--no-cache)   NO_CACHE=1; shift ;;
 	--host)       HOST=1; shift ;;
 	--shell)      SHELL_ONLY=1; shift ;;
 	-h|--help)    usage; exit 0 ;;
@@ -122,7 +127,13 @@ if [ -z "${CEDALION_IN_CONTAINER:-}" ] && { [ "$HOST" = 0 ] || [ "$SHELL_ONLY" =
 			done
 		fi
 	fi
-	[ "$stale" = 1 ] && { say "building $IMAGE"; docker build -t "$IMAGE" "$HERE"; }
+	if [ "$NO_CACHE" = 1 ]; then
+		say "building $IMAGE without docker cache"
+		docker build --pull --no-cache -t "$IMAGE" "$HERE"
+	elif [ "$stale" = 1 ]; then
+		say "building $IMAGE"
+		docker build -t "$IMAGE" "$HERE"
+	fi
 
 	opts=(--rm -i --device /dev/kvm --group-add "$(stat -c %g /dev/kvm)"
 	      --user "$(id -u):$(id -g)" -v "$PWD:/work" -w /work)

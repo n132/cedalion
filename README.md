@@ -59,6 +59,11 @@ it and someone else can reproduce a bug needing the network for three files.
 `--host` uses what is installed here and clones into `./.cache/linux.git`
 instead; `--shell` opens a shell in the container.
 
+If the image may be stale, `--no-cache` rebuilds it with Docker's cache disabled
+and pulls a fresh base image before running the requested command:
+
+    reproduction/repro.sh --no-cache build 5e2bcf11e7027510
+
 Nothing is read or written outside the directory it is run from -- that
 directory is the container's `/work` and its only view of the machine, and the
 work happens as the invoking uid, so what lands there belongs to whoever ran
