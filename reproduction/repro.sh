@@ -418,7 +418,18 @@ if [ -s bzImage ] && [ "$FORCE" = 0 ]; then
 else
 	gzip -dc config.gz > linux/.config
 	make -C linux olddefconfig >/dev/null
-	make -C linux -j"$JOBS" bzImage
+	# In its own process group, so that killing this script kills the build.
+	# Orphaned make is not a tidiness problem: the flock above lives in an fd of
+	# this process and is released the moment it dies, while the make it started
+	# keeps writing. The next run then takes the lock and starts a second make
+	# over the first one's object files, which is what the lock exists to stop.
+	set -m
+	make -C linux -j"$JOBS" bzImage &
+	MAKE=$!
+	trap 'kill -- "-$MAKE" 2>/dev/null' INT TERM EXIT
+	wait "$MAKE"
+	trap - INT TERM EXIT
+	set +m
 	cp linux/arch/x86/boot/bzImage bzImage
 	note "bzImage: $(du -h bzImage | cut -f1)"
 fi
@@ -520,15 +531,29 @@ done
 
 note "up to ${TIMEOUT}s; console also in repro.log in $WHERE"
 set +e
-# Not --foreground: that leaves the command in this process group and so signals
-# only the direct child, which is the run.sh wrapper and not the qemu it forked.
-# A bug that reports without panicking -- a KASAN splat under panic_on_warn=0 --
-# then outlives its own timeout: the wrapper dies, qemu is reparented to pid 1,
-# and tee blocks forever on a pipe qemu still holds open. Without it timeout
-# puts the command in a process group of its own and signals the group, so the
-# VM goes when the clock runs out.
-timeout -k 5 "$TIMEOUT" ./run-repro.sh nodebug </dev/null 2>&1 | tee repro.log
-rc=${PIPESTATUS[0]}
+# Two ways the VM has to be able to die, and neither of them worked through a
+# `timeout --foreground ... | tee` pipeline.
+#
+# The clock: --foreground keeps the command in this process group, so timeout
+# signals only its direct child -- the run.sh wrapper, not the qemu that wrapper
+# forked. A bug that reports without panicking, a KASAN splat under
+# panic_on_warn=0, then outlives its own timeout. Without --foreground timeout
+# puts the command in a group of its own and signals the whole group.
+#
+# The interrupt: a ctrl-c or a kill of this script left qemu orphaned onto pid 1
+# and tee blocking forever on a pipe that qemu still held open. So the VM runs
+# in the background with its own group, the trap takes it down with us, and the
+# console is followed out of the log rather than piped through tee -- which also
+# means rc is the VM's own status and not something read back out of PIPESTATUS.
+: > repro.log   # tail follows it below and the redirect happens after the fork
+set -m
+timeout -k 5 "$TIMEOUT" ./run-repro.sh nodebug </dev/null >repro.log 2>&1 &
+VM=$!
+set +m
+trap 'kill -- "-$VM" 2>/dev/null' INT TERM EXIT
+tail -n +1 -f --pid="$VM" repro.log
+wait "$VM"; rc=$?
+trap - INT TERM EXIT
 set -e
 
 say "result"
