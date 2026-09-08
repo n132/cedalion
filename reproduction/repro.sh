@@ -6,32 +6,33 @@
 #
 # Everything a bug needs to be re-run is already public at bugs.sh/b/<id>/: the
 # reproducer, the config it was built with, and the exact qemu line. `build`
-# puts all of that in ./<bug_id>/ and turns it into a bzImage and a static
-# binary; `run` boots them. They are separate because building is minutes and
-# booting is seconds, and a bug that needs a few attempts to land should cost
-# the second and not the first.
+# puts all of that in a per-bug Docker image and turns it into a bzImage and a
+# static binary; `run` starts that image and boots them. They are separate
+# because building is minutes and booting is seconds, and a bug that needs a few
+# attempts to land should cost the second and not the first.
 #
 # Both work inside the container the Dockerfile beside this file describes,
 # which is built on first use. That is where the expensive and unchanging parts
-# are cached: the toolchain, qemu, and the 650MB kernelCTF image every
-# published run.sh boots. --host uses what is installed here instead.
+# are cached: the toolchain, qemu, the 650MB kernelCTF image every published
+# run.sh boots, and a public mainline kernel mirror.
 #
-# Nothing is read or written outside the directory this is run from: per-bug
-# work is ./<bug_id>/, and throwing the whole thing away is `rm -rf`. The one
-# thing not kept there is the kernel object store every checkout comes out of,
-# which is a layer of the image -- clone it once when the image is built, not
-# once per directory that ever runs a bug. --host has no image to take it from
-# and clones into ./.cache/linux.git instead.
+# A run does not mount a host work directory. Per-bug writable state is committed
+# into the Docker image named n132/cedalion:co-<bug_id>-vul. Throwing the work
+# away is `docker image rm n132/cedalion:co-<bug_id>-vul`. The one thing not
+# stored under /work is the kernel object store every checkout comes out of:
+# /opt/cedalion/linux.git is a read-only layer of the public image, cloned from
+# public mainline when the image was built, not once per directory that ever
+# runs a bug.
 #
 # Environment:
 #   CEDALION_BASE            site to fetch from        (default https://bugs.sh)
 #   CEDALION_LINUX_URL       kernel remote to clone    (default torvalds/linux)
 #   CEDALION_TIMEOUT         seconds to let the VM run (default 300)
 #   CEDALION_IMAGE           image to build and run in (default cedalion-repro)
-#   CEDALION_ROOTFS          kernelCTF image           (default ./.cache/rootfs.img)
+#   CEDALION_ROOTFS          kernelCTF image           (image default:
+#                                                       /opt/cedalion/rootfs.img)
 #   CEDALION_LINUX_CACHE     bare kernel clone to take checkouts out of; the
-#                            image sets this to the one baked into it, and
-#                            --host clones into ./.cache/linux.git instead
+#                            image sets this to the public one baked into it
 set -euo pipefail
 
 ARGV=("$@")   # kept so the script can hand itself the same arguments in docker
@@ -46,7 +47,6 @@ COMMIT=
 RUNAS=root
 FORCE=0
 NO_CACHE=0
-HOST=0
 SHELL_ONLY=0
 CMD=
 BUG=
@@ -60,13 +60,12 @@ usage: $0 build <bug_id>    fetch the bug, build its kernel and reproducer
   -c, --commit SHA   kernel commit to build (default: the one artifacts.json
                      records for this bug)                          [build]
   -j, --jobs N       make -j (default $JOBS)                            [build]
-  -f, --force        redo every step, even ones already done         [build]
+  -f, --force        rebuild the per-bug image without cache         [build]
       --no-cache     rebuild the container with docker --no-cache --pull
                      before running; useful when the baked-in kernel mirror
                      may be older than a moving target branch
   -t, --timeout SEC  how long to let the VM run (default $TIMEOUT)        [run]
   -u, --as-user      run the reproducer as 'user' rather than root     [run]
-      --host         work here rather than in the container
 EOF
 }
 
@@ -82,7 +81,6 @@ while [ $# -gt 0 ]; do
 	-u|--as-user) RUNAS=user; shift ;;
 	-f|--force)   FORCE=1; shift ;;
 	--no-cache)   NO_CACHE=1; shift ;;
-	--host)       HOST=1; shift ;;
 	--shell)      SHELL_ONLY=1; shift ;;
 	-h|--help)    usage; exit 0 ;;
 	-*)           usage >&2; die "unknown option $1" ;;
@@ -105,16 +103,16 @@ fi
 
 # ------------------------------------------------------------------- container
 #
-# Unless told otherwise, this script's job is to run itself inside the image,
-# with the current directory as the container's /work and as the calling uid --
-# so ./<bug_id>/ and ./.cache/ appear here, owned by whoever ran this, exactly
-# as they would have without docker. That bind mount is the only thing the
-# container can see of this machine.
-if [ -z "${CEDALION_IN_CONTAINER:-}" ] && { [ "$HOST" = 0 ] || [ "$SHELL_ONLY" = 1 ]; }; then
+# This script's job is to run itself inside Docker. `build` uses Docker's image
+# build path to produce n132/cedalion:co-<bug_id>-vul with the checked-out
+# kernel, bzImage and compiled reproducer already inside it. `run` starts that
+# per-bug image. No host work directory is mounted.
+if [ -z "${CEDALION_IN_CONTAINER:-}" ]; then
 	HERE=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
-	command -v docker >/dev/null || die "docker is not installed; --host works without it"
-	[ -e /dev/kvm ] || die "/dev/kvm is missing; every published run.sh boots with -enable-kvm"
-	[ -f "$HERE/Dockerfile" ] || die "no Dockerfile next to $0; --host works without one"
+	command -v docker >/dev/null || die "docker is not installed"
+	[ -f "$HERE/Dockerfile" ] || die "no Dockerfile next to $0; run this from the public Cedalion checkout"
+	BUG_IMAGE="n132/cedalion:co-$BUG-vul"
+	BUG_CONTAINER="co-$BUG-vul"
 
 	# The image carries a copy of this script, so an edit to either file is a
 	# reason to build again. Nothing else here is in the image.
@@ -135,25 +133,70 @@ if [ -z "${CEDALION_IN_CONTAINER:-}" ] && { [ "$HOST" = 0 ] || [ "$SHELL_ONLY" =
 		docker build -t "$IMAGE" "$HERE"
 	fi
 
-	opts=(--rm -i --device /dev/kvm --group-add "$(stat -c %g /dev/kvm)"
-	      --user "$(id -u):$(id -g)" -v "$PWD:/work" -w /work)
-	[ -t 0 ] && opts+=(-t)
-	for v in CEDALION_BASE CEDALION_LINUX_URL CEDALION_TIMEOUT; do
-		[ -n "${!v:-}" ] && opts+=(-e "$v=${!v}")
-	done
+	if [ "$SHELL_ONLY" = 1 ]; then
+		opts=(--rm -i -w /work)
+		[ -t 0 ] && opts+=(-t)
+		for v in CEDALION_BASE CEDALION_LINUX_URL CEDALION_TIMEOUT; do
+			[ -n "${!v:-}" ] && opts+=(-e "$v=${!v}")
+		done
+		exec docker run "${opts[@]}" --entrypoint bash "$IMAGE"
+	fi
 
-	[ "$SHELL_ONLY" = 1 ] && exec docker run "${opts[@]}" --entrypoint bash "$IMAGE"
-	exec docker run "${opts[@]}" "$IMAGE" "${ARGV[@]}"
+	if [ "$CMD" = build ]; then
+		[ "$FORCE" = 1 ] && docker image rm "$BUG_IMAGE" >/dev/null 2>&1 || true
+		build_opts=(-t "$BUG_IMAGE" --build-arg "BASE_IMAGE=$IMAGE"
+		            --build-arg "BUG=$BUG" --build-arg "JOBS=$JOBS")
+		[ -n "$COMMIT" ] && build_opts+=(--build-arg "COMMIT=$COMMIT")
+		[ -n "${CEDALION_BASE:-}" ] && build_opts+=(--build-arg "CEDALION_BASE=$CEDALION_BASE")
+		[ -n "${CEDALION_LINUX_URL:-}" ] && build_opts+=(--build-arg "CEDALION_LINUX_URL=$CEDALION_LINUX_URL")
+		[ -n "${CEDALION_TIMEOUT:-}" ] && build_opts+=(--build-arg "CEDALION_TIMEOUT=$CEDALION_TIMEOUT")
+		{ [ "$NO_CACHE" = 1 ] || [ "$FORCE" = 1 ]; } && build_opts+=(--no-cache)
+		say "building ready-to-run image $BUG_IMAGE"
+		docker build "${build_opts[@]}" -f - "$HERE" <<'EOF'
+ARG BASE_IMAGE=cedalion-repro
+FROM ${BASE_IMAGE}
+ARG BUG
+ARG COMMIT
+ARG JOBS
+ARG CEDALION_BASE
+ARG CEDALION_LINUX_URL
+ARG CEDALION_TIMEOUT
+ENV CEDALION_IN_CONTAINER=1
+WORKDIR /work
+RUN set -eu; \
+	if [ -n "${COMMIT:-}" ]; then set -- -c "$COMMIT"; else set --; fi; \
+	/usr/local/bin/repro.sh "$@" -j "$JOBS" build "$BUG"
+EOF
+		note "image: $BUG_IMAGE"
+		note "run it with: ${0##*/} run $BUG"
+		exit 0
+	fi
+
+	docker image inspect "$BUG_IMAGE" >/dev/null 2>&1 ||
+		die "no image $BUG_IMAGE -- build it first: ${0##*/} build $BUG"
+	[ -e /dev/kvm ] || die "/dev/kvm is missing; every published run.sh boots with -enable-kvm"
+	if old=$(docker ps -aq --filter "name=^/${BUG_CONTAINER}$"); then
+		if [ -n "$old" ]; then
+			running=$(docker inspect -f '{{.State.Running}}' "$old")
+			[ "$running" = false ] || die "$BUG_CONTAINER is already running"
+			docker rm "$old" >/dev/null
+		fi
+	fi
+	run_opts=(--rm -i --name "$BUG_CONTAINER" --device /dev/kvm -w /work)
+	[ -t 0 ] && run_opts+=(-t)
+	for v in CEDALION_TIMEOUT; do
+		[ -n "${!v:-}" ] && run_opts+=(-e "$v=${!v}")
+	done
+	exec docker run "${run_opts[@]}" "$BUG_IMAGE" "${ARGV[@]}"
 fi
 
-[ "$SHELL_ONLY" = 1 ] && die "--shell needs the container"
+[ "$SHELL_ONLY" = 1 ] && die "--shell needs docker"
 
-# In the container both of these are layers of the image; on --host they are
-# fetched once into ./.cache/ and shared by every bug built in this directory.
+# In the container both of these are layers of the public reproduction image.
 CACHE=$PWD/.cache
 ROOTFS=${CEDALION_ROOTFS:-$CACHE/rootfs.img}
 MIRROR=${CEDALION_LINUX_CACHE:-$CACHE/linux.git}
-DIR=$PWD/$BUG
+DIR=$PWD
 
 # =============================================================================
 if [ "$CMD" = build ]; then
@@ -197,14 +240,13 @@ EOF
 ) || exit 1
 eval "$meta"
 
-mkdir -p "$DIR"
 cd "$DIR"
 
 # One at a time per bug. Two builds in one directory step on each other deep
 # inside make -- objtool failing on a half-written object file -- and the error
 # says nothing about the cause.
 exec 9>".lock"
-flock -n 9 || die "something else is already working in $BUG/"
+flock -n 9 || die "something else is already working on $BUG"
 [ "$FORCE" = 1 ] && rm -f bzImage exp/repro run-repro.sh
 
 [ -n "$COMMIT" ] || COMMIT=$ENTRY_COMMIT
@@ -231,39 +273,23 @@ done
 
 # ------------------------------------------------------------------- 2. source
 #
-# One bare clone under .cache/ is the object store for every bug built in this
-# directory: the first pays for it, the rest get a checkout out of it in a
-# second. A bug's ./linux is a working copy that borrows those objects through
-# a *relative* alternates path, so the same directory works whether the build
-# runs in the container (as /work/...) or on the host (as $PWD/...).
+# The image's public bare clone is the object store. A bug's ./linux is a
+# working copy in /work that borrows those objects before the per-bug image is
+# committed.
 say "2/4  kernel source at $COMMIT"
 
 has_commit() { git -C "$1" cat-file -e "$COMMIT^{commit}" 2>/dev/null; }
 
-# --host has no image to take the object store from, so it makes its own.
 if [ ! -d "$MIRROR" ]; then
-	note "cloning $LINUX_URL into .cache/linux.git (once; this takes a while)"
-	git clone --quiet --bare "$LINUX_URL" "$MIRROR"
+	die "kernel object store is missing from the reproduction image: $MIRROR"
 fi
 
 # The bug's own clone owns nothing but its refs -- every object it can already
-# see comes from the store, which stays read-only and shared. In .cache/ that
-# link is written relative, so the work directory survives being moved or
-# copied; the one in the image is an absolute path that only exists in it.
+# see comes from the public store baked into the image, which stays read-only
+# and shared.
 if [ ! -d linux/.git ]; then
 	git clone --quiet --shared --no-checkout "$MIRROR" linux
 	git -C linux remote set-url origin "$LINUX_URL"
-	case $MIRROR in
-	"$CACHE"/*)
-		python3 - "$MIRROR" <<'EOF'
-import os, sys
-alt = "linux/.git/objects/info/alternates"
-with open(alt, "w") as f:
-    f.write(os.path.relpath(os.path.join(sys.argv[1], "objects"),
-                            os.path.abspath("linux/.git/objects")) + "\n")
-EOF
-		;;
-	esac
 	note "sharing objects with ${MIRROR#$PWD/}"
 fi
 
@@ -327,17 +353,16 @@ for t in qemu-system-x86_64 flock; do
 	command -v "$t" >/dev/null || die "$t is not installed"
 done
 
-[ -d "$DIR" ] || die "no ./$BUG here -- build it first: ${0##*/} build $BUG"
 cd "$DIR"
 
 # One at a time per bug. Two builds in one directory step on each other deep
 # inside make -- objtool failing on a half-written object file -- and the error
 # says nothing about the cause.
 exec 9>".lock"
-flock -n 9 || die "something else is already working in $BUG/"
+flock -n 9 || die "something else is already working on $BUG"
 
 for f in bzImage exp/repro run.sh; do
-	[ -s "$f" ] || die "no $BUG/$f -- build it first: ${0##*/} build $BUG"
+	[ -s "$f" ] || die "no $f in the per-bug image -- build it first: ${0##*/} build $BUG"
 done
 
 say "booting $BUG"
@@ -388,7 +413,7 @@ for v in $(grep -oE '\$[A-Za-z_][A-Za-z0-9_]*' run-repro.sh | tr -d '$' | sort -
 	[ -n "${!v:-}" ] || note "warning: run.sh uses \$$v and it is unset"
 done
 
-note "up to ${TIMEOUT}s; console also in $BUG/repro.log"
+note "up to ${TIMEOUT}s; console also in repro.log inside the per-bug image"
 set +e
 timeout --foreground -k 5 "$TIMEOUT" ./run-repro.sh nodebug </dev/null 2>&1 | tee repro.log
 rc=${PIPESTATUS[0]}
@@ -397,9 +422,9 @@ set -e
 say "result"
 if grep -qE 'KASAN|KMSAN|UBSAN|BUG: |general protection fault|Oops|kernel BUG at|WARNING: |Kernel panic|refcount_t:|INFO: task .* blocked' repro.log; then
 	grep -nE 'KASAN|KMSAN|UBSAN|BUG: |general protection fault|Oops|kernel BUG at|WARNING: |Kernel panic|refcount_t:' repro.log | head -5 | sed 's/^/    /'
-	note "crash reproduced -- full log in $BUG/repro.log"
+	note "crash reproduced -- full log in repro.log inside the per-bug image"
 	exit 0
 fi
 [ "$rc" = 124 ] && note "the VM ran out of time (${TIMEOUT}s) with no crash"
-note "no crash found in $BUG/repro.log"
+note "no crash found in repro.log inside the per-bug image"
 exit 1
