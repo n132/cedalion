@@ -15,38 +15,20 @@ If you are interested in helping the Linux kernel address these security issues,
 visit https://bugs.sh. You can also reach
 us at co@bugs.sh.
 
-## Reproduce A Bug
-
-Use [`reproduction/repro.sh`](reproduction/repro.sh):
-
-Build the image:
+## Reproduce a bug
 
 ```bash
+# Build the image
 reproduction/repro.sh build 4bda3bf8e1a2b780
-```
-
-Run it:
-
-```bash
+# Run it:
 reproduction/repro.sh run 4bda3bf8e1a2b780
 ```
 
-The built image is tagged as:
-
-```text
-n132/cedalion:co-4bda3bf8e1a2b780-vul
-```
-
-No host work directory is mounted. The image is built only from public inputs:
-this repository, `bugs.sh` artifacts, the public Linux git remote, and the
-public kernelCTF rootfs.
-
 ## Dataset (in-progress)
 
-We are building an interactive reproduction dataset similar to
-[ARVO](https://github.com/n132/ARVO-Meta/blob/main/2026155803.pdf).
+We are building an interactive reproduction dataset.
 
-Only public/patched (no race) bugs are included.
+> Only public/patched (no race) bugs are included.
 
 After an image has been pushed, another machine can reproduce the bug with one
 Docker command:
