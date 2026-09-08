@@ -8,9 +8,9 @@ ours. Same token, same domain, same From — only the transport differs.
 
 Reads a message on stdin (or a file), so it drops in wherever sendmail would:
 
-    cfsend.py < message.eml
-    cfsend.py message.eml --to someone@example.com
-    git send-email --sendmail-cmd=./cfsend.py ...
+    tools/cfsend.py < message.eml
+    tools/cfsend.py message.eml --to someone@example.com
+    git send-email --sendmail-cmd=./tools/cfsend.py ...
 
 Requires CF_API_TOKEN in the environment. Account id may be overridden with
 CF_ACCOUNT_ID.

@@ -12,8 +12,8 @@ one JSON document. An in-page refresh button would have handed a network caller
 the ability to spawn a process and to reach the database indirectly, which is a
 poor trade for saving a shell command.
 
-    python3 extract.py        # refresh the data
-    python3 app.py            # http://<host>:60001
+    python3 extract.py              # refresh the data
+    python3 tools/app.py            # http://<host>:60001
 """
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ import os
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, JSONResponse, Response
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Data at the root, front-end under web/. bugs.json is the one file that is
 # generated rather than written by hand, and the one file that is gitignored,
 # so it sits apart from the source it feeds.
@@ -31,9 +31,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # Where it lives is a parameter, because this server needs nothing else from
 # the machine it runs on: no claudes.db, no lore mirror, no CVE corpus, no
 # kernel clone. Those belong to extract.py. Hand this process a bugs.json from
-# anywhere and app.py plus web/ is the whole site.
-DATA = os.environ.get("CEDALION_DATA", os.path.join(HERE, "bugs.json"))
-WEB = os.path.join(HERE, "web")
+# anywhere and tools/app.py plus web/ is the whole site.
+DATA = os.environ.get("CEDALION_DATA", os.path.join(ROOT, "bugs.json"))
+WEB = os.path.join(ROOT, "web")
 
 # Every asset this server will ever hand out, named here rather than resolved
 # from the request. A route picks one of these constants, so no path a caller
@@ -44,7 +44,7 @@ LOGO_LIGHT_FILE = os.path.join(WEB, "logo-light.svg")
 FAVICON_FILE = os.path.join(WEB, "favicon.svg")
 CSS_FILE = os.path.join(WEB, "style.css")
 JS_FILE = os.path.join(WEB, "cedalion.js")
-ALLOW_FILE = os.path.join(HERE, "disclose_allow.json")
+ALLOW_FILE = os.path.join(ROOT, "disclose_allow.json")
 PORT = int(os.environ.get("CEDALION_PORT", "60001"))
 HOST = os.environ.get("CEDALION_HOST", "0.0.0.0")
 
@@ -143,7 +143,7 @@ if __name__ == "__main__":
     # HOST is 0.0.0.0 by default so the server accepts connections from
     # anywhere, but a browser cannot be pointed AT 0.0.0.0 — it means "every
     # interface", not an address. Print the hostname instead, the same way
-    # preview.py does: not gethostbyname()'s resolution of it, which on this
+    # tools/preview.py does: not gethostbyname()'s resolution of it, which on this
     # machine is 127.0.1.1 in /etc/hosts and reachable from nowhere else.
     print(f"  http://{socket.gethostname()}:{PORT}")
     uvicorn.run(app, host=HOST, port=PORT, log_level="info")

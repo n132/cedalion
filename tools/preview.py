@@ -9,7 +9,7 @@ It deliberately mirrors worker.js rather than sharing code with it, so treat
 that file as the authority: if the two ever disagree, the deployed behaviour is
 whatever the Worker says.
 
-    python3 preview.py            # http://127.0.0.1:60002
+    python3 tools/preview.py            # http://127.0.0.1:60002
 """
 
 import http.server
@@ -18,8 +18,8 @@ import os
 import re
 import sys
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-DOCS = os.path.join(HERE, "docs")
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DOCS = os.path.join(ROOT, "docs")
 PORT = int(os.environ.get("PORT", "60002"))
 # 0.0.0.0 so it is reachable from another machine. It serves docs/ only,
 # which holds nothing that publish.py has not already disclosed.

@@ -5,12 +5,12 @@
 # entry point that makes that work: extract.py rebuilds the file from
 # the triage database (read-only) and only then does the server start.
 #
-# The two stay separate processes on purpose. app.py never opens the database
+# The two stay separate processes on purpose. tools/app.py never opens the database
 # and never shells out, so the surface reachable over the network stays exactly
 # one JSON document — running the extractor here, before the socket is open,
 # keeps that true.
 #
-# Serving without refreshing first is still just `python3 app.py`.
+# Serving without refreshing first is still just `python3 tools/app.py`.
 set -e
 cd "$(dirname "$0")"
 
@@ -21,4 +21,4 @@ cd "$(dirname "$0")"
 [ -f .env ] && . ./.env
 
 python3 extract.py
-exec python3 app.py
+exec python3 tools/app.py

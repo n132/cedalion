@@ -7,7 +7,7 @@ syzbot report and never claims to be: the report is sent from your own address,
 carries your own tracking id, and omits every syzbot/syzkaller marker.
 
 Usage:
-    mkbugreport.py <bug-dir> [--kdir DIR] [--send] [--id-len N]
+    tools/mkbugreport.py <bug-dir> [--kdir DIR] [--send] [--id-len N]
 
 Reads from <bug-dir>:
     report.md     title + root cause (first '# ' line is the title)
@@ -29,7 +29,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+TOOLS = Path(__file__).resolve().parent
+sys.path.insert(0, str(TOOLS))
 import cfsend            # REST transport; port 465 is filtered on some nets
 
 FROM_NAME = "co"
@@ -79,7 +80,7 @@ COMPILE_CMD = "gcc -O2 -static -o repro repro.c"
 REPO_URL = "https://github.com/n132/cedalion"
 # Lives beside the register it reads: bugs.json for the bug id and the
 # lore link, artifacts.json for what has been disclosed.
-CEDALION = Path(__file__).resolve().parent
+CEDALION = TOOLS.parent
 BUGS_JSON = CEDALION / "bugs.json"
 SITE = "https://bugs.sh"
 
