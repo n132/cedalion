@@ -58,3 +58,13 @@ venv/
 # which is ignored right above for good reason. Publishing means adding it
 # deliberately with `git add -f docs`, which is the point.
 docs/
+
+# What reproduction/repro.sh --host writes where it is run from, which is
+# normally a checkout of this repository: one shared kernel object store and
+# the 650MB kernelCTF image in .cache/, and a directory per bug holding its
+# published files, a kernel checkout and a bzImage. All of it is derived, and
+# all of it is measured in gigabytes. The directory names are bug ids -- 16 hex
+# characters, and the same again with -latest for a build against mainline.
+.cache/
+[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]/
+[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]-latest/

@@ -14,15 +14,25 @@
 # Both work inside the container the Dockerfile beside this file describes,
 # which is built on first use. That is where the expensive and unchanging parts
 # are cached: the toolchain, qemu, the 650MB kernelCTF image every published
-# run.sh boots, and a public mainline kernel mirror.
+# run.sh boots, and a public mainline kernel mirror. --host uses what is
+# installed here instead and never invokes docker at all.
 #
 # A run does not mount a host work directory. Per-bug writable state is committed
-# into the Docker image named n132/cedalion:co-<bug_id>-vul. Throwing the work
-# away is `docker image rm n132/cedalion:co-<bug_id>-vul`. The one thing not
-# stored under /work is the kernel object store every checkout comes out of:
+# into the Docker image named n132/cedalion:co-<bug_id>-vul -- or, for --latest,
+# n132/cedalion:co-<bug_id>-latest, so that "does it still crash on mainline?"
+# and "does it crash on the commit it was found on?" are two images and not one
+# overwriting the other. Throwing the work away is `docker image rm` on the one
+# you no longer want. The one thing not stored under /work is the kernel object
+# store every checkout comes out of:
 # /opt/cedalion/linux.git is a read-only layer of the public image, cloned from
 # public mainline when the image was built, not once per directory that ever
 # runs a bug.
+#
+# --host has neither an image to commit into nor one to take the object store
+# from. It writes nothing outside the directory it is run from: per-bug work is
+# ./<bug_id>/ (./<bug_id>-latest/ under --latest), the object store is cloned
+# once into ./.cache/linux.git unless CEDALION_LINUX_CACHE points at a clone
+# that already exists, and throwing it all away is `rm -rf`.
 #
 # Environment:
 #   CEDALION_BASE            site to fetch from        (default https://bugs.sh)
@@ -32,7 +42,8 @@
 #   CEDALION_ROOTFS          kernelCTF image           (image default:
 #                                                       /opt/cedalion/rootfs.img)
 #   CEDALION_LINUX_CACHE     bare kernel clone to take checkouts out of; the
-#                            image sets this to the public one baked into it
+#                            image sets this to the public one baked into it,
+#                            and --host clones ./.cache/linux.git when unset
 set -euo pipefail
 
 ARGV=("$@")   # kept so the script can hand itself the same arguments in docker
@@ -44,6 +55,8 @@ TIMEOUT=${CEDALION_TIMEOUT:-300}
 IMAGE=${CEDALION_IMAGE:-cedalion-repro}
 JOBS=$(nproc)
 COMMIT=
+LATEST=0
+HOST=0
 RUNAS=root
 FORCE=0
 NO_CACHE=0
@@ -59,6 +72,13 @@ usage: $0 build <bug_id>    fetch the bug, build its kernel and reproducer
 
   -c, --commit SHA   kernel commit to build (default: the one artifacts.json
                      records for this bug)                          [build]
+      --latest       ignore the recorded commit and build the current tip of
+                     the kernel remote instead -- "does this still reproduce
+                     on mainline?". Its image is a separate one, so pass
+                     --latest to 'run' as well             [build] and [run]
+      --host         work here rather than in the container: no docker, the
+                     toolchain and qemu installed on this machine, and the
+                     bug's files under ./<bug_id>/  [build] and [run]
   -j, --jobs N       make -j (default $JOBS)                            [build]
   -f, --force        rebuild the per-bug image without cache         [build]
       --no-cache     rebuild the container with docker --no-cache --pull
@@ -76,6 +96,8 @@ die()  { printf '\033[1;31merror:\033[0m %s\n' "$*" >&2; exit 1; }
 while [ $# -gt 0 ]; do
 	case $1 in
 	-c|--commit)  COMMIT=$2; shift 2 ;;
+	--latest)     LATEST=1; shift ;;
+	--host)       HOST=1; shift ;;
 	-j|--jobs)    JOBS=$2; shift 2 ;;
 	-t|--timeout) TIMEOUT=$2; shift 2 ;;
 	-u|--as-user) RUNAS=user; shift ;;
@@ -89,6 +111,21 @@ while [ $# -gt 0 ]; do
 	              else die "too many arguments"; fi; shift ;;
 	esac
 done
+
+if [ "$LATEST" = 1 ] && [ -n "$COMMIT" ]; then
+	die "--latest and --commit both say which kernel to build; pick one"
+fi
+
+# --shell is a shell in the container, which is the one thing --host does not
+# have. Refuse the pair here, before the container block, so that asking for it
+# does not build or start anything.
+if [ "$HOST" = 1 ] && [ "$SHELL_ONLY" = 1 ]; then
+	die "--shell is a shell in the container and --host has none; drop one of them"
+fi
+
+# How to say "the same thing again" in the hints this prints.
+[ "$LATEST" = 1 ] && LATEST_ARG=" --latest" || LATEST_ARG=
+[ "$HOST"   = 1 ] && HOST_ARG=" --host"     || HOST_ARG=
 
 if [ "$SHELL_ONLY" = 0 ]; then
 	case $CMD in
@@ -107,12 +144,16 @@ fi
 # build path to produce n132/cedalion:co-<bug_id>-vul with the checked-out
 # kernel, bzImage and compiled reproducer already inside it. `run` starts that
 # per-bug image. No host work directory is mounted.
-if [ -z "${CEDALION_IN_CONTAINER:-}" ]; then
+#
+# --host skips this whole section: the same four steps then run on this machine,
+# against ./<bug_id>/ and ./.cache/, and docker is never invoked.
+if [ -z "${CEDALION_IN_CONTAINER:-}" ] && [ "$HOST" = 0 ]; then
 	HERE=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
-	command -v docker >/dev/null || die "docker is not installed"
-	[ -f "$HERE/Dockerfile" ] || die "no Dockerfile next to $0; run this from the public Cedalion checkout"
-	BUG_IMAGE="n132/cedalion:co-$BUG-vul"
-	BUG_CONTAINER="co-$BUG-vul"
+	command -v docker >/dev/null || die "docker is not installed; --host works without it"
+	[ -f "$HERE/Dockerfile" ] || die "no Dockerfile next to $0; --host works without one"
+	if [ "$LATEST" = 1 ]; then FLAVOUR=latest; else FLAVOUR=vul; fi
+	BUG_IMAGE="n132/cedalion:co-$BUG-$FLAVOUR"
+	BUG_CONTAINER="co-$BUG-$FLAVOUR"
 
 	# The image carries a copy of this script, so an edit to either file is a
 	# reason to build again. Nothing else here is in the image.
@@ -147,16 +188,19 @@ if [ -z "${CEDALION_IN_CONTAINER:-}" ]; then
 		build_opts=(-t "$BUG_IMAGE" --build-arg "BASE_IMAGE=$IMAGE"
 		            --build-arg "BUG=$BUG" --build-arg "JOBS=$JOBS")
 		[ -n "$COMMIT" ] && build_opts+=(--build-arg "COMMIT=$COMMIT")
+		[ "$LATEST" = 1 ] && build_opts+=(--build-arg "LATEST=1")
 		[ -n "${CEDALION_BASE:-}" ] && build_opts+=(--build-arg "CEDALION_BASE=$CEDALION_BASE")
 		[ -n "${CEDALION_LINUX_URL:-}" ] && build_opts+=(--build-arg "CEDALION_LINUX_URL=$CEDALION_LINUX_URL")
 		[ -n "${CEDALION_TIMEOUT:-}" ] && build_opts+=(--build-arg "CEDALION_TIMEOUT=$CEDALION_TIMEOUT")
-		{ [ "$NO_CACHE" = 1 ] || [ "$FORCE" = 1 ]; } && build_opts+=(--no-cache)
+		{ [ "$NO_CACHE" = 1 ] || [ "$FORCE" = 1 ] || [ "$LATEST" = 1 ]; } &&
+			build_opts+=(--no-cache)
 		say "building ready-to-run image $BUG_IMAGE"
 		docker build "${build_opts[@]}" -f - "$HERE" <<'EOF'
 ARG BASE_IMAGE=cedalion-repro
 FROM ${BASE_IMAGE}
 ARG BUG
 ARG COMMIT
+ARG LATEST
 ARG JOBS
 ARG CEDALION_BASE
 ARG CEDALION_LINUX_URL
@@ -164,16 +208,18 @@ ARG CEDALION_TIMEOUT
 ENV CEDALION_IN_CONTAINER=1
 WORKDIR /work
 RUN set -eu; \
-	if [ -n "${COMMIT:-}" ]; then set -- -c "$COMMIT"; else set --; fi; \
+	set --; \
+	if [ -n "${COMMIT:-}" ]; then set -- -c "$COMMIT"; fi; \
+	if [ "${LATEST:-0}" = 1 ]; then set -- --latest; fi; \
 	/usr/local/bin/repro.sh "$@" -j "$JOBS" build "$BUG"
 EOF
 		note "image: $BUG_IMAGE"
-		note "run it with: ${0##*/} run $BUG"
+		note "run it with: ${0##*/} run $BUG${LATEST_ARG:-}"
 		exit 0
 	fi
 
 	docker image inspect "$BUG_IMAGE" >/dev/null 2>&1 ||
-		die "no image $BUG_IMAGE -- build it first: ${0##*/} build $BUG"
+		die "no image $BUG_IMAGE -- build it first: ${0##*/} build $BUG${LATEST_ARG:-}"
 	[ -e /dev/kvm ] || die "/dev/kvm is missing; every published run.sh boots with -enable-kvm"
 	if old=$(docker ps -aq --filter "name=^/${BUG_CONTAINER}$"); then
 		if [ -n "$old" ]; then
@@ -192,11 +238,25 @@ fi
 
 [ "$SHELL_ONLY" = 1 ] && die "--shell needs docker"
 
-# In the container both of these are layers of the public reproduction image.
+# In the container both of these are layers of the public reproduction image; on
+# --host they are fetched once into ./.cache/ and shared by every bug built in
+# this directory.
 CACHE=$PWD/.cache
 ROOTFS=${CEDALION_ROOTFS:-$CACHE/rootfs.img}
 MIRROR=${CEDALION_LINUX_CACHE:-$CACHE/linux.git}
-DIR=$PWD
+TOP=$PWD
+
+# The container gives the bug all of /work, because the image is the bug. On
+# --host there is no image, so a bug gets a directory of its own -- and --latest
+# gets one beside it rather than building over the recorded commit's tree, for
+# the same reason its image is a separate tag.
+if [ "$HOST" = 0 ]; then
+	DIR=$PWD
+	WHERE="the per-bug image"
+else
+	[ "$LATEST" = 1 ] && DIR=$PWD/$BUG-latest || DIR=$PWD/$BUG
+	WHERE=./${DIR#$TOP/}/
+fi
 
 # =============================================================================
 if [ "$CMD" = build ]; then
@@ -240,6 +300,7 @@ EOF
 ) || exit 1
 eval "$meta"
 
+mkdir -p "$DIR"
 cd "$DIR"
 
 # One at a time per bug. Two builds in one directory step on each other deep
@@ -249,10 +310,19 @@ exec 9>".lock"
 flock -n 9 || die "something else is already working on $BUG"
 [ "$FORCE" = 1 ] && rm -f bzImage exp/repro run-repro.sh
 
-[ -n "$COMMIT" ] || COMMIT=$ENTRY_COMMIT
-[ -n "$COMMIT" ] || die "no kernel commit for $BUG; pass one with --commit"
+# --latest deliberately drops what the bug was found on: the question it asks is
+# whether the tip of the tree still crashes, and the answer only means something
+# if nothing pins the checkout to the old commit. Which commit that turned out
+# to be is resolved below, once the remote has been asked.
+if [ "$LATEST" = 1 ]; then
+	COMMIT=
+	[ -n "$ENTRY_COMMIT" ] && note "recorded commit: $ENTRY_COMMIT (ignored, --latest)"
+else
+	[ -n "$COMMIT" ] || COMMIT=$ENTRY_COMMIT
+	[ -n "$COMMIT" ] || die "no kernel commit for $BUG; pass one with --commit"
+fi
 [ -n "$TITLE" ] && note "$TITLE"
-note "kernel commit: $COMMIT"
+[ -n "$COMMIT" ] && note "kernel commit: $COMMIT"
 
 for f in repro.c config.gz run.sh; do
 	[ -s "$f" ] && [ "$FORCE" = 0 ] && { note "have $f"; continue; }
@@ -276,35 +346,66 @@ done
 # The image's public bare clone is the object store. A bug's ./linux is a
 # working copy in /work that borrows those objects before the per-bug image is
 # committed.
-say "2/4  kernel source at $COMMIT"
+say "2/4  kernel source at ${COMMIT:-the tip of $LINUX_URL}"
 
 has_commit() { git -C "$1" cat-file -e "$COMMIT^{commit}" 2>/dev/null; }
 
 if [ ! -d "$MIRROR" ]; then
-	die "kernel object store is missing from the reproduction image: $MIRROR"
+	[ "$HOST" = 0 ] &&
+		die "kernel object store is missing from the reproduction image: $MIRROR"
+	# --host has no image to take the object store from, so it makes its own.
+	# Pointing CEDALION_LINUX_CACHE at a kernel clone that already exists skips
+	# this, and `git clone --shared` is happy to borrow from a non-bare one.
+	note "cloning $LINUX_URL into ${MIRROR#$TOP/} (once; this takes a while)"
+	git clone --quiet --bare "$LINUX_URL" "$MIRROR"
 fi
 
 # The bug's own clone owns nothing but its refs -- every object it can already
 # see comes from the public store baked into the image, which stays read-only
 # and shared.
 if [ ! -d linux/.git ]; then
+	# Borrowing objects is what makes a per-bug tree cheap, and a shallow store
+	# cannot be borrowed from -- git quietly copies the objects instead, once
+	# per bug and at the size of the whole store. Say so rather than letting it
+	# look like a hung clone.
+	if [ "$(git -C "$MIRROR" rev-parse --is-shallow-repository 2>/dev/null || echo false)" = true ]; then
+		note "warning: ${MIRROR#$TOP/} is a shallow clone; objects will be copied,"
+		note "         not shared -- a full clone is cheaper if you build often"
+	fi
 	git clone --quiet --shared --no-checkout "$MIRROR" linux
 	git -C linux remote set-url origin "$LINUX_URL"
-	note "sharing objects with ${MIRROR#$PWD/}"
+	note "sharing objects with ${MIRROR#$TOP/}"
 fi
 
-# A commit newer than the store -- the image has aged, or the bug is on a tree
-# that is not mainline. Fetching it into the bug's clone is the writable half
-# of the arrangement: only the objects the store lacks come down.
-has_commit linux || {
-	note "$COMMIT is not in the store; fetching it"
-	git -C linux fetch --quiet --no-tags origin "$COMMIT" 2>/dev/null ||
-		git -C linux fetch --quiet --no-tags origin ||
-		die "cannot fetch $COMMIT from $LINUX_URL"
-}
-has_commit linux || die "$COMMIT is not reachable from $LINUX_URL"
+# Whatever the store lacks -- a commit newer than the image, a bug on a tree that
+# is not mainline, or the moving tip --latest asks for -- comes down into the
+# bug's own clone. That fetch is the writable half of the arrangement: only the
+# objects missing from the shared store are transferred.
+if [ -z "$COMMIT" ]; then
+	# The store baked into the image is as old as the image, so the tip has to
+	# come from the remote every time -- that is the whole point of --latest.
+	note "asking $LINUX_URL for its tip"
+	git -C linux fetch --quiet --no-tags origin HEAD 2>/dev/null ||
+		git -C linux fetch --quiet --no-tags origin master ||
+		die "cannot fetch the tip of $LINUX_URL"
+	COMMIT=$(git -C linux rev-parse FETCH_HEAD)
+	note "tip is $COMMIT"
+else
+	has_commit linux || {
+		note "$COMMIT is not in the store; fetching it"
+		git -C linux fetch --quiet --no-tags origin "$COMMIT" 2>/dev/null ||
+			git -C linux fetch --quiet --no-tags origin ||
+			die "cannot fetch $COMMIT from $LINUX_URL"
+	}
+	has_commit linux || die "$COMMIT is not reachable from $LINUX_URL"
+fi
 
-if [ "$(git -C linux rev-parse HEAD 2>/dev/null || true)" != "$COMMIT" ]; then
+# HEAD alone does not say the tree is there: the clone above is --no-checkout,
+# and it inherits the store's default branch -- which, for a store cloned from
+# mainline moments ago, already is the tip --latest asks for. Matching SHAs and
+# an empty directory is a real state, and make finds no Makefile in it.
+if [ "$(git -C linux rev-parse HEAD 2>/dev/null || true)" != "$COMMIT" ] ||
+   [ ! -f linux/Makefile ]; then
 	git -C linux checkout --quiet --detach --force "$COMMIT"
 	git -C linux clean -qfdx
 fi
@@ -332,7 +433,7 @@ gcc -O2 -static -o exp/repro repro.c -lpthread -w
 note "exp/repro: $(du -h exp/repro | cut -f1)"
 
 say "built"
-note "boot it with: ${0##*/} run $BUG"
+note "boot it with: ${0##*/} run $BUG$LATEST_ARG$HOST_ARG"
 exit 0
 fi
 
@@ -353,6 +454,9 @@ for t in qemu-system-x86_64 flock; do
 	command -v "$t" >/dev/null || die "$t is not installed"
 done
 
+[ -e /dev/kvm ] || die "/dev/kvm is missing; every published run.sh boots with -enable-kvm"
+[ -d "$DIR" ] ||
+	die "nothing built for $BUG in $WHERE -- build it first: ${0##*/} build $BUG$LATEST_ARG$HOST_ARG"
 cd "$DIR"
 
 # One at a time per bug. Two builds in one directory step on each other deep
@@ -362,7 +466,8 @@ exec 9>".lock"
 flock -n 9 || die "something else is already working on $BUG"
 
 for f in bzImage exp/repro run.sh; do
-	[ -s "$f" ] || die "no $f in the per-bug image -- build it first: ${0##*/} build $BUG"
+	[ -s "$f" ] ||
+		die "no $f in $WHERE -- build it first: ${0##*/} build $BUG$LATEST_ARG$HOST_ARG"
 done
 
 say "booting $BUG"
@@ -413,18 +518,25 @@ for v in $(grep -oE '\$[A-Za-z_][A-Za-z0-9_]*' run-repro.sh | tr -d '$' | sort -
 	[ -n "${!v:-}" ] || note "warning: run.sh uses \$$v and it is unset"
 done
 
-note "up to ${TIMEOUT}s; console also in repro.log inside the per-bug image"
+note "up to ${TIMEOUT}s; console also in repro.log in $WHERE"
 set +e
-timeout --foreground -k 5 "$TIMEOUT" ./run-repro.sh nodebug </dev/null 2>&1 | tee repro.log
+# Not --foreground: that leaves the command in this process group and so signals
+# only the direct child, which is the run.sh wrapper and not the qemu it forked.
+# A bug that reports without panicking -- a KASAN splat under panic_on_warn=0 --
+# then outlives its own timeout: the wrapper dies, qemu is reparented to pid 1,
+# and tee blocks forever on a pipe qemu still holds open. Without it timeout
+# puts the command in a process group of its own and signals the group, so the
+# VM goes when the clock runs out.
+timeout -k 5 "$TIMEOUT" ./run-repro.sh nodebug </dev/null 2>&1 | tee repro.log
 rc=${PIPESTATUS[0]}
 set -e
 
 say "result"
 if grep -qE 'KASAN|KMSAN|UBSAN|BUG: |general protection fault|Oops|kernel BUG at|WARNING: |Kernel panic|refcount_t:|INFO: task .* blocked' repro.log; then
 	grep -nE 'KASAN|KMSAN|UBSAN|BUG: |general protection fault|Oops|kernel BUG at|WARNING: |Kernel panic|refcount_t:' repro.log | head -5 | sed 's/^/    /'
-	note "crash reproduced -- full log in repro.log inside the per-bug image"
+	note "crash reproduced -- full log in repro.log in $WHERE"
 	exit 0
 fi
 [ "$rc" = 124 ] && note "the VM ran out of time (${TIMEOUT}s) with no crash"
-note "no crash found in repro.log inside the per-bug image"
+note "no crash found in repro.log in $WHERE"
 exit 1
