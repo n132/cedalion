@@ -694,6 +694,13 @@ body.bug { zoom: 1; }
 /* Set in the same face as the rest, only tinted: these are the names of trailers
    and files, and a monospace switch mid-sentence reads as a code sample. */
 .doc code { font-family: inherit; color: var(--text); font-weight: 560; }
+.doc pre {
+  margin: 12px 0 14px; padding: 11px 13px; overflow-x: auto;
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: 4px; box-shadow: var(--sunk-soft);
+  font: 12px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.doc pre code { color: inherit; font: inherit; font-weight: 400; }
 .doc a { color: var(--text); text-underline-offset: 2px; }
 
 /* The one word in the topbar. It sits with the brand rather than against the

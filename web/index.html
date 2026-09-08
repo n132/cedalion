@@ -16,6 +16,7 @@
          answer cannot live inside the table. -->
     <a class="brand" href="."><img src="logo-light.svg" alt="Cedalion"></a>
     <a class="page" href="reporting.html">How it works</a>
+    <a class="page" href="patch.html">Patch</a>
     <!-- The one link off this page, and a mark rather than a word: the bar
          carries the register's name and what the register is, and a third
          thing spelled out across it would read as the nav that is
@@ -152,13 +153,21 @@ const VULN_COLUMNS = [["bug_id", "bug id"], ["hash", "hash"],
                ["kernel_commit", "kernel commit"], ["config", "config"],
                ["poc", "poc"], ["sanitizer", "sanitizer report"],
                ["lore", "lore links"]];
+// The one column Processing carries that Vulnerable does not, and it is the
+// exception that the paragraph above is otherwise right about. It is not a
+// different fact about a different kind of row — it is the same question every
+// row on this page asks — but its answer is only worth offering once a report
+// has actually gone out under the bug's own address, and that is exactly what
+// makes a row Processing. Built from VULN_COLUMNS rather than written out
+// again, so the seven columns the two views share stay one list.
+const PROC_COLUMNS = [...VULN_COLUMNS, ["patches", "patches on lore"]];
 const COLUMNS = {
   // The same field under the same name in both views that carry it: it is the
   // subject the patch went out under before it lands and the subject it landed
   // with after, which is one thing at two moments, not two things.
   patched:    [["cve", "cve"], ["commit", "patch commit"],
                ["title", "patch title"], ["cvss", "cvss"]],
-  processing: VULN_COLUMNS,
+  processing: PROC_COLUMNS,
   vulnerable: VULN_COLUMNS,
 };
 
@@ -312,6 +321,34 @@ function loreLink(b) {
              title="not in the local mirror; search lore for this title">search ↗</a>`;
 }
 
+// Has somebody already written this patch? The column exists so the answer
+// costs a click rather than an evening.
+//
+// A report goes out with `Reported-by: co+<id>@bugs.sh` in it. git send-email
+// puts the addresses it finds in a patch's trailers on Cc, so a patch written
+// for this bug carries that address whether or not its author ever replied to
+// our thread — every message that has credited us so far has carried it. So a
+// search for the address finds the patch that already exists, which is the
+// thing to settle before starting another.
+//
+// Derived from bug_id rather than published as a field of its own: the address
+// is `co+<bug_id>@bugs.sh` for every bug there has ever been, so a column of
+// them in bugs.json would be the row's own id written out a second time.
+//
+// Two details about the URL, both of which produce an empty page when they are
+// wrong. Message search lives inside an inbox and never at the archive root —
+// the search box on lore.kernel.org/ matches the NAMES of the lists — and
+// `all` is the inbox to ask, because the answer may be on netdev, linux-usb or
+// somewhere nobody thought to guess. The quotes are not decoration either:
+// unquoted, an address is tokenised on its `+` and `@`.
+function patchSearchLink(b) {
+  if (!b.bug_id) return DASH;
+  const addr = `co+${b.bug_id}@bugs.sh`;
+  const url = "https://lore.kernel.org/all/?q=" + encodeURIComponent(`"${addr}"`);
+  return `<a class="ext" href="${esc(url)}" target="_blank" rel="noopener"
+             title="every message on lore that cites ${esc(addr)} — a patch for this bug would carry it, so look here before writing another">search ↗</a>`;
+}
+
 // A diff, coloured the way one is read: the +/- lines are the change, @@ says
 // where, and the file headers are neither. Every line is its own block and
 // carries its own newline, so a blank line in the patch still occupies one.
@@ -385,6 +422,10 @@ function cellHTML(k, b) {
       return ["desc", v ? esc(v) : UNKNOWN];
     case "lore":
       return ["", loreLink(b)];
+    // Not backed by a field, so it never reaches `v` above -- the link is
+    // built from the row's own id. See patchSearchLink().
+    case "patches":
+      return ["", patchSearchLink(b)];
     // The diff itself is in a row of its own below this one; this is the
     // handle that shows it. A row with no patch has nothing to open — the
     // mirror has no copy of the posting — and gets a dash rather than a
@@ -429,7 +470,10 @@ function renderCell([k, label], b) {
 // The patch column holds a diff, and ordering rows by the text of one puts
 // them in the alphabetical order of the first file each touches, which is not
 // an order anybody wants. Its header says so by not offering to be clicked.
-const NOSORT = new Set(["patch"]);
+// `patches` joins it for a different reason: it is the same link on every row,
+// so there is no order in it either -- and being unsortable also keeps it out
+// of the phone view's sort menu, which lists the columns a head would offer.
+const NOSORT = new Set(["patch", "patches"]);
 
 function renderHead() {
   document.getElementById("head").innerHTML =
@@ -484,8 +528,13 @@ function renderTable() {
   // in the useful direction: they are held whole and drawn cut, so pasting a
   // full sha256 of a report.md finds its row as well as typing the 16 hex on
   // screen does.
+  // `patches` is searched by the address it links to rather than by a field it
+  // does not have. That is the lookup somebody actually arrives with: they
+  // read `Reported-by: co+<id>@bugs.sh` at the bottom of a patch on a list and
+  // want the bug it names, and pasting the whole trailer address finds it.
   if (q) rows = rows.filter(b => cols.some(([k]) =>
-    (isPending(k, b) ? "pending"
+    (k === "patches" ? `co+${b.bug_id}@bugs.sh`
+        : isPending(k, b) ? "pending"
         : String(artifactOf(k, b) || b[k] || "")).toLowerCase().includes(q)));
   // Worst score first, then assigned CVEs ahead of the rest, then by title.
   // Severity is what people come here to rank by; a CVE only breaks ties among
