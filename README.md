@@ -20,15 +20,15 @@ us at co@bugs.sh.
 ```bash
 # Build the image
 reproduction/repro.sh build 4bda3bf8e1a2b780
-# Run it:
+# Run it
 reproduction/repro.sh run 4bda3bf8e1a2b780
 ```
 
 ## Dataset (in-progress)
 
-We are building an interactive reproduction dataset.
+> Only public/patched (no race) bugs are currently included.
 
-> Only public/patched (no race) bugs are included.
+We are building an interactive reproduction dataset.
 
 After an image has been pushed, another machine can reproduce the bug with one
 Docker command:
