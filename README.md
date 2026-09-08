@@ -43,8 +43,8 @@ public kernelCTF rootfs.
 
 ## Dataset (in-progress)
 
-We are building an interactive reproduction dataset in
-[ARVO-Style](https://github.com/n132/ARVO-Meta/blob/main/2026155803.pdf).
+We are building an interactive reproduction dataset similar to
+[ARVO](https://github.com/n132/ARVO-Meta/blob/main/2026155803.pdf).
 
 Only public/patched (no race) bugs are included.
 
