@@ -46,6 +46,32 @@ always rebuilt without Docker cache, so a build a week later is a build of that
 week's tree. Everything else is unchanged: the bug's published `config.gz` still
 configures it (through `olddefconfig`) and its published `run.sh` still boots it.
 
+## Another tree
+
+`--latest` asks the tip of mainline by default. `--tree` points it somewhere
+else — a git URL, or one of `mainline`, `net`, `net-next`, `linux-next`,
+`stable`:
+
+```bash
+./repro.sh build 4bda3bf8e1a2b780 --latest --tree net
+./repro.sh run   4bda3bf8e1a2b780 --latest --tree net
+./repro.sh build 4bda3bf8e1a2b780 --latest \
+    --tree https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next.git
+```
+
+"Is it still there?" is a different question for `net` than for mainline, so
+each tree gets a name of its own — image `n132/cedalion:co-<bug_id>-net-latest`,
+directory `./<bug_id>-net-latest/` under `--host` — and two trees never build
+over each other. A URL and its shorthand resolve to the same name. Mainline
+keeps the plain `-latest` name it already had.
+
+The fetch is cheap even across trees, because the object store already holds
+almost everything: pulling `netdev/net`'s tip into a store cloned from mainline
+moves seconds of objects, not a clone. A pinned `--commit` build keeps the `vul`
+name whichever tree it was fetched from — a commit identifies itself.
+
+`CEDALION_LINUX_URL` still works and does the same thing as a `--tree` URL.
+
 ## Host mode
 
 `--host` does the same work on this machine instead of in a container, and never
@@ -134,7 +160,7 @@ says so before booting rather than after.
 | variable | points at |
 |---|---|
 | `CEDALION_IMAGE` | the base image to build from (default `cedalion-repro`) |
-| `CEDALION_LINUX_URL` | the public kernel remote a missing commit is fetched from |
+| `CEDALION_LINUX_URL` | the public kernel remote a missing commit is fetched from; `--tree` sets the same thing |
 | `CEDALION_LINUX_CACHE` | the bare public mainline clone checkouts come out of; the base image sets this, and `--host` clones `./.cache/linux.git` when it is unset |
 | `CEDALION_TIMEOUT` | how long to let the VM run (default 300s) |
 | `CEDALION_ROOTFS` | the public kernelCTF image baked into the container |

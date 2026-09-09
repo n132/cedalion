@@ -57,6 +57,8 @@ JOBS=$(nproc)
 COMMIT=
 LATEST=0
 HOST=0
+TREE=
+TREE_ARG=
 RUNAS=root
 FORCE=0
 NO_CACHE=0
@@ -76,6 +78,11 @@ usage: $0 build <bug_id>    fetch the bug, build its kernel and reproducer
                      the kernel remote instead -- "does this still reproduce
                      on mainline?". Its image is a separate one, so pass
                      --latest to 'run' as well             [build] and [run]
+      --tree T       which kernel remote that is: a git URL, or one of
+                     mainline net net-next linux-next stable. A tree other
+                     than mainline gets an image and a directory of its own,
+                     so two trees do not build over each other
+                                                           [build] and [run]
       --host         work here rather than in the container: no docker, the
                      toolchain and qemu installed on this machine, and the
                      bug's files under ./<bug_id>/  [build] and [run]
@@ -98,6 +105,7 @@ while [ $# -gt 0 ]; do
 	-c|--commit)  COMMIT=$2; shift 2 ;;
 	--latest)     LATEST=1; shift ;;
 	--host)       HOST=1; shift ;;
+	--tree)       TREE=$2; TREE_ARG=" --tree $2"; shift 2 ;;
 	-j|--jobs)    JOBS=$2; shift 2 ;;
 	-t|--timeout) TIMEOUT=$2; shift 2 ;;
 	-u|--as-user) RUNAS=user; shift ;;
@@ -116,6 +124,27 @@ if [ "$LATEST" = 1 ] && [ -n "$COMMIT" ]; then
 	die "--latest and --commit both say which kernel to build; pick one"
 fi
 
+# A bug is found on one tree and fixed on another, and "is it still there?" is
+# a different question for net, net-next and mainline. The shorthands are the
+# trees that question is usually asked of; anything else is a URL.
+K=https://git.kernel.org/pub/scm/linux/kernel/git
+case $TREE in
+"")                ;;
+mainline|torvalds) LINUX_URL=$K/torvalds/linux.git;  TREE= ;;
+net)               LINUX_URL=$K/netdev/net.git ;;
+net-next)          LINUX_URL=$K/netdev/net-next.git ;;
+linux-next)        LINUX_URL=$K/next/linux-next.git ;;
+stable)            LINUX_URL=$K/stable/linux.git ;;
+*://*|*@*:*)       LINUX_URL=$TREE
+                   TREE=$(basename "$TREE" .git | tr -c 'a-z0-9._\n-' '-') ;;
+*)                 die "unknown tree '$TREE'; give a git URL or one of: mainline net net-next linux-next stable" ;;
+esac
+
+# What a build off this tree is called. A commit names itself, so a pinned build
+# stays 'vul' whichever remote it came from; a moving tip does not, so it is
+# named after the tree it moved to.
+if [ "$LATEST" = 1 ]; then FLAVOUR=${TREE:+$TREE-}latest; else FLAVOUR=vul; fi
+
 # --shell is a shell in the container, which is the one thing --host does not
 # have. Refuse the pair here, before the container block, so that asking for it
 # does not build or start anything.
@@ -124,7 +153,7 @@ if [ "$HOST" = 1 ] && [ "$SHELL_ONLY" = 1 ]; then
 fi
 
 # How to say "the same thing again" in the hints this prints.
-[ "$LATEST" = 1 ] && LATEST_ARG=" --latest" || LATEST_ARG=
+[ "$LATEST" = 1 ] && LATEST_ARG=" --latest$TREE_ARG" || LATEST_ARG=$TREE_ARG
 [ "$HOST"   = 1 ] && HOST_ARG=" --host"     || HOST_ARG=
 
 if [ "$SHELL_ONLY" = 0 ]; then
@@ -151,7 +180,6 @@ if [ -z "${CEDALION_IN_CONTAINER:-}" ] && [ "$HOST" = 0 ]; then
 	HERE=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 	command -v docker >/dev/null || die "docker is not installed; --host works without it"
 	[ -f "$HERE/Dockerfile" ] || die "no Dockerfile next to $0; --host works without one"
-	if [ "$LATEST" = 1 ]; then FLAVOUR=latest; else FLAVOUR=vul; fi
 	BUG_IMAGE="n132/cedalion:co-$BUG-$FLAVOUR"
 	BUG_CONTAINER="co-$BUG-$FLAVOUR"
 
@@ -190,7 +218,7 @@ if [ -z "${CEDALION_IN_CONTAINER:-}" ] && [ "$HOST" = 0 ]; then
 		[ -n "$COMMIT" ] && build_opts+=(--build-arg "COMMIT=$COMMIT")
 		[ "$LATEST" = 1 ] && build_opts+=(--build-arg "LATEST=1")
 		[ -n "${CEDALION_BASE:-}" ] && build_opts+=(--build-arg "CEDALION_BASE=$CEDALION_BASE")
-		[ -n "${CEDALION_LINUX_URL:-}" ] && build_opts+=(--build-arg "CEDALION_LINUX_URL=$CEDALION_LINUX_URL")
+		build_opts+=(--build-arg "CEDALION_LINUX_URL=$LINUX_URL")
 		[ -n "${CEDALION_TIMEOUT:-}" ] && build_opts+=(--build-arg "CEDALION_TIMEOUT=$CEDALION_TIMEOUT")
 		{ [ "$NO_CACHE" = 1 ] || [ "$FORCE" = 1 ] || [ "$LATEST" = 1 ]; } &&
 			build_opts+=(--no-cache)
@@ -254,7 +282,7 @@ if [ "$HOST" = 0 ]; then
 	DIR=$PWD
 	WHERE="the per-bug image"
 else
-	[ "$LATEST" = 1 ] && DIR=$PWD/$BUG-latest || DIR=$PWD/$BUG
+	[ "$FLAVOUR" = vul ] && DIR=$PWD/$BUG || DIR=$PWD/$BUG-$FLAVOUR
 	WHERE=./${DIR#$TOP/}/
 fi
 
