@@ -28,8 +28,8 @@
     </p>
     <p class="standfirst">
       This page is a guide to using bugs.sh artifacts to reproduce a bug,
-      test the provided patch or develop one, and send it to the appropriate
-      maintainers.
+      test the provided patch or develop a better one, and send it to the
+      appropriate maintainers.
     </p>
 
     <h2>Human review</h2>
@@ -39,11 +39,14 @@
       root cause, violate subsystem design, break functionality, or introduce
       new bugs. Treat it as a starting point, not a ready-to-send fix. Sending
       an unverified patch would waste maintainers&rsquo; time and burden the review
-      process, so we share the reproduction artifacts and welcome help testing
-      our fix or developing a better one. To keep disclosure ethical, every bug
-      we make public is low severity or already patched, and most are security
-      issues. When a fix is merged, we request a CVE where applicable, and the
-      contributor receives credit for the work.
+      process.
+    </p>
+    <p>
+      We share the reproduction artifacts so contributors can verify our patch
+      or develop a better one. To keep disclosure ethical, every public bug is
+      low severity or already patched. Most are security issues; when a fix is
+      merged, we request a CVE where applicable, and the contributor receives
+      credit for the work.
     </p>
 
     <h2>Open issues</h2>
@@ -59,23 +62,182 @@
 
     <h2>Reproduction</h2>
     <p>
-      Our storage is limited, so we cannot provide a compiled kernel for every
-      issue. Instead, bugs.sh provides the metadata and scripts needed to build
-      the affected kernel and trigger the bug. Using bug ID
-      <code>4bda3bf8e1a2b780</code> as an example:
+      Our storage is limited, so we cannot provide a compiled Linux kernel for
+      every issue. Instead, bugs.sh provides the metadata and scripts needed to
+      build the affected Linux kernel and trigger the bug.
     </p>
-    <pre><code>./reproduction/repro.sh build 4bda3bf8e1a2b780 --latest --host
-./reproduction/repro.sh run   4bda3bf8e1a2b780 --latest --host</code></pre>
     <p>
-      <code>--host</code> keeps the kernel source and build output in
-      <code>./4bda3bf8e1a2b780-latest/</code>, making it easy to inspect and edit
-      the source. The script checks out the latest kernel, applies the provided
-      configuration, compiles it, boots it with QEMU and runs the PoC.
+      A bug could have been fixed by a commit that bugs.sh has not detected;
+      developing another patch would duplicate that work. Maintainers apply
+      fixes through the subsystem&rsquo;s source-code-management (SCM) tree.
+      Reproduce the bug on the current tip of that tree before developing a
+      patch. If it no longer reproduces, inspect the intervening commits instead
+      of preparing a duplicate fix.
+    </p>
+    <p>
+      The Linux kernel records subsystem ownership and source trees in
+      <code>MAINTAINERS</code>. From an existing Linux kernel source checkout,
+      <code>get_maintainer.pl --scm</code> reads those entries for the affected
+      file and reports the tree used by its maintainers:
+    </p>
+    <pre><code>./scripts/get_maintainer.pl --scm -f &lt;path/to/affected/file&gt;</code></pre>
+    <p>
+      Pass the reported SCM URL to <code>repro.sh --tree</code>. For bug ID
+      <code>4bda3bf8e1a2b780</code>, the networking SCM tree is:
+    </p>
+    <pre><code>git://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git</code></pre>
+    <pre><code>export BUG_ID=4bda3bf8e1a2b780
+export KERNEL_TREE=git://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git
+./reproduction/repro.sh build "$BUG_ID" --latest --host \
+  --tree "$KERNEL_TREE"
+./reproduction/repro.sh run   "$BUG_ID" --latest --host \
+  --tree "$KERNEL_TREE"</code></pre>
+    <p>
+      <code>--host</code> keeps the Linux kernel source and build output in
+      <code>./4bda3bf8e1a2b780-net-latest/</code>, making it easy to inspect and
+      edit the source. The script checks out the current tip of the selected
+      tree, applies the provided configuration, compiles it, boots it with QEMU
+      and runs the PoC.
     </p>
     <p>
       Docker mode is also available: omit <code>--host</code>. To reproduce the
-      bug on the older kernel version where we originally triggered it, omit
-      <code>--latest</code>; the script then checks out the recorded commit.
+      bug on the older Linux kernel version where we originally triggered it,
+      omit <code>--latest</code>; the script then checks out the recorded commit.
+    </p>
+
+    <h2>Patch</h2>
+    <p>
+      After confirming that the bug still reproduces, read the report, inspect
+      the affected code and confirm the root cause. Continue working in the SCM
+      tree built above, then fetch the bugs.sh patch. The published patch is
+      AI-generated and is only a starting point: inspect it carefully, apply it
+      if useful, or replace it with your own fix.
+    </p>
+    <pre><code>export BUG_ID=4bda3bf8e1a2b780
+export KERNEL_TREE=git://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git
+export PATCH_URL="https://bugs.sh/b/${BUG_ID}/patch.diff"
+pushd "${BUG_ID}-net-latest/linux"
+wget -O ../patch.diff "$PATCH_URL"
+git apply ../patch.diff</code></pre>
+    <p>
+      Inspect and edit the applied patch in the source tree. When it is ready
+      to test, return to the Cedalion checkout, rebuild the same tree, and run
+      the reproducer:
+    </p>
+    <pre><code>popd
+./reproduction/repro.sh build "$BUG_ID" --latest --host --force \
+  --tree "$KERNEL_TREE"
+./reproduction/repro.sh run   "$BUG_ID" --latest --host \
+  --tree "$KERNEL_TREE"</code></pre>
+    <p>
+      A good patch fixes the root cause without changing the subsystem&rsquo;s
+      intended behavior. Review the final diff, run the relevant subsystem
+      tests, and add these trailers to the commit message:
+    </p>
+    <pre><code>Reported-by: co+&lt;BUG_ID&gt;@bugs.sh
+Closes: &lt;URL of the initial report on lore&gt;</code></pre>
+    <p>
+      <code>Reported-by:</code> credits our work finding the vulnerability and
+      lets bugs.sh track the fix. <code>Closes:</code> connects the patch to the
+      original report.
+    </p>
+
+    <h3>Commit message</h3>
+    <p>
+      Follow the Linux kernel&rsquo;s
+      <a href="https://docs.kernel.org/process/submitting-patches.html">Submitting
+      patches</a> guide. Explain the problem, confirm its root cause and describe
+      why the change fixes it. Include a short decoded crash excerpt. You can
+      copy one from the bugs.sh report or decode your reproduction log from the
+      Linux kernel source tree:
+    </p>
+    <pre><code>export BUG_ID=4bda3bf8e1a2b780
+pushd "${BUG_ID}-net-latest/linux"
+./scripts/decode_stacktrace.sh vmlinux &lt; ../repro.log
+popd</code></pre>
+    <p>A typical commit message has this shape:</p>
+    <pre><code>&lt;subsystem&gt;: &lt;short imperative summary&gt;
+
+&lt;Describe the failure and its impact.&gt;
+
+&lt;Explain the root cause and why this change fixes it.&gt;
+
+&lt;Short decoded crash excerpt.&gt;
+
+Reported-by: co+4bda3bf8e1a2b780@bugs.sh
+Closes: &lt;URL of the initial report on lore&gt;
+Fixes: &lt;introducing-commit&gt; ("introducing commit subject")
+Signed-off-by: Your Real Name &lt;you@example.com&gt;</code></pre>
+    <p>
+      <code>Fixes:</code> identifies the commit that introduced the bug.
+      Follow <code>Reported-by:</code> with the initial lore report URL in
+      <code>Closes:</code>. <code>Signed-off-by:</code> must use your real name and
+      email address.
+    </p>
+
+    <h3>Send the patch</h3>
+    <p>
+      Commit the tested change with your sign-off, generate the email patch,
+      check it against the Linux kernel style rules, and use the Linux kernel
+      source tree to identify the appropriate maintainers and mailing lists:
+    </p>
+    <pre><code>export BUG_ID=4bda3bf8e1a2b780
+pushd "${BUG_ID}-net-latest/linux"
+git add &lt;changed-files&gt;
+git commit -s
+git format-patch -1 --stdout &gt; "../${BUG_ID}.patch"
+./scripts/checkpatch.pl --strict --show-types "../${BUG_ID}.patch"
+./scripts/get_maintainer.pl "../${BUG_ID}.patch"</code></pre>
+    <p>
+      Resolve relevant <code>checkpatch.pl</code> findings, then use the
+      maintainers and lists reported by <code>get_maintainer.pl</code> as the
+      recipients. Check the subsystem&rsquo;s maintainer handbook for any additional
+      rules before sending:
+    </p>
+    <pre><code>git send-email --to="&lt;maintainer-or-list&gt;" \
+  --cc="&lt;list-or-reviewer&gt;" "../${BUG_ID}.patch"
+popd</code></pre>
+
+    <h3>Merged example</h3>
+    <p>
+      See
+      <a href="https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=a66734a1c5e36525ea07e9f4547fddc51e916de3">this
+      merged patch for an example</a>. Its commit message includes:
+    </p>
+    <pre><code>Fixes: 378e25357ac7 ("net: qualcomm: rmnet: Remove unnecessary device assignment")
+Reported-by: co+4638111fe2a12980@bugs.sh
+Closes: https://lore.kernel.org/netdev/ijg79FFMfIvKJbivdJEKvTO90Q9dTvyBkJck@bugs.sh/T/#u
+Signed-off-by: Xiang Mei &lt;xmei5@asu.edu&gt;</code></pre>
+
+    <h2>Community</h2>
+    <p>
+      Linux kernel development is a community process. Follow the
+      <a href="#resources">Linux kernel guides</a> and each subsystem&rsquo;s
+      expectations, and listen carefully to review feedback. We have learned a
+      great deal from maintainers and contributors, who have been generous with
+      their time and guidance.
+    </p>
+    <p>
+      We follow discussions that include us and can help reproduce the issue,
+      test revisions and work with contributors to help the patch land.
+    </p>
+    <p>
+      Our goal is not a larger CVE count. It is a more secure Linux kernel.
+      Please do not treat LLM-generated patches as a shortcut or send them
+      without understanding, reviewing and testing them yourself.
+    </p>
+
+    <h2 id="resources">Resources</h2>
+    <p>
+      Consult the official Linux kernel documentation before submitting a patch:
+    </p>
+    <ul>
+      <li><a href="https://docs.kernel.org/process/submitting-patches.html">Submitting patches</a></li>
+      <li><a href="https://docs.kernel.org/process/submit-checklist.html">Submit checklist</a></li>
+      <li><a href="https://docs.kernel.org/process/email-clients.html">Email client configuration</a></li>
+    </ul>
+    <p>
+      Contact: <a href="mailto:co@bugs.sh">co@bugs.sh</a>
     </p>
   </article>
 </div>
