@@ -1,6 +1,4 @@
-# Cedalion
-
-https://bugs.sh
+# Cedalion (bugs.sh)
 
 We have discovered a more efficient approach to finding vulnerabilities in the
 Linux kernel. Because the manpower to review LLM-generated patches is limited,
