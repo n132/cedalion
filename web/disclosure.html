@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Disclosure — Cedalion</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="."><img src="logo-light.svg" alt="Cedalion"></a>
+    <a class="page" href="reporting.html">How it works</a>
+    <a class="page" href="patch.html">Patch</a>
+    <a class="page" href="disclosure.html" aria-current="page">Disclosure</a>
+    <a class="gh" href="https://github.com/n132/cedalion"
+       target="_blank" rel="noopener" aria-label="Cedalion on GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.65 7.65 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+    </a>
+  </div>
+</div>
+
+<div class="wrap">
+  <article class="doc">
+
+    <h1>Disclosure</h1>
+    <!-- The order is deliberate: what the ordinary process is, that automated
+         reporting already works this way, what the window costs, and only
+         then what we do inside it. A reader with no background should be able
+         to judge us without taking any of it on trust. -->
+    <p class="standfirst">
+      Most kernel bugs are reported and fixed in public. This page sets out how
+      that works, what it costs while a fix is on its way, and how we report
+      inside it.
+    </p>
+
+    <h2>How a kernel bug is handled</h2>
+    <p>
+      Kernel development takes place on public mailing lists. The bug report,
+      the discussion, the patch and its review are posted there and archived on
+      lore, where anyone can read them. The fix then lands in the
+      maintainer&rsquo;s tree, reaches mainline at the next merge window, is
+      backported to stable, packaged by a distribution, and installed when a
+      machine is updated. Weeks at best, often months.
+    </p>
+    <p>
+      The severity of a bug decides how it is reported. Ordinary bugs go to the
+      subsystem&rsquo;s public list. Serious ones go to
+      <a href="mailto:security@kernel.org">security@kernel.org</a>, which is
+      private, and the fix goes out as soon as it is ready. It can be held back
+      <a href="https://docs.kernel.org/process/security-bugs.html">7 days, 14 at
+      most</a>, and only if the reporter asks.
+    </p>
+
+    <h2>Automated reporting</h2>
+    <p>
+      syzbot has fuzzed the kernel for years and reports what it finds to the
+      subsystem lists automatically; a bug with a reproducer is posted there in
+      public. The conventions are well established: a report carries the kernel
+      commit, the config, the crash and a reproducer, and a maintainer can
+      close it as a duplicate or as invalid, or ask to receive no more. We
+      report the same way and follow the same conventions. If you would rather
+      not receive ours, for one subsystem or at all, tell us and we will stop.
+    </p>
+
+    <h2>The window between report and fix</h2>
+    <p>
+      From the first mail until the fix is installed, the bug is public and the
+      machines that have it are unpatched. Anyone reading the list has what the
+      maintainers have. No disclosure process removes that window; it can only
+      be kept short.
+    </p>
+
+    <h2>How we report</h2>
+    <p>
+      Keeping that window short is the part we can act on. Every bug is
+      assessed before it goes anywhere: what the primitive actually gives an
+      attacker, and what privileges are needed to reach it. Only low-severity
+      bugs are reported in public, and anything more serious goes to the
+      private channel, as the kernel&rsquo;s
+      <a href="https://docs.kernel.org/process/security-bugs.html">reporting
+      guidance</a> suggests.
+    </p>
+    <p>
+      When a bug does go to a public list, the report carries everything needed
+      to confirm and fix it without a round trip to us. Time to a patch is the
+      part of the window we can shorten, and that is where the effort goes.
+    </p>
+    <p>
+      We also do not send everything we find at once. A report waiting in a
+      backlog is a bug in the open that nobody has started on, so we watch how
+      quickly reports are taken up and fixed, and send new ones as the earlier
+      ones are dealt with.
+    </p>
+
+    <h2>Discussion is welcome</h2>
+    <p>
+      Concern about a bug being reported before it is fixed is reasonable, and
+      we take it seriously. Holding one back has a cost of its own: it does not
+      get fixed, and it stays available to anyone else who finds it. Neither
+      option is free. Reporting to a public list and fixing it there is how the
+      kernel has worked for decades, and it has proved an effective way to get
+      bugs fixed.
+    </p>
+    <p>
+      AI-assisted bug finding is new, and it produces more reports than any
+      subsystem has asked for. We welcome suggestions on how to improve the way
+      we disclose them: write to <a href="mailto:co@bugs.sh">co@bugs.sh</a>.
+    </p>
+
+  </article>
+
+  <footer>
+    Questions, suggestions and complaints:
+    <a href="mailto:co@bugs.sh">co@bugs.sh</a>
+  </footer>
+</div>
