@@ -22,9 +22,8 @@
   <article class="doc">
     <h1>Patch</h1>
     <p class="tldr">
-      <span class="key">Warning</span>
-      <strong>Do NOT send an AI-generated patch without reviewing and validating
-      it yourself.</strong>
+      Do NOT send an AI-generated patch without reviewing and validating it
+      yourself.
     </p>
     <p class="standfirst">
       This page is a guide to using bugs.sh artifacts to reproduce a bug,
@@ -37,16 +36,13 @@
       We provide AI-generated patches that pass an A/B test against the PoC,
       but AI makes mistakes: a patch can suppress the crash without fixing the
       root cause, violate subsystem design, break functionality, or introduce
-      new bugs. Treat it as a starting point, not a ready-to-send fix. Sending
-      an unverified patch would waste maintainers&rsquo; time and burden the review
-      process.
+      new bugs. Treat it as a starting point, not a ready-to-send fix.
     </p>
     <p>
       We share the reproduction artifacts so contributors can verify our patch
-      or develop a better one. To keep disclosure ethical, every public bug is
-      low severity or already patched. Most are security issues; when a fix is
-      merged, we request a CVE where applicable, and the contributor receives
-      credit for the work.
+      or develop a better one. Every public bug is low severity or already
+      patched. Most are security issues; when a fix is merged, we request a CVE
+      where applicable, and the contributor receives credit for the work.
     </p>
 
     <h2>Open issues</h2>
@@ -130,9 +126,8 @@ git apply ../patch.diff</code></pre>
 ./reproduction/repro.sh run   "$BUG_ID" --latest --host \
   --tree "$KERNEL_TREE"</code></pre>
     <p>
-      A good patch fixes the root cause without changing the subsystem&rsquo;s
-      intended behavior. Review the final diff, run the relevant subsystem
-      tests, and add these trailers to the commit message:
+      Review the final diff, run the relevant subsystem tests, and add these
+      trailers to the commit message:
     </p>
     <pre><code>Reported-by: co+&lt;BUG_ID&gt;@bugs.sh
 Closes: &lt;URL of the initial report on lore&gt;</code></pre>
@@ -144,12 +139,10 @@ Closes: &lt;URL of the initial report on lore&gt;</code></pre>
 
     <h3>Commit message</h3>
     <p>
-      Follow the Linux kernel&rsquo;s
+      Commit message conventions are in
       <a href="https://docs.kernel.org/process/submitting-patches.html">Submitting
-      patches</a> guide. Explain the problem, confirm its root cause and describe
-      why the change fixes it. Include a short decoded crash excerpt. You can
-      copy one from the bugs.sh report or decode your reproduction log from the
-      Linux kernel source tree:
+      patches</a>. For a short decoded crash excerpt, copy one from the bugs.sh
+      report or decode your reproduction log from the Linux kernel source tree:
     </p>
     <pre><code>export BUG_ID=4bda3bf8e1a2b780
 pushd "${BUG_ID}-net-latest/linux"
@@ -171,8 +164,7 @@ Signed-off-by: Your Real Name &lt;you@example.com&gt;</code></pre>
     <p>
       <code>Fixes:</code> identifies the commit that introduced the bug.
       Follow <code>Reported-by:</code> with the initial lore report URL in
-      <code>Closes:</code>. <code>Signed-off-by:</code> must use your real name and
-      email address.
+      <code>Closes:</code>.
     </p>
 
     <h3>Send the patch</h3>
@@ -189,10 +181,7 @@ git format-patch -1 --stdout &gt; "../${BUG_ID}.patch"
 ./scripts/checkpatch.pl --strict --show-types "../${BUG_ID}.patch"
 ./scripts/get_maintainer.pl "../${BUG_ID}.patch"</code></pre>
     <p>
-      Resolve relevant <code>checkpatch.pl</code> findings, then use the
-      maintainers and lists reported by <code>get_maintainer.pl</code> as the
-      recipients. Check the subsystem&rsquo;s maintainer handbook for any additional
-      rules before sending:
+      Then send it to the recipients <code>get_maintainer.pl</code> reported:
     </p>
     <pre><code>git send-email --to="&lt;maintainer-or-list&gt;" \
   --cc="&lt;list-or-reviewer&gt;" "../${BUG_ID}.patch"
@@ -211,11 +200,8 @@ Signed-off-by: Xiang Mei &lt;xmei5@asu.edu&gt;</code></pre>
 
     <h2>Community</h2>
     <p>
-      Linux kernel development is a community process. Follow the
-      <a href="#resources">Linux kernel guides</a> and each subsystem&rsquo;s
-      expectations, and listen carefully to review feedback. We have learned a
-      great deal from maintainers and contributors, who have been generous with
-      their time and guidance.
+      We have learned a great deal from maintainers and contributors, who have
+      been generous with their time and guidance.
     </p>
     <p>
       We follow discussions that include us and can help reproduce the issue,
@@ -229,7 +215,7 @@ Signed-off-by: Xiang Mei &lt;xmei5@asu.edu&gt;</code></pre>
 
     <h2 id="resources">Resources</h2>
     <p>
-      Consult the official Linux kernel documentation before submitting a patch:
+      Linux kernel documentation:
     </p>
     <ul>
       <li><a href="https://docs.kernel.org/process/submitting-patches.html">Submitting patches</a></li>
