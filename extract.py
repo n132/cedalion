@@ -2,11 +2,11 @@
 """Extract the Cedalion bug list from the triage database. READ-ONLY.
 
 This script never writes to that database and never touches a bug's artifacts —
-it opens the database with mode=ro and reads nothing off a bug's own directory.
-Its one output is bugs.json next to this file. It reads three other things, all
-of them local and all of them read-only: the kernel CVE corpus for a base score,
-the stable clone for a fixing commit's subject, and the lore mirror for the
-postings behind the Processing rows.
+before opening it read-only, it asks claudeManager to reconcile missing lore
+Message-IDs.  That manager-owned hook is the only writer.
+Its one output is bugs.json next to this file. It also reads the local kernel
+CVE corpus for base scores and the stable clone for fixing-commit titles. Lore
+Message-IDs are persisted in the database before extraction.
 
 Per bug it produces:
 
@@ -24,9 +24,6 @@ the fix is not ours and neither is any CVE on it.
 """
 from __future__ import annotations
 
-import email
-import email.policy
-import email.utils
 import hashlib
 import json
 import os
@@ -151,313 +148,6 @@ def view_of(state: str, hash_id: str, allowed: set) -> str:
 
 # The kernel CVE corpus, one JSON record per CVE, for the CVSS base score.
 CVE_DIR = path("CEDALION_CVE_DIR")
-
-# Notes on a Reported bug hold the subject line the patch was posted under —
-# except for a handful that hold a status instead. Those are not subjects.
-_STATUS_NOTES = ("patch sent", "patch accepted", "could be scooped", "scooped")
-
-
-def patch_subject(notes: str | None) -> str:
-    """The subject a Reported bug's patch went out under, kept in its notes.
-
-    This is the only thing that can locate the posting: no message-id and no
-    lore URL is stored anywhere, so it is also the key the local lore mirror
-    below is searched with.
-    """
-    for line in (notes or "").splitlines():
-        line = line.strip()
-        low = line.lower()
-        if not line or any(low.startswith(s) for s in _STATUS_NOTES):
-            continue
-        if ": " in line:          # `subsystem: what it fixes`, a kernel subject
-            return line
-    return ""
-
-
-# ------------------------------------------------------------------- lore --
-#
-# The local lore mirror at CEDALION_LORE_DB: each list's public-inbox
-# epochs as bare git repos, plus an FTS5 index over the messages in them. Read
-# strictly — this never fetches, never syncs and never writes to the mirror.
-LORE_DB = path("CEDALION_LORE_DB")
-
-# The addresses this project's patches go out from. Subject alone is not enough
-# to identify a posting as ours — it would just as happily match a stranger's
-# mail carrying the same title — so a candidate must also come from one of
-# these. They are the two authors behind every fixing commit in Patched that we
-# wrote ourselves.
-PATCH_SENDERS = ("xmei5@asu.edu", "bestswngs@gmail.com")
-
-
-def strip_patch_tag(subj: str) -> str:
-    """`[PATCH net v2 1/2] tipc: fix ...` -> `tipc: fix ...`, the title the
-    commit will land under once the patch is applied."""
-    return re.sub(r"^\s*\[[^\]]*\]\s*", "", subj or "").strip()
-
-
-def _norm_subject(subj: str) -> str:
-    """A subject cut down to what identifies the patch.
-
-    Drops any `Re:` and the whole bracket tag, so the note's bare
-    `tipc: fix ...` and the posting's `[PATCH net v2 1/2] tipc: fix ...` land on
-    one key — and so do v1 and v3 of the same patch, which is what lets the
-    newest revision win in lore_postings().
-    """
-    s = re.sub(r"^\s*(?:re|fwd|aw)\s*:\s*", "", subj or "", flags=re.I)
-    return re.sub(r"\s+", " ", strip_patch_tag(s)).strip().lower()
-
-
-def _msg_time(date: str) -> float:
-    """Sort key for a message. The mirror stores the Date header verbatim, and
-    an RFC-2822 date does not sort as text."""
-    try:
-        return email.utils.parsedate_to_datetime(date).timestamp()
-    except (TypeError, ValueError, OverflowError):
-        return 0.0
-
-
-# How much two titles have to agree, measured AFTER the subsystem prefix, before
-# they are worth testing as two revisions of one patch.
-#
-# Measuring the whole title does not work. A kernel subject opens with
-# `subsystem: file: `, which is boilerplate two unrelated fixes to the same file
-# share for free — `netfilter: nf_conntrack_sip: fix ` is 33 characters of
-# agreement between a fix for an OOB read in epaddr_len() and a fix for an
-# uninitialised rtp_addr in process_sdp(), which are different bugs. Counting
-# only what follows the last `: ` scores that pair 4 and the real revisions
-# 20-35, which separates them cleanly.
-_REVISION_BODY = 15
-
-
-def _shared_body(a: str, b: str) -> int:
-    """Length of the common prefix of two subjects, ignoring the part of it
-    that is only `subsystem: file: ` boilerplate."""
-    common = os.path.commonprefix((a, b))
-    return len(common.rpartition(": ")[2])
-
-
-def _touched_files(blob: str, _cache: dict = {}) -> frozenset:
-    """The paths a posting's diff touches, off the `diff --git` lines."""
-    if blob not in _cache:
-        _cache[blob] = frozenset(
-            re.findall(r"^diff --git a/(\S+)", lore_patch(blob), re.M))
-    return _cache[blob]
-
-
-def _fold_revisions(best: dict) -> None:
-    """Point a retitled earlier revision at the newest one.
-
-    Keying on the subject collapses revisions that kept their title — v1 and v3
-    of the same wording land on one key and the newest wins. A patch *reworded*
-    between revisions does not: it sits under two keys, and a note carrying the
-    earlier wording would link the superseded posting and draw its diff, which
-    is the one failure this whole path exists to avoid. Seen in this set:
-
-        tipc: fix use-after-free of discoverer in tipc_disc_rcv()
-        tipc: fix use-after-free of the discoverer in tipc_disc_rcv()   (v3)
-
-    Two keys are one patch only when BOTH hold: their titles agree past the
-    subsystem prefix, and their diffs touch a file in common. Each test alone
-    lets a wrong pair through, and the two failures point opposite ways:
-
-        fs/ntfs3: fix out-of-bounds read in read_log_rec_buf()        (fslog.c)
-        fs/ntfs3: fix out-of-bounds read of INDEX_ROOT in reparse…    (fsntfs.c)
-
-    agree on 23 characters of body and are unrelated — the file test rejects
-    them. While
-
-        netfilter: nf_conntrack_sip: fix OOB read in epaddr_len …
-        netfilter: nf_conntrack_sip: fix use of uninitialized rtp_addr …
-
-    are two different bugs in one file, which the file test cannot tell apart —
-    they agree on 4 characters of body, so the title test rejects them.
-
-    The older key is kept rather than deleted, so a note written against the old
-    wording still resolves; it just resolves to the revision that superseded it.
-    """
-    keys = sorted(best)
-    for i, one in enumerate(keys):
-        for other in keys[i + 1:]:
-            if _shared_body(one, other) < _REVISION_BODY:
-                continue
-            a, b = _touched_files(best[one][3]), _touched_files(best[other][3])
-            if not (a and b and a & b):
-                continue
-            lo, hi = (one, other) if best[one][0] < best[other][0] else (other, one)
-            best[lo] = best[hi]
-
-
-def lore_postings(_cache: dict = {}) -> dict:
-    """{normalised subject: (msgid, subject, blob)} for our own postings.
-
-    One query for the whole run rather than one per row: a phrase search over a
-    couple of million indexed messages costs seconds each, and every Processing
-    row needs an answer. Replies are skipped — a thread is located by the patch
-    that opened it — and where a subject was posted more than once the newest
-    wins, since the latest revision is the one to send a reader to.
-    """
-    if _cache:
-        return _cache
-    _cache["\0"] = None           # only try once, even if the mirror is absent
-    if not os.path.exists(LORE_DB):
-        return _cache
-    match = " OR ".join(f"frm:{a.split('@')[0]}" for a in PATCH_SENDERS)
-    try:
-        conn = sqlite3.connect(f"file:{LORE_DB}?mode=ro", uri=True)
-        rows = conn.execute(
-            """SELECT m.msgid, m.date, m.frm, m.subj, m.blob
-                 FROM fts f JOIN msgs m USING(msgid)
-                WHERE f.fts MATCH ?""", (match,)).fetchall()
-        conn.close()
-    except sqlite3.Error:
-        return _cache
-    best: dict = {}
-    for msgid, date, frm, subj, blob in rows:
-        # `frm:` filters a tokenised column, so it matched the local part of the
-        # address and not the address itself. Confirm the whole one before
-        # taking the message for ours.
-        if not any(a in (frm or "").lower() for a in PATCH_SENDERS):
-            continue
-        # A patch, not a reply to one: only the mail that carries the diff can
-        # answer either of the two things the page wants from it.
-        tag = re.match(r"\s*\[([^\]]*)\]", subj or "")
-        if not tag or "PATCH" not in tag.group(1).upper():
-            continue
-        key = _norm_subject(subj)
-        if not key:
-            continue
-        when = _msg_time(date)
-        if key not in best or when > best[key][0]:
-            best[key] = (when, msgid, subj, blob)
-    _fold_revisions(best)
-    _cache.update({k: (v[1], v[2], v[3]) for k, v in best.items()})
-    return _cache
-
-
-# How much of a subject has to line up before a prefix counts as evidence. A
-# kernel subject is `subsystem: what it fixes`, and the subsystem alone is
-# shared by dozens of postings — 30 characters is well past that on every
-# subject in this set.
-_PREFIX_FLOOR = 30
-
-
-def resolve_posting(subject: str):
-    """The posting a note's subject refers to, or None.
-
-    An exact subject first. Failing that, an *anchored* prefix in either
-    direction, which is what recovers a note that does not say quite what the
-    mail said:
-
-      * text pasted in after the subject — one note carried a mail client's
-        UI chrome ("… U16_MAX entries 收件箱 Linux Kernel/Sent"), and the
-        posting's subject is a prefix of it;
-      * a note that stops early, where the posting's subject carries on
-        ("… in tipc_lxc_xmit()" vs "… in tipc_lxc_xmit() on node up").
-
-    A prefix, never a similarity score. Scoring these subjects was tried and it
-    is not safe at any threshold that also recovers anything: at 0.72 it put an
-    ext4 row on an ntfs3 patch, and matched `ntfs_read_mft` to a fix for
-    `read_log_rec_buf()`. A wrong diff under a row is worse than a dash, so a
-    prefix that two different postings both answer to is treated as no answer.
-    """
-    postings = lore_postings()
-    key = _norm_subject(subject)
-    if not key:
-        return None
-    hit = postings.get(key)
-    if isinstance(hit, tuple):
-        return hit
-    if len(key) < _PREFIX_FLOOR:
-        return None
-    found = [v for k, v in postings.items()
-             if isinstance(v, tuple) and len(k) >= _PREFIX_FLOOR
-             and (key.startswith(k) or k.startswith(key))]
-    return found[0] if len(found) == 1 else None
-
-
-def own_report_posting(pub_name: str, _cache: dict = {}) -> str | None:
-    """The lore posting of OUR OWN mailed bug report, found by its exact
-    subject.
-
-    Different problem from resolve_posting() above: that one matches a
-    STRANGER's [PATCH] wording, recovered from a triage note typed by hand,
-    with an anchored-prefix fallback because a stranger's subject can drift
-    slightly from the note. Our own report needs no guessing at all —
-    co/mkbugreport.py always sends exactly `f"[BUG] {bug['pub_name']}"` — so
-    an exact, indexed equality check on msgs.subj finds it directly. Nothing
-    fuzzy: an exact string or nothing.
-    """
-    if not pub_name:
-        return None
-    subject = f"[BUG] {pub_name}"
-    if subject in _cache:
-        return _cache[subject]
-    if not os.path.exists(LORE_DB):
-        _cache[subject] = None
-        return None
-    try:
-        conn = sqlite3.connect(f"file:{LORE_DB}?mode=ro", uri=True)
-        row = conn.execute(
-            "SELECT msgid FROM msgs WHERE subj = ? ORDER BY date LIMIT 1",
-            (subject,)).fetchone()
-        conn.close()
-    except sqlite3.Error:
-        row = None
-    _cache[subject] = row[0] if row else None
-    return _cache[subject]
-
-
-def resolve_lore(notes: str | None, pub_name: str) -> str:
-    """The lore link for a Processing row, tried two ways in order, both
-    exact matches — no fuzzy full-text search:
-
-    1. the fix a stranger posted, resolved off the triage notes
-       (resolve_posting()) — patch_subject() itself skips a note that is not
-       a title (a bare URL, a status line like "scooped"), so there is
-       nothing to look up in that case;
-    2. failing that, our own mailed [BUG] report, by its own exact subject
-       (own_report_posting()).
-    """
-    posting = resolve_posting(patch_subject(notes))
-    if posting:
-        return posting[0]
-    return own_report_posting(pub_name) or ""
-
-
-# git's own trailer: "-- " on a line of its own followed by the version that
-# produced the patch. Not part of the diff. The trailing space is what the
-# standard says and what git sends, but enough mailers strip it on the way
-# through that two postings in the mirror arrive with a bare "--", so both are
-# taken. Anchoring at the end of the message and insisting on a version-shaped
-# line after it is what keeps this off a removed line that reads "--".
-_SIGNATURE = re.compile(r"\n-- ?\n\d[\d.]*\S*\s*\Z")
-
-
-def lore_patch(blob: str) -> str:
-    """The diff exactly as posted, read out of the mirror's git repo.
-
-    public-inbox stores each message as a blob at path `m` in its own commit,
-    and the mirror records where: "<repo>::<rev>". Only the diff is taken — the
-    commit message and the headers are a click away on lore, and the box on the
-    page is for the code.
-    """
-    repo, _, rev = (blob or "").partition("::")
-    if not rev:
-        return ""
-    try:
-        p = subprocess.run(["git", "-C", repo, "cat-file", "-p", f"{rev}:m"],
-                           capture_output=True, timeout=30)
-        if p.returncode != 0:
-            return ""
-        msg = email.message_from_bytes(p.stdout, policy=email.policy.default)
-        body = msg.get_body(preferencelist=("plain",))
-        text = body.get_content() if body else ""
-    except (OSError, subprocess.SubprocessError, LookupError, ValueError):
-        return ""
-    start = text.find("\ndiff --git ")
-    if start < 0:
-        return ""
-    return _SIGNATURE.sub("", text[start + 1:]).rstrip() + "\n"
 
 
 def cvss_score(cve: str, _cache: dict = {}) -> str:
@@ -693,6 +383,25 @@ def collect() -> dict:
     if not os.path.exists(DB):
         sys.exit(f"database not found: {DB}")
 
+    # Lore discovery and database writes belong to claudeManager.  Run its
+    # idempotent pre-extract reconciliation before this process opens the same
+    # database read-only.  A standalone cedalion checkout may omit the hook;
+    # in the integrated tree its failure is fatal so a publish cannot silently
+    # drop a newly confirmed public link.
+    manager = os.path.expanduser(os.environ.get(
+        "CLAUDE_MANAGER_DIR", os.path.join(HERE, "..", "claudeManager")))
+    reconcile = os.path.join(manager, "tools", "reconcile_lore_msgids.py")
+    if os.path.isfile(reconcile):
+        result = subprocess.run(
+            [sys.executable, reconcile, "--db", DB, "--register", OUT],
+            text=True, capture_output=True,
+        )
+        if result.returncode:
+            sys.exit(
+                "claudeManager lore reconciliation failed: "
+                + (result.stderr.strip() or result.stdout.strip() or "unknown error")
+            )
+
     conn = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)
     placeholders = ",".join("?" for _ in EXCLUDED_STATES)
     patched_states = ",".join("?" for _ in PATCHED_STATES)
@@ -702,8 +411,8 @@ def collect() -> dict:
                    (lower(COALESCE(notes, '')) LIKE ?
                     AND lower(COALESCE(notes, '')) NOT LIKE ?
                     AND trim(COALESCE(cve_number, '')) = '') AS scooped,
-                   cve_number, notes, commit_link, report,
-                   COALESCE(pub_name, '') AS pub_name
+                   cve_number, commit_link, report,
+                   COALESCE(lore_msgid, '') AS lore_msgid
             FROM bugs
             WHERE ((hash_id NOT LIKE ? AND length(hash_id) != ?)
                    OR (state IN ({patched_states})
@@ -738,11 +447,10 @@ def collect() -> dict:
     # Scooped overrides whatever state the row was left in — it is the outcome
     # that actually happened. `notes` itself is never published; it is read here
     # only to classify.
-    # `report`/`pub_name` ride on the end: collapse_link_groups() reads this
-    # tuple by position (id, hash_id, state, linked_ids), so nothing may be
-    # inserted ahead of those four.
-    rows = [(i, h, SCOOPED_STATE if sc else st, li, cv, nt, cl, rp, pn)
-            for i, h, st, li, sc, cv, nt, cl, rp, pn in rows]
+    # collapse_link_groups() reads this tuple by position (id, hash_id, state,
+    # linked_ids), so nothing may be inserted ahead of those four.
+    rows = [(i, h, SCOOPED_STATE if sc else st, li, cv, cl, rp, lm)
+            for i, h, st, li, sc, cv, cl, rp, lm in rows]
 
     conn.close()
 
@@ -756,7 +464,7 @@ def collect() -> dict:
     cves_seen = set()
     fixes_seen = set()
     for (_id, hash_id, state, _linked, cve,
-         notes, commit_link, report, pub_name) in rows:
+         commit_link, report, lore_msgid) in rows:
         # Taken for every row, not just the Vulnerable ones that publish the
         # fingerprint: `with a report` counts the whole register, so skipping
         # the others would report them all as missing.
@@ -811,10 +519,9 @@ def collect() -> dict:
                 # not a different kind of identity.
                 "bug_id": hash_id,
                 "hash": report_hash,
-                # Tried two ways, in order, both exact matches: the fix a
-                # stranger posted (off the triage notes), then our own mailed
-                # [BUG] report by its exact subject. See resolve_lore().
-                "lore": resolve_lore(notes, pub_name),
+                # Discovery is performed and persisted by claudeManager before
+                # extraction.  Cedalion publishes the canonical value only.
+                "lore": lore_msgid,
             })
         else:
             cve_id = (cve or "").strip().upper()
@@ -919,10 +626,8 @@ def main() -> None:
     print(f"{c['bugs']} bugs -> {OUT}")
     print(f"  with report.md : {c['with_report']}")
     # Not a published count — the page has no place for it — but the operator
-    # needs it: a Processing row the mirror could not place keeps its typed
-    # subject and a lore *search*, and shows no patch at all. A large number
-    # here usually means the mirror is behind, or the list the patch went to is
-    # not one of the mirrored ones.
+    # needs it: a missing value means claudeManager has not yet persisted the
+    # report's public Message-ID (or the row is a legacy report with no link).
     proc = [b for b in data["bugs"] if b["view"] == VIEW_PROCESSING]
     placed = sum(1 for b in proc if b["lore"])
     print(f"  on lore        : {placed}/{len(proc)} processing rows")
