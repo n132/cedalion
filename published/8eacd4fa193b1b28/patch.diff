@@ -1,0 +1,49 @@
+diff --git a/sound/usb/card.h b/sound/usb/card.h
+index e34d92d576a2..8299ac241c60 100644
+--- a/sound/usb/card.h
++++ b/sound/usb/card.h
+@@ -116,6 +116,7 @@ struct snd_usb_endpoint {
+ 	unsigned int phase;		/* phase accumulator */
+ 	unsigned int maxpacksize;	/* max packet size in bytes */
+ 	unsigned int maxframesize;      /* max packet size in frames */
++	unsigned int max_urb_packs;	/* packets allocated per data URB */
+ 	unsigned int max_urb_frames;	/* max URB size in frames */
+ 	unsigned int curpacksize;	/* current packet size in bytes (for capture) */
+ 	unsigned int curframesize;      /* current packet size in frames (for capture) */
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index a1d449f2a342..a0ec51cc56ac 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -492,9 +492,10 @@ int snd_usb_queue_pending_output_urbs(struct snd_usb_endpoint *ep,
+ 
+ 		/* copy over the length information */
+ 		if (implicit_fb) {
+-			ctx->packets = packet->packets;
++			ctx->packets = min_t(int, packet->packets,
++					     ep->max_urb_packs);
+ 			memcpy(ctx->packet_size, packet->packet_size,
+-			       packet->packets * sizeof(packet->packet_size[0]));
++			       ctx->packets * sizeof(packet->packet_size[0]));
+ 		}
+ 
+ 		/* call the data handler to fill in playback data */
+@@ -1239,15 +1240,16 @@ static int data_ep_set_params(struct snd_usb_endpoint *ep)
+ 		ep->nurbs = min(max_urbs, urbs_per_period * ep->cur_buffer_periods);
+ 	}
+ 
++	if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
++		urb_packs++; /* for transfer delimiter */
++	ep->max_urb_packs = urb_packs;
++
+ 	/* allocate and initialize data urbs */
+ 	for (i = 0; i < ep->nurbs; i++) {
+ 		struct snd_urb_ctx *u = &ep->urb[i];
+ 		u->index = i;
+ 		u->ep = ep;
+ 		u->packets = urb_packs;
+-
+-		if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
+-			u->packets++; /* for transfer delimiter */
+ 		u->buffer_size = maxsize * u->packets;
+ 		u->urb = usb_alloc_urb(u->packets, GFP_KERNEL);
+ 		if (!u->urb)
