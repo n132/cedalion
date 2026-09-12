@@ -1,0 +1,26 @@
+diff --git a/kernel/trace/trace_events_user.c b/kernel/trace/trace_events_user.c
+index 8c82ecb735f4..f2fdec76de43 100644
+--- a/kernel/trace/trace_events_user.c
++++ b/kernel/trace/trace_events_user.c
+@@ -1503,6 +1503,10 @@ static int destroy_user_event(struct use
+ 
+ 	lockdep_assert_held(&event_mutex);
+ 
++	/* An eprobe or other dynamic event user may still hold a reference */
++	if (trace_event_dyn_busy(&user->call))
++		return -EBUSY;
++
+ 	/* Must destroy fields before call removal */
+ 	user_event_destroy_fields(user);
+ 
+@@ -1859,6 +1863,9 @@ static bool user_event_is_busy(struct dy
+ {
+ 	struct user_event *user = container_of(ev, struct user_event, devent);
+ 
++	if (trace_event_dyn_busy(&user->call))
++		return true;
++
+ 	return !user_event_last_ref(user);
+ }
+ 
+
