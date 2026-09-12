@@ -1,0 +1,25 @@
+diff --git a/sound/usb/6fire/pcm.c b/sound/usb/6fire/pcm.c
+index d2e274b731fe..b3ecf9fa4951 100644
+--- a/sound/usb/6fire/pcm.c
++++ b/sound/usb/6fire/pcm.c
+@@ -328,10 +328,16 @@ static void usb6fire_pcm_in_urb_handler(struct urb *usb_urb)
+ 
+ 	/* setup out urb structure */
+ 	for (i = 0; i < PCM_N_PACKETS_PER_URB; i++) {
++		unsigned int length = 4;
++
++		if (in_urb->packets[i].actual_length > 4)
++			length = (in_urb->packets[i].actual_length - 4)
++					/ (rt->in_n_analog << 2)
++					* (rt->out_n_analog << 2) + 4;
++
+ 		out_urb->packets[i].offset = total_length;
+-		out_urb->packets[i].length = (in_urb->packets[i].actual_length
+-				- 4) / (rt->in_n_analog << 2)
+-				* (rt->out_n_analog << 2) + 4;
++		out_urb->packets[i].length = min_t(unsigned int, length,
++						   rt->out_packet_size);
+ 		out_urb->packets[i].status = 0;
+ 		total_length += out_urb->packets[i].length;
+ 	}
+
