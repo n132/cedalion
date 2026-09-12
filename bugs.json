@@ -176,7 +176,7 @@
   {
    "bug_id": "f11f93b386afda5d",
    "hash": "16ff9e59ee9299aaa63d54484a488eb0c27c278e7b94d8df56fe04228037106f",
-   "lore": "",
+   "lore": "rvhsRXzc3FhxUM9cmdzPQshyaGy50iIL9t5p@bugs.sh",
    "view": "processing"
   },
   {
@@ -7855,7 +7855,7 @@
   "scooped": 13,
   "with_report": 1478
  },
- "generated_at": "2026-09-12 05:46:16",
+ "generated_at": "2026-09-12 05:56:47",
  "states": {
   "Fixed": 116,
   "PoC Available": 1345,
