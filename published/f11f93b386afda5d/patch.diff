@@ -1,0 +1,78 @@
+From: Xiang Mei <xmei5@asu.edu>
+Subject: [PATCH] media: usbtv: only scan chunk positions that hold a whole chunk
+
+usbtv_iso_cb() walks every isochronous packet in USBTV_CHUNK_SIZE (256 byte)
+steps and bounds only the chunk *start* against the packet's actual_length.
+An accepted chunk, however, consumes a 4-byte header word plus USBTV_CHUNK
+(240) image words - 964 bytes - because usbtv_chunk_to_vbuf() does two
+480-byte memcpy()s out of it.
+
+A chunk that starts in the last 963 bytes of a packet therefore reads past
+the data the device delivered, and for the final packet past the end of the
+kcalloc(USBTV_ISOC_PACKETS, iso_size) transfer buffer. The bytes are copied
+straight into the vb2 plane, so adjacent kernel heap is handed to whoever is
+dequeuing V4L2 buffers.
+
+Real hardware pads chunks to a 1024-byte stride, so the intermediate 256-byte
+positions fail USBTV_MAGIC_OK() and the bug stays dormant; a malicious device
+controls every payload byte and simply places the 0x88 magic at a tail offset.
+
+Require a whole chunk to fit in the received data before scanning a position.
+Every position at which a compliant device places a chunk is still visited.
+
+  BUG: KASAN: slab-out-of-bounds in usbtv_iso_cb (drivers/media/usb/usbtv/usbtv-video.c:390 drivers/media/usb/usbtv/usbtv-video.c:435 drivers/media/usb/usbtv/usbtv-video.c:492)
+  Read of size 480 at addr ffff88802d529e5c by task vhci_rx/5017
+
+  Call Trace:
+   __asan_memcpy (mm/kasan/shadow.c:105)
+   usbtv_iso_cb (drivers/media/usb/usbtv/usbtv-video.c:390 drivers/media/usb/usbtv/usbtv-video.c:435 drivers/media/usb/usbtv/usbtv-video.c:492)
+   __usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1657)
+   usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1741)
+   vhci_rx_loop (drivers/usb/usbip/vhci_rx.c:107 drivers/usb/usbip/vhci_rx.c:242)
+   kthread (kernel/kthread.c:436)
+
+  Allocated by task 5013:
+   __kmalloc_noprof (mm/slub.c:5439)
+   usbtv_start_streaming (drivers/media/usb/usbtv/usbtv-video.c:517 drivers/media/usb/usbtv/usbtv-video.c:586 drivers/media/usb/usbtv/usbtv-video.c:771)
+   vb2_start_streaming (drivers/media/common/videobuf2/videobuf2-core.c:1783)
+   vb2_core_streamon (drivers/media/common/videobuf2/videobuf2-core.c:2336)
+   vb2_ioctl_streamon (drivers/media/common/videobuf2/videobuf2-v4l2.c:1105)
+
+  The buggy address is located 7772 bytes inside of
+  allocated 8000-byte region [ffff88802d528000, ffff88802d529f40)
+
+Fixes: f3d27f34fdd7 ("[media] usbtv: Add driver for Fushicai USBTV007 video frame grabber")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+---
+--- a/drivers/media/usb/usbtv/usbtv.h
++++ b/drivers/media/usb/usbtv/usbtv.h
+@@ -56,6 +56,8 @@
+ 
+ #define USBTV_CHUNK_SIZE	256
+ #define USBTV_CHUNK		240
++/* Bytes a chunk occupies: the header word plus USBTV_CHUNK data words. */
++#define USBTV_CHUNK_BYTES	(sizeof(__be32) * (USBTV_CHUNK + 1))
+ 
+ #define USBTV_AUDIO_URBSIZE	20480
+ #define USBTV_AUDIO_HDRSIZE	4
+--- a/drivers/media/usb/usbtv/usbtv-video.c
++++ b/drivers/media/usb/usbtv/usbtv-video.c
+@@ -483,12 +483,14 @@
+ 	}
+ 
+ 	for (i = 0; i < ip->number_of_packets; i++) {
+-		int size = ip->iso_frame_desc[i].actual_length;
++		unsigned int size = ip->iso_frame_desc[i].actual_length;
+ 		unsigned char *data = ip->transfer_buffer +
+ 				ip->iso_frame_desc[i].offset;
+ 		int offset;
+ 
+-		for (offset = 0; USBTV_CHUNK_SIZE * offset < size; offset++)
++		for (offset = 0;
++		     USBTV_CHUNK_SIZE * offset + USBTV_CHUNK_BYTES <= size;
++		     offset++)
+ 			usbtv_image_chunk(usbtv,
+ 				(__be32 *)&data[USBTV_CHUNK_SIZE * offset]);
+ 	}
