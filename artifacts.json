@@ -321,6 +321,17 @@
   },
   "kernel_commit": "7b53449540502cb21b32bca62a6258e22cd97bbe"
  },
+ "66c3f58096d0bde8": {
+  "files": {
+   "config.gz": "66c3f58096d0bde8/config.gz",
+   "patch.diff": "66c3f58096d0bde8/patch.diff",
+   "report.eml": "66c3f58096d0bde8/report.eml",
+   "report.md": "66c3f58096d0bde8/report.md",
+   "repro.c": "66c3f58096d0bde8/repro.c",
+   "run.sh": "66c3f58096d0bde8/run.sh"
+  },
+  "kernel_commit": "2f1baf1fc8929e6c48370be543ad028ac7ad4131"
+ },
  "6a581c4284f721d4": {
   "files": {
    "config.gz": "6a581c4284f721d4/config.gz",

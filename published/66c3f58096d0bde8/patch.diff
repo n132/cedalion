@@ -1,0 +1,24 @@
+diff --git a/drivers/usb/usbip/stub_rx.c b/drivers/usb/usbip/stub_rx.c
+--- a/drivers/usb/usbip/stub_rx.c
++++ b/drivers/usb/usbip/stub_rx.c
+@@ -534,10 +534,10 @@
+ 	}
+ 
+ 	/* allocate urb array */
+-	priv->num_urbs = num_urbs;
+ 	priv->urbs = kmalloc_objs(*priv->urbs, num_urbs);
+ 	if (!priv->urbs)
+ 		goto err_urbs;
++	priv->num_urbs = num_urbs;
+ 
+ 	/* setup a urb */
+ 	if (support_sg) {
+@@ -641,6 +641,8 @@
+ 
+ err_urb:
+ 	kfree(priv->urbs);
++	priv->urbs = NULL;
++	priv->num_urbs = 0;
+ err_urbs:
+ 	kfree(buffer);
+ 	sgl_free(sgl);

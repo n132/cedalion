@@ -230,7 +230,8 @@
   {
    "bug_id": "66c3f58096d0bde8",
    "hash": "ed4b52b2905f49c9c4d9f074615c1968d139ef229880e462835c0e1228f07a07",
-   "view": "vulnerable"
+   "lore": "",
+   "view": "processing"
   },
   {
    "bug_id": "12c7c92ae4bb088a",
@@ -7849,7 +7850,7 @@
   "scooped": 13,
   "with_report": 1478
  },
- "generated_at": "2026-09-10 08:08:18",
+ "generated_at": "2026-09-11 19:05:39",
  "states": {
   "Fixed": 116,
   "PoC Available": 1345,
@@ -7857,7 +7858,7 @@
  },
  "views": {
   "patched": 116,
-  "processing": 50,
-  "vulnerable": 1322
+  "processing": 51,
+  "vulnerable": 1321
  }
 }
