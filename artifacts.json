@@ -94,6 +94,17 @@
   "kernel_commit": "eb3f4b7426cfd2b79d65b7d37155480b32259a11",
   "title": "drivers/net: NULL pointer dereference in vxlan_igmp_leave()"
  },
+ "24304d323d28f156": {
+  "files": {
+   "config.gz": "24304d323d28f156/config.gz",
+   "patch.diff": "24304d323d28f156/patch.diff",
+   "report.eml": "24304d323d28f156/report.eml",
+   "report.md": "24304d323d28f156/report.md",
+   "repro.c": "24304d323d28f156/repro.c",
+   "run.sh": "24304d323d28f156/run.sh"
+  },
+  "kernel_commit": "2f1baf1fc8929e6c48370be543ad028ac7ad4131"
+ },
  "246b6a95e617738f": {
   "files": {
    "config.gz": "246b6a95e617738f/config.gz",
