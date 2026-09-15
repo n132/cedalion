@@ -1,0 +1,13 @@
+diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
+index 085ae0cfb5f7f..073d9f4a3adbb 100644
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -380,6 +380,8 @@ static int parse_reply_info_lease(void **p, void *end,
+
+ 	lend = *p + struct_len;
+ 	ceph_decode_need(p, end, struct_len, bad);
++	if (struct_len < sizeof(**lease))
++		goto bad;
+ 	*lease = *p;
+ 	*p += sizeof(**lease);
+

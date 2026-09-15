@@ -1,0 +1,122 @@
+Subject: [BUG] fs/ceph: out-of-bounds in __update_dentry_lease()
+From: co <co+f92fbe44e3c6df69@bugs.sh>
+To: linux-kernel@vger.kernel.org
+Cc: Ilya Dryomov <idryomov@gmail.com>, Alex Markuze <amarkuze@redhat.com>, Viacheslav Dubeyko <slava@dubeyko.com>, Jeff Layton <jlayton@kernel.org>, Xiubo Li <xiubli@redhat.com>, Milind Changire <mchangir@redhat.com>, ceph-devel@vger.kernel.org, co <co+f92fbe44e3c6df69@bugs.sh>
+
+This is a bug report, not a patch submission.
+
+We found a bug reachable in:
+
+    path    fs/ceph
+    crash   out-of-bounds in __update_dentry_lease()
+    commit  a500db7819c50 ("Merge tag 'selinux-pr-20260903' of git://git.kernel.org/pub/scm/linux/kernel/git/pcmoore/selinux")
+
+Config, environment, the sanitizer report and a C reproducer follow.
+
+== Notes ===============================================================
+    If you fix this bug, this tag credits the report and lets us
+    close it on our side:
+
+Reported-by: co+f92fbe44e3c6df69@bugs.sh
+
+    Everything in this mail is validated by the reproducer below.
+
+    We also hold an unreviewed LLM-generated analysis and candidate
+    patch. The same reproducer panics the unpatched kernel and runs
+    clean with that patch applied. Use it as a starting point, or ignore
+    it and write your own:
+
+        patch.diff  https://bugs.sh/b/f92fbe44e3c6df69/patch.diff
+        report.md   https://bugs.sh/b/f92fbe44e3c6df69/report.md
+
+    Happy to test patches. Complaints and suggestions about our work
+    are welcome at:
+
+        cedalion@bugs.sh
+
+== Environment =========================================================
+    Reproduced on  a500db7819c50 ("Merge tag 'selinux-pr-20260903' of git://git.kernel.org/pub/scm/linux/kernel/git/pcmoore/selinux")
+    VM setup       https://bugs.sh/b/f92fbe44e3c6df69/run.sh
+    config         https://bugs.sh/b/f92fbe44e3c6df69/config.gz
+    poc            https://bugs.sh/b/f92fbe44e3c6df69/repro.c
+
+== Sanitizer Report ====================================================
+BUG: KASAN: slab-out-of-bounds in __update_dentry_lease.constprop.0 (fs/ceph/inode.c:1459)
+Read of size 4 at addr ffff88802aa08565 by task kworker/0:2/797
+Workqueue: ceph-msgr ceph_con_workfn
+Call Trace:
+dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+kasan_report (mm/kasan/report.c:595)
+__update_dentry_lease.constprop.0 (fs/ceph/inode.c:1459)
+ceph_fill_trace (fs/ceph/inode.c:1474 fs/ceph/inode.c:1823)
+mds_dispatch (fs/ceph/mds_client.c:4229 fs/ceph/mds_client.c:7225)
+ceph_con_process_message (net/ceph/messenger.c:1424)
+ceph_con_v1_try_read (net/ceph/messenger_v1.c:1430)
+ceph_con_workfn (net/ceph/messenger.c:1576)
+process_one_work (kernel/workqueue.c:3396)
+worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:158)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+Allocated by task 797:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_save_track (mm/kasan/common.c:78)
+__kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+__kvmalloc_node_noprof (/include/linux/kasan.h:263 mm/slub.c:5414 mm/slub.c:7005)
+ceph_msg_new2 (net/ceph/messenger.c:1983 (discriminator 2))
+mds_alloc_msg (fs/ceph/mds_client.c:7395)
+ceph_con_in_msg_alloc (net/ceph/messenger.c:2076)
+ceph_con_v1_try_read (net/ceph/messenger_v1.c:1205 net/ceph/messenger_v1.c:1413)
+ceph_con_workfn (net/ceph/messenger.c:1576)
+process_one_work (kernel/workqueue.c:3396)
+worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:158)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+The buggy address belongs to the object at ffff88802aa08400
+which belongs to the cache kmalloc-512 of size 512
+The buggy address is located 357 bytes inside of
+allocated 360-byte region [ffff88802aa08400, ffff88802aa08568)
+The buggy address belongs to the physical page:
+post_alloc_hook (/include/linux/page_owner.h:33 mm/page_alloc.c:1871)
+get_page_from_freelist (mm/page_alloc.c:1879 mm/page_alloc.c:3943)
+__alloc_frozen_pages_noprof (mm/page_alloc.c:5436)
+new_slab (mm/slub.c:3347 (discriminator 2) mm/slub.c:3462 (discriminator 2) mm/slub.c:3513 (discriminator 2))
+refill_objects (mm/slub.c:7410)
+__pcs_replace_empty_main (mm/slub.c:2885 mm/slub.c:4774)
+__kmalloc_cache_noprof (mm/slub.c:4850 mm/slub.c:4984 mm/slub.c:5559)
+dev_pm_qos_constraints_allocate (/include/linux/slab.h:991 /include/linux/slab.h:1312 drivers/base/power/qos.c:201)
+__dev_pm_qos_add_request (drivers/base/power/qos.c:345)
+dev_pm_qos_add_request (drivers/base/power/qos.c:395)
+usb_hub_create_port_device (drivers/usb/core/port.c:800)
+hub_probe (drivers/usb/core/hub.c:1739 drivers/usb/core/hub.c:2006)
+usb_probe_interface (drivers/usb/core/driver.c:399)
+really_probe (drivers/base/dd.c:628 drivers/base/dd.c:706)
+__driver_probe_device (drivers/base/dd.c:868)
+driver_probe_device (drivers/base/dd.c:898)
+Memory state around the buggy address:
+ffff88802aa08400: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ffff88802aa08480: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffff88802aa08500: 00 00 00 00 00 00 00 00 00 00 00 00 00 fc fc fc
+^
+ffff88802aa08580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ffff88802aa08600: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+Kernel panic - not syncing: KASAN: panic_on_warn set ...
+
+---
+The report format is based on syzbot bug report.
+
+This report is generated by a bot. It may contain errors.
+See https://github.com/n132/cedalion for more information.
+
+For any issue with this report, reach out to cedalion@bugs.sh
+
+If the report is already addressed, let us know by replying with:
+#co fix: <commit hash>
+
+If the report is a duplicate of another one, reply with:
+#co dup: <lore link>
+
+If you want to undo deduplication, reply with:
+#co undup
