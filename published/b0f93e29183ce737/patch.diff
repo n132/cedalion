@@ -1,0 +1,14 @@
+diff --git a/fs/ceph/inode.c b/fs/ceph/inode.c
+index 61d7c0b..7f7b7b8 100644
+--- a/fs/ceph/inode.c
++++ b/fs/ceph/inode.c
+@@ -993,7 +993,7 @@ static int decode_encrypted_symlink(struct ceph_mds_client *mdsc,
+ 		kfree(sym);
+ 		return -EIO;
+ 	}
+-	sym[declen + 1] = '\0';
++	sym[declen] = '\0';
+ 	*decsym = sym;
+ 	return declen;
+ }
+-- 
