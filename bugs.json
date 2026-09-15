@@ -7846,27 +7846,33 @@
    "cvss": "7.8",
    "title": "net: bonding: fix use-after-free in bond_xmit_broadcast()",
    "view": "patched"
+  },
+  {
+   "bug_id": "25860fb17af97289",
+   "hash": "04af48c6c76cfd458125b0bbd65c3018843e06fac3906b472da9e7cb0d3d4166",
+   "lore": "",
+   "view": "processing"
   }
  ],
  "counts": {
-  "bugs": 1488,
+  "bugs": 1489,
   "cves": 90,
   "fixed": 116,
   "incomplete": 0,
   "merged_links": 86,
-  "reported": 143,
+  "reported": 144,
   "scooped": 13,
-  "with_report": 1478
+  "with_report": 1479
  },
- "generated_at": "2026-09-12 22:55:22",
+ "generated_at": "2026-09-14 22:08:07",
  "states": {
   "Fixed": 116,
   "PoC Available": 1345,
-  "Reported": 27
+  "Reported": 28
  },
  "views": {
   "patched": 116,
-  "processing": 59,
+  "processing": 60,
   "vulnerable": 1313
  }
 }

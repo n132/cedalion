@@ -117,6 +117,17 @@
   "kernel_commit": "eb3f4b7426cfd2b79d65b7d37155480b32259a11",
   "title": "crypto/asymmetric_keys: NULL pointer dereference in key_or_keyring_common()"
  },
+ "25860fb17af97289": {
+  "files": {
+   "config.gz": "25860fb17af97289/config.gz",
+   "patch.diff": "25860fb17af97289/patch.diff",
+   "report.eml": "25860fb17af97289/report.eml",
+   "report.md": "25860fb17af97289/report.md",
+   "repro.c": "25860fb17af97289/repro.c",
+   "run.sh": "25860fb17af97289/run.sh"
+  },
+  "kernel_commit": "a500db7819c50db59e55f1b4fa1c3baa5a2616f3"
+ },
  "28eef7d8af9428e6": {
   "files": {
    "config.gz": "28eef7d8af9428e6/config.gz",
