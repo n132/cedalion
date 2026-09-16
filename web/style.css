@@ -610,17 +610,21 @@ body.bug { zoom: 1; }
               font-size: .95rem; font-weight: 600; color: var(--text);
               margin: 1.25rem 0 .35rem; }
 
-/* max-width and min-width together are what actually make the scroll happen:
-   without them a pre in a flex or grid context sizes to its longest line and
-   pushes the page wide instead of scrolling inside itself. */
-.bugpage pre { margin: 0; padding: 0; overflow-x: auto; white-space: pre;
+/* Mail arrives preformatted, but prose still needs to wrap at the page edge.
+   Keeping every block on one line makes Notes and the footer behave like code
+   and clips them on narrow screens. The actual program output and source opt
+   back into horizontal scrolling below. */
+.bugpage pre { margin: 0; padding: 0; white-space: pre-wrap;
+               overflow-wrap: anywhere;
                max-width: 100%; min-width: 0;
                font-size: .78rem; line-height: 1.5;
                /* the stack the register already uses, not the browser's
                   default monospace */
                font-family: ui-monospace, SFMono-Regular, Menlo, Consolas,
                             monospace; }
-.bugpage pre.code { padding: .7rem .9rem; background: var(--surface-2);
+.bugpage pre.code { padding: .7rem .9rem; overflow-x: auto;
+                    white-space: pre; overflow-wrap: normal;
+                    background: var(--surface-2);
                     border: 1px solid var(--line-soft); }
 .bugpage pre.fields { margin-bottom: 1.5rem; }
 /* The id of a bug whose report is published: still copies on click, and takes
