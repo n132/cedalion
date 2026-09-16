@@ -153,15 +153,10 @@ let sortKey = null, sortDir = 1;
 // page has spent its comments arguing against.
 const VULN_COLUMNS = [["bug_id", "bug id"], ["hash", "hash"],
                ["kernel_commit", "kernel commit"], ["config", "config"],
-               ["poc", "poc"], ["sanitizer", "sanitizer report"],
-               ["lore", "lore links"]];
-// The one column Processing carries that Vulnerable does not, and it is the
-// exception that the paragraph above is otherwise right about. It is not a
-// different fact about a different kind of row — it is the same question every
-// row on this page asks — but its answer is only worth offering once a report
-// has actually gone out under the bug's own address, and that is exactly what
-// makes a row Processing. Built from VULN_COLUMNS rather than written out
-// again, so the seven columns the two views share stay one list.
+               ["poc", "poc"], ["sanitizer", "sanitizer report"]];
+// Processing adds only a search for patches carrying the bug's Reported-by
+// address. The canonical Message-ID remains internal workflow state; the
+// public table does not need a second, direct lore-links column.
 const PROC_COLUMNS = [...VULN_COLUMNS, ["patches", "patches on lore"]];
 const COLUMNS = {
   // The same field under the same name in both views that carry it: it is the
@@ -183,7 +178,7 @@ const COLUMNS = {
 // they are released separately and will land separately: the commit the bug was
 // found on, the CONFIG that builds it, the reproducer, and the sanitizer report
 // it trips. A single column would have to go from pending to done in one step.
-const VULN_PENDING = new Set(["kernel_commit", "config", "poc", "sanitizer", "lore"]);
+const VULN_PENDING = new Set(["kernel_commit", "config", "poc", "sanitizer"]);
 const PENDING = { processing: VULN_PENDING, vulnerable: VULN_PENDING };
 
 // Which file answers which column. A column is pending for a row until that
@@ -309,20 +304,6 @@ function sevClass(score) {
   return n >= 9 ? "sev-critical" : n >= 7 ? "sev-high" : n >= 4 ? "sev-medium" : "sev-low";
 }
 
-// The message-id the extractor read off the local lore mirror, which is the
-// posting's permanent address. Where the mirror had no copy the row carries no
-// id and this falls back to what the page always did before: a search for the
-// exact title the patch went out under.
-function loreLink(b) {
-  if (b.lore)
-    return `<a class="ext" href="https://lore.kernel.org/all/${encodeURIComponent(b.lore)}/"
-               target="_blank" rel="noopener" title="${esc(b.lore)}">lore ↗</a>`;
-  if (!b.title) return DASH;
-  const url = "https://lore.kernel.org/all/?q=" + encodeURIComponent('"' + b.title + '"');
-  return `<a class="ext" href="${esc(url)}" target="_blank" rel="noopener"
-             title="not in the local mirror; search lore for this title">search ↗</a>`;
-}
-
 // Has somebody already written this patch? The column exists so the answer
 // costs a click rather than an evening.
 //
@@ -422,8 +403,6 @@ function cellHTML(k, b) {
   switch (k) {
     case "title":
       return ["desc", v ? esc(v) : UNKNOWN];
-    case "lore":
-      return ["", loreLink(b)];
     // Not backed by a field, so it never reaches `v` above -- the link is
     // built from the row's own id. See patchSearchLink().
     case "patches":
