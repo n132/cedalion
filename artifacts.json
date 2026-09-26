@@ -409,6 +409,17 @@
   "kernel_commit": "f09079bd04a924c72d555cd97942d5f8d7eca98c",
   "title": "fs/xfs: NULL pointer dereference in xlog_recover_inode_commit_pass2()"
  },
+ "7aebac19e62711ff": {
+  "files": {
+   "config.gz": "7aebac19e62711ff/config.gz",
+   "patch.diff": "7aebac19e62711ff/patch.diff",
+   "report.eml": "7aebac19e62711ff/report.eml",
+   "report.md": "7aebac19e62711ff/report.md",
+   "repro.c": "7aebac19e62711ff/repro.c",
+   "run.sh": "7aebac19e62711ff/run.sh"
+  },
+  "kernel_commit": "2709dd5ae32f0828f386327c76bba9f39f63a1c6"
+ },
  "7f3235ad2e697d87": {
   "files": {
    "config.gz": "7f3235ad2e697d87/config.gz",
