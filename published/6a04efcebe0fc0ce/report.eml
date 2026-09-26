@@ -1,0 +1,115 @@
+Subject: [BUG] drivers/media: double free in usb_free_urb()
+From: co <co+6a04efcebe0fc0ce@bugs.sh>
+To: linux-media@vger.kernel.org, Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: Dinghao Liu <dinghao.liu@zju.edu.cn>, Hans Verkuil <hverkuil@kernel.org>, linux-kernel@vger.kernel.org, co <co+6a04efcebe0fc0ce@bugs.sh>
+
+This is a bug report, not a patch submission.
+
+We found a bug reachable in:
+
+    path    drivers/media/usb/em28xx
+    crash   double free in usb_free_urb()
+    commit  2f1baf1fc892 ("Merge tag 'trace-v7.2-rc7' of git://git.kernel.org/pub/scm/linux/kernel/git/trace/linux-trace")
+
+Config, environment, the sanitizer report and a C reproducer follow.
+
+== Notes ===============================================================
+    If you fix this bug, this tag credits the report and lets us
+    close it on our side:
+
+Reported-by: co+6a04efcebe0fc0ce@bugs.sh
+
+    Everything in this mail is validated by the reproducer below.
+
+    We also hold an unreviewed LLM-generated analysis and candidate
+    patch. The same reproducer panics the unpatched kernel and runs
+    clean with that patch applied. Use it as a starting point, or ignore
+    it and write your own:
+
+        patch.diff  https://bugs.sh/b/6a04efcebe0fc0ce/patch.diff
+        report.md   https://bugs.sh/b/6a04efcebe0fc0ce/report.md
+
+    Happy to test patches. Complaints and suggestions about our work
+    are welcome at:
+
+        cedalion@bugs.sh
+
+== Environment =========================================================
+    Reproduced on  2f1baf1fc892 ("Merge tag 'trace-v7.2-rc7' of git://git.kernel.org/pub/scm/linux/kernel/git/trace/linux-trace")
+    VM setup       https://bugs.sh/b/6a04efcebe0fc0ce/run.sh
+    config         https://bugs.sh/b/6a04efcebe0fc0ce/config.gz
+    poc            https://bugs.sh/b/6a04efcebe0fc0ce/repro.c
+
+== Sanitizer Report ====================================================
+BUG: KASAN: double-free in usb_free_urb.part.0 (drivers/usb/core/urb.c:25 ./include/linux/kref.h:65 drivers/usb/core/urb.c:96)
+Free of addr ffff88802e754c00 by task kworker/1:3/5017
+Workqueue: events request_module_async
+Call Trace:
+dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+kasan_report_invalid_free (mm/kasan/report.c:557)
+check_slab_allocation (mm/kasan/common.c:235)
+kfree (./include/linux/kasan.h:199 (discriminator 1) mm/slub.c:2622 (discriminator 1) mm/slub.c:6377 (discriminator 1) mm/slub.c:6692 (discriminator 1))
+usb_free_urb.part.0 (drivers/usb/core/urb.c:25 ./include/linux/kref.h:65 drivers/usb/core/urb.c:96)
+usb_free_urb (drivers/usb/core/urb.c:95)
+em28xx_uninit_usb_xfer (drivers/media/usb/em28xx/em28xx-core.c:964)
+em28xx_alloc_urbs (drivers/media/usb/em28xx/em28xx-core.c:1076)
+em28xx_dvb_init (drivers/media/usb/em28xx/em28xx-dvb.c:1734 drivers/media/usb/em28xx/em28xx-dvb.c:1698)
+em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
+request_module_async (drivers/media/usb/em28xx/em28xx-cards.c:3660)
+process_one_work (kernel/workqueue.c:3322)
+worker_thread (kernel/workqueue.c:3405 kernel/workqueue.c:3486)
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:158)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+Allocated by task 5017:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_save_track (mm/kasan/common.c:78)
+__kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+__kmalloc_noprof (./include/linux/kasan.h:263 mm/slub.c:5334 mm/slub.c:5359)
+em28xx_alloc_urbs (./include/linux/slab.h:992 ./include/linux/slab.h:1309 drivers/media/usb/em28xx/em28xx-core.c:1081)
+em28xx_dvb_init (drivers/media/usb/em28xx/em28xx-dvb.c:1734 drivers/media/usb/em28xx/em28xx-dvb.c:1698)
+em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
+request_module_async (drivers/media/usb/em28xx/em28xx-cards.c:3660)
+process_one_work (kernel/workqueue.c:3322)
+worker_thread (kernel/workqueue.c:3405 kernel/workqueue.c:3486)
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:158)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+Freed by task 5017:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_save_track (mm/kasan/common.c:78)
+kasan_save_free_info (mm/kasan/generic.c:584)
+__kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
+kfree (./include/linux/kasan.h:235 mm/slub.c:2677 mm/slub.c:6377 mm/slub.c:6692)
+em28xx_alloc_urbs (drivers/media/usb/em28xx/em28xx-core.c:1084)
+em28xx_dvb_init (drivers/media/usb/em28xx/em28xx-dvb.c:1734 drivers/media/usb/em28xx/em28xx-dvb.c:1698)
+em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
+request_module_async (drivers/media/usb/em28xx/em28xx-cards.c:3660)
+process_one_work (kernel/workqueue.c:3322)
+worker_thread (kernel/workqueue.c:3405 kernel/workqueue.c:3486)
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:158)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+The buggy address belongs to the object at ffff88802e754c00
+which belongs to the cache kmalloc-512 of size 512
+The buggy address is located 0 bytes inside of
+512-byte region [ffff88802e754c00, ffff88802e754e00)
+Kernel panic - not syncing: KASAN: panic_on_warn set ...
+
+---
+The report format is based on syzbot bug report.
+
+This report is generated by a bot. It may contain errors.
+See https://github.com/n132/cedalion for more information.
+
+For any issue with this report, reach out to cedalion@bugs.sh
+
+If the report is already addressed, let us know by replying with:
+#co fix: <commit hash>
+
+If the report is a duplicate of another one, reply with:
+#co dup: <lore link>
+
+If you want to undo deduplication, reply with:
+#co undup
