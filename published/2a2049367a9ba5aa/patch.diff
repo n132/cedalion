@@ -1,0 +1,13 @@
+diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
+index bcb04c6cb92c..88e145a3d12c 100644
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -3669,7 +3669,7 @@ static void handle_cap_grant(struct inode *inode,
+ 	}
+
+ 	if ((extra_info->issued & CEPH_CAP_XATTR_EXCL) == 0 &&
+-	    grant->xattr_len) {
++	    grant->xattr_len && xattr_buf) {
+ 		int len = le32_to_cpu(grant->xattr_len);
+ 		u64 version = le64_to_cpu(grant->xattr_version);
+
