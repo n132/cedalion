@@ -1,0 +1,20 @@
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index 03c068ea27b6..ab8b951485c0 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -484,8 +484,11 @@ void tcp_init_metrics(struct sock *sk)
+ 		goto reset;
+ 	}
+
+-	if (tcp_metric_locked(tm, TCP_METRIC_CWND))
+-		tp->snd_cwnd_clamp = tcp_metric_get(tm, TCP_METRIC_CWND);
++	if (tcp_metric_locked(tm, TCP_METRIC_CWND)) {
++		val = tcp_metric_get(tm, TCP_METRIC_CWND);
++		if (val)
++			tp->snd_cwnd_clamp = val;
++	}
+
+ 	val = READ_ONCE(net->ipv4.sysctl_tcp_no_ssthresh_metrics_save) ?
+ 	      0 : tcp_metric_get(tm, TCP_METRIC_SSTHRESH);
+--
+2.43.0
