@@ -1,0 +1,23 @@
+diff --git a/drivers/usb/gadget/function/f_ncm.c b/drivers/usb/gadget/function/f_ncm.c
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1131,10 +1131,14 @@ err:
+ 	ncm->netdev->stats.tx_dropped++;
+
+ 	if (skb)
+ 		dev_kfree_skb_any(skb);
+-	if (ncm->skb_tx_data)
++	if (ncm->skb_tx_data) {
+ 		dev_kfree_skb_any(ncm->skb_tx_data);
+-	if (ncm->skb_tx_ndp)
++		ncm->skb_tx_data = NULL;
++	}
++	if (ncm->skb_tx_ndp) {
+ 		dev_kfree_skb_any(ncm->skb_tx_ndp);
++		ncm->skb_tx_ndp = NULL;
++	}
+
+ 	return NULL;
+ }
+--
+2.43.0

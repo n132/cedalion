@@ -1,4 +1,15 @@
 {
+ "02480a85e1a0d4f5": {
+  "files": {
+   "config.gz": "02480a85e1a0d4f5/config.gz",
+   "patch.diff": "02480a85e1a0d4f5/patch.diff",
+   "report.eml": "02480a85e1a0d4f5/report.eml",
+   "report.md": "02480a85e1a0d4f5/report.md",
+   "repro.c": "02480a85e1a0d4f5/repro.c",
+   "run.sh": "02480a85e1a0d4f5/run.sh"
+  },
+  "kernel_commit": "238650ef6c7c7cca08e032527329424c9fbd70e5"
+ },
  "058d6946d88a289a": {
   "files": {
    "config.gz": "058d6946d88a289a/config.gz",
