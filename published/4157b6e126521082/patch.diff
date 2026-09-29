@@ -1,0 +1,17 @@
+diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
+index 3a27773186ae..3f370d40d74b 100644
+--- a/fs/smb/client/reparse.c
++++ b/fs/smb/client/reparse.c
+@@ -1021,6 +1021,12 @@ static int parse_reparse_native_symlink(struct reparse_symlink_data_buffer *sym,
+
+ 	/* We handle Symbolic Link reparse tag here. See: MS-FSCC 2.1.2.4 */
+
++	if (plen < sizeof(*sym)) {
++		cifs_dbg(VFS, "srv returned malformed symlink buffer\n");
++		return smb_EIO2(smb_eio_trace_reparse_native_sym_len,
++				plen, sizeof(*sym));
++	}
++
+ 	offs = le16_to_cpu(sym->SubstituteNameOffset);
+ 	len = le16_to_cpu(sym->SubstituteNameLength);
+ 	if (offs + 20 > plen || offs + len + 20 > plen) {
