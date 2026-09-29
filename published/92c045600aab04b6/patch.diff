@@ -1,0 +1,38 @@
+diff --git a/net/tipc/bearer.h b/net/tipc/bearer.h
+index 41eac1ee0c09..61c1a5a3d95f 100644
+--- a/net/tipc/bearer.h
++++ b/net/tipc/bearer.h
+@@ -63,6 +63,9 @@
+ /* Minimum bearer MTU */
+ #define TIPC_MIN_BEARER_MTU	(MAX_H_SIZE + INT_H_SIZE)
+
++/* Maximum bearer MTU (link->mtu and link->advertised_mtu are u16) */
++#define TIPC_MAX_BEARER_MTU	U16_MAX
++
+ /* Identifiers for distinguishing between broadcast/multicast and replicast
+  */
+ #define TIPC_BROADCAST_SUPPORT  1
+@@ -254,13 +257,18 @@ static inline void tipc_loopback_trace(struct net *net,
+ 		tipc_clone_to_loopback(net, pkts);
+ }
+
+-/* check if device MTU is too low for tipc headers */
++/* check if device MTU is within the valid range for tipc headers */
+ static inline bool tipc_mtu_bad(struct net_device *dev)
+ {
+-	if (dev->mtu >= TIPC_MIN_BEARER_MTU)
+-		return false;
+-	netdev_warn(dev, "MTU too low for tipc bearer\n");
+-	return true;
++	if (dev->mtu < TIPC_MIN_BEARER_MTU) {
++		netdev_warn(dev, "MTU too low for tipc bearer\n");
++		return true;
++	}
++	if (dev->mtu > TIPC_MAX_BEARER_MTU) {
++		netdev_warn(dev, "MTU too high for tipc bearer\n");
++		return true;
++	}
++	return false;
+ }
+
+ #endif	/* _TIPC_BEARER_H */

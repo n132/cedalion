@@ -7891,27 +7891,33 @@
    "hash": "a07e909caacadac377129fe3ed8e53ec8704e05b741d3b2fe82d8a97c2d75f4c",
    "lore": "",
    "view": "processing"
+  },
+  {
+   "bug_id": "92c045600aab04b6",
+   "hash": "270ba205865fdf0efeda566a508efe0b64b3ebaf92db31330f5ec20f556c9e17",
+   "lore": "",
+   "view": "processing"
   }
  ],
  "counts": {
-  "bugs": 1495,
+  "bugs": 1496,
   "cves": 90,
   "fixed": 116,
   "incomplete": 0,
   "merged_links": 86,
   "reported": 145,
   "scooped": 13,
-  "with_report": 1485
+  "with_report": 1486
  },
- "generated_at": "2026-09-29 16:19:25",
+ "generated_at": "2026-09-29 16:19:35",
  "states": {
   "Fixed": 116,
-  "PoC Available": 1350,
+  "PoC Available": 1351,
   "Reported": 29
  },
  "views": {
   "patched": 116,
-  "processing": 69,
+  "processing": 70,
   "vulnerable": 1310
  }
 }
