@@ -1,0 +1,13 @@
+diff --git a/fs/ceph/snap.c b/fs/ceph/snap.c
+index 9b79a5eaca939..7ed782abfbbc1 100644
+--- a/fs/ceph/snap.c
++++ b/fs/ceph/snap.c
+@@ -1027,7 +1027,7 @@ void ceph_handle_snap(struct ceph_mds_client *mdsc,
+ 	void *p = msg->front.iov_base;
+ 	void *e = p + msg->front.iov_len;
+ 	struct ceph_mds_snap_head *h;
+-	int num_split_inos, num_split_realms;
++	u32 num_split_inos, num_split_realms;
+ 	__le64 *split_inos = NULL, *split_realms = NULL;
+ 	int i;
+ 	int locked_rwsem = 0;
