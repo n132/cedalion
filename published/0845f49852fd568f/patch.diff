@@ -1,0 +1,23 @@
+diff --git a/drivers/block/drbd/drbd_receiver.c b/drivers/block/drbd/drbd_receiver.c
+index 2135c14354a8..f1bc6fcb15a3 100644
+--- a/drivers/block/drbd/drbd_receiver.c
++++ b/drivers/block/drbd/drbd_receiver.c
+@@ -2712,6 +2712,18 @@ static int receive_DataRequest(struct drbd_connection *connection, struct packet
+
+ 	case P_OV_REPLY:
+ 	case P_CSUM_RS_REQUEST:
++		{
++			struct crypto_shash *tfm = pi->cmd == P_CSUM_RS_REQUEST ?
++				peer_device->connection->csums_tfm :
++				peer_device->connection->verify_tfm;
++			unsigned int expect = tfm ? crypto_shash_digestsize(tfm) : 0;
++
++			if (pi->size != expect) {
++				drbd_err(device, "%s: invalid digest length %u (expected %u)\n",
++					 cmdname(pi->cmd), pi->size, expect);
++				goto out_free_e;
++			}
++		}
+ 		di = kmalloc(sizeof(*di) + pi->size, GFP_NOIO);
+ 		if (!di)
+ 			goto out_free_e;

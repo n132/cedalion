@@ -22,6 +22,17 @@
   "kernel_commit": "eb3f4b7426cfd2b79d65b7d37155480b32259a11",
   "title": "drivers/net: out-of-bounds in lock_acquire()"
  },
+ "0845f49852fd568f": {
+  "files": {
+   "config.gz": "0845f49852fd568f/config.gz",
+   "patch.diff": "0845f49852fd568f/patch.diff",
+   "report.eml": "0845f49852fd568f/report.eml",
+   "report.md": "0845f49852fd568f/report.md",
+   "repro.c": "0845f49852fd568f/repro.c",
+   "run.sh": "0845f49852fd568f/run.sh"
+  },
+  "kernel_commit": "238650ef6c7c7cca08e032527329424c9fbd70e5"
+ },
  "0bfc402647f53e3e": {
   "files": {
    "patch.diff": null,
