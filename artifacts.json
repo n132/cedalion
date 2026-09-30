@@ -797,6 +797,17 @@
   "kernel_commit": "eb3f4b7426cfd2b79d65b7d37155480b32259a11",
   "title": "fs/ntfs3: use-after-free in log_replay()"
  },
+ "e015e82956da641b": {
+  "files": {
+   "config.gz": "e015e82956da641b/config.gz",
+   "patch.diff": "e015e82956da641b/patch.diff",
+   "report.eml": "e015e82956da641b/report.eml",
+   "report.md": "e015e82956da641b/report.md",
+   "repro.c": "e015e82956da641b/repro.c",
+   "run.sh": "e015e82956da641b/run.sh"
+  },
+  "kernel_commit": "238650ef6c7c7cca08e032527329424c9fbd70e5"
+ },
  "e5693071d903b832": {
   "files": {
    "config.gz": "e5693071d903b832/config.gz",
