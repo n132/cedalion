@@ -1,0 +1,28 @@
+diff --git a/net/ceph/messenger.c b/net/ceph/messenger.c
+index 4cb60bacf5f5..000000000000 100644
+--- a/net/ceph/messenger.c
++++ b/net/ceph/messenger.c
+@@ -2177,11 +2177,18 @@ int ceph_con_in_msg_alloc(struct ceph_connection *con,
+ 	}
+ 	memcpy(&con->in_msg->hdr, hdr, sizeof(*hdr));
+
+-	if (middle_len && !con->in_msg->middle) {
+-		ret = ceph_alloc_middle(con, con->in_msg);
+-		if (ret < 0) {
+-			ceph_msg_put(con->in_msg);
+-			con->in_msg = NULL;
++	if (middle_len) {
++		if (con->in_msg->middle &&
++		    middle_len > con->in_msg->middle->alloc_len) {
++			ceph_buffer_put(con->in_msg->middle);
++			con->in_msg->middle = NULL;
++		}
++		if (!con->in_msg->middle) {
++			ret = ceph_alloc_middle(con, con->in_msg);
++			if (ret < 0) {
++				ceph_msg_put(con->in_msg);
++				con->in_msg = NULL;
++			}
+ 		}
+ 	}
+
