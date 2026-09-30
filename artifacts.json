@@ -273,6 +273,17 @@
   "kernel_commit": "aaec7096f9961eb223b5b149abe9495525c205d9",
   "title": "net/can: NULL pointer dereference in j1939_session_completed()"
  },
+ "4a4f9998e2b4b490": {
+  "files": {
+   "config.gz": "4a4f9998e2b4b490/config.gz",
+   "patch.diff": "4a4f9998e2b4b490/patch.diff",
+   "report.eml": "4a4f9998e2b4b490/report.eml",
+   "report.md": "4a4f9998e2b4b490/report.md",
+   "repro.c": "4a4f9998e2b4b490/repro.c",
+   "run.sh": "4a4f9998e2b4b490/run.sh"
+  },
+  "kernel_commit": "238650ef6c7c7cca08e032527329424c9fbd70e5"
+ },
  "4bda3bf8e1a2b780": {
   "files": {
    "config.gz": "4bda3bf8e1a2b780/config.gz",
