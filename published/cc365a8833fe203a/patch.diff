@@ -1,0 +1,52 @@
+diff --git a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
+--- a/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
++++ b/drivers/net/wireless/marvell/mwifiex/uap_txrx.c
+@@ -90,6 +90,7 @@ static void mwifiex_uap_queue_bridged_pkt(struct mwifiex_private *priv,
+ 	struct ethhdr *p_ethhdr;
+ 	struct mwifiex_sta_node *src_node;
+ 	int index;
++	u8 rx_rate, ht_info;
+
+ 	uap_rx_pd = (struct uap_rxpd *)(skb->data);
+ 	rx_pkt_hdr = (void *)uap_rx_pd + le16_to_cpu(uap_rx_pd->rx_pkt_offset);
+@@ -149,6 +150,13 @@ static void mwifiex_uap_queue_bridged_pkt(struct mwifiex_private *priv,
+ 		hdr_chop = (u8 *)&rx_pkt_hdr->eth803_hdr - (u8 *)uap_rx_pd;
+ 	}
+
++	/* rx_rate and ht_info live in the rxpd that skb_pull() chops off
++	 * below, and the original head that rx_pkt_hdr points into may be
++	 * freed by the headroom reallocation; cache them while still valid.
++	 */
++	rx_rate = uap_rx_pd->rx_rate;
++	ht_info = uap_rx_pd->ht_info;
++
+ 	/* Chop off the leading header bytes so that it points
+ 	 * to the start of either the reconstructed EthII frame
+ 	 * or the 802.2/llc/snap frame.
+@@ -183,16 +191,20 @@ static void mwifiex_uap_queue_bridged_pkt(struct mwifiex_private *priv,
+ 	tx_info->bss_type = priv->bss_type;
+ 	tx_info->flags |= MWIFIEX_BUF_FLAG_BRIDGED_PKT;
+
+-	src_node = mwifiex_get_sta_entry(priv, rx_pkt_hdr->eth803_hdr.h_source);
++	/* skb->data now points at the ethernet header, which survived the
++	 * pull/realloc; rx_pkt_hdr still references the possibly-freed head.
++	 */
++	p_ethhdr = (struct ethhdr *)skb->data;
++	src_node = mwifiex_get_sta_entry(priv, p_ethhdr->h_source);
+ 	if (src_node) {
+ 		src_node->stats.last_rx = jiffies;
+ 		src_node->stats.rx_bytes += skb->len;
+ 		src_node->stats.rx_packets++;
+-		src_node->stats.last_tx_rate = uap_rx_pd->rx_rate;
+-		src_node->stats.last_tx_htinfo = uap_rx_pd->ht_info;
++		src_node->stats.last_tx_rate = rx_rate;
++		src_node->stats.last_tx_htinfo = ht_info;
+ 	}
+
+-	if (is_unicast_ether_addr(rx_pkt_hdr->eth803_hdr.h_dest)) {
++	if (is_unicast_ether_addr(p_ethhdr->h_dest)) {
+ 		/* Update bridge packet statistics as the
+ 		 * packet is not going to kernel/upper layer.
+ 		 */
+--
+2.43.0
