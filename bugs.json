@@ -1,31 +1,42 @@
 {
- "generated_at": "2026-10-12 17:24:25",
+ "generated_at": "2026-11-11 00:22:45",
  "counts": {
-  "bugs": 1170,
-  "with_report": 1159,
-  "fixed": 135,
-  "reported": 192,
+  "bugs": 1164,
+  "with_report": 1152,
+  "fixed": 165,
+  "reported": 210,
   "scooped": 99,
   "incomplete": 0,
   "merged_links": 83,
-  "cves": 127
+  "cves": 134
  },
  "states": {
-  "Reported": 57,
-  "PoC Available": 762,
-  "Scooped": 216,
-  "Fixed": 135
+  "Fixed": 165,
+  "PoC Available": 738,
+  "Reported": 45,
+  "Scooped": 216
  },
  "views": {
-  "vulnerable": 975,
-  "processing": 60,
-  "patched": 135
+  "vulnerable": 956,
+  "processing": 43,
+  "patched": 165
  },
  "bugs": [
   {
-   "view": "vulnerable",
+   "view": "patched",
+   "bug_id": "",
+   "cve": "CVE-2026-99026",
+   "commit": "489114c9ecae",
+   "title": "net: team: free skb when broadcast has no txable port",
+   "cvss": ""
+  },
+  {
+   "view": "patched",
    "bug_id": "1fe9b56e2c61be5e",
-   "hash": "0e188be5dcc11e8b69f993d1c529e35741a25bc93ef80b4e95f667936994f708"
+   "cve": "CVE-2026-98954",
+   "commit": "44378d02c5aa",
+   "title": "net: always dissect GSO packets in __virtio_net_hdr_to_skb()",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -70,16 +81,6 @@
   },
   {
    "view": "vulnerable",
-   "bug_id": "458b09d27eb8d0c8",
-   "hash": "816b8002e8c0a38682f74a48fcd83313985592f29cbd78f7f7da9cac01f90dde"
-  },
-  {
-   "view": "vulnerable",
-   "bug_id": "c2b23827384ca58d",
-   "hash": "38c7e4bc2866ff8ce369af5f2d31e7fccb13ca23e5f56b0fd4a1c6abd06cc739"
-  },
-  {
-   "view": "vulnerable",
    "bug_id": "feea12e9151b7f58",
    "hash": "e6cbdacdf5aa9bdb8c059157bb6b45392f64871556f4aebdb98f1d016502e1cd"
   },
@@ -89,10 +90,12 @@
    "hash": "ef075077bf7118d38dabcd4ace8ec0a4061c92703830b6b3db2dc357c43a58db"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "71b6509cb791e531",
-   "hash": "d2e35d4a4c2526b39ad9ad3e236e253028cdd953b43984591cd9eeea75462091",
-   "lore": "20261003153224.2683219-2-bestswngs@gmail.com"
+   "cve": "",
+   "commit": "363c8c79220d",
+   "title": "net: ipv4: add zero check for snd_cwnd_clamp",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -109,7 +112,7 @@
    "view": "processing",
    "bug_id": "4a4f9998e2b4b490",
    "hash": "14b9934e807fad34c587db4e8e3b75f8b967f2ba7dd513bdb29583b90b68226b",
-   "lore": ""
+   "lore": "20261028061651.110435-1-yymhvert@gmail.com"
   },
   {
    "view": "vulnerable",
@@ -148,11 +151,6 @@
   },
   {
    "view": "vulnerable",
-   "bug_id": "42c7a3f29dff0982",
-   "hash": "ea9e9fd11a723519a6ed813e361ba1bad2dfbc3893f5759a7110424bf31fd704"
-  },
-  {
-   "view": "vulnerable",
    "bug_id": "edba4c449e4a7f71",
    "hash": "11433955ca820580745685485a2b6cec8d5db4f4f86f782869517a47b967c472"
   },
@@ -162,9 +160,12 @@
    "hash": "c9e75adb083a7b153f2a0bd78f2b391b4da08b079fb60be24bb32a21b13c05e8"
   },
   {
-   "view": "vulnerable",
+   "view": "patched",
    "bug_id": "eada64ce90ecebce",
-   "hash": "3f49f11ec7d3aef2cfff1d9a40b662e9e0d542d82ddfdfc792fba725c83f3d66"
+   "cve": "",
+   "commit": "90aedf8854c0",
+   "title": "bpf: Validate stack arg reads against caller state",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -227,7 +228,7 @@
    "view": "processing",
    "bug_id": "0845f49852fd568f",
    "hash": "c7ffda0305cbc09438fde2c32d61694796da6499db9e16b9378d38ce03200271",
-   "lore": ""
+   "lore": "20261020182200.236875-1-yiboliume@gmail.com"
   },
   {
    "view": "vulnerable",
@@ -238,7 +239,7 @@
    "view": "processing",
    "bug_id": "02480a85e1a0d4f5",
    "hash": "678d664d2cc0c2334c856d89fa4b09c30af6e6508230b120a40bb670d81f943e",
-   "lore": ""
+   "lore": "20261015024508.3179-1-yymhvert@gmail.com"
   },
   {
    "view": "vulnerable",
@@ -277,18 +278,16 @@
   },
   {
    "view": "vulnerable",
-   "bug_id": "985a0b88a20be0f3",
-   "hash": "beb58eacdf6aa4c426cfc0527f7495a8fc1fa34aa2dd9977cd8c495a28f97536"
-  },
-  {
-   "view": "vulnerable",
    "bug_id": "195cb3cf7823591c",
    "hash": "e9a1c41975269ce63c99ba5a1ade26df9eb73c329d66611c6cc763b822e9debf"
   },
   {
-   "view": "vulnerable",
+   "view": "patched",
    "bug_id": "d531129f2f9fbf88",
-   "hash": "b06163bc2c97d394d6618168673a864d7b96b0788495ed30f26aac5b955dcea7"
+   "cve": "",
+   "commit": "2ff3730998b0",
+   "title": "smb/server: prevent file publication after tree disconnect",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -310,7 +309,7 @@
    "view": "processing",
    "bug_id": "98d7de09cd94fec5",
    "hash": "18cbcd8114fcf282dc17133766fd87c34030566694573841dfcee2d65ef22854",
-   "lore": ""
+   "lore": "20261021024738.17266-1-yymhvert@gmail.com"
   },
   {
    "view": "vulnerable",
@@ -329,11 +328,6 @@
   },
   {
    "view": "vulnerable",
-   "bug_id": "d358690b2fb44920",
-   "hash": "b4ce8e81dec3696149b5fad5c9b2f8f7f556029db320fd253890e2c570668218"
-  },
-  {
-   "view": "vulnerable",
    "bug_id": "b9f6e8286e5e3124",
    "hash": "17f757b624826fde5b4782e30a6c16e62dc94b48d4772a8d3fae317107d1e5b8"
   },
@@ -348,10 +342,12 @@
    "hash": "82f414b8bd6008f59c6c00ac1d9eb1c7d74f47172b0ef3ad479a5635c57c62bb"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "e015e82956da641b",
-   "hash": "21dd646847ca6f9cdc8eede9f5b315ecace044b2bedab1bc70ffd3250046af99",
-   "lore": ""
+   "cve": "",
+   "commit": "635e760169a8",
+   "title": "nvmet-rdma: reject short connection requests",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -407,11 +403,6 @@
    "view": "vulnerable",
    "bug_id": "95a0f3d4ffb26a22",
    "hash": "f2b3d0d561514bb09337a98d2dd25f44174f3bd111bd2f817ba3fdc0871d74f0"
-  },
-  {
-   "view": "vulnerable",
-   "bug_id": "b8f38274cd4d21db",
-   "hash": "4b6de278c5161284398c6787833e497baf8fe3dca6510c07fa7fb1512f77e7e5"
   },
   {
    "view": "vulnerable",
@@ -509,9 +500,12 @@
    "hash": "94582c8b7f20be74f689e4172c2cbd1f2492fdadcffa533c8b556f9fd7514e28"
   },
   {
-   "view": "vulnerable",
+   "view": "patched",
    "bug_id": "24c7c12d69e63c6d",
-   "hash": "c352e5bb8c1b8ff3ad74d42e21176e375de8b231abfcaa8eb35d8774115716a5"
+   "cve": "",
+   "commit": "51efca72345a",
+   "title": "smb: client: stop processing a read response after a receive error",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -769,6 +763,14 @@
    "hash": "18568e541732d4d28784a747c3ff7db2a6dba22955179ffebba4e0663784a6d5"
   },
   {
+   "view": "patched",
+   "bug_id": "",
+   "cve": "CVE-2026-98836",
+   "commit": "61b0a5a114fa",
+   "title": "ALSA: line6: reject oversized playback packets",
+   "cvss": ""
+  },
+  {
    "view": "vulnerable",
    "bug_id": "7c5f9ed83313bce9",
    "hash": "591b6550e8cfa751fd8d807934aafebb3445dc13c571b86d7f1f99059bb24dd3"
@@ -809,14 +811,20 @@
    "hash": "37a4d5ff57ea9ca27eee4dadbe2a31716d314354ebf99802d55887f827f17955"
   },
   {
-   "view": "vulnerable",
+   "view": "patched",
    "bug_id": "f8e3e01d8dda8689",
-   "hash": "c6e6adbd5725d3f49062a403acb2fba1db5107e31fec0fa360e9db54dc40e671"
+   "cve": "",
+   "commit": "c1742590d2b2",
+   "title": "ceph: reject mdsmaps that claim more than CEPH_MAX_MDS ranks",
+   "cvss": ""
   },
   {
-   "view": "vulnerable",
+   "view": "patched",
    "bug_id": "ff13a35f73bb7891",
-   "hash": "dfc4dd0fa800f092f619b823fc302f566baa21cd7712f539630d9af0fbea312b"
+   "cve": "",
+   "commit": "b3ad42f61832",
+   "title": "bpf: Reset skb->cb after an lwt prog pushes an IP header",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -864,7 +872,7 @@
    "cve": "CVE-2026-98378",
    "commit": "50e80e2bb5e2",
    "title": "bpf: Skip unsettled links in link iterator",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "patched",
@@ -896,11 +904,6 @@
    "commit": "86b6471e690c",
    "title": "netfilter: nft_set_rbtree: skip transaction elements during GC",
    "cvss": ""
-  },
-  {
-   "view": "vulnerable",
-   "bug_id": "8c52eded0647cb1a",
-   "hash": "6e07d5aaf8cf34fcdd6d5e4dd798e4272bc269712670edb007b2923e7cc0e624"
   },
   {
    "view": "vulnerable",
@@ -938,7 +941,7 @@
    "cve": "CVE-2026-98381",
    "commit": "7104a3707143",
    "title": "veth: manage XDP program pointers during channel resize",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "vulnerable",
@@ -1084,10 +1087,12 @@
    "hash": "3190fa7999aa63a25888ac8d46d03bbd25a27fd4a55c3669760c934ec9ca0b48"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "f92fbe44e3c6df69",
-   "hash": "31f1fb25022a8d95f0f8ce738e830dea666456edae2f19e85c3b35626801fe57",
-   "lore": "20260915021710.386847-1-xmei5@asu.edu"
+   "cve": "",
+   "commit": "7286b2ffe04d",
+   "title": "ceph: require the dentry lease record to cover struct ceph_mds_reply_lease",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -1095,10 +1100,12 @@
    "hash": "6a402f77ec68ec39b6aa7fd4a7d62db6d3d94d9402427d9563e5dd4054c2cbc7"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "25860fb17af97289",
-   "hash": "04af48c6c76cfd458125b0bbd65c3018843e06fac3906b472da9e7cb0d3d4166",
-   "lore": "20260915014243.355592-1-xmei5@asu.edu"
+   "cve": "",
+   "commit": "62b41a16d860",
+   "title": "libceph: bound mon_command ack decode to front len",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -1122,9 +1129,12 @@
    "hash": "edef3932c2f9bbf378d50c59821e3b7fc8c079ea5d825c33a93107b7c9154895"
   },
   {
-   "view": "vulnerable",
+   "view": "patched",
    "bug_id": "ecaada42f806f629",
-   "hash": "c97dee4a157c3569387d38f09686fca730a4a7a57cbac5ff316fd013b745548a"
+   "cve": "",
+   "commit": "b3bf89767e3c",
+   "title": "ceph: fix integer overflow in the snap trace bounds check",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -1238,7 +1248,7 @@
    "cve": "CVE-2026-98382",
    "commit": "6db1ce73e985",
    "title": "bpf: Reject dev-bound-only programs on other devices",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "vulnerable",
@@ -1246,9 +1256,12 @@
    "hash": "1b753fbe6f536f81cd60635df3607d9729e26b5450dcb9f85f9fbbff9fa5c1df"
   },
   {
-   "view": "vulnerable",
+   "view": "patched",
    "bug_id": "ac0ebfcd53bd2316",
-   "hash": "3f869fd426adc9b0bf3d6bfdd93a229c6f6dd136b7f55e1f0a1bb78005936aaf"
+   "cve": "",
+   "commit": "2eacf058d2db",
+   "title": "media: go7007: only set audio_enabled if go7007_snd_init() succeeded",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -1361,10 +1374,12 @@
    "hash": "30a0e5646aceb936ee723d3c1fd26dd4737638bbcda1bcbd15c612fea13a6786"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "6a04efcebe0fc0ce",
-   "hash": "471e59f2c205e814de5e8e037f657c662a30863122f5f5b8071ad8dd2e20399a",
-   "lore": "20260929001903.158767-2-kj2864@nyu.edu"
+   "cve": "",
+   "commit": "fd427b8adae4",
+   "title": "media: em28xx: fix double free in em28xx_alloc_urbs",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -1463,15 +1478,17 @@
    "lore": "rvhsRXzc3FhxUM9cmdzPQshyaGy50iIL9t5p@bugs.sh"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "9782320f78c23f40",
-   "hash": "56e8445458a227ccfbffa2ae7ba6f0f2654cf056d1abaaedbe84f6edd5757816",
-   "lore": "20260913002945.338569-1-xmei5@asu.edu"
+   "cve": "",
+   "commit": "aebfe430ba88",
+   "title": "media: em28xx: reject audio endpoint with zero packet size",
+   "cvss": ""
   },
   {
    "view": "patched",
    "bug_id": "24304d323d28f156",
-   "cve": "",
+   "cve": "CVE-2026-98741",
    "commit": "86f86e6fdedc",
    "title": "ALSA: ua101: reject mismatched capture/playback packet sizes",
    "cvss": ""
@@ -1582,7 +1599,7 @@
    "cve": "CVE-2026-98383",
    "commit": "e4a62833adff",
    "title": "bpf: Disallow bpf_skb_pull_data() for LWT_SEG6LOCAL",
-   "cvss": ""
+   "cvss": "7.8"
   },
   {
    "view": "vulnerable",
@@ -1645,7 +1662,7 @@
   {
    "view": "patched",
    "bug_id": "77553a7fc66ac133",
-   "cve": "",
+   "cve": "CVE-2026-98725",
    "commit": "fa6778e030be",
    "title": "nvmet-auth: fix out-of-bounds write in nvmet_auth_challenge()",
    "cvss": ""
@@ -2178,11 +2195,6 @@
   },
   {
    "view": "vulnerable",
-   "bug_id": "f7e4cfe97c08febf",
-   "hash": "5ba83403c915cd8cfd89d29d89b1d21a922c15aef83d2371a621bfdbded3c90c"
-  },
-  {
-   "view": "vulnerable",
    "bug_id": "4f3e4a83a41ea117",
    "hash": "15cc02066b2c631bb5ea50dee99fc8336f4e3b00c7530c1ea1fc779d9ad6253a"
   },
@@ -2292,10 +2304,12 @@
    "hash": "45f8b4f5669cfa2ea67e60fbd2ee52a2be0f0b0f687ebb22e5ca4f8e94b649d4"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "6dcbccedc9ec6452",
-   "hash": "54da5c72c9e8fe13ed8fb42b3a0cb698ce969bbe5c0bddbdd937fe5d48a20c41",
-   "lore": "20260912215401.126194-1-xmei5@asu.edu"
+   "cve": "",
+   "commit": "1f8824fe7f6e",
+   "title": "vdpa: fix double free of the reply skb in vdpa_nl_cmd_dev_config_get_doit()",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -2478,10 +2492,12 @@
    "hash": "62a24944d9abe1ce901697226059e36845e02894fede04090b0b8c737f4bf1f9"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "fd80bc5967eb22c3",
-   "hash": "ead70d5fda0aed3a67aac178f9e41c0d744ff50807485f4f8f32c2de74cdb2d3",
-   "lore": "20260902132458.5de2f031.michal.pecio@gmail.com"
+   "cve": "",
+   "commit": "68c5cb7574c5",
+   "title": "usb: xhci: Fix bounce buffer overflow",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -2847,10 +2863,12 @@
    "hash": "e9914a52d206e904ae9450b5ccd845355f387f05c153fd0c794bf99eedd3ee02"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "e5693071d903b832",
-   "hash": "9593fb4906639d81c00d4c6f8c53b8f442f39ecc991600aaf8335ba070b444a9",
-   "lore": "20260829164945.2691317-3-samuel.thibault@ens-lyon.org"
+   "cve": "",
+   "commit": "e1301ab8a841",
+   "title": "speakup: Fix NULL pointer dereference on VT switch + selection",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -3021,10 +3039,12 @@
    "hash": "cd2f75d3ab1a808ce74e5e512ad686c75f08bd5126c00765ddce60f084aa57a4"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "b0f93e29183ce737",
-   "hash": "a843ca621ee5c6a83a23f383546b041c72b3751341a953ae082ac865b7753140",
-   "lore": "20260915044302.711802-1-xmei5@asu.edu"
+   "cve": "",
+   "commit": "4da259ea8bf4",
+   "title": "ceph: fix off-by-one NUL termination in decode_encrypted_symlink()",
+   "cvss": ""
   },
   {
    "view": "processing",
@@ -3399,10 +3419,12 @@
    "hash": "5368b365083e0c3c587828b0fb7d8606dee9d4d1579daf7d4227bcaea83552ca"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "ed9902f2e44184d9",
-   "hash": "6a40161bfc5b6a30b31ad1f853ff9eeb8b02172e4d757a69cbf3ce5595328053",
-   "lore": "20260912211512.2049147-1-xmei5@asu.edu"
+   "cve": "",
+   "commit": "ac9cfa552102",
+   "title": "fbdev: udlfb: don't rebuild the mode list while the framebuffer is in use",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -3579,10 +3601,12 @@
    "hash": "6869ed7d7a40c8780087bb48aa02b57a2b718430d7c6b5c26dca2a86c3245c74"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "b6ca86c542b91b27",
-   "hash": "e6ef22cc6c03340647ccd127b66161d8a615ce4a4b0e078909327042b276b58b",
-   "lore": ""
+   "cve": "",
+   "commit": "7a374d9be826",
+   "title": "ntfs3: fix out-of-bounds read in ntfs_read_mft()",
+   "cvss": ""
   },
   {
    "view": "patched",
@@ -3770,11 +3794,6 @@
   },
   {
    "view": "vulnerable",
-   "bug_id": "4441642dd8919327",
-   "hash": "cee04c0a601aac808ae2004ac80a8cba3ea2d24cb58adbaf5a7afb22cabd0c58"
-  },
-  {
-   "view": "vulnerable",
    "bug_id": "9f3e47c03174d504",
    "hash": "d2cbce95c7321f9a88c3c7a9200f3d4e8f417a1ff8094cf412df9a88071455b3"
   },
@@ -3941,6 +3960,14 @@
    "hash": "fdcc4cee6561ebd843f72ef3c963e3c4a86ee1ea328afb3a7bfaccf53dc84807"
   },
   {
+   "view": "patched",
+   "bug_id": "0913c6a15917f90b",
+   "cve": "",
+   "commit": "c1338aae7b40",
+   "title": "fuse: don't BUG when the copy buffer is exhausted",
+   "cvss": ""
+  },
+  {
    "view": "vulnerable",
    "bug_id": "6715ab7ada5c53a9",
    "hash": "111dc744bd0eb2165462cad1e28101e49004327207c73fce8fe5e3f59d5fd02b"
@@ -4010,9 +4037,12 @@
    "cvss": "7.8"
   },
   {
-   "view": "vulnerable",
+   "view": "patched",
    "bug_id": "d17c2bc750a9cbbb",
-   "hash": "3012be10936e31a604df406816aaae69d60bd07955ccfe781b8997f80bc86056"
+   "cve": "",
+   "commit": "123470748205",
+   "title": "virtio_net: atomically disable rx mode work",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -4098,16 +4128,20 @@
    "hash": "dc71fa278c8f647eff1cba39158dc9b1eec96a471ca1955b7ff2e4424ab66442"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "1e58c12339692e73",
-   "hash": "3ef6c68ace40080f87d88d31e3a7c7b21b010b9a6baa81ac9d898a6442841873",
-   "lore": "20260703222333.94030-1-xmei5@asu.edu"
+   "cve": "",
+   "commit": "01e56820ef52",
+   "title": "fs/ntfs3: validate EA entry layout against ef->size in ntfs_read_ea",
+   "cvss": ""
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "11ee03ff6051943f",
-   "hash": "be9926d2bf7466870a6fa61aaf8b644ccfb9533ba8ba350cbc8bfb8a192ca730",
-   "lore": "20260703215431.73681-1-xmei5@asu.edu"
+   "cve": "",
+   "commit": "5b76487f94da",
+   "title": "fs/ntfs3: validate $SDH entry size in ntfs_insert_security",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -4145,10 +4179,12 @@
    "hash": "0f2fbe3371aca292806b65ff652255f3e6675c11a97e7ed29684d11bed6c3b83"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "d09dcbf05ea07dba",
-   "hash": "66b758ca3caa2f12f102f4e1109499a6999eb4e53d04b0ce6b60c07c9f368c4f",
-   "lore": "20260712133427.435377-2-bestswngs@gmail.com"
+   "cve": "",
+   "commit": "80218408836f",
+   "title": "fs/ntfs3: do not mark frame pages uptodate on read error",
+   "cvss": ""
   },
   {
    "view": "vulnerable",
@@ -4774,15 +4810,20 @@
    "hash": "85ac77883e0e05585831211976aea8dfc94b9a332fad5ba321b9e628e81e7665"
   },
   {
-   "view": "vulnerable",
+   "view": "patched",
    "bug_id": "2a7fab38eb17bffd",
-   "hash": "7604b26cd45edd6c3dfef10aafe01127204fef0bdb9b27f406fae427dee28521"
+   "cve": "",
+   "commit": "ad39d8d90fa0",
+   "title": "fs/ntfs3: take run_lock when freeing offs_folio in ni_decompress_file",
+   "cvss": ""
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "57eff147b621eef5",
-   "hash": "dad368a48322b88c5fe23b6136346f7c200f82a7c78b95229feccd152d516998",
-   "lore": ""
+   "cve": "",
+   "commit": "a32e893a077a",
+   "title": "fs/ntfs3: zero frame pages on read error",
+   "cvss": ""
   },
   {
    "view": "processing",
@@ -5466,10 +5507,12 @@
    "cvss": "8.4"
   },
   {
-   "view": "processing",
+   "view": "patched",
    "bug_id": "246b6a95e617738f",
-   "hash": "36b7f52d76f8b75ccc80efbcd24b71eb610ac3522fe96fd130bd22895ea7fe4f",
-   "lore": ""
+   "cve": "CVE-2026-99220",
+   "commit": "9695df3b1db4",
+   "title": "asymmetric_keys: reject trust keys without IDs",
+   "cvss": ""
   },
   {
    "view": "patched",
@@ -5520,7 +5563,7 @@
   {
    "view": "patched",
    "bug_id": "2cf741c3005abc20",
-   "cve": "",
+   "cve": "CVE-2026-99027",
    "commit": "b7454f1940c5",
    "title": "net: team: stop reusing skb after queue override",
    "cvss": ""
