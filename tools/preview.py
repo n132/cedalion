@@ -10,6 +10,7 @@ that file as the authority: if the two ever disagree, the deployed behaviour is
 whatever the Worker says.
 
     python3 tools/preview.py            # http://127.0.0.1:60002
+    CEDALION_LIVE=1 PORT=65432 python3 tools/preview.py  # serve source edits live
 """
 
 import http.server
@@ -20,6 +21,11 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOCS = os.path.join(ROOT, "docs")
+LIVE = os.environ.get("CEDALION_LIVE") == "1"
+if LIVE:
+    sys.path.insert(0, ROOT)
+    from build import ASSETS
+
 PORT = int(os.environ.get("PORT", "60002"))
 # 0.0.0.0 so it is reachable from another machine. It serves docs/ only,
 # which holds nothing that publish.py has not already disclosed.
@@ -45,6 +51,18 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     def __init__(self, *a, **kw):
         super().__init__(*a, directory=DOCS, **kw)
+
+    def translate_path(self, path):
+        resolved = super().translate_path(path)
+        if LIVE:
+            name = os.path.relpath(resolved, DOCS)
+            if name == ".":
+                name = "index.html"
+            if name in ASSETS:
+                return os.path.join(ROOT, "web", name)
+            if name in ("bugs.json", "artifacts.json", "disclose_allow.json"):
+                return os.path.join(ROOT, name)
+        return resolved
 
     def end_headers(self):
         self.send_header("Cache-Control", "no-store")
@@ -141,7 +159,8 @@ with Server((HOST, PORT), Handler) as httpd:
     # this machine can reach. The bare hostname is what a reader actually
     # types, and mDNS/LAN DNS resolves it correctly from elsewhere.
     hostname = socket.gethostname()
-    print(f"preview on {hostname} ({HOST}:{PORT})   (ctrl-c to stop)")
+    print(f"preview on {hostname} ({HOST}:{PORT})   (ctrl-c to stop)"
+          f"{' — live source files' if LIVE else ''}")
     print(f"  register      http://{hostname}:{PORT}/#vulnerable")
     print(f"  a bug's page  http://{hostname}:{PORT}/b/4638111fe2a12980")
     httpd.serve_forever()

@@ -28,7 +28,21 @@
    "cve": "CVE-2026-99026",
    "commit": "489114c9ecae",
    "title": "net: team: free skb when broadcast has no txable port",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -36,7 +50,33 @@
    "cve": "CVE-2026-98954",
    "commit": "44378d02c5aa",
    "title": "net: always dissect GSO packets in __virtio_net_hdr_to_skb()",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Eric Dumazet",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Willem de Bruijn",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -95,7 +135,28 @@
    "cve": "CVE-2026-99298",
    "commit": "363c8c79220d",
    "title": "net: ipv4: add zero check for snd_cwnd_clamp",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Eric Dumazet",
+     "tags": [
+      "Suggested-by",
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Kaho Jiang",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -165,7 +226,8 @@
    "cve": "",
    "commit": "90aedf8854c0",
    "title": "bpf: Validate stack arg reads against caller state",
-   "cvss": ""
+   "cvss": "",
+   "credits": []
   },
   {
    "view": "vulnerable",
@@ -287,7 +349,8 @@
    "cve": "",
    "commit": "2ff3730998b0",
    "title": "smb/server: prevent file publication after tree disconnect",
-   "cvss": ""
+   "cvss": "",
+   "credits": []
   },
   {
    "view": "vulnerable",
@@ -347,7 +410,27 @@
    "cve": "CVE-2026-99302",
    "commit": "635e760169a8",
    "title": "nvmet-rdma: reject short connection requests",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Christoph Hellwig",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Keith Busch",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -505,7 +588,21 @@
    "cve": "CVE-2026-99295",
    "commit": "51efca72345a",
    "title": "smb: client: stop processing a read response after a receive error",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Paulo Alcantara",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -768,7 +865,21 @@
    "cve": "CVE-2026-98836",
    "commit": "61b0a5a114fa",
    "title": "ALSA: line6: reject oversized playback packets",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Takashi Iwai",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -816,7 +927,27 @@
    "cve": "CVE-2026-99306",
    "commit": "c1742590d2b2",
    "title": "ceph: reject mdsmaps that claim more than CEPH_MAX_MDS ranks",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Alex Markuze",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Ilya Dryomov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -824,7 +955,8 @@
    "cve": "",
    "commit": "b3ad42f61832",
    "title": "bpf: Reset skb->cb after an lwt prog pushes an IP header",
-   "cvss": ""
+   "cvss": "",
+   "credits": []
   },
   {
    "view": "vulnerable",
@@ -872,7 +1004,27 @@
    "cve": "CVE-2026-98378",
    "commit": "50e80e2bb5e2",
    "title": "bpf: Skip unsettled links in link iterator",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Andrii Nakryiko",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -880,7 +1032,27 @@
    "cve": "CVE-2026-98380",
    "commit": "c82b797abe66",
    "title": "net/sched: reject IDR error pointers when deleting actions",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -903,7 +1075,8 @@
    "cve": "",
    "commit": "86b6471e690c",
    "title": "netfilter: nft_set_rbtree: skip transaction elements during GC",
-   "cvss": ""
+   "cvss": "",
+   "credits": []
   },
   {
    "view": "vulnerable",
@@ -941,7 +1114,39 @@
    "cve": "CVE-2026-98381",
    "commit": "7104a3707143",
    "title": "veth: manage XDP program pointers during channel resize",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Stanislav Fomichev",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Jiayuan Chen",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jason Xing",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1024,7 +1229,27 @@
    "cve": "CVE-2026-98377",
    "commit": "ab888242fce4",
    "title": "vlan: require the MAC header to be present in __vlan_insert_inner_tag()",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Simon Horman",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1092,7 +1317,27 @@
    "cve": "CVE-2026-99307",
    "commit": "7286b2ffe04d",
    "title": "ceph: require the dentry lease record to cover struct ceph_mds_reply_lease",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Alex Markuze",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Ilya Dryomov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1105,7 +1350,27 @@
    "cve": "CVE-2026-99296",
    "commit": "62b41a16d860",
    "title": "libceph: bound mon_command ack decode to front len",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Alex Markuze",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Ilya Dryomov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1134,7 +1399,27 @@
    "cve": "CVE-2026-99304",
    "commit": "b3bf89767e3c",
    "title": "ceph: fix integer overflow in the snap trace bounds check",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Alex Markuze",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Ilya Dryomov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1248,7 +1533,21 @@
    "cve": "CVE-2026-98382",
    "commit": "6db1ce73e985",
    "title": "bpf: Reject dev-bound-only programs on other devices",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Alexei Starovoitov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1261,7 +1560,21 @@
    "cve": "CVE-2026-99300",
    "commit": "2eacf058d2db",
    "title": "media: go7007: only set audio_enabled if go7007_snd_init() succeeded",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Hans Verkuil",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1379,7 +1692,21 @@
    "cve": "CVE-2026-99297",
    "commit": "fd427b8adae4",
    "title": "media: em28xx: fix double free in em28xx_alloc_urbs",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Kaho Jiang",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Hans Verkuil",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1427,7 +1754,21 @@
    "cve": "CVE-2026-98312",
    "commit": "1589afe2d099",
    "title": "ALSA: 6fire: fix OOB write from device-reported iso length",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Takashi Iwai",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1483,7 +1824,21 @@
    "cve": "CVE-2026-99299",
    "commit": "aebfe430ba88",
    "title": "media: em28xx: reject audio endpoint with zero packet size",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Hans Verkuil",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -1491,7 +1846,21 @@
    "cve": "CVE-2026-98741",
    "commit": "86f86e6fdedc",
    "title": "ALSA: ua101: reject mismatched capture/playback packet sizes",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Takashi Iwai",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -1499,7 +1868,21 @@
    "cve": "CVE-2026-98265",
    "commit": "76a986c980bb",
    "title": "ALSA: usb-audio: Clamp implicit feedback packet count to URB capacity",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Takashi Iwai",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1599,7 +1982,33 @@
    "cve": "CVE-2026-98383",
    "commit": "e4a62833adff",
    "title": "bpf: Disallow bpf_skb_pull_data() for LWT_SEG6LOCAL",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Alexei Starovoitov",
+     "tags": [
+      "Suggested-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Daniel Borkmann",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Emil Tsalapatis",
+     "tags": [
+      "Reviewed-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1612,7 +2021,27 @@
    "cve": "CVE-2026-98017",
    "commit": "e6662f2100f8",
    "title": "net/sched: defer qdisc freeing after failed creation",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1665,7 +2094,33 @@
    "cve": "CVE-2026-98725",
    "commit": "fa6778e030be",
    "title": "nvmet-auth: fix out-of-bounds write in nvmet_auth_challenge()",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Christoph Hellwig",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Hannes Reinecke",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Keith Busch",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1688,7 +2143,27 @@
    "cve": "CVE-2026-98379",
    "commit": "1b9b5323725e",
    "title": "netfilter: ip6t_rpfilter: reject routes without inet6_dev",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Florian Westphal",
+     "tags": [
+      "Suggested-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Pablo Neira Ayuso",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1716,7 +2191,34 @@
    "cve": "CVE-2026-89477",
    "commit": "2db9bfa3e27b",
    "title": "sctp: fix NULL deref on untransmitted RECONF completion",
-   "cvss": "7.5"
+   "cvss": "7.5",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xin Long",
+     "tags": [
+      "Suggested-by",
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1732,9 +2234,35 @@
    "view": "patched",
    "bug_id": "2d46a2a6fa490679",
    "cve": "CVE-2026-52940",
-   "commit": "",
-   "title": "",
-   "cvss": ""
+   "commit": "7f2fcff15e99bb85",
+   "title": "tun: zero the whole vnet header in tun_put_user()",
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Willem de Bruijn",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -1965,9 +2493,29 @@
    "view": "patched",
    "bug_id": "bcd91c205a9da03c",
    "cve": "CVE-2026-89779",
-   "commit": "",
-   "title": "",
-   "cvss": "9.1"
+   "commit": "c22f91d82cb9a29d",
+   "title": "fs/ntfs3: validate ef->size covers the record's name and value",
+   "cvss": "9.1",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Konstantin Komarov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -2076,7 +2624,21 @@
    "cve": "CVE-2026-97604",
    "commit": "a0a34a40ed29",
    "title": "fbdev: vfb: defer cleanup until the last reference",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Helge Deller",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -2309,7 +2871,8 @@
    "cve": "",
    "commit": "1f8824fe7f6e",
    "title": "vdpa: fix double free of the reply skb in vdpa_nl_cmd_dev_config_get_doit()",
-   "cvss": ""
+   "cvss": "",
+   "credits": []
   },
   {
    "view": "vulnerable",
@@ -2497,7 +3060,27 @@
    "cve": "CVE-2026-99308",
    "commit": "68c5cb7574c5",
    "title": "usb: xhci: Fix bounce buffer overflow",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Michal Pecio",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Mathias Nyman",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Greg Kroah-Hartman",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -2530,7 +3113,39 @@
    "cve": "CVE-2026-74613",
    "commit": "a31e0ad44469",
    "title": "vsock/virtio: avoid refilling the RX queue after teardown",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Stefano Garzarella",
+     "tags": [
+      "Suggested-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Bobby Eshleman",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "processing",
@@ -2552,9 +3167,35 @@
    "view": "patched",
    "bug_id": "587437ab2e6bd373",
    "cve": "CVE-2026-64543",
-   "commit": "",
-   "title": "",
-   "cvss": "7.8"
+   "commit": "1579342d71133da7",
+   "title": "tipc: fix use-after-free of the discoverer in tipc_disc_rcv()",
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Tung Nguyen",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -2767,9 +3408,35 @@
    "view": "patched",
    "bug_id": "b1da965a6463c41f",
    "cve": "CVE-2026-64545",
-   "commit": "",
-   "title": "",
-   "cvss": "7.5"
+   "commit": "e82d8cc4321c373d",
+   "title": "net, bpf: check master for NULL in xdp_master_redirect()",
+   "cvss": "7.5",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jiayuan Chen",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -2830,7 +3497,27 @@
    "cve": "CVE-2026-81002",
    "commit": "71283aaa6c65",
    "title": "xdp: fix zero-copy frame layout",
-   "cvss": "9.8"
+   "cvss": "9.8",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -2868,7 +3555,27 @@
    "cve": "CVE-2026-99303",
    "commit": "e1301ab8a841",
    "title": "speakup: Fix NULL pointer dereference on VT switch + selection",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Samuel Thibault",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Tested-by"
+     ]
+    },
+    {
+     "name": "Greg Kroah-Hartman",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -2966,7 +3673,27 @@
    "cve": "CVE-2026-98221",
    "commit": "114f00d738f1",
    "title": "KEYS: trusted: Fix tpm2_load_cmd() boundary check",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Stefano Garzarella",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Srish Srinivasan",
+     "tags": [
+      "Tested-by"
+     ]
+    },
+    {
+     "name": "Jarkko Sakkinen",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -3044,7 +3771,8 @@
    "cve": "",
    "commit": "4da259ea8bf4",
    "title": "ceph: fix off-by-one NUL termination in decode_encrypted_symlink()",
-   "cvss": ""
+   "cvss": "",
+   "credits": []
   },
   {
    "view": "processing",
@@ -3289,7 +4017,27 @@
    "cve": "CVE-2026-97614",
    "commit": "5be081b83abd",
    "title": "net: dsa: tag_brcm: legacy FCS: request needed tailroom",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Florian Fainelli",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -3424,7 +4172,21 @@
    "cve": "CVE-2026-99305",
    "commit": "ac9cfa552102",
    "title": "fbdev: udlfb: don't rebuild the mode list while the framebuffer is in use",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Helge Deller",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -3447,7 +4209,40 @@
    "cve": "CVE-2026-98295",
    "commit": "d236517c264e",
    "title": "Bluetooth: coredump: Quiesce dump work on unregister",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Aby Sam Ross",
+     "tags": [
+      "Reported-by",
+      "Suggested-by"
+     ]
+    },
+    {
+     "name": "Tristan Madani",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Luiz Augusto von Dentz",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -3511,7 +4306,33 @@
    "cve": "CVE-2026-89561",
    "commit": "f826df95332c",
    "title": "ipv6: rpl: fix NULL dereference of idev in ipv6_rpl_srh_rcv()",
-   "cvss": "7.5"
+   "cvss": "7.5",
+   "credits": [
+    {
+     "name": "Andrea Mayer",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Tested-by"
+     ]
+    },
+    {
+     "name": "Simon Horman",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -3519,7 +4340,39 @@
    "cve": "CVE-2026-80946",
    "commit": "fd10f40af314",
    "title": "fuse: copy request headers via a stack buffer for io-uring",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Bernd Schubert",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Joanne Koong",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Miklos Szeredi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -3527,7 +4380,33 @@
    "cve": "CVE-2026-72407",
    "commit": "cbb0d30a1ad6",
    "title": "geneve: validate inner network offset in geneve_gro_complete()",
-   "cvss": "10"
+   "cvss": "10",
+   "credits": [
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Suggested-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Co-developed-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -3545,7 +4424,33 @@
    "cve": "CVE-2026-72408",
    "commit": "2651c1744458",
    "title": "geneve: gate GRO hint in geneve_gro_complete() on gs->gro_hint",
-   "cvss": "10"
+   "cvss": "10",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Kyle Zeng",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -3573,7 +4478,33 @@
    "cve": "CVE-2026-74614",
    "commit": "ebac8f6b1ef0",
    "title": "vsock/virtio: read virtqueues under worker locks",
-   "cvss": "8.4"
+   "cvss": "8.4",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Bobby Eshleman",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -3606,7 +4537,8 @@
    "cve": "",
    "commit": "7a374d9be826",
    "title": "ntfs3: fix out-of-bounds read in ntfs_read_mft()",
-   "cvss": ""
+   "cvss": "",
+   "credits": []
   },
   {
    "view": "patched",
@@ -3614,7 +4546,27 @@
    "cve": "CVE-2026-89615",
    "commit": "6f7b9dbdc1b7",
    "title": "fs/ntfs3: bound page_lcns[] index by the log record",
-   "cvss": "8.4"
+   "cvss": "8.4",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Konstantin Komarov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -3627,7 +4579,27 @@
    "cve": "CVE-2026-89782",
    "commit": "111f8d74a19d",
    "title": "fs/ntfs3: reject restart table growth beyond U16_MAX entries",
-   "cvss": "8.4"
+   "cvss": "8.4",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Konstantin Komarov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -3685,7 +4657,34 @@
    "cve": "CVE-2026-64567",
    "commit": "a2d8d5647ed8",
    "title": "btrfs: reject free space cache with more entries than pages",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Qu Wenruo",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "David Sterba",
+     "tags": [
+      "Reviewed-by",
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -3718,7 +4717,39 @@
    "cve": "CVE-2026-89787",
    "commit": "c7e6b863d298",
    "title": "ext4: check dir entry fits before reading the hash trailer in ext4_search_dir()",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Andreas Dilger",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jan Kara",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Theodore Ts'o",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -3736,7 +4767,39 @@
    "cve": "CVE-2026-64187",
    "commit": "2094dab19d45",
    "title": "xfs: fail recovery on a committed log item with no regions",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Christoph Hellwig",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Darrick J. Wong",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Carlos Maiolino",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -3784,7 +4847,33 @@
    "cve": "CVE-2026-64569",
    "commit": "56d96fededd6",
    "title": "mpls: fix NULL deref in mpls_valid_fib_dump_req() on CONFIG_INET=n",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "David Ahern",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "processing",
@@ -3813,7 +4902,27 @@
    "cve": "CVE-2026-89783",
    "commit": "5d9e3bf34fec",
    "title": "xfrm6: fix out-of-bounds write in xfrm6_input_addr() when secpath is full",
-   "cvss": "9.8"
+   "cvss": "9.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Steffen Klassert",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -3861,7 +4970,27 @@
    "cve": "CVE-2026-89780",
    "commit": "a66734a1c5e3",
    "title": "net: qualcomm: rmnet: restore skb->dev on deaggregated frames",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Subash Abhinov Kasiviswanathan",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -3965,7 +5094,34 @@
    "cve": "CVE-2026-99293",
    "commit": "c1338aae7b40",
    "title": "fuse: don't BUG when the copy buffer is exhausted",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Joanne Koong",
+     "tags": [
+      "Suggested-by",
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Miklos Szeredi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -4013,7 +5169,27 @@
    "cve": "CVE-2026-64574",
    "commit": "952c02b33f56",
    "title": "wifi: mac80211: tear down new links on vif update error path",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Johannes Berg",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -4021,7 +5197,27 @@
    "cve": "CVE-2026-64570",
    "commit": "286e52a799fa",
    "title": "wifi: mac80211: fix fils_discovery double free on alloc failure",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Johannes Berg",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -4034,7 +5230,33 @@
    "cve": "CVE-2026-64189",
    "commit": "7cd9103283b2",
    "title": "netfilter: ipset: fix race between dump and ip_set_list resize",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jozsef Kadlecsik",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Florian Westphal",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -4042,7 +5264,21 @@
    "cve": "CVE-2026-99301",
    "commit": "123470748205",
    "title": "virtio_net: atomically disable rx mode work",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -4075,7 +5311,33 @@
    "cve": "CVE-2026-89776",
    "commit": "984f831dda31",
    "title": "vxlan: vnifilter: enforce exact length of GROUP/GROUP6 attributes",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Ido Schimmel",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -4133,7 +5395,8 @@
    "cve": "",
    "commit": "01e56820ef52",
    "title": "fs/ntfs3: validate EA entry layout against ef->size in ntfs_read_ea",
-   "cvss": ""
+   "cvss": "",
+   "credits": []
   },
   {
    "view": "patched",
@@ -4141,7 +5404,8 @@
    "cve": "",
    "commit": "5b76487f94da",
    "title": "fs/ntfs3: validate $SDH entry size in ntfs_insert_security",
-   "cvss": ""
+   "cvss": "",
+   "credits": []
   },
   {
    "view": "vulnerable",
@@ -4184,7 +5448,8 @@
    "cve": "",
    "commit": "80218408836f",
    "title": "fs/ntfs3: do not mark frame pages uptodate on read error",
-   "cvss": ""
+   "cvss": "",
+   "credits": []
   },
   {
    "view": "vulnerable",
@@ -4373,7 +5638,39 @@
    "cve": "CVE-2026-80537",
    "commit": "cc3144da377d",
    "title": "xfs: fix off-by-one in rtrefcount btree root level validation",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Darrick J. Wong",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Christoph Hellwig",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Carlos Maiolino",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -4411,7 +5708,33 @@
    "cve": "CVE-2026-68159",
    "commit": "9f00f9cf2be2",
    "title": "libceph: bound pg_{temp,upmap,upmap_items} length to CEPH_PG_MAX_SIZE",
-   "cvss": "9.8"
+   "cvss": "9.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Alex Markuze",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Ilya Dryomov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -4454,7 +5777,33 @@
    "cve": "CVE-2026-98098",
    "commit": "b3b76e9f4f24",
    "title": "tipc: fix NULL deref in tipc_named_node_up() on empty publication list",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Tested-by"
+     ]
+    },
+    {
+     "name": "Tung Nguyen",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -4663,7 +6012,27 @@
    "cve": "CVE-2026-64541",
    "commit": "9d160b35cc34",
    "title": "net/smc: fix UAF in smc_cdc_rx_handler() by pinning the socket",
-   "cvss": "9.8"
+   "cvss": "9.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -4676,7 +6045,33 @@
    "cve": "CVE-2026-64542",
    "commit": "d186e942365a",
    "title": "ipv6: ndisc: fix NULL deref in accept_untracked_na()",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jiayuan Chen",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -4689,7 +6084,27 @@
    "cve": "CVE-2026-64568",
    "commit": "1d067abcd370",
    "title": "wifi: mac80211: fix unsol_bcast_probe_resp double free on alloc failure",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Johannes Berg",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -4697,7 +6112,27 @@
    "cve": "CVE-2026-64547",
    "commit": "03f384bc0cb8",
    "title": "net: usb: net1080: validate packet_len before pad-byte access in rx_fixup",
-   "cvss": "8.1"
+   "cvss": "8.1",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -4705,7 +6140,27 @@
    "cve": "CVE-2026-64540",
    "commit": "8ff7f2a6da4f",
    "title": "usbnet: gl620a: fix out-of-bounds read in genelink_rx_fixup()",
-   "cvss": "8.1"
+   "cvss": "8.1",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -4713,7 +6168,27 @@
    "cve": "CVE-2026-89617",
    "commit": "006cb7713dec",
    "title": "fs/ntfs3: validate dirty page table on log replay",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Konstantin Komarov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -4731,7 +6206,27 @@
    "cve": "CVE-2026-64411",
    "commit": "a622d2e9608c",
    "title": "netfilter: ebtables: terminate table name before find_table_lock()",
-   "cvss": "7.1"
+   "cvss": "7.1",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Florian Westphal",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -4739,7 +6234,39 @@
    "cve": "CVE-2026-64538",
    "commit": "46c3b8191aad",
    "title": "ipv6: Fix null-ptr-deref in fib6_nh_mtu_change().",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Fernando Fernandez Mancera",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Ido Schimmel",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "processing",
@@ -4753,7 +6280,39 @@
    "cve": "CVE-2026-46322",
    "commit": "aa8963fdce66",
    "title": "tun: free page on build_skb failure in tun_xdp_one()",
-   "cvss": "7.1"
+   "cvss": "7.1",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Dongli Zhang",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Willem de Bruijn",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -4761,7 +6320,39 @@
    "cve": "CVE-2026-46320",
    "commit": "3bcf7aec6a9d",
    "title": "tap: free page on error paths in tap_get_user_xdp()",
-   "cvss": "7.4"
+   "cvss": "7.4",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Dongli Zhang",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Willem de Bruijn",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -4784,7 +6375,27 @@
    "cve": "CVE-2026-89785",
    "commit": "2064bc663f89",
    "title": "fs/ntfs3: fix out-of-bounds read of INDEX_ROOT in reparse/objid init",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Wu",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Konstantin Komarov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -4802,7 +6413,27 @@
    "cve": "CVE-2026-89781",
    "commit": "de603b9d377f",
    "title": "fs/ntfs3: fix out-of-bounds read in read_log_rec_buf()",
-   "cvss": "8.4"
+   "cvss": "8.4",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Konstantin Komarov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -4815,7 +6446,8 @@
    "cve": "",
    "commit": "ad39d8d90fa0",
    "title": "fs/ntfs3: take run_lock when freeing offs_folio in ni_decompress_file",
-   "cvss": ""
+   "cvss": "",
+   "credits": []
   },
   {
    "view": "patched",
@@ -4823,7 +6455,8 @@
    "cve": "",
    "commit": "a32e893a077a",
    "title": "fs/ntfs3: zero frame pages on read error",
-   "cvss": ""
+   "cvss": "",
+   "credits": []
   },
   {
    "view": "processing",
@@ -4852,7 +6485,27 @@
    "cve": "CVE-2026-89778",
    "commit": "68d4d3e78150",
    "title": "isofs: fix out-of-bounds page array access on empty zisofs block",
-   "cvss": "9.8"
+   "cvss": "9.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jan Kara",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -4950,7 +6603,28 @@
    "cve": "CVE-2026-64546",
    "commit": "faaa1e115583",
    "title": "drm/edid: fix OOB read in drm_parse_tiled_block()",
-   "cvss": "7.1"
+   "cvss": "7.1",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jani Nikula",
+     "tags": [
+      "Reviewed-by",
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -4958,7 +6632,27 @@
    "cve": "CVE-2026-89777",
    "commit": "dc77acfeb979",
    "title": "vfio/pci: clear vdev->msi_perm after freeing it on init failure",
-   "cvss": "8.8"
+   "cvss": "8.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Alex Williamson",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -4976,7 +6670,35 @@
    "cve": "CVE-2026-93813",
    "commit": "3dc22abc21f5",
    "title": "btrfs: tree-checker: validate INODE_REF's namelen",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Acked-by",
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Qu Wenruo",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "David Sterba",
+     "tags": [
+      "Reviewed-by",
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -4984,7 +6706,33 @@
    "cve": "CVE-2026-80631",
    "commit": "b0d27d43791b",
    "title": "btrfs: lzo: reject compressed segment that overflows the compressed input",
-   "cvss": "7.5"
+   "cvss": "7.5",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Qu Wenruo",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "David Sterba",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5047,7 +6795,33 @@
    "cve": "CVE-2026-89786",
    "commit": "9333cc809f0a",
    "title": "ext4: fix out-of-bounds read in ext4_read_inline_dir()",
-   "cvss": "9.1"
+   "cvss": "9.1",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jan Kara",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Theodore Ts'o",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5112,7 +6886,27 @@
    "cve": "CVE-2026-64549",
    "commit": "dd068ef04412",
    "title": "Bluetooth: bpa10x: avoid OOB read of revision string in bpa10x_setup()",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Luiz Augusto von Dentz",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5135,7 +6929,39 @@
    "cve": "CVE-2026-64573",
    "commit": "c90164ca0f70",
    "title": "Bluetooth: qca: fix NVM tag length underflow in TLV parser",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Johan Hovold",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Bartosz Golaszewski",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Luiz Augusto von Dentz",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5158,7 +6984,28 @@
    "cve": "CVE-2026-45843",
    "commit": "4c1367a2d7aa",
    "title": "slip: bound decode() reads against the compressed packet length",
-   "cvss": "8.2"
+   "cvss": "8.2",
+   "credits": [
+    {
+     "name": "Simon Horman",
+     "tags": [
+      "Reported-by",
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5177,7 +7024,27 @@
    "cve": "CVE-2026-64539",
    "commit": "6f5fb689fdf8",
    "title": "Bluetooth: eir: Fix stack OOB write when prepending the Flags AD",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Luiz Augusto von Dentz",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5195,7 +7062,21 @@
    "cve": "CVE-2026-53257",
    "commit": "cb9959ab5f99",
    "title": "wifi: cfg80211: enforce HE/EHT cap/oper consistency",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Johannes Berg",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5234,7 +7115,33 @@
    "cve": "CVE-2026-52939",
    "commit": "34080db3e70d",
    "title": "net/rds: fix NULL deref in rds_ib_send_cqe_handler() on masked atomic completion",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Allison Henderson",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5253,7 +7160,33 @@
    "cve": "CVE-2026-64551",
    "commit": "1cd23ca80784",
    "title": "sctp: validate STALE_COOKIE cause length before reading staleness",
-   "cvss": "9.1"
+   "cvss": "9.1",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Xin Long",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5282,7 +7215,39 @@
    "cve": "CVE-2026-52941",
    "commit": "7bf563badd37",
    "title": "net/smc: avoid NULL deref of conn->lnk in smc_msg_event tracepoint",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Dust Li",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Sidraya Jayagond",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5290,7 +7255,27 @@
    "cve": "CVE-2026-64048",
    "commit": "277740023def",
    "title": "net/smc: reject CHID-0 ACCEPT that matches an empty ism_dev slot",
-   "cvss": "7.5"
+   "cvss": "7.5",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5308,7 +7293,27 @@
    "cve": "CVE-2026-64553",
    "commit": "aedd02af1f8b",
    "title": "net: psample: fix info leak in PSAMPLE_ATTR_DATA",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Jiri Pirko",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5356,7 +7361,27 @@
    "cve": "CVE-2026-93286",
    "commit": "9e7f36ab5b7b",
    "title": "net: appletalk: fix NULL pointer dereference in aarp_send_ddp()",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5399,7 +7424,34 @@
    "cve": "CVE-2026-68323",
    "commit": "350e592ff4e3",
    "title": "tipc: serialize udp bearer replicast list updates",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Tung Nguyen",
+     "tags": [
+      "Suggested-by",
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5427,7 +7479,33 @@
    "cve": "CVE-2026-89784",
    "commit": "fd22370226a0",
    "title": "SUNRPC: check rpc_sockaddr2uaddr() return value in rpcb_register_inet4/6",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jeff Layton",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Trond Myklebust",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5445,7 +7523,34 @@
    "cve": "CVE-2026-45845",
    "commit": "3d07ca5c0fae",
    "title": "net/sched: taprio: fix NULL pointer dereference in class dump",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by",
+      "Tested-by"
+     ]
+    },
+    {
+     "name": "Jamal Hadi Salim",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5453,7 +7558,27 @@
    "cve": "CVE-2026-52942",
    "commit": "a84b6fedbc97",
    "title": "netfilter: nf_log: validate MAC header was set before dumping it",
-   "cvss": "7.1"
+   "cvss": "7.1",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Pablo Neira Ayuso",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5496,7 +7621,33 @@
    "cve": "CVE-2026-64572",
    "commit": "f2f152e94a67",
    "title": "ipv4: fib: free fib_alias with kfree_rcu() on insert error path",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Ido Schimmel",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5504,7 +7655,52 @@
    "cve": "CVE-2026-64548",
    "commit": "0c0a8ed85349",
    "title": "bpf, sockmap: reject overflowing copy + len in bpf_msg_push_data()",
-   "cvss": "8.4"
+   "cvss": "8.4",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Tested-by"
+     ]
+    },
+    {
+     "name": "Xinyu Ma",
+     "tags": [
+      "Tested-by"
+     ]
+    },
+    {
+     "name": "Jiayuan Chen",
+     "tags": [
+      "Reviewed-by",
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Emil Tsalapatis",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Kuniyuki Iwashima",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Alexei Starovoitov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5512,7 +7708,27 @@
    "cve": "CVE-2026-99220",
    "commit": "9695df3b1db4",
    "title": "asymmetric_keys: reject trust keys without IDs",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Herbert Xu",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5520,7 +7736,27 @@
    "cve": "CVE-2026-64544",
    "commit": "f7dd32c5179d",
    "title": "crypto: asymmetric_keys - fix OOB read in pefile_digest_pe_contents",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Herbert Xu",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5543,7 +7779,45 @@
    "cve": "CVE-2026-64552",
    "commit": "9e5ad06ea826",
    "title": "virtio-net: fix len check in receive_big()",
-   "cvss": "8.4"
+   "cvss": "8.4",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Xuan Zhuo",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Michael S. Tsirkin",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Bui Quang Minh",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5566,7 +7840,21 @@
    "cve": "CVE-2026-99027",
    "commit": "b7454f1940c5",
    "title": "net: team: stop reusing skb after queue override",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5574,7 +7862,33 @@
    "cve": "CVE-2026-64190",
    "commit": "25fe708bbc59",
    "title": "net: team: fix NULL pointer dereference in team_xmit during mode change",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jiayuan Chen",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5582,7 +7896,39 @@
    "cve": "CVE-2026-46321",
    "commit": "f4feb1e20058",
    "title": "tun: free page on short-frame rejection in tun_xdp_one()",
-   "cvss": "7.1"
+   "cvss": "7.1",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Dongli Zhang",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Willem de Bruijn",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5595,7 +7941,33 @@
    "cve": "CVE-2026-52937",
    "commit": "bddc09212c24",
    "title": "tap: fix stack info leak in tap_ioctl() SIOCGIFHWADDR",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Willem de Bruijn",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5603,7 +7975,39 @@
    "cve": "CVE-2026-45846",
    "commit": "aa6c6d9ee064",
    "title": "bareudp: fix NULL pointer dereference in bareudp_fill_metadata_dst()",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Kuniyuki Iwashima",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Eric Dumazet",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5621,7 +8025,33 @@
    "cve": "CVE-2026-52938",
    "commit": "375e4e33c18d",
    "title": "bpf: Fix NULL pointer dereference in bpf_sk_storage_clone and diag paths",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Amery Hung",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Martin KaFai Lau",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5629,7 +8059,8 @@
    "cve": "",
    "commit": "1081de1accb2",
    "title": "bpf: Fix NULL pointer dereference in bpf_skb_fib_lookup()",
-   "cvss": ""
+   "cvss": "",
+   "credits": []
   },
   {
    "view": "patched",
@@ -5637,7 +8068,8 @@
    "cve": "",
    "commit": "f3f34ca45b96",
    "title": "bpf, sockmap: Fix wrong rsge offset in bpf_msg_push_data()",
-   "cvss": ""
+   "cvss": "",
+   "credits": []
   },
   {
    "view": "vulnerable",
@@ -5680,7 +8112,8 @@
    "cve": "",
    "commit": "2f768d638d97",
    "title": "netfilter: nft_compat: run xt_check_hooks_{match,target}() from .validate",
-   "cvss": ""
+   "cvss": "",
+   "credits": []
   },
   {
    "view": "vulnerable",
@@ -5693,7 +8126,27 @@
    "cve": "CVE-2026-53349",
    "commit": "c3009418f9fa",
    "title": "netfilter: nf_conntrack: destroy stale expectfn expectations on unregister",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Pablo Neira Ayuso",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5732,7 +8185,40 @@
    "cve": "CVE-2026-45841",
    "commit": "2195574dc6d9",
    "title": "netfilter: nfnetlink_osf: fix divide-by-zero in OSF_WSS_MODULO",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Florian Westphal",
+     "tags": [
+      "Suggested-by"
+     ]
+    },
+    {
+     "name": "Pablo Neira Ayuso",
+     "tags": [
+      "Suggested-by",
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Fernando Fernandez Mancera",
+     "tags": [
+      "Reviewed-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5750,7 +8236,39 @@
    "cve": "CVE-2026-43086",
    "commit": "9a91797e61d2",
    "title": "ipvs: fix NULL deref in ip_vs_add_service error path",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Simon Horman",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Julian Anastasov",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Florian Westphal",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "processing",
@@ -5764,7 +8282,27 @@
    "cve": "CVE-2026-74569",
    "commit": "db3d0e0e5d4b",
    "title": "netfilter: nf_conntrack_sip: widen NAT rewrite delta to s32 in sip_help_tcp()",
-   "cvss": "9.8"
+   "cvss": "9.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Pablo Neira Ayuso",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5772,7 +8310,27 @@
    "cve": "CVE-2026-43085",
    "commit": "1f3083aec883",
    "title": "netfilter: nfnetlink_log: initialize nfgenmsg in NLMSG_DONE terminator",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Florian Westphal",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5780,7 +8338,33 @@
    "cve": "CVE-2026-31422",
    "commit": "1a280dd4bd1d",
    "title": "net/sched: cls_flow: fix NULL pointer dereference on shared blocks",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jamal Hadi Salim",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5838,7 +8422,33 @@
    "cve": "CVE-2026-31425",
    "commit": "a54ecccfae62",
    "title": "rds: ib: reject FRMR registration before IB connection is established",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Allison Henderson",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5866,7 +8476,33 @@
    "cve": "CVE-2026-74563",
    "commit": "78f75d632f74",
    "title": "rds: tcp: hold the RCU lock across ipv6_chk_addr() in rds_tcp_laddr_check()",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Allison Henderson",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5874,7 +8510,33 @@
    "cve": "CVE-2026-31423",
    "commit": "4576100b8cd0",
    "title": "net/sched: sch_hfsc: fix divide-by-zero in rtsc_min()",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jamal Hadi Salim",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5882,7 +8544,33 @@
    "cve": "CVE-2026-31421",
    "commit": "faeea8bbf6e9",
    "title": "net/sched: cls_fw: fix NULL pointer dereference on shared blocks",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jamal Hadi Salim",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5890,7 +8578,27 @@
    "cve": "CVE-2026-23276",
    "commit": "6f1a9140ecda",
    "title": "net: add xmit recursion limit to tunnel xmit functions",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5898,7 +8606,33 @@
    "cve": "CVE-2026-22977",
    "commit": "2a71a1a8d0ed",
    "title": "net: sock: fix hardened usercopy panic in sock_recv_errqueue",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Eric Dumazet",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5906,7 +8640,21 @@
    "cve": "CVE-2026-22976",
    "commit": "c1d73b148023",
    "title": "net/sched: sch_qfq: Fix NULL deref when deactivating inactive aggregate in qfq_reset",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5914,7 +8662,33 @@
    "cve": "CVE-2026-31428",
    "commit": "52025ebaa29f",
    "title": "netfilter: nfnetlink_log: fix uninitialized padding leak in NFULA_PAYLOAD",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Florian Westphal",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Pablo Neira Ayuso",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5922,7 +8696,27 @@
    "cve": "CVE-2026-31424",
    "commit": "3d5d488f1177",
    "title": "netfilter: x_tables: restrict xt_check_match/xt_check_target extensions for NFPROTO_ARP",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Florian Westphal",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Pablo Neira Ayuso",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5930,7 +8724,27 @@
    "cve": "CVE-2026-99294",
    "commit": "1d47b55b36d2",
    "title": "netfilter: nft_fwd_netdev: use recursion counter in neigh egress path",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Pablo Neira Ayuso",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5938,7 +8752,21 @@
    "cve": "CVE-2026-63858",
    "commit": "10f79dbd7719",
    "title": "netfilter: nf_tables: add hook transactions for device deletions",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Pablo Neira Ayuso",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5946,7 +8774,33 @@
    "cve": "CVE-2026-31427",
    "commit": "6a2b724460cb",
    "title": "netfilter: nf_conntrack_sip: fix use of uninitialized rtp_addr in process_sdp",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Florian Westphal",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Pablo Neira Ayuso",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -5964,7 +8818,39 @@
    "cve": "CVE-2026-45838",
    "commit": "5828b9e5b272",
    "title": "bpf: fix end-of-list detection in cgroup_storage_get_next_key()",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Sun Jian",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Paul Chaignon",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Alexei Starovoitov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5972,7 +8858,39 @@
    "cve": "CVE-2026-45839",
    "commit": "1c22483a2c4b",
    "title": "bpf: reject negative CO-RE accessor indices in bpf_core_parse_spec()",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Emil Tsalapatis",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Paul Chaignon",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Alexei Starovoitov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -5980,7 +8898,33 @@
    "cve": "CVE-2026-45837",
    "commit": "4fddde2a732d",
    "title": "bpf: Fix use-after-free in arena_vm_close on fork",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Emil Tsalapatis",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Alexei Starovoitov",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -6003,7 +8947,33 @@
    "cve": "CVE-2026-64571",
    "commit": "ebd6d37fa94b",
    "title": "wifi: p54: validate RX frame length in p54_rx_eeprom_readback()",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Christian Lamparter",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Johannes Berg",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -6016,7 +8986,34 @@
    "cve": "CVE-2026-64550",
    "commit": "f0f1887a9e30",
    "title": "net: qualcomm: rmnet: validate MAP frame length before ingress parsing",
-   "cvss": "7.3"
+   "cvss": "7.3",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Subash Abhinov Kasiviswanathan",
+     "tags": [
+      "Suggested-by",
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -6024,7 +9021,27 @@
    "cve": "CVE-2026-64188",
    "commit": "d00c953a8f69",
    "title": "net: qualcomm: rmnet: fix endpoint use-after-free in rmnet_dellink()",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -6072,7 +9089,27 @@
    "cve": "CVE-2026-97446",
    "commit": "f8d14b7bb006",
    "title": "ACPICA: Fix NULL pointer dereference in acpi_ns_custom_package()",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Rafael J. Wysocki",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -6110,7 +9147,27 @@
    "cve": "CVE-2026-31426",
    "commit": "f6484cadbcaf",
    "title": "ACPI: EC: clean up handlers on probe failure in acpi_ec_setup()",
-   "cvss": "7"
+   "cvss": "7",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Rafael J. Wysocki",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -6134,7 +9191,33 @@
    "cve": "CVE-2026-64191",
    "commit": "6036b5067a81",
    "title": "i2c: stub: Reject I2C block transfers with invalid length",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jean Delvare",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Wolfram Sang",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -6142,7 +9225,27 @@
    "cve": "CVE-2026-93287",
    "commit": "3051cd060fa4",
    "title": "i2c: smbus: reject oversized block transfers in the common path",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Wolfram Sang",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -6190,7 +9293,33 @@
    "cve": "CVE-2026-45840",
    "commit": "2091c6aa0df6",
    "title": "openvswitch: cap upcall PID array size and pre-size vport replies",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Ilya Maximets",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -6213,7 +9342,27 @@
    "cve": "CVE-2026-23396",
    "commit": "c73bb9a2d33b",
    "title": "wifi: mac80211: fix NULL deref in mesh_matches_local()",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Johannes Berg",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -6221,7 +9370,33 @@
    "cve": "CVE-2026-45842",
    "commit": "e76607442d5b",
    "title": "slip: reject VJ receive packets on instances with no rstate array",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Simon Horman",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -6234,7 +9409,27 @@
    "cve": "CVE-2026-23397",
    "commit": "dbdfaae96096",
    "title": "nfnetlink_osf: validate individual option lengths in fingerprints",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Florian Westphal",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -6252,7 +9447,27 @@
    "cve": "CVE-2026-72250",
    "commit": "3b08fed5b7e0",
    "title": "netfilter: nf_conntrack_reasm: guard mac_header adjustment after IPv6 defrag",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Florian Westphal",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -6260,7 +9475,21 @@
    "cve": "CVE-2026-45844",
    "commit": "1e8e3f449b1e",
    "title": "netfilter: arp_tables: fix IEEE1394 ARP payload parsing",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Pablo Neira Ayuso",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -6268,7 +9497,27 @@
    "cve": "CVE-2026-23439",
    "commit": "b3a6df291fec",
    "title": "udp_tunnel: fix NULL deref caused by udp_sock_create6 when CONFIG_IPV6=n",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -6276,7 +9525,27 @@
    "cve": "CVE-2026-23398",
    "commit": "614aefe56af8",
    "title": "icmp: fix NULL pointer dereference in icmp_tag_validation()",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -6284,7 +9553,39 @@
    "cve": "CVE-2026-31420",
    "commit": "fa6e24963342",
    "title": "bridge: mrp: reject zero test interval to avoid OOM panic",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Nikolay Aleksandrov",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Ido Schimmel",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -6292,7 +9593,39 @@
    "cve": "CVE-2026-64537",
    "commit": "f3e02edd8322",
    "title": "bridge: cfm: reject invalid CCM interval at configuration time",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Nikolay Aleksandrov",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Ido Schimmel",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "vulnerable",
@@ -6330,7 +9663,27 @@
    "cve": "CVE-2026-31546",
    "commit": "605b52497bf8",
    "title": "net: bonding: fix NULL deref in bond_debug_rlb_hash_show",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -6338,7 +9691,27 @@
    "cve": "CVE-2026-23277",
    "commit": "0cc0c2e661af",
    "title": "net/sched: teql: fix NULL pointer dereference in iptunnel_xmit on TEQL slave xmit",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Jakub Kicinski",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -6346,7 +9719,45 @@
    "cve": "CVE-2026-72389",
    "commit": "2a00517db8de",
    "title": "bridge: stp: Fix a potential use-after-free when deleting a bridge",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Noam Rathaus",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Neil Young",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Nikolay Aleksandrov",
+     "tags": [
+      "Acked-by"
+     ]
+    },
+    {
+     "name": "Ido Schimmel",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Breno Leitao",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -6354,7 +9765,27 @@
    "cve": "CVE-2025-40083",
    "commit": "dd831ac8221e",
    "title": "net/sched: sch_qfq: Fix null-deref in agg_dequeue",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Cong Wang",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -6362,7 +9793,27 @@
    "cve": "CVE-2025-38477",
    "commit": "5e28d5a3f774",
    "title": "net/sched: sch_qfq: Fix race condition on qfq_aggregate",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Cong Wang",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "David S. Miller",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -6370,7 +9821,27 @@
    "cve": "CVE-2025-68325",
    "commit": "9fefc78f7f02",
    "title": "net/sched: sch_cake: Fix incorrect qlen reduction in cake_drop",
-   "cvss": ""
+   "cvss": "",
+   "credits": [
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Toke H\u00f8iland-J\u00f8rgensen",
+     "tags": [
+      "Reviewed-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   },
   {
    "view": "patched",
@@ -6378,7 +9849,27 @@
    "cve": "CVE-2026-31419",
    "commit": "2884bf72fb8f",
    "title": "net: bonding: fix use-after-free in bond_xmit_broadcast()",
-   "cvss": "7.8"
+   "cvss": "7.8",
+   "credits": [
+    {
+     "name": "Weiming Shi",
+     "tags": [
+      "Reported-by"
+     ]
+    },
+    {
+     "name": "Xiang Mei",
+     "tags": [
+      "Signed-off-by"
+     ]
+    },
+    {
+     "name": "Paolo Abeni",
+     "tags": [
+      "Signed-off-by"
+     ]
+    }
+   ]
   }
  ]
 }

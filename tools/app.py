@@ -123,6 +123,16 @@ async def script():
     return _asset(JS_FILE, "application/javascript")
 
 
+@app.get("/contributors.html")
+async def contributors():
+    return _asset(os.path.join(WEB, "contributors.html"), "text/html; charset=utf-8")
+
+
+@app.get("/contributors.js")
+async def contributors_script():
+    return _asset(os.path.join(WEB, "contributors.js"), "application/javascript")
+
+
 @app.get("/", response_class=HTMLResponse)
 async def index():
     """The issues list — the register itself, and the only page there is."""

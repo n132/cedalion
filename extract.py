@@ -32,6 +32,7 @@ import sqlite3
 import subprocess
 import sys
 import time
+import unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "bugs.json")
@@ -193,6 +194,63 @@ def fix_commit_of(link: str | None) -> str:
 STABLE_REPO = path("CEDALION_STABLE_REPO")
 
 
+def cve_commit(cve: str) -> str:
+    """Mainline fix recorded by the local kernel CVE corpus, if available."""
+    if not re.fullmatch(r"CVE-\d{4}-\d{4,}", cve):
+        return ""
+    try:
+        with open(os.path.join(CVE_DIR, cve.split("-")[1], cve + ".sha1")) as f:
+            sha = f.read().strip()
+        return short(sha) if re.fullmatch(r"[0-9a-f]{40}", sha) else ""
+    except OSError:
+        return ""
+
+
+CREDIT_TAGS = {tag.lower(): (tag,) for tag in (
+    "Signed-off-by", "Reviewed-by", "Tested-by", "Acked-by",
+    "Suggested-by", "Co-developed-by", "Reported-by",
+)}
+CREDIT_TAGS["reported-and-tested-by"] = ("Reported-by", "Tested-by")
+
+
+def commit_credits(sha: str, _cache: dict = {}) -> list[dict]:
+    """Named contribution credits from the fixing commit, without emails.
+
+    Keep roles so reporting, reviewing and signing off are distinguishable.
+    Address-only bot reports and tool credits such as Assisted-by are not
+    named people and do not belong in the contributor list.
+    """
+    if not re.fullmatch(r"[0-9a-f]{7,40}", sha):
+        return []
+    if sha in _cache:
+        return _cache[sha]
+    names = {}
+    try:
+        p = subprocess.run(
+            ["git", "-C", STABLE_REPO, "show", "-s", "--format=%B", sha, "--"],
+            capture_output=True, text=True, timeout=30,
+        )
+        if p.returncode == 0:
+            for tag, name in re.findall(
+                r"^([A-Za-z-]+):[ \t]*(.*?)[ \t]*<[^<>\n]+>(?:[ \t].*)?$",
+                p.stdout, re.MULTILINE | re.IGNORECASE,
+            ):
+                roles = CREDIT_TAGS.get(tag.lower())
+                name = unicodedata.normalize("NFC", " ".join(name.split()))
+                if name.startswith('"') and name.endswith('"'):
+                    name = name[1:-1].strip()
+                if not roles or not name:
+                    continue
+                credit = names.setdefault(name.casefold(), {"name": name, "tags": []})
+                for role in roles:
+                    if role not in credit["tags"]:
+                        credit["tags"].append(role)
+    except (OSError, subprocess.SubprocessError):
+        pass
+    _cache[sha] = list(names.values())
+    return _cache[sha]
+
+
 def commit_title(sha: str, _cache: dict = {}) -> str:
     """Subject line of a fixing commit, read from the local clone.
 
@@ -343,7 +401,8 @@ PUBLISHED = {
     # exists once a message is actually public, so pointing at it discloses
     # nothing the message itself has not already.
     VIEW_PROCESSING: {"view", "bug_id", "hash", "lore"},
-    VIEW_PATCHED:    {"view", "bug_id", "cve", "commit", "title", "cvss"},
+    VIEW_PATCHED:    {"view", "bug_id", "cve", "commit", "title", "cvss",
+                     "credits"},
 }
 
 # A Vulnerable or Processing row names a live, unfixed bug, so every value on
@@ -527,7 +586,7 @@ def collect() -> dict:
             cve_id = (cve or "").strip().upper()
             if cve_id:
                 cves_seen.add(cve_id)
-            fix = fix_commit_of(commit_link)
+            fix = fix_commit_of(commit_link) or cve_commit(cve_id)
             # Every column in this view derives from the CVE or the commit, so a
             # row with neither draws four dashes and says nothing. Two records
             # are in that state: marked Fixed, with commit_link, cve_number and
@@ -575,6 +634,7 @@ def collect() -> dict:
                 "commit": fix,
                 "title": commit_title(fix),
                 "cvss": cvss_score(cve_id),
+                "credits": commit_credits(fix) if cve_id else [],
             })
 
     # Aggregates only, and only for what the page actually shows: a count per

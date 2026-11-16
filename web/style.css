@@ -719,6 +719,71 @@ body.bug { zoom: 1; }
 .topbar .page:hover { color: var(--text); }
 .topbar .page[aria-current="page"] { color: var(--text); font-weight: 620; }
 
+/* Contributors stays at the right edge with the repository link. */
+.topbar .contributors-link { margin-left: auto; white-space: nowrap; }
+.topbar .contributors-link + .gh { margin-left: 8px; }
+
+.contributors-page { padding-bottom: 20px; }
+.contributors-page .doc { max-width: 76ch; }
+.contributors-controls {
+  margin: 18px 0;
+}
+.contributors-controls p { margin: 0; font-size: 13px; color: var(--text-2); }
+#contributor-coverage { color: var(--text-2); font-size: 13px; }
+.contributor {
+  display: grid; grid-template-columns: minmax(150px, 1fr) 3fr;
+  gap: 18px; padding: 20px 0; border-top: 1px solid var(--line);
+}
+.contributor h2 { margin: 0; font-size: 17px; font-weight: 640; line-height: 1.4; }
+.contributor-count { margin: 4px 0 0; font-size: 13px; color: var(--text-2); }
+.contributor-roles { margin: 5px 0 0; font-size: 11px; color: var(--text-2); }
+.contributor-cve-group { min-width: 0; }
+.contributor-cves {
+  display: flex; align-content: flex-start; flex-wrap: wrap; gap: 7px;
+  list-style: none; padding: 0; margin: 0; min-width: 0;
+}
+.contributor-cves li {
+  display: flex; align-items: baseline; padding: 0;
+  color: #1a1a1a; background: var(--surface);
+  border: 1px solid #1a1a1a; border-radius: 3px;
+  font-size: 12px;
+  transition: background-color .2s, color .2s;
+}
+.contributor-cves a { color: inherit; text-decoration: none; transition: color .2s; }
+.contributor-cves a:hover { text-decoration: underline; }
+.contributor-cve-label { display: block; width: 100%; padding: 3px 8px; }
+.contributor-cves li:hover, .contributor-cves li:focus-within {
+  color: #fff; background: #1a1a1a;
+}
+.contributor-cves li:hover a, .contributor-cves li:focus-within a { color: #fff; }
+.contributor-cves li[hidden], .contributor-toggle[hidden] { display: none; }
+.contributor-cves .contributor-toggle-item { padding: 0; }
+.contributor-toggle {
+  width: 100%; padding: 3px 6px; font: inherit; white-space: nowrap;
+  font-size: 11px;
+  color: inherit; background: transparent;
+  border: 0; border-radius: 2px; cursor: pointer;
+}
+.contributors-page a:focus-visible, .contributor-toggle:focus-visible {
+  outline: 2px solid var(--text); outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+  .topbar .wrap {
+    display: grid; grid-template-columns: 1fr auto auto;
+    grid-template-rows: 26px 24px; gap: 4px 12px;
+    height: 64px; padding-top: 4px; padding-bottom: 6px;
+  }
+  .topbar .brand { grid-area: 1 / 1; }
+  .topbar .contributors-link { grid-area: 1 / 2; }
+  .topbar .gh { grid-area: 1 / 3; }
+  .topbar .page { margin-left: 0; font-size: 12px; line-height: 20px; }
+  .topbar .page:not(.contributors-link) { grid-row: 2; }
+  .topbar .contributors-link + .gh { margin-left: 0; }
+  .toolbar { top: 66px; }
+  .contributor { grid-template-columns: 1fr; gap: 10px; }
+}
+
 /* The page's one claim, set into the page the way the register's table is set
    into its well — same tint, same inset light. It is not a callout in the
    sense of a warning; it is the summary a reader in a hurry is entitled to,

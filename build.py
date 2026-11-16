@@ -44,6 +44,7 @@ OUT = os.path.join(HERE, "docs")
 # app.py names its routes: a stray file in web/ should not become published by
 # having been dropped there.
 ASSETS = ("index.html", "reporting.html", "patch.html", "disclosure.html",
+          "contributors.html", "contributors.js",
           "style.css", "cedalion.js",
           "bugpage.js", "logo.svg", "logo-light.svg", "favicon.svg")
 

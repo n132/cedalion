@@ -43,3 +43,27 @@ Expected output:
 ## More
 
 Detailed reproduction notes are in [`reproduction/README.md`](reproduction/README.md).
+
+## Local feature preview
+
+```bash
+python3 build.py
+CEDALION_LIVE=1 HOST=0.0.0.0 PORT=65432 python3 tools/preview.py
+```
+
+Open `http://localhost:65432/`, or use this machine's hostname/IP from another
+machine. Live mode reads pages from `web/` and the current `bugs.json` on each
+request; disclosed artifact downloads use the built `docs/` directory.
+
+The **Contributors** page groups names credited with `Signed-off-by`,
+`Reviewed-by`, `Tested-by`, `Acked-by`, `Suggested-by`, `Co-developed-by`, and
+`Reported-by` on fixing commits for bugs with an assigned CVE. Combined
+`Reported-and-tested-by` credits count as reporting and testing. Multiple tags
+on one CVE count only once per person; roles remain visible. Address-only bot
+reports, tool credits (`Assisted-by`), and metadata (`Cc`, `Fixes`, `Link`) are
+excluded. `extract.py` refreshes these credits from
+`CEDALION_STABLE_REPO` whenever it updates the register. If a fixing commit is
+missing, it uses the mainline `.sha1` entry in `CEDALION_CVE_DIR` when available.
+No separate contributor list needs maintenance. The page loads the published
+static data once when opened or reloaded, with no background polling. Production
+updates through the normal extract/build/push workflow.
