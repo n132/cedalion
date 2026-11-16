@@ -1,19 +1,19 @@
 {
- "generated_at": "2026-11-11 00:22:45",
+ "generated_at": "2026-11-16 12:32:43",
  "counts": {
   "bugs": 1164,
   "with_report": 1152,
   "fixed": 165,
-  "reported": 210,
+  "reported": 211,
   "scooped": 99,
   "incomplete": 0,
   "merged_links": 83,
-  "cves": 134
+  "cves": 150
  },
  "states": {
   "Fixed": 165,
-  "PoC Available": 738,
-  "Reported": 45,
+  "PoC Available": 737,
+  "Reported": 46,
   "Scooped": 216
  },
  "views": {
@@ -92,7 +92,7 @@
   {
    "view": "patched",
    "bug_id": "71b6509cb791e531",
-   "cve": "",
+   "cve": "CVE-2026-99298",
    "commit": "363c8c79220d",
    "title": "net: ipv4: add zero check for snd_cwnd_clamp",
    "cvss": ""
@@ -344,7 +344,7 @@
   {
    "view": "patched",
    "bug_id": "e015e82956da641b",
-   "cve": "",
+   "cve": "CVE-2026-99302",
    "commit": "635e760169a8",
    "title": "nvmet-rdma: reject short connection requests",
    "cvss": ""
@@ -502,7 +502,7 @@
   {
    "view": "patched",
    "bug_id": "24c7c12d69e63c6d",
-   "cve": "",
+   "cve": "CVE-2026-99295",
    "commit": "51efca72345a",
    "title": "smb: client: stop processing a read response after a receive error",
    "cvss": ""
@@ -813,7 +813,7 @@
   {
    "view": "patched",
    "bug_id": "f8e3e01d8dda8689",
-   "cve": "",
+   "cve": "CVE-2026-99306",
    "commit": "c1742590d2b2",
    "title": "ceph: reject mdsmaps that claim more than CEPH_MAX_MDS ranks",
    "cvss": ""
@@ -1089,7 +1089,7 @@
   {
    "view": "patched",
    "bug_id": "f92fbe44e3c6df69",
-   "cve": "",
+   "cve": "CVE-2026-99307",
    "commit": "7286b2ffe04d",
    "title": "ceph: require the dentry lease record to cover struct ceph_mds_reply_lease",
    "cvss": ""
@@ -1102,7 +1102,7 @@
   {
    "view": "patched",
    "bug_id": "25860fb17af97289",
-   "cve": "",
+   "cve": "CVE-2026-99296",
    "commit": "62b41a16d860",
    "title": "libceph: bound mon_command ack decode to front len",
    "cvss": ""
@@ -1131,7 +1131,7 @@
   {
    "view": "patched",
    "bug_id": "ecaada42f806f629",
-   "cve": "",
+   "cve": "CVE-2026-99304",
    "commit": "b3bf89767e3c",
    "title": "ceph: fix integer overflow in the snap trace bounds check",
    "cvss": ""
@@ -1258,7 +1258,7 @@
   {
    "view": "patched",
    "bug_id": "ac0ebfcd53bd2316",
-   "cve": "",
+   "cve": "CVE-2026-99300",
    "commit": "2eacf058d2db",
    "title": "media: go7007: only set audio_enabled if go7007_snd_init() succeeded",
    "cvss": ""
@@ -1376,7 +1376,7 @@
   {
    "view": "patched",
    "bug_id": "6a04efcebe0fc0ce",
-   "cve": "",
+   "cve": "CVE-2026-99297",
    "commit": "fd427b8adae4",
    "title": "media: em28xx: fix double free in em28xx_alloc_urbs",
    "cvss": ""
@@ -1480,7 +1480,7 @@
   {
    "view": "patched",
    "bug_id": "9782320f78c23f40",
-   "cve": "",
+   "cve": "CVE-2026-99299",
    "commit": "aebfe430ba88",
    "title": "media: em28xx: reject audio endpoint with zero packet size",
    "cvss": ""
@@ -2494,7 +2494,7 @@
   {
    "view": "patched",
    "bug_id": "fd80bc5967eb22c3",
-   "cve": "",
+   "cve": "CVE-2026-99308",
    "commit": "68c5cb7574c5",
    "title": "usb: xhci: Fix bounce buffer overflow",
    "cvss": ""
@@ -2865,7 +2865,7 @@
   {
    "view": "patched",
    "bug_id": "e5693071d903b832",
-   "cve": "",
+   "cve": "CVE-2026-99303",
    "commit": "e1301ab8a841",
    "title": "speakup: Fix NULL pointer dereference on VT switch + selection",
    "cvss": ""
@@ -3421,7 +3421,7 @@
   {
    "view": "patched",
    "bug_id": "ed9902f2e44184d9",
-   "cve": "",
+   "cve": "CVE-2026-99305",
    "commit": "ac9cfa552102",
    "title": "fbdev: udlfb: don't rebuild the mode list while the framebuffer is in use",
    "cvss": ""
@@ -3962,7 +3962,7 @@
   {
    "view": "patched",
    "bug_id": "0913c6a15917f90b",
-   "cve": "",
+   "cve": "CVE-2026-99293",
    "commit": "c1338aae7b40",
    "title": "fuse: don't BUG when the copy buffer is exhausted",
    "cvss": ""
@@ -4039,7 +4039,7 @@
   {
    "view": "patched",
    "bug_id": "d17c2bc750a9cbbb",
-   "cve": "",
+   "cve": "CVE-2026-99301",
    "commit": "123470748205",
    "title": "virtio_net: atomically disable rx mode work",
    "cvss": ""
@@ -5927,7 +5927,7 @@
   {
    "view": "patched",
    "bug_id": "16f751ca5863f6c5",
-   "cve": "",
+   "cve": "CVE-2026-99294",
    "commit": "1d47b55b36d2",
    "title": "netfilter: nft_fwd_netdev: use recursion counter in neigh egress path",
    "cvss": ""
