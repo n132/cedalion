@@ -32,8 +32,7 @@ After an image has been pushed, another machine can reproduce the bug with one
 Docker command:
 
 ```bash
-docker run --rm --name co-4bda3bf8e1a2b780-vul --device /dev/kvm \
-  n132/cedalion:co-4bda3bf8e1a2b780-vul run 4bda3bf8e1a2b780
+docker run -it --rm --device /dev/kvm n132/cedalion:CVE-2026-99298 co vul
 ```
 
 Expected output:
