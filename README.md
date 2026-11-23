@@ -47,3 +47,12 @@ See [the archive guide](archive/README.md) for image tags and usage.
 ## More
 
 Detailed reproduction notes are in [`reproduction/README.md`](reproduction/README.md).
+
+## Known issue
+
+25 of the 83 published `config.gz` files are the kernelCTF template config
+(sha1 `782d5761e8`, 268417 bytes), not the config the crash was reproduced
+with. Those bugs' `vul_config_gz` was backfilled with the template, and
+`publish.py` ships whatever that column holds. A config that reproduces
+nothing is worse than no config, so these need re-deriving, or a check in
+`publish.py` that refuses the template. Not fixed yet.
