@@ -28,7 +28,7 @@ if LIVE:
 
 PORT = int(os.environ.get("PORT", "60002"))
 # 0.0.0.0 so it is reachable from another machine. It serves docs/ only,
-# which holds nothing that publish.py has not already disclosed.
+# which holds the published site and its artifacts.
 HOST = os.environ.get("HOST", "0.0.0.0")
 CONTACT = "co@bugs.sh"
 BUG_PATH = re.compile(r"^/b/([0-9a-f]{8,64})(?:/(.+))?$")

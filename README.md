@@ -22,47 +22,28 @@ reproduction/repro.sh build 4bda3bf8e1a2b780
 reproduction/repro.sh run 4bda3bf8e1a2b780
 ```
 
-## Dataset (in-progress)
+## Docker Hub archive
 
-> Only public/patched (no race) bugs are currently included.
+We are building an archive of ready-to-run reproduction images for
+vulnerabilities that have an assigned CVE or have been patched. The archive
+currently excludes race conditions.
 
-We are building an interactive reproduction dataset.
-
-After an image has been pushed, another machine can reproduce the bug with one
-Docker command:
+For example, reproduce `CVE-2026-89783`, corresponding to bugs.sh local ID
+`98dcb2414482df0b`:
 
 ```bash
-docker run -it --rm --device /dev/kvm n132/cedalion:CVE-2026-99298 co vul
+docker run -it --rm --device /dev/kvm n132/cedalion:CVE-2026-89783 co vul
 ```
 
-Expected output:
+Replace `co vul` with `co fix` to run the precompiled kernel at the patching commit,
+or with `co patch` to display the related patch.
 
-![Expected docker run output](reproduction/assets/expected-output.png)
+The CVE tag is an alias associated with the local ID. Docker downloads the image
+automatically when needed. The host requires Docker and access to `/dev/kvm`.
+The dataset is still being built. We will publish a release when it is ready.
+
+See [the archive guide](archive/README.md) for image tags and usage.
 
 ## More
 
 Detailed reproduction notes are in [`reproduction/README.md`](reproduction/README.md).
-
-## Local feature preview
-
-```bash
-python3 build.py
-CEDALION_LIVE=1 HOST=0.0.0.0 PORT=65432 python3 tools/preview.py
-```
-
-Open `http://localhost:65432/`, or use this machine's hostname/IP from another
-machine. Live mode reads pages from `web/` and the current `bugs.json` on each
-request; disclosed artifact downloads use the built `docs/` directory.
-
-The **Contributors** page groups names credited with `Signed-off-by`,
-`Reviewed-by`, `Tested-by`, `Acked-by`, `Suggested-by`, `Co-developed-by`, and
-`Reported-by` on fixing commits for bugs with an assigned CVE. Combined
-`Reported-and-tested-by` credits count as reporting and testing. Multiple tags
-on one CVE count only once per person; roles remain visible. Address-only bot
-reports, tool credits (`Assisted-by`), and metadata (`Cc`, `Fixes`, `Link`) are
-excluded. `extract.py` refreshes these credits from
-`CEDALION_STABLE_REPO` whenever it updates the register. If a fixing commit is
-missing, it uses the mainline `.sha1` entry in `CEDALION_CVE_DIR` when available.
-No separate contributor list needs maintenance. The page loads the published
-static data once when opened or reloaded, with no background polling. Production
-updates through the normal extract/build/push workflow.

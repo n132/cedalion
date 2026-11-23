@@ -1,20 +1,5 @@
 #!/usr/bin/env python3
-"""Cedalion — a read-only listing of the kernel bugs found so far.
-
-Serves the page, its logo and bugs.json on port 60001, and nothing else. Of
-those, bugs.json is the only one carrying data. This process never opens
-the triage database, never reads a bug's artifacts, and never shells out:
-the only file it touches is the extracted bugs.json beside it. Producing that
-file is extract.py's job, run separately.
-
-Keeping the two apart means the surface reachable over the network is exactly
-one JSON document. An in-page refresh button would have handed a network caller
-the ability to spawn a process and to reach the database indirectly, which is a
-poor trade for saving a shell command.
-
-    python3 extract.py              # refresh the data
-    python3 tools/app.py            # http://<host>:60001
-"""
+"""Serve the published register and website assets locally."""
 from __future__ import annotations
 
 import json
@@ -24,14 +9,6 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, JSONResponse, Response
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# Data at the root, front-end under web/. bugs.json is the one file that is
-# generated rather than written by hand, and the one file that is gitignored,
-# so it sits apart from the source it feeds.
-#
-# Where it lives is a parameter, because this server needs nothing else from
-# the machine it runs on: no claudes.db, no lore mirror, no CVE corpus, no
-# kernel clone. Those belong to extract.py. Hand this process a bugs.json from
-# anywhere and tools/app.py plus web/ is the whole site.
 DATA = os.environ.get("CEDALION_DATA", os.path.join(ROOT, "bugs.json"))
 WEB = os.path.join(ROOT, "web")
 
